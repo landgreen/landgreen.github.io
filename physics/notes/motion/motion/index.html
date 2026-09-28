@@ -882,240 +882,268 @@
 		</script>
 
 	</article>
-	<article>
-		<h1 class='underlined'>Practice <a class="printout-link" href="../../../output/pdf/motion-practice-questions.pdf">printout.pdf</a></h1>
-		<p>
-			In case you wanted more practice I used AI to make some more problems. The rest of the site I made by hand, but generating endless problems seemed safe. I did find mistakes in the AI generated problems, and there are probably some I didn't find. Let me know if something could be fixed. I also added a practice problem on each page with no solution. That's intentional. Have fun!
-		</p>
+	<article class="practice-compact">
+		<details class="practice-menu">
+			<summary>practice problems (17)</summary>
+			<div class="derive practice-intro">
+				<p>
+					In case you wanted more practice I used AI to make some more problems. The rest of the site I made by hand, but generating endless problems seemed safe. I did find mistakes in the AI generated problems, and there are probably some I didn't find. Let me know if something could be fixed. I also added a practice problem on each page with no solution. That's intentional. Have fun!
+				</p>
+				<p class="practice-controls">
+					<a class="printout-link practice-printout-link" href="../../../output/pdf/motion-practice-questions.pdf">printout.pdf</a>
+					<label class="practice-tag-toggle"><input type="checkbox"> show topics and mark harder problems</label>
+				</p>
+			</div>
 
-		<div class='example'>
-			<strong>Example:</strong> A small camera drone starts 2 m above the ground while filming a school field. It rises to 14 m above the ground, and the camera records for 9 s. What is its vertical displacement?
-			<details>
-				<summary>solution</summary>
-				$$\Delta x=x_f-x_i$$
-				$$\Delta x=14-2$$
-				$$\Delta x=12\,\mathrm{m}$$
-			</details>
-		</div>
+			<div class='example' data-topic="Position">
+				<strong>Example:</strong> A small camera drone starts 2 m above the ground while filming a school field. It rises to 14 m above the ground, and the camera records for 9 s. What is its vertical displacement?
+				<details>
+					<summary>solution</summary>
+					$$\Delta x=x_f-x_i$$
+					$$\Delta x=14-2$$
+					$$\Delta x=12\,\mathrm{m}$$
+					<p>The drone ends 12 m higher than it started. How long it filmed doesn't change its displacement.</p>
+				</details>
+			</div>
 
-		<div class='example'>
-			<strong>Example:</strong> A student starts at a locker marked -12 m and walks to a classroom marked 35 m. What is the student's displacement?
-			<details>
-				<summary>solution</summary>
-				$$\Delta x=x_f-x_i$$
-				$$\Delta x=35-(-12)$$
-				$$\Delta x=47\,\mathrm{m}$$
-			</details>
-		</div>
+			<div class='example' data-topic="Position">
+				<strong>Example:</strong> A student starts at a locker marked -12 m and walks to a classroom marked 35 m. What is the student's displacement?
+				<details>
+					<summary>solution</summary>
+					$$\Delta x=x_f-x_i$$
+					$$\Delta x=35-(-12)$$
+					$$\Delta x=47\,\mathrm{m}$$
+					<p>Subtracting a negative position adds. The student walks 12 m to reach the 0 m mark, then 35 m more.</p>
+				</details>
+			</div>
 
-		<div class='example'>
-			<strong>Example:</strong> A runner sprints 0.10 km east, turns around, and jogs 35 m west. What are the runner's distance traveled and displacement?
-			<details>
-				<summary>solution</summary>
-				<p>Distance traveled counts the whole path.</p>
-				$$0.10 \times 1000=100$$
-				$$d=100+35$$
-				$$d=135\,\mathrm{m}$$
-				<p>Displacement only compares the final position to the initial position. Let east be positive.</p>
-				$$\Delta x=100-35$$
-				$$\Delta x=65\,\mathrm{m}$$
-			</details>
-		</div>
+			<div class='example' data-topic="Position">
+				<strong>Example:</strong> A runner sprints 0.10 km east, turns around, and jogs 35 m west. What are the runner's distance traveled and displacement?
+				<details>
+					<summary>solution</summary>
+					$$0.10\,\mathrm{km} \left(\frac{1000\,\mathrm{m}}{1\,\mathrm{km}}\right) = 100\,\mathrm{m}$$
+					<p>Distance traveled counts the whole path.</p>
+					$$d=100+35$$
+					$$d=135\,\mathrm{m}$$
+					<p>Displacement only compares the final position to the initial position. Let east be positive.</p>
+					$$\Delta x=100-35$$
+					$$\Delta x=65\,\mathrm{m}$$
+					<p>The runner covered 135 m, but only ended up 65 m east of the start.</p>
+				</details>
+			</div>
 
-		<div class='example'>
-			<strong>Example:</strong> A city bus leaves the science museum stop at 7:48 AM and arrives at school at 8:13 AM. The route is listed as 6.2 km, but only the clock times matter here. How long was the ride in minutes?
-			<details>
-				<summary>solution</summary>
-				$$8{:}00-7{:}48=12$$
-				$$8{:}13-8{:}00=13$$
-				$$\Delta t=12+13$$
-				$$\Delta t=25\,\mathrm{min}$$
-			</details>
-		</div>
+			<div class='example' data-topic="Time">
+				<strong>Example:</strong> A city bus leaves the science museum stop at 7:48 AM and follows a 6.2 km route to school, arriving at 8:13 AM. How long was the ride in minutes?
+				<details>
+					<summary>solution</summary>
+					<p>The hour changes during the ride, so count the minutes up to 8:00, then the minutes after 8:00.</p>
+					$$\Delta t=12\,\mathrm{min}+13\,\mathrm{min}$$
+					$$\Delta t=25\,\mathrm{min}$$
+					<p>The route length doesn't matter here. The clock times alone give the time period.</p>
+				</details>
+			</div>
 
-		<div class='example'>
-			<strong>Example:</strong> A runner moves for 12 s and travels 80 m along a curved path. What is the runner's displacement?
-			<details>
-				<summary>answer</summary>
-				This cannot be solved from the information given. Distance traveled and time are not enough to find displacement. You need the starting position and ending position, or a clear direction for the motion.
-			</details>
-		</div>
+			<div class='example' data-topic="Position">
+				<strong>Example:</strong> A runner jogs for 12 s and covers 80 m on the school's running track. What is the runner's displacement?
+				<details>
+					<summary>solution</summary>
+					<p>This cannot be solved from the information given. 80 m is the distance traveled, the length of the path. Displacement needs the starting and ending positions. A track curves, so unless the runner stayed on a straight section, the displacement is less than 80 m. We also don't know its direction.</p>
+				</details>
+			</div>
 
-		<div class='example'>
-			<strong>Example:</strong> A skateboarder goes from the 0.008 km mark to the 68 m mark in 15 s. What is the skateboarder's average velocity?
-			<details>
-				<summary>solution</summary>
-				$$0.008 \times 1000=8$$
-				$$\Delta x=x_f-x_i$$
-				$$\Delta x=68-8$$
-				$$\Delta x=60$$
-				$$v_{avg}=\frac{\Delta x}{\Delta t}$$
-				$$v_{avg}=\frac{60}{15}$$
-				$$v_{avg}=4\,\mathrm{m/s}$$
-			</details>
-		</div>
+			<div class='example' data-topic="Velocity">
+				<strong>Example:</strong> A skateboarder goes from the 0.008 km mark to the 68 m mark in 15 s. What is the skateboarder's average velocity?
+				<details>
+					<summary>solution</summary>
+					$$0.008\,\mathrm{km} \left(\frac{1000\,\mathrm{m}}{1\,\mathrm{km}}\right) = 8\,\mathrm{m}$$
+					$$\Delta x=x_f-x_i$$
+					$$\Delta x=68-8$$
+					$$\Delta x=60\,\mathrm{m}$$
+					$$v_{\mathrm{avg}}=\frac{\Delta x}{\Delta t}$$
+					$$v_{\mathrm{avg}}=\frac{60}{15}$$
+					$$v_{\mathrm{avg}}=4\,\mathrm{\tfrac{m}{s}}$$
+					<p>On average, the skateboarder moves 4 m farther along the path every second.</p>
+				</details>
+			</div>
 
-		<div class='example'>
-			<strong>Example:</strong> A dog runs 18 m east, then 6 m west, in 8 s. What are the dog's distance traveled and average velocity?
-			<details>
-				<summary>solution</summary>
-				$$d=18+6$$
-				$$d=24\,\mathrm{m}$$
-				$$\Delta x=18-6$$
-				$$\Delta x=12$$
-				$$v_{avg}=\frac{\Delta x}{\Delta t}$$
-				$$v_{avg}=\frac{12}{8}$$
-				$$v_{avg}=1.5\,\mathrm{m/s}$$
-			</details>
-		</div>
+			<div class='example' data-topic="Velocity">
+				<strong>Example:</strong> A dog runs 18 m east, then 6 m west, in 8 s. What are the dog's distance traveled and average velocity?
+				<details>
+					<summary>solution</summary>
+					$$d=18+6$$
+					$$d=24\,\mathrm{m}$$
+					<p>Let east be positive.</p>
+					$$\Delta x=18-6$$
+					$$\Delta x=12\,\mathrm{m}$$
+					$$v_{\mathrm{avg}}=\frac{\Delta x}{\Delta t}$$
+					$$v_{\mathrm{avg}}=\frac{12}{8}$$
+					$$v_{\mathrm{avg}}=1.5\,\mathrm{\tfrac{m}{s}}$$
+					<p>Average velocity uses the 12 m displacement, not the 24 m the dog ran. The answer is 1.5 m/s east.</p>
+				</details>
+			</div>
 
-		<div class='example'>
-			<strong>Example:</strong> An elevator rises with an average velocity of 1.5 m/s. How long does it take to rise 36 m?
-			<details>
-				<summary>solution</summary>
-				$$v_{avg}=\frac{\Delta x}{\Delta t}$$
-				$$1.5=\frac{36}{\Delta t}$$
-				$$1.5\Delta t=36$$
-				$$\Delta t=\frac{36}{1.5}$$
-				$$\Delta t=24\,\mathrm{s}$$
-			</details>
-		</div>
+			<div class='example' data-topic="Velocity">
+				<strong>Example:</strong> An elevator rises with an average velocity of 1.5 m/s. How long does it take to rise 36 m?
+				<details>
+					<summary>solution</summary>
+					$$v_{\mathrm{avg}}=\frac{\Delta x}{\Delta t}$$
+					$$1.5=\frac{36}{\Delta t}$$
+					$$1.5\Delta t=36$$
+					$$\Delta t=\frac{36}{1.5}$$
+					$$\Delta t=24\,\mathrm{s}$$
+					<p>36 m is about 10 floors, so a 24 s ride seems reasonable.</p>
+				</details>
+			</div>
 
-		<div class='example'>
-			<strong>Example:</strong> A train backs up slowly while coupling to another car. It moves at 43.2 km/h for 8 s. Let forward be positive, so the train's velocity is negative. What is its displacement?
-			<details>
-				<summary>solution</summary>
-				$$\frac{43.2}{3.6}=12$$
-				$$v_{avg}=-12$$
-				$$v_{avg}=\frac{\Delta x}{\Delta t}$$
-				$$-12=\frac{\Delta x}{8}$$
-				$$(-12)(8)=\Delta x$$
-				$$\Delta x=-96\,\mathrm{m}$$
-			</details>
-		</div>
+			<div class='example' data-topic="Velocity">
+				<strong>Example:</strong> A train backs up slowly at 5.4 km/h for 20 s while coupling to another car. Let forward be positive. What is the train's displacement?
+				<details>
+					<summary>solution</summary>
+					$$5.4\left(\frac{\mathrm{\color{#f05}{km}}}{\mathrm{\color{#07b}{h}}}\right)\left(\frac{1000\,\mathrm{m}}{1\,\mathrm{\color{#f05}{km}}}\right)\left(\frac{1\,\mathrm{\color{#07b}{h}}}{3600\,\mathrm{s}}\right) = 1.5\,\mathrm{\tfrac{m}{s}}$$
+					<p>The train moves backward, so its velocity is negative.</p>
+					$$v_{\mathrm{avg}}=-1.5\,\mathrm{\tfrac{m}{s}}$$
+					$$v_{\mathrm{avg}}=\frac{\Delta x}{\Delta t}$$
+					$$-1.5=\frac{\Delta x}{20}$$
+					$$(-1.5)(20)=\Delta x$$
+					$$\Delta x=-30\,\mathrm{m}$$
+					<p>The negative sign means the train ends 30 m behind where it started.</p>
+				</details>
+			</div>
 
-		<div class='example'>
-			<strong>Example:</strong> A position vs. time graph goes through the points (2 s, 5 m) and (8 s, 29 m). What is the slope of the graph?
-			<details>
-				<summary>solution</summary>
-				<p>The slope of a position vs. time graph is velocity.</p>
-				$$v_{avg}=\frac{\Delta x}{\Delta t}$$
-				$$v_{avg}=\frac{29-5}{8-2}$$
-				$$v_{avg}=\frac{24}{6}$$
-				$$v_{avg}=4\,\mathrm{m/s}$$
-			</details>
-		</div>
+			<div class='example' data-topic="Graphing Motion">
+				<strong>Example:</strong> A position vs. time graph goes through the points (2 s, 5 m) and (8 s, 29 m). What is the slope of the graph?
+				<details>
+					<summary>solution</summary>
+					<p>The slope of a position vs. time graph is velocity.</p>
+					$$v_{\mathrm{avg}}=\frac{\Delta x}{\Delta t}$$
+					$$v_{\mathrm{avg}}=\frac{29-5}{8-2}$$
+					$$v_{\mathrm{avg}}=\frac{24}{6}$$
+					$$v_{\mathrm{avg}}=4\,\mathrm{\tfrac{m}{s}}$$
+					<p>The position increases by 4 m every second, so the object moves in the positive direction.</p>
+				</details>
+			</div>
 
-		<div class='example'>
-			<strong>Example:</strong> A position vs. time graph falls from 40 m at 0 s to -20 m at 10 s. What average velocity does the graph show?
-			<details>
-				<summary>solution</summary>
-				$$v_{avg}=\frac{\Delta x}{\Delta t}$$
-				$$v_{avg}=\frac{-20-40}{10-0}$$
-				$$v_{avg}=\frac{-60}{10}$$
-				$$v_{avg}=-6\,\mathrm{m/s}$$
-			</details>
-		</div>
+			<div class='example' data-topic="Graphing Motion">
+				<strong>Example:</strong> A position vs. time graph falls from 40 m at 0 s to -20 m at 10 s. What average velocity does the graph show?
+				<details>
+					<summary>solution</summary>
+					$$v_{\mathrm{avg}}=\frac{\Delta x}{\Delta t}$$
+					$$v_{\mathrm{avg}}=\frac{-20-40}{10-0}$$
+					$$v_{\mathrm{avg}}=\frac{-60}{10}$$
+					$$v_{\mathrm{avg}}=-6\,\mathrm{\tfrac{m}{s}}$$
+					<p>A downward slope means a negative velocity. The object moves in the negative direction and passes right through the 0 m mark.</p>
+				</details>
+			</div>
 
-		<div class='example'>
-			<strong>Example:</strong> A skateboarder speeds up from 1.5 m/s to 7.5 m/s in 4 s. What is the skateboarder's average acceleration?
-			<details>
-				<summary>solution</summary>
-				$$a_{avg}=\frac{\Delta v}{\Delta t}$$
-				$$a_{avg}=\frac{v_f-v_i}{\Delta t}$$
-				$$a_{avg}=\frac{7.5-1.5}{4}$$
-				$$a_{avg}=1.5\,\mathrm{m/s^2}$$
-			</details>
-		</div>
+			<div class='example' data-topic="Acceleration">
+				<strong>Example:</strong> A skateboarder speeds up from 1.5 m/s to 7.5 m/s in 4 s. What is the skateboarder's average acceleration?
+				<details>
+					<summary>solution</summary>
+					$$a_{\mathrm{avg}}=\frac{\Delta v}{\Delta t}$$
+					$$a_{\mathrm{avg}}=\frac{v_f-v_i}{\Delta t}$$
+					$$a_{\mathrm{avg}}=\frac{7.5-1.5}{4}$$
+					$$a_{\mathrm{avg}}=1.5\,\mathrm{\tfrac{m}{s^{2}}}$$
+					<p>The skateboarder's velocity increases by 1.5 m/s every second.</p>
+				</details>
+			</div>
 
-		<div class='example'>
-			<strong>Example:</strong> A bike is moving forward at 9 m/s and comes to rest in 3 s. What is the bike's average acceleration?
-			<details>
-				<summary>solution</summary>
-				$$a_{avg}=\frac{\Delta v}{\Delta t}$$
-				$$a_{avg}=\frac{v_f-v_i}{\Delta t}$$
-				$$a_{avg}=\frac{0-9}{3}$$
-				$$a_{avg}=-3\,\mathrm{m/s^2}$$
-			</details>
-		</div>
+			<div class='example' data-topic="Acceleration">
+				<strong>Example:</strong> A bike is moving forward at 9 m/s and comes to rest in 3 s. What is the bike's average acceleration?
+				<details>
+					<summary>solution</summary>
+					$$a_{\mathrm{avg}}=\frac{\Delta v}{\Delta t}$$
+					$$a_{\mathrm{avg}}=\frac{v_f-v_i}{\Delta t}$$
+					$$a_{\mathrm{avg}}=\frac{0-9}{3}$$
+					$$a_{\mathrm{avg}}=-3\,\mathrm{\tfrac{m}{s^{2}}}$$
+					<p>The acceleration points backward, opposite the bike's motion, so the bike slows down. It loses 3 m/s every second.</p>
+				</details>
+			</div>
 
-		<div class='example'>
-			<strong>Example:</strong> A cart is moving left at 4 m/s, then 5 s later it is moving right at 6 m/s. Let right be positive. What is the cart's average acceleration?
-			<details>
-				<summary>solution</summary>
-				$$a_{avg}=\frac{\Delta v}{\Delta t}$$
-				$$a_{avg}=\frac{v_f-v_i}{\Delta t}$$
-				$$v_i=-4$$
-				$$v_f=6$$
-				$$a_{avg}=\frac{6-(-4)}{5}$$
-				$$a_{avg}=2\,\mathrm{m/s^2}$$
-			</details>
-		</div>
+			<div class='example' data-topic="Acceleration">
+				<strong>Example:</strong> A cart is moving left at 4 m/s, then 5 s later it is moving right at 6 m/s. Let right be positive. What is the cart's average acceleration?
+				<details>
+					<summary>solution</summary>
+					$$v_i=-4\,\mathrm{\tfrac{m}{s}}$$
+					$$v_f=6\,\mathrm{\tfrac{m}{s}}$$
+					$$a_{\mathrm{avg}}=\frac{\Delta v}{\Delta t}$$
+					$$a_{\mathrm{avg}}=\frac{v_f-v_i}{\Delta t}$$
+					$$a_{\mathrm{avg}}=\frac{6-(-4)}{5}$$
+					$$a_{\mathrm{avg}}=2\,\mathrm{\tfrac{m}{s^{2}}}$$
+					<p>The velocity changed by 10 m/s, not 2 m/s. The acceleration points right the whole time, even while the cart is still moving left and slowing down.</p>
+				</details>
+			</div>
 
-		<div class='example'>
-			<strong>Example:</strong> A velocity vs. time graph goes through the points (3 s, 2 m/s) and (11 s, -6 m/s). What is the slope of the graph?
-			<details>
-				<summary>solution</summary>
-				<p>The slope of a velocity vs. time graph is acceleration.</p>
-				$$a_{avg}=\frac{\Delta v}{\Delta t}$$
-				$$a_{avg}=\frac{-6-2}{11-3}$$
-				$$a_{avg}=\frac{-8}{8}$$
-				$$a_{avg}=-1\,\mathrm{m/s^2}$$
-			</details>
-		</div>
+			<div class='example' data-topic="Graphing Motion">
+				<strong>Example:</strong> A velocity vs. time graph goes through the points (3 s, 2 m/s) and (11 s, -6 m/s). What is the slope of the graph?
+				<details>
+					<summary>solution</summary>
+					<p>The slope of a velocity vs. time graph is acceleration.</p>
+					$$a_{\mathrm{avg}}=\frac{\Delta v}{\Delta t}$$
+					$$a_{\mathrm{avg}}=\frac{-6-2}{11-3}$$
+					$$a_{\mathrm{avg}}=\frac{-8}{8}$$
+					$$a_{\mathrm{avg}}=-1\,\mathrm{\tfrac{m}{s^{2}}}$$
+					<p>The velocity drops 1 m/s every second. It reaches zero at 5 s, so the object stops and turns around before speeding up in the negative direction.</p>
+				</details>
+			</div>
 
-		<div class='example'>
-			<strong>Example:</strong> A cyclist on a straight bike path starts a timer at the 0.020 km mark and is at the 110 m mark after 0.50 min. The bike computer also reports that the cyclist's velocity changes from 2 m/s to 8 m/s. Find the displacement, average velocity, and average acceleration.
-			<details>
-				<summary>solution</summary>
-				$$0.020 \times 1000=20$$
-				$$0.50 \times 60=30$$
-				$$\Delta x=x_f-x_i$$
-				$$\Delta x=110-20$$
-				$$\Delta x=90\,\mathrm{m}$$
+			<div class='example' data-topic="Acceleration" data-hard>
+				<strong>Example:</strong> A cyclist on a straight bike path starts a timer at the 0.020 km mark and is at the 170 m mark after 0.50 min. During that same time, the bike computer reports that the cyclist's velocity changes from 2 m/s to 8 m/s. Find the displacement, average velocity, and average acceleration.
+				<details>
+					<summary>solution</summary>
+					$$0.020\,\mathrm{km} \left(\frac{1000\,\mathrm{m}}{1\,\mathrm{km}}\right) = 20\,\mathrm{m}$$
+					$$0.50\,\mathrm{min} \left(\frac{60\,\mathrm{s}}{1\,\mathrm{min}}\right) = 30\,\mathrm{s}$$
+					<br>
+					$$\Delta x=x_f-x_i$$
+					$$\Delta x=170-20$$
+					$$\Delta x=150\,\mathrm{m}$$
+					<br>
+					$$v_{\mathrm{avg}}=\frac{\Delta x}{\Delta t}$$
+					$$v_{\mathrm{avg}}=\frac{150}{30}$$
+					$$v_{\mathrm{avg}}=5\,\mathrm{\tfrac{m}{s}}$$
+					<br>
+					$$a_{\mathrm{avg}}=\frac{\Delta v}{\Delta t}$$
+					$$a_{\mathrm{avg}}=\frac{v_f-v_i}{\Delta t}$$
+					$$a_{\mathrm{avg}}=\frac{8-2}{30}$$
+					$$a_{\mathrm{avg}}=0.2\,\mathrm{\tfrac{m}{s^{2}}}$$
+					<p>The numbers agree with each other. If the cyclist speeds up steadily from 2 m/s to 8 m/s, the average velocity should be halfway between them, 5 m/s.</p>
+				</details>
+			</div>
+
+			<div class='example' data-topic="Velocity" data-hard>
+				<strong>Example:</strong> Two cars drive toward each other on a straight east-west road. Let east be positive. At the same instant, one car is at the 0 m marker and travels east at a constant 20 m/s. The other car is at the 600 m marker and travels west at a constant 10 m/s. How long until the cars meet?
+				<details>
+					<summary>solution</summary>
+					<p>Rearrange the velocity equation to find each car's final position.</p>
+					$$v=\frac{x_f-x_i}{\Delta t}$$
+					$$x_f=x_i+v\Delta t$$
+					<p>Write one position equation for each car. The westbound car has a negative velocity.</p>
+					$$x_1=0+20\Delta t$$
+					$$x_2=600-10\Delta t$$
+					<p>At the meeting time, both cars have the same position.</p>
+					$$20\Delta t=600-10\Delta t$$
+					$$30\Delta t=600$$
+					$$\Delta t=20\,\mathrm{s}$$
+					<p>The cars meet after 20 s, at the 400 m marker. The eastbound car is faster, so it covers more of the gap.</p>
+				</details>
+			</div>
+
+			<div class='example'>
+				<p><strong>Reading (5 minutes):</strong> Read <a href="https://skepticalinquirer.org/1987/10/the-burden-of-skepticism/">The Burden of Skepticism</a> by Carl Sagan from Skeptical Inquirer. Then answer these questions.</p>
+
+				What does Sagan's used-car example show about skepticism in everyday life?
+				<details>
+					<summary>answer</summary>
+					<p>Skepticism means checking a claim before accepting it when there is a cost to being wrong. It can include asking questions, looking for evidence, or consulting someone who understands the evidence better.</p>
+				</details>
 				<br>
-				$$v_{avg}=\frac{\Delta x}{\Delta t}$$
-				$$v_{avg}=\frac{90}{30}$$
-				$$v_{avg}=3\,\mathrm{m/s}$$
-				<br>
-				$$a_{avg}=\frac{\Delta v}{\Delta t}$$
-				$$a_{avg}=\frac{v_f-v_i}{\Delta t}$$
-				$$a_{avg}=\frac{8-2}{30}$$
-				$$a_{avg}=0.2\,\mathrm{m/s^2}$$
-			</details>
-		</div>
 
-		<div class='example'>
-			<strong>Example:</strong> Two cars drive toward each other on a straight east-west road. Let east be positive. At the same instant, one car is at the 0 m marker and travels east at a constant 20 m/s. The other car is at the 600 m marker and travels west at a constant 10 m/s. How long until the cars meet?
-			<details>
-				<summary>solution</summary>
-				<p>Write one position equation for each car. The westbound car has a negative velocity.</p>
-				$$x_1=20\Delta t$$
-				$$x_2=600-10\Delta t$$
-				<p>At the meeting time, both cars have the same position.</p>
-				$$20\Delta t=600-10\Delta t$$
-				$$30\Delta t=600$$
-				$$\Delta t=20\,\mathrm{s}$$
-				<p>The cars meet after 20 s.</p>
-			</details>
-		</div>
-
-		<div class='example'>
-			<p><strong>Reading (5 minutes):</strong> Read <a href="https://skepticalinquirer.org/1987/10/the-burden-of-skepticism/">The Burden of Skepticism</a> by Carl Sagan from Skeptical Inquirer. Then answer these questions.</p>
-
-			What does Sagan's used-car example show about skepticism in everyday life?
-			<details>
-				<summary>answer</summary>
-				<p>Skepticism means checking a claim before accepting it when there is a cost to being wrong. It can include asking questions, looking for evidence, or consulting someone who understands the evidence better.</p>
-			</details>
-			<br>
-
-			Why does Sagan argue that a claim should receive extra scrutiny when it strongly appeals to hope, fear, or grief?
-			<details>
-				<summary>answer</summary>
-				<p>Strong emotions can make people easier to mislead or more willing to accept a comforting claim without evidence. He argues that emotional importance is a reason to ask more careful questions, not fewer.</p>
-			</details>
-		</div>
+				Why does Sagan argue that a claim should receive extra scrutiny when it strongly appeals to hope, fear, or grief?
+				<details>
+					<summary>answer</summary>
+					<p>Strong emotions can make people easier to mislead or more willing to accept a comforting claim without evidence. He argues that emotional importance is a reason to ask more careful questions, not fewer.</p>
+				</details>
+			</div>
+		</details>
 	</article>
 	<footer>
 		<a href="../../../">Back</a>
@@ -1127,6 +1155,7 @@
 		renderMathInElement(document.body);
 		graphEquations("0.5");
 	</script>
+	<script defer src="../../../lib/practice-labels.js"></script>
 </body>
 
 </html>

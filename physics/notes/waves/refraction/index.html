@@ -28,7 +28,7 @@
 		</h1>
 	</header>
 	<article>
-		<h2 class='underlined'>Reflection and Refraction</h2>
+
 		<p>
 			<a href="https://ricktu288.github.io/ray-optics/simulator/">Reflection and refraction</a> occur when the wave speed changes as it enters a new medium. Part of the wave refracts into the new medium, and part of the wave reflects back into the old medium.
 		</p>
@@ -545,6 +545,35 @@
 		</div>
 
 
+		<h2 class='underlined' id="snell">lenses</h2>
+
+		<!--
+
+optics topics
+
+image formation by lens and mirrors
+lenses
+		concave convex
+		focal point
+mirrors
+		virtual images
+		ray??
+devices
+		telescope
+		magnifying glass
+		glasses
+
+
+
+-->
+
+
+
+
+
+
+
+
 	</article>
 	<article>
 		<h1 class='underlined'>Practice <a class="printout-link" href="../../../output/pdf/waves-practice-questions.pdf">printout.pdf</a></h1>
@@ -855,26 +884,6 @@
 		renderMathInElement(document.body);
 	</script>
 	<script src='../../../lib/matter.min.js'></script>
-	<script src="wave.js "></script>
-	<script src="sound.js "></script>
-	<script defer src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-	<script defer src="https://cdnjs.cloudflare.com/ajax/libs/jquery.ripples/0.5.3/jquery.ripples.min.js"></script>
-	<!-- <script defer src="jquery.ripples-min.js"></script> -->
-	<script defer>
-		target = document.getElementById("tsunami")
-		target.addEventListener("click", startRipple);
-
-		function startRipple() {
-			target.removeEventListener('click', startRipple, false);
-			document.getElementById("hide-after-click").style.visibility = "hidden"
-			$('#tsunami').ripples({
-				dropRadius: 20,
-				resolution: 512,
-				perturbance: 0.03,
-				interactive: true
-			});
-		}
-	</script>
 </body>
 
 </html>

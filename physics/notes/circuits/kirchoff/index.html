@@ -1397,439 +1397,669 @@
 
 
 	</article>
-	<article>
-<h1 class='underlined'>Practice <a class="printout-link" href="../../../output/pdf/kirchoff-practice-questions.pdf">printout.pdf</a></h1>
-		<p>
-			In case you wanted more practice I used AI to make some more problems. The rest of the site I made by hand, but generating endless problems seemed safe. I did find mistakes in the AI generated problems, and there are probably some I didn't find. Let me know if something could be fixed. I also added a practice problem on each page with no solution. That's intentional. Have fun!
-		</p>
-		<p>
-			Convert kΩ to Ω and mA to A before calculating.
-		</p>
+	<article class="practice-compact">
+		<details class="practice-menu">
+			<summary>practice problems (28)</summary>
+			<div class="derive practice-intro">
+				<p>
+					In case you wanted more practice I used AI to make some more problems. The rest of the site I made by hand, but generating endless problems seemed safe. I did find mistakes in the AI generated problems, and there are probably some I didn't find. Let me know if something could be fixed. I also added a practice problem on each page with no solution. That's intentional. Have fun!
+				</p>
+				<p>
+					Convert kΩ to Ω and mA to A before calculating.
+				</p>
+				<p class="practice-controls">
+					<a class="printout-link practice-printout-link" href="../../../output/pdf/kirchoff-practice-questions.pdf">printout.pdf</a>
+					<label class="practice-tag-toggle"><input type="checkbox"> show topics and mark harder problems</label>
+				</p>
+			</div>
 
-		<div class='example'>
-			<strong>Example:</strong> A small sensor circuit has one side of a resistor at 9.0 V and the other side at 4.0 V. What is the potential difference across the resistor?
-			<details>
-				<summary>solution</summary>
-				<p>Potential difference is the change in electric potential from one side to the other.</p>
-				$$\Delta V = V_2 - V_1$$
-				$$\Delta V = 4.0 - 9.0$$
-				$$\Delta V = -5.0\,\mathrm{V}$$
-				<p>The resistor has a 5.0 V drop.</p>
-			</details>
-		</div>
+			<div class='example printout-ignore' data-topic="Electric Potential in Circuits">
+				<strong>Example:</strong> A small sensor circuit has one side of a resistor at 9.0 V and the other side at 4.0 V. What is the potential difference across the resistor?
+				<details>
+					<summary>solution</summary>
+					<p>Potential difference is the change in electric potential from one side to the other.</p>
+					$$\Delta V = V_2 - V_1$$
+					$$\Delta V = 4.0 - 9.0$$
+					$$\Delta V = -5.0\,\mathrm{V}$$
+					<p>The resistor has a 5.0 V drop.</p>
+				</details>
+			</div>
 
-		<div class='example'>
-			<strong>Example:</strong> A battery raises charge from 0.0 V to 12.0 V. What potential difference does the battery provide?
-			<details>
-				<summary>solution</summary>
-				$$\Delta V = V_2 - V_1$$
-				$$\Delta V = 12.0 - 0.0$$
-				$$\Delta V = 12.0\,\mathrm{V}$$
-				<p>The battery provides a 12.0 V potential rise.</p>
-			</details>
-		</div>
+			<div class='example printout-ignore' data-topic="Electric Potential in Circuits">
+				<strong>Example:</strong> A battery raises charge from 0.0 V to 12.0 V. What potential difference does the battery provide?
+				<details>
+					<summary>solution</summary>
+					$$\Delta V = V_2 - V_1$$
+					$$\Delta V = 12.0 - 0.0$$
+					$$\Delta V = 12.0\,\mathrm{V}$$
+					<p>The battery provides a 12.0 V potential rise.</p>
+				</details>
+			</div>
 
-		<div class='example'>
-			<strong>Example:</strong> A loop has a 9.0 V battery and three voltage changes around the loop. Two resistor drops are -2.0 V and -3.5 V. What must the third voltage change be?
-			<details>
-				<summary>solution</summary>
-				<p>Kirchhoff's voltage law says the voltage changes around a complete loop add to zero.</p>
-				$$\sum V = 0$$
-				$$9.0 - 2.0 - 3.5 + V_3 = 0$$
-				$$3.5 + V_3 = 0$$
-				$$V_3 = -3.5\,\mathrm{V}$$
-				<p>The missing voltage change is a 3.5 V drop.</p>
-			</details>
-		</div>
+			<div class='example' data-topic="Kirchhoff&#x27;s Voltage Law">
+				<strong>Example:</strong> A loop has a 9.0 V battery and three voltage changes around the loop. Two resistor drops are -2.0 V and -3.5 V. What must the third voltage change be?
+				<details>
+					<summary>solution</summary>
+					<p>Kirchhoff's voltage law says the voltage changes around a complete loop add to zero.</p>
+					$$\sum V = 0$$
+					$$9.0 - 2.0 - 3.5 + V_3 = 0$$
+					$$3.5 + V_3 = 0$$
+					$$V_3 = -3.5\,\mathrm{V}$$
+					<p>The missing voltage change is a 3.5 V drop.</p>
+				</details>
+			</div>
 
-		<div class='example'>
-			<strong>Example:</strong> At a junction in a model train layout, 2.4 A flows in. Current leaves along three branches. Two branches carry 0.80 A and 0.60 A. How much current leaves in the third branch?
-			<details>
-				<summary>solution</summary>
-				<p>Kirchhoff's current law says the current into a junction equals the current out of the junction.</p>
-				$$I_{\mathrm{in}} = I_{\mathrm{out}}$$
-				$$2.4 = 0.80 + 0.60 + I_3$$
-				$$2.4 = 1.40 + I_3$$
-				$$I_3 = 1.0\,\mathrm{A}$$
-				<p>The third branch carries 1.0 A.</p>
-			</details>
-		</div>
+			<div class='example' data-topic="Kirchhoff&#x27;s Current Law">
+				<strong>Example:</strong> At a junction in a model train layout, 2.4 A flows in. Current leaves along three branches. Two branches carry 0.80 A and 0.60 A. How much current leaves in the third branch?
+				<details>
+					<summary>solution</summary>
+					<p>Kirchhoff's current law says the current into a junction equals the current out of the junction.</p>
+					$$I_{\mathrm{in}} = I_{\mathrm{out}}$$
+					$$2.4 = 0.80 + 0.60 + I_3$$
+					$$2.4 = 1.40 + I_3$$
+					$$I_3 = 1.0\,\mathrm{A}$$
+					<p>The third branch carries 1.0 A.</p>
+				</details>
+			</div>
 
-		<div class='example'>
-			<strong>Example:</strong> Two wires bring current into a junction. One wire brings in 0.50 A. Two wires leave the junction with currents of 1.2 A and 0.70 A. What current must come in through the second incoming wire?
-			<details>
-				<summary>solution</summary>
-				$$I_{\mathrm{in}} = I_{\mathrm{out}}$$
-				$$0.50 + I_2 = 1.2 + 0.70$$
-				$$0.50 + I_2 = 1.90$$
-				$$I_2 = 1.40\,\mathrm{A}$$
-				<p>The second incoming wire carries 1.40 A.</p>
-			</details>
-		</div>
+			<div class='example printout-ignore' data-topic="Kirchhoff&#x27;s Current Law">
+				<strong>Example:</strong> Two wires bring current into a junction. One wire brings in 0.50 A. Two wires leave the junction with currents of 1.2 A and 0.70 A. What current must come in through the second incoming wire?
+				<details>
+					<summary>solution</summary>
+					$$I_{\mathrm{in}} = I_{\mathrm{out}}$$
+					$$0.50 + I_2 = 1.2 + 0.70$$
+					$$0.50 + I_2 = 1.90$$
+					$$I_2 = 1.40\,\mathrm{A}$$
+					<p>The second incoming wire carries 1.40 A.</p>
+				</details>
+			</div>
 
-		<div class='example'>
-			<strong>Example:</strong> A circuit loop has a 9.0 V battery and two resistors labeled 100 Ω and 220 Ω. What is the current in the 220 Ω resistor?
-			<details>
-				<summary>solution</summary>
-				<p>This cannot be solved from the information given. The circuit does not say whether the resistors are in series, in parallel, or arranged some other way.</p>
-				<p>Those different arrangements give different voltages across the 220 Ω resistor, so the current cannot be determined from the numbers alone.</p>
-			</details>
-		</div>
+			<div class='example' data-topic="Kirchhoff&#x27;s Voltage Law">
+				<strong>Example:</strong> A circuit loop has a 9.0 V battery and two resistors labeled 100 Ω and 220 Ω. What is the current in the 220 Ω resistor?
+				<details>
+					<summary>solution</summary>
+					<p>This cannot be solved from the information given. The circuit does not say whether the resistors are in series, in parallel, or arranged some other way.</p>
+					<p>Those different arrangements give different voltages across the 220 Ω resistor, so the current cannot be determined from the numbers alone.</p>
+				</details>
+			</div>
 
-		<div class='example'>
-			<strong>Example:</strong> Three resistors are connected in series: 120 Ω, 330 Ω, and 470 Ω. What is the equivalent resistance?
-			<details>
-				<summary>solution</summary>
-				<p>In series, resistances add directly.</p>
-				$$R_{\mathrm{eq}} = R_1 + R_2 + R_3$$
-				$$R_{\mathrm{eq}} = 120 + 330 + 470$$
-				$$R_{\mathrm{eq}} = 920\,\Omega$$
-			</details>
-		</div>
+			<div class='example printout-ignore' data-topic="Resistors in Series">
+				<strong>Example:</strong> Three resistors are connected in series: 120 Ω, 330 Ω, and 470 Ω. What is the equivalent resistance?
+				<details>
+					<summary>solution</summary>
+					<p>In series, resistances add directly.</p>
+					$$R_{\mathrm{eq}} = R_1 + R_2 + R_3$$
+					$$R_{\mathrm{eq}} = 120 + 330 + 470$$
+					$$R_{\mathrm{eq}} = 920\,\Omega$$
+				</details>
+			</div>
 
-		<div class='example'>
-			<strong>Example:</strong> A repair kit has three resistors in series: 1.5 kΩ, 680 Ω, and 2.2 kΩ. What is the equivalent resistance in kΩ?
-			<details>
-				<summary>solution</summary>
-				<p>Convert the kΩ values to Ω first.</p>
-				$$1.5 = 1500$$
-				$$2.2 = 2200$$
-				$$R_{\mathrm{eq}} = 1500 + 680 + 2200$$
-				$$R_{\mathrm{eq}} = 4380$$
-				$$R_{\mathrm{eq}} = 4.38\,\mathrm{k}\Omega$$
-			</details>
-		</div>
+			<div class='example printout-ignore' data-topic="Resistors in Series">
+				<strong>Example:</strong> A repair kit has three resistors in series: 1.5 kΩ, 680 Ω, and 2.2 kΩ. What is the equivalent resistance in kΩ?
+				<details>
+					<summary>solution</summary>
+					<p>Convert the kΩ values to Ω first.</p>
+					$$1.5\,\mathrm{k}\Omega = 1500\,\Omega$$
+					$$2.2\,\mathrm{k}\Omega = 2200\,\Omega$$
+					$$R_{\mathrm{eq}} = 1500 + 680 + 2200$$
+					$$R_{\mathrm{eq}} = 4380$$
+					$$R_{\mathrm{eq}} = 4.38\,\mathrm{k}\Omega$$
+				</details>
+			</div>
 
-		<div class='example'>
-			<strong>Example:</strong> Two resistors, 300 Ω and 600 Ω, are connected in parallel. What is their equivalent resistance?
-			<details>
-				<summary>solution</summary>
-				$$\frac{1}{R_{\mathrm{eq}}} = \frac{1}{300} + \frac{1}{600}$$
-				$$\frac{1}{R_{\mathrm{eq}}} = 0.00333 + 0.00167$$
-				$$\frac{1}{R_{\mathrm{eq}}} = 0.00500$$
-				$$R_{\mathrm{eq}} = 200\,\Omega$$
-			</details>
-		</div>
+			<div class='example' data-topic="Resistors in Parallel">
+				<strong>Example:</strong> Two resistors, 300 Ω and 600 Ω, are connected in parallel. What is their equivalent resistance?
+				<details>
+					<summary>solution</summary>
+					$$\frac{1}{R_{\mathrm{eq}}} = \frac{1}{300} + \frac{1}{600}$$
+					$$\frac{1}{R_{\mathrm{eq}}} = 0.00333 + 0.00167$$
+					$$\frac{1}{R_{\mathrm{eq}}} = 0.00500$$
+					$$R_{\mathrm{eq}} = 200\,\Omega$$
+				</details>
+			</div>
 
-		<div class='example'>
-			<strong>Example:</strong> A dashboard light circuit uses a 4.0 kΩ resistor in parallel with a 12 kΩ resistor. What is the equivalent resistance?
-			<details>
-				<summary>solution</summary>
-				<p>Convert to the same unit before calculating.</p>
-				$$4.0 = 4000$$
-				$$12 = 12000$$
-				$$\frac{1}{R_{\mathrm{eq}}} = \frac{1}{4000} + \frac{1}{12000}$$
-				$$\frac{1}{R_{\mathrm{eq}}} = 0.000333$$
-				$$R_{\mathrm{eq}} = 3000$$
-				$$R_{\mathrm{eq}} = 3.0\,\mathrm{k}\Omega$$
-			</details>
-		</div>
+			<div class='example printout-ignore' data-topic="Resistors in Parallel">
+				<strong>Example:</strong> A dashboard light circuit uses a 4.0 kΩ resistor in parallel with a 12 kΩ resistor. What is the equivalent resistance?
+				<details>
+					<summary>solution</summary>
+					<p>Convert to the same unit before calculating.</p>
+					$$4.0\,\mathrm{k}\Omega = 4000\,\Omega$$
+					$$12\,\mathrm{k}\Omega = 12000\,\Omega$$
+					$$\frac{1}{R_{\mathrm{eq}}} = \frac{1}{4000} + \frac{1}{12000}$$
+					$$\frac{1}{R_{\mathrm{eq}}} = 0.000333$$
+					$$R_{\mathrm{eq}} = 3000$$
+					$$R_{\mathrm{eq}} = 3.0\,\mathrm{k}\Omega$$
+				</details>
+			</div>
 
-		<div class='example'>
-			<strong>Example:</strong> Three identical 150 Ω resistors are connected in parallel for a small lab demonstration. What is their equivalent resistance?
-			<details>
-				<summary>solution</summary>
-				$$\frac{1}{R_{\mathrm{eq}}} = \frac{1}{150} + \frac{1}{150} + \frac{1}{150}$$
-				$$\frac{1}{R_{\mathrm{eq}}} = \frac{3}{150}$$
-				$$\frac{1}{R_{\mathrm{eq}}} = 0.020$$
-				$$R_{\mathrm{eq}} = 50\,\Omega$$
-			</details>
-		</div>
+			<div class='example' data-topic="Resistors in Parallel">
+				<strong>Example:</strong> You need 120 Ω for a circuit, but you only have a 300 Ω resistor. What resistor should you put in parallel with it?
+				<details>
+					<summary>solution</summary>
+					$$\frac{1}{R_{\mathrm{eq}}} = \frac{1}{R_1} + \frac{1}{R_2}$$
+					$$\frac{1}{120} = \frac{1}{300} + \frac{1}{R_2}$$
+					$$\frac{1}{R_2} = \frac{1}{120} - \frac{1}{300}$$
+					$$\frac{1}{R_2} = 0.00500$$
+					$$R_2 = 200\,\Omega$$
+					<p>Adding a resistor in parallel always lowers the equivalent resistance below the smallest resistor, so the answer has to make R_eq less than 300 Ω.</p>
+				</details>
+			</div>
 
-		<div class='example'>
-			<strong>Example:</strong> A 12 V battery powers three series resistors: 100 Ω, 200 Ω, and 300 Ω. What is the circuit current, and what is the voltage across the 200 Ω resistor?
-			<details>
-				<summary>solution</summary>
-				$$R_{\mathrm{eq}} = 100 + 200 + 300$$
-				$$R_{\mathrm{eq}} = 600$$
-				$$I = \frac{V}{R}$$
-				$$I = \frac{12}{600}$$
-				$$I = 0.020\,\mathrm{A}$$
-				$$V_2 = IR_2$$
-				$$V_2 = (0.020)(200)$$
-				$$V_2 = 4.0\,\mathrm{V}$$
-				<p>The current is 0.020 A, and the 200 Ω resistor has a 4.0 V drop.</p>
-			</details>
-		</div>
+			<div class='example' data-topic="Resistors in Series">
+				<strong>Example:</strong> A 12 V battery powers three series resistors: 100 Ω, 200 Ω, and 300 Ω. What is the circuit current, and what is the voltage across the 200 Ω resistor?
+				<details>
+					<summary>solution</summary>
+					$$R_{\mathrm{eq}} = 100 + 200 + 300$$
+					$$R_{\mathrm{eq}} = 600$$
+					$$I = \frac{V}{R}$$
+					$$I = \frac{12}{600}$$
+					$$I = 0.020\,\mathrm{A}$$
+					$$V_2 = IR_2$$
+					$$V_2 = (0.020)(200)$$
+					$$V_2 = 4.0\,\mathrm{V}$$
+					<p>The current is 0.020 A, and the 200 Ω resistor has a 4.0 V drop.</p>
+				</details>
+			</div>
 
-		<div class='example'>
-			<strong>Example:</strong> A 12 V power supply is connected across two parallel branches. One branch has a 2.0 kΩ resistor, and the other has a 3.0 kΩ resistor. What is the total current from the supply?
-			<details>
-				<summary>solution</summary>
-				$$2.0 = 2000$$
-				$$3.0 = 3000$$
-				$$I_1 = \frac{12}{2000}$$
-				$$I_1 = 0.0060$$
-				$$I_2 = \frac{12}{3000}$$
-				$$I_2 = 0.0040$$
-				$$I_t = 0.0060 + 0.0040$$
-				$$I_t = 0.010\,\mathrm{A}$$
-				<p>The supply provides 0.010 A, or 10 mA.</p>
-			</details>
-		</div>
+			<div class='example' data-topic="Resistors in Parallel">
+				<strong>Example:</strong> A 12 V power supply is connected across two parallel branches. One branch has a 2.0 kΩ resistor, and the other has a 3.0 kΩ resistor. What is the total current from the supply?
+				<details>
+					<summary>solution</summary>
+					$$2.0\,\mathrm{k}\Omega = 2000\,\Omega$$
+					$$3.0\,\mathrm{k}\Omega = 3000\,\Omega$$
+					$$I_1 = \frac{12}{2000}$$
+					$$I_1 = 0.0060$$
+					$$I_2 = \frac{12}{3000}$$
+					$$I_2 = 0.0040$$
+					$$I_t = 0.0060 + 0.0040$$
+					$$I_t = 0.010\,\mathrm{A}$$
+					<p>The supply provides 0.010 A, or 10 mA.</p>
+				</details>
+			</div>
 
-		<div class='example'>
-			<strong>Example:</strong> Two parallel branches are connected across a 9.0 V battery. One branch has a 1.0 kΩ resistor. The total current from the battery is 15 mA. What resistance is in the second branch?
-			<details>
-				<summary>solution</summary>
-				$$1.0 = 1000$$
-				$$15 = 0.015$$
-				$$I_1 = \frac{9.0}{1000}$$
-				$$I_1 = 0.0090$$
-				$$I_2 = 0.015 - 0.0090$$
-				$$I_2 = 0.0060$$
-				$$R_2 = \frac{V}{I_2}$$
-				$$R_2 = \frac{9.0}{0.0060}$$
-				$$R_2 = 1500\,\Omega$$
-				<p>The second branch has a resistance of 1.5 kΩ.</p>
-			</details>
-		</div>
+			<div class='example' data-topic="Resistors in Parallel">
+				<strong>Example:</strong> Two parallel branches are connected across a 9.0 V battery. One branch has a 1.0 kΩ resistor. The total current from the battery is 15 mA. What resistance is in the second branch?
+				<details>
+					<summary>solution</summary>
+					$$1.0\,\mathrm{k}\Omega = 1000\,\Omega$$
+					$$15\,\mathrm{mA} = 0.015\,\mathrm{A}$$
+					$$I_1 = \frac{9.0}{1000}$$
+					$$I_1 = 0.0090$$
+					$$I_2 = 0.015 - 0.0090$$
+					$$I_2 = 0.0060$$
+					$$R_2 = \frac{V}{I_2}$$
+					$$R_2 = \frac{9.0}{0.0060}$$
+					$$R_2 = 1500\,\Omega$$
+					<p>The second branch has a resistance of 1.5 kΩ.</p>
+				</details>
+			</div>
 
-		<div class='example'>
-			<strong>Example:</strong> A 10 V supply is connected to a 200 Ω resistor in series with a parallel pair of two 600 Ω resistors. What is the total current from the supply?
-			<details>
-				<summary>solution</summary>
-				<p>First reduce the parallel pair.</p>
-				$$\frac{1}{R_p} = \frac{1}{600} + \frac{1}{600}$$
-				$$\frac{1}{R_p} = 0.00333$$
-				$$R_p = 300$$
-				<p>Now add the series resistor.</p>
-				$$R_t = 200 + 300$$
-				$$R_t = 500$$
-				$$I = \frac{V}{R_t}$$
-				$$I = \frac{10}{500}$$
-				$$I = 0.020\,\mathrm{A}$$
-			</details>
-		</div>
+			<div class='example printout-ignore' data-topic="Solving Complex Circuits" data-hard>
+				<strong>Example:</strong> A 10 V supply is connected to a 200 Ω resistor in series with a parallel pair of two 600 Ω resistors. What is the total current from the supply?
+				<details>
+					<summary>solution</summary>
+					<p>First reduce the parallel pair.</p>
+					$$\frac{1}{R_p} = \frac{1}{600} + \frac{1}{600}$$
+					$$\frac{1}{R_p} = 0.00333$$
+					$$R_p = 300$$
+					<p>Now add the series resistor.</p>
+					$$R_t = 200 + 300$$
+					$$R_t = 500$$
+					$$I = \frac{V}{R_t}$$
+					$$I = \frac{10}{500}$$
+					$$I = 0.020\,\mathrm{A}$$
+				</details>
+			</div>
 
-		<div class='example'>
-			<svg viewBox="-30 0 600 290" class="center" width="420" height="230" aria-label="Complex circuit with series and parallel resistors">
-				<path d="M 50 50 h 80
-				l10 10 l10 -20 l10 20 l10 -20 l10 20 l10 -20 l10 20 l 10 -10 h 80
-				v 60 l10 10 l-20 10 l20 10 l-20 10 l20 10 l-20 10 l20 10 l-10 10 v60
-				h -80 l-10 10 l-10 -20 l-10 20 l-10 -20 l-10 20 l-10 -20 l-10 20 l-10 -10
-				h -80 v-87 m-40 0 h 80 m-20 -15 h-40 m20 0 v -100
-				M 290 50 h170
-				v 60 l10 10 l-20 10 l20 10 l-20 10 l20 10 l-20 10 l20 10 l-10 10 v60
-				h-170" fill='none' stroke="#333" stroke-width="4" stroke-linejoin="round" />
-				<text x="45" y="140" text-anchor="end" font-size="20" fill='#333'>9.0 V</text>
-				<text x="170" y="33" text-anchor="middle" font-size="16" fill='#999'>R1</text>
-				<text x="170" y="85" text-anchor="middle" font-size="20" fill='#333'>300 Ω</text>
-				<text x="254" y="157" text-anchor="start" font-size="16" fill='#999'>R2</text>
-				<text x="305" y="157" text-anchor="start" font-size="20" fill='#333'>600 Ω</text>
-				<text x="424" y="157" text-anchor="start" font-size="16" fill='#999'>R3</text>
-				<text x="475" y="157" text-anchor="start" font-size="20" fill='#333'>1200 Ω</text>
-				<text x="170" y="233" text-anchor="middle" font-size="16" fill='#999'>R4</text>
-				<text x="170" y="283" text-anchor="middle" font-size="20" fill='#333'>200 Ω</text>
-			</svg>
-			<strong>Example:</strong> Find the equivalent resistance of the circuit above. Then find the total current from the 9.0 V battery.
-			<details>
-				<summary>solution</summary>
-				<p>The 600 Ω and 1200 Ω resistors are in parallel.</p>
-				$$\frac{1}{R_p} = \frac{1}{600} + \frac{1}{1200}$$
-				$$\frac{1}{R_p} = 0.00250$$
-				$$R_p = 400$$
-				<p>That parallel section is in series with the 300 Ω and 200 Ω resistors.</p>
-				$$R_t = 300 + 400 + 200$$
-				$$R_t = 900\,\Omega$$
-				$$I = \frac{V}{R_t}$$
-				$$I = \frac{9.0}{900}$$
-				$$I = 0.010\,\mathrm{A}$$
-				<p>The total current is 0.010 A, or 10 mA.</p>
-			</details>
-		</div>
+			<div class='example printout-ignore' data-topic="Solving Complex Circuits" data-hard>
+				<svg viewBox="-30 0 600 290" class="center" width="420" height="230" aria-label="Complex circuit with series and parallel resistors">
+					<path d="M 50 50 h 80
+					l10 10 l10 -20 l10 20 l10 -20 l10 20 l10 -20 l10 20 l 10 -10 h 80
+					v 60 l10 10 l-20 10 l20 10 l-20 10 l20 10 l-20 10 l20 10 l-10 10 v60
+					h -80 l-10 10 l-10 -20 l-10 20 l-10 -20 l-10 20 l-10 -20 l-10 20 l-10 -10
+					h -80 v-87 m-40 0 h 80 m-20 -15 h-40 m20 0 v -100
+					M 290 50 h170
+					v 60 l10 10 l-20 10 l20 10 l-20 10 l20 10 l-20 10 l20 10 l-10 10 v60
+					h-170" fill='none' stroke="#333" stroke-width="4" stroke-linejoin="round" />
+					<text x="45" y="140" text-anchor="end" font-size="20" fill='#333'>9.0 V</text>
+					<text x="170" y="33" text-anchor="middle" font-size="16" fill='#999'>R1</text>
+					<text x="170" y="85" text-anchor="middle" font-size="20" fill='#333'>300 Ω</text>
+					<text x="254" y="157" text-anchor="start" font-size="16" fill='#999'>R2</text>
+					<text x="305" y="157" text-anchor="start" font-size="20" fill='#333'>600 Ω</text>
+					<text x="424" y="157" text-anchor="start" font-size="16" fill='#999'>R3</text>
+					<text x="475" y="157" text-anchor="start" font-size="20" fill='#333'>1200 Ω</text>
+					<text x="170" y="233" text-anchor="middle" font-size="16" fill='#999'>R4</text>
+					<text x="170" y="283" text-anchor="middle" font-size="20" fill='#333'>200 Ω</text>
+				</svg>
+				<strong>Example:</strong> Find the equivalent resistance of the circuit above. Then find the total current from the 9.0 V battery.
+				<details>
+					<summary>solution</summary>
+					<p>The 600 Ω and 1200 Ω resistors are in parallel.</p>
+					$$\frac{1}{R_p} = \frac{1}{600} + \frac{1}{1200}$$
+					$$\frac{1}{R_p} = 0.00250$$
+					$$R_p = 400$$
+					<p>That parallel section is in series with the 300 Ω and 200 Ω resistors.</p>
+					$$R_t = 300 + 400 + 200$$
+					$$R_t = 900\,\Omega$$
+					$$I = \frac{V}{R_t}$$
+					$$I = \frac{9.0}{900}$$
+					$$I = 0.010\,\mathrm{A}$$
+					<p>The total current is 0.010 A, or 10 mA.</p>
+				</details>
+			</div>
 
-		<div class='example'>
-			<svg viewBox="-30 0 600 290" onmouseover="document.getElementById('volts-practice-1').style.opacity = '0.5';" onmouseout="document.getElementById('volts-practice-1').style.opacity='0';">
-				<g class="fade-volts" id="volts-practice-1" stroke-linejoin="round" fill='none' opacity="0">
-					<path d="M 50 146 v-96 h 400 v60  M 220 50 v60 M 330 50 v60" stroke="#ccc" stroke-width="40" />
-					<path d="M 180 250 h 270 v-60  M 220 250 v-60 M 330 250 v-60" stroke="#d77" stroke-width="45" />
-					<path d="M 50 162 v88 h 50" stroke="#f00" stroke-width="50" />
-				</g>
-				<path d="M 50 50 h 400
-				v 60 l10 10 l-20 10 l20 10 l-20 10 l20 10 l-20 10 l20 10 l-10 10 v60
-				h -270 l-10 10 l-10 -20 l-10 20 l-10 -20 l-10 20 l-10 -20 l-10 20 l-10 -10
-				h -50 v-87 m-40 0 h 80 m-20 -15 h-40 m20 0 v -100
-				M 220 50
-				v 60 l10 10 l-20 10 l20 10 l-20 10 l20 10 l-20 10 l20 10 l-10 10 v60
-				M 330 50
-				v 60 l10 10 l-20 10 l20 10 l-20 10 l20 10 l-20 10 l20 10 l-10 10 v60" fill='none' stroke="#333" stroke-width="4" stroke-linejoin="round" />
-				<text x="38" y="138" text-anchor="end" font-size="20" fill='#333'>V = ?</text>
-				<text x="205" y="147" text-anchor="end" font-size="20" fill='#333'>60 kΩ</text>
-				<text x="205" y="173" text-anchor="end" font-size="20" fill='#333'>4.0 V</text>
-				<text x="315" y="157" text-anchor="end" font-size="20" fill='#333'>120 kΩ</text>
-				<text x="435" y="157" text-anchor="end" font-size="20" fill='#333'>120 kΩ</text>
-				<text x="140" y="283" text-anchor="middle" font-size="20" fill='#333'>20 kΩ</text>
-			</svg>
-			<strong>Example:</strong> Find the voltage of the battery in the circuit above.
-			<details>
-				<summary>solution</summary>
-				<p>The three vertical resistors are in parallel, so each has 4.0 V across it.</p>
-				$$60 = 60000$$
-				$$120 = 120000$$
-				$$20 = 20000$$
-				$$I_1 = \frac{4.0}{60000}$$
-				$$I_1 = 0.0000667$$
-				$$I_2 = \frac{4.0}{120000}$$
-				$$I_2 = 0.0000333$$
-				$$I_3 = \frac{4.0}{120000}$$
-				$$I_3 = 0.0000333$$
-				$$I_t = I_1 + I_2 + I_3$$
-				$$I_t = 0.000133$$
-				<p>That total current flows through the 20 kΩ resistor.</p>
-				$$V_4 = I_tR_4$$
-				$$V_4 = (0.000133)(20000)$$
-				$$V_4 = 2.67$$
-				$$V_b = 4.0 + 2.67$$
-				$$V_b = 6.67\,\mathrm{V}$$
-			</details>
-		</div>
+			<div class='example' data-topic="Solving Complex Circuits" data-hard>
+				<svg viewBox="-30 0 600 290" onmouseover="document.getElementById('volts-practice-1').style.opacity = '0.5';" onmouseout="document.getElementById('volts-practice-1').style.opacity='0';">
+					<g class="fade-volts" id="volts-practice-1" stroke-linejoin="round" fill='none' opacity="0">
+						<path d="M 50 146 v-96 h 400 v60  M 220 50 v60 M 330 50 v60" stroke="#ccc" stroke-width="40" />
+						<path d="M 180 250 h 270 v-60  M 220 250 v-60 M 330 250 v-60" stroke="#d77" stroke-width="45" />
+						<path d="M 50 162 v88 h 50" stroke="#f00" stroke-width="50" />
+					</g>
+					<path d="M 50 50 h 400
+					v 60 l10 10 l-20 10 l20 10 l-20 10 l20 10 l-20 10 l20 10 l-10 10 v60
+					h -270 l-10 10 l-10 -20 l-10 20 l-10 -20 l-10 20 l-10 -20 l-10 20 l-10 -10
+					h -50 v-87 m-40 0 h 80 m-20 -15 h-40 m20 0 v -100
+					M 220 50
+					v 60 l10 10 l-20 10 l20 10 l-20 10 l20 10 l-20 10 l20 10 l-10 10 v60
+					M 330 50
+					v 60 l10 10 l-20 10 l20 10 l-20 10 l20 10 l-20 10 l20 10 l-10 10 v60" fill='none' stroke="#333" stroke-width="4" stroke-linejoin="round" />
+					<text x="38" y="138" text-anchor="end" font-size="20" fill='#333'>V = ?</text>
+					<text x="205" y="147" text-anchor="end" font-size="20" fill='#333'>60 kΩ</text>
+					<text x="205" y="173" text-anchor="end" font-size="20" fill='#333'>4.0 V</text>
+					<text x="315" y="157" text-anchor="end" font-size="20" fill='#333'>120 kΩ</text>
+					<text x="435" y="157" text-anchor="end" font-size="20" fill='#333'>120 kΩ</text>
+					<text x="140" y="283" text-anchor="middle" font-size="20" fill='#333'>20 kΩ</text>
+				</svg>
+				<strong>Example:</strong> Find the voltage of the battery in the circuit above.
+				<details>
+					<summary>solution</summary>
+					<p>The three vertical resistors are in parallel, so each has 4.0 V across it.</p>
+					$$60\,\mathrm{k}\Omega = 60000\,\Omega$$
+					$$120\,\mathrm{k}\Omega = 120000\,\Omega$$
+					$$20\,\mathrm{k}\Omega = 20000\,\Omega$$
+					$$I_1 = \frac{4.0}{60000}$$
+					$$I_1 = 0.0000667$$
+					$$I_2 = \frac{4.0}{120000}$$
+					$$I_2 = 0.0000333$$
+					$$I_3 = \frac{4.0}{120000}$$
+					$$I_3 = 0.0000333$$
+					$$I_t = I_1 + I_2 + I_3$$
+					$$I_t = 0.000133$$
+					<p>That total current flows through the 20 kΩ resistor.</p>
+					$$V_4 = I_tR_4$$
+					$$V_4 = (0.000133)(20000)$$
+					$$V_4 = 2.67$$
+					$$V_b = 4.0 + 2.67$$
+					$$V_b = 6.67\,\mathrm{V}$$
+				</details>
+			</div>
 
-		<div class='example'>
-			<svg viewBox="-30 0 600 290" onmouseover="document.getElementById('volts-practice-2').style.opacity = '0.5';" onmouseout="document.getElementById('volts-practice-2').style.opacity='0';">
-				<g class="fade-volts" id="volts-practice-2" stroke-linejoin="round" fill='none' opacity="0">
-					<path d="M 50 146 v-96 h 400 v60  M 220 50 v60 M 330 50 v60" stroke="#ccc" stroke-width="40" />
-					<path d="M 180 250 h 270 v-60  M 220 250 v-60 M 330 250 v-60" stroke="#d77" stroke-width="45" />
-					<path d="M 50 162 v88 h 50" stroke="#f00" stroke-width="50" />
-				</g>
-				<path d="M 50 50 h 400
-				v 60 l10 10 l-20 10 l20 10 l-20 10 l20 10 l-20 10 l20 10 l-10 10 v60
-				h -270 l-10 10 l-10 -20 l-10 20 l-10 -20 l-10 20 l-10 -20 l-10 20 l-10 -10
-				h -50 v-87 m-40 0 h 80 m-20 -15 h-40 m20 0 v -100
-				M 220 50
-				v 60 l10 10 l-20 10 l20 10 l-20 10 l20 10 l-20 10 l20 10 l-10 10 v60
-				M 330 50
-				v 60 l10 10 l-20 10 l20 10 l-20 10 l20 10 l-20 10 l20 10 l-10 10 v60" fill='none' stroke="#333" stroke-width="4" stroke-linejoin="round" />
-				<text x="38" y="138" text-anchor="end" font-size="20" fill='#333'>4.05 V</text>
-				<text x="205" y="147" text-anchor="end" font-size="20" fill='#333'>40 kΩ</text>
-				<text x="205" y="173" text-anchor="end" font-size="20" fill='#333'>2.4 V</text>
-				<text x="315" y="157" text-anchor="end" font-size="20" fill='#333'>80 kΩ</text>
-				<text x="435" y="157" text-anchor="end" font-size="20" fill='#333'>120 kΩ</text>
-				<text x="140" y="283" text-anchor="middle" font-size="20" fill='#333'>R = ?</text>
-			</svg>
-			<strong>Example:</strong> Find the missing resistance at the bottom of the circuit above.
-			<details>
-				<summary>solution</summary>
-				<p>The parallel section has 2.4 V across each branch.</p>
-				$$40 = 40000$$
-				$$80 = 80000$$
-				$$120 = 120000$$
-				$$I_1 = \frac{2.4}{40000}$$
-				$$I_1 = 0.000060$$
-				$$I_2 = \frac{2.4}{80000}$$
-				$$I_2 = 0.000030$$
-				$$I_3 = \frac{2.4}{120000}$$
-				$$I_3 = 0.000020$$
-				$$I_t = I_1 + I_2 + I_3$$
-				$$I_t = 0.000110$$
-				<p>The bottom resistor must use the rest of the battery voltage.</p>
-				$$V_4 = 4.05 - 2.4$$
-				$$V_4 = 1.65$$
-				$$R_4 = \frac{V_4}{I_t}$$
-				$$R_4 = \frac{1.65}{0.000110}$$
-				$$R_4 = 15000$$
-				$$R_4 = 15\,\mathrm{k}\Omega$$
-			</details>
-		</div>
+			<div class='example printout-ignore' data-topic="Solving Complex Circuits" data-hard>
+				<svg viewBox="-30 0 600 290" onmouseover="document.getElementById('volts-practice-2').style.opacity = '0.5';" onmouseout="document.getElementById('volts-practice-2').style.opacity='0';">
+					<g class="fade-volts" id="volts-practice-2" stroke-linejoin="round" fill='none' opacity="0">
+						<path d="M 50 146 v-96 h 400 v60  M 220 50 v60 M 330 50 v60" stroke="#ccc" stroke-width="40" />
+						<path d="M 180 250 h 270 v-60  M 220 250 v-60 M 330 250 v-60" stroke="#d77" stroke-width="45" />
+						<path d="M 50 162 v88 h 50" stroke="#f00" stroke-width="50" />
+					</g>
+					<path d="M 50 50 h 400
+					v 60 l10 10 l-20 10 l20 10 l-20 10 l20 10 l-20 10 l20 10 l-10 10 v60
+					h -270 l-10 10 l-10 -20 l-10 20 l-10 -20 l-10 20 l-10 -20 l-10 20 l-10 -10
+					h -50 v-87 m-40 0 h 80 m-20 -15 h-40 m20 0 v -100
+					M 220 50
+					v 60 l10 10 l-20 10 l20 10 l-20 10 l20 10 l-20 10 l20 10 l-10 10 v60
+					M 330 50
+					v 60 l10 10 l-20 10 l20 10 l-20 10 l20 10 l-20 10 l20 10 l-10 10 v60" fill='none' stroke="#333" stroke-width="4" stroke-linejoin="round" />
+					<text x="38" y="138" text-anchor="end" font-size="20" fill='#333'>4.05 V</text>
+					<text x="205" y="147" text-anchor="end" font-size="20" fill='#333'>40 kΩ</text>
+					<text x="205" y="173" text-anchor="end" font-size="20" fill='#333'>2.4 V</text>
+					<text x="315" y="157" text-anchor="end" font-size="20" fill='#333'>80 kΩ</text>
+					<text x="435" y="157" text-anchor="end" font-size="20" fill='#333'>120 kΩ</text>
+					<text x="140" y="283" text-anchor="middle" font-size="20" fill='#333'>R = ?</text>
+				</svg>
+				<strong>Example:</strong> Find the missing resistance at the bottom of the circuit above.
+				<details>
+					<summary>solution</summary>
+					<p>The parallel section has 2.4 V across each branch.</p>
+					$$40\,\mathrm{k}\Omega = 40000\,\Omega$$
+					$$80\,\mathrm{k}\Omega = 80000\,\Omega$$
+					$$120\,\mathrm{k}\Omega = 120000\,\Omega$$
+					$$I_1 = \frac{2.4}{40000}$$
+					$$I_1 = 0.000060$$
+					$$I_2 = \frac{2.4}{80000}$$
+					$$I_2 = 0.000030$$
+					$$I_3 = \frac{2.4}{120000}$$
+					$$I_3 = 0.000020$$
+					$$I_t = I_1 + I_2 + I_3$$
+					$$I_t = 0.000110$$
+					<p>The bottom resistor must use the rest of the battery voltage.</p>
+					$$V_4 = 4.05 - 2.4$$
+					$$V_4 = 1.65$$
+					$$R_4 = \frac{V_4}{I_t}$$
+					$$R_4 = \frac{1.65}{0.000110}$$
+					$$R_4 = 15000$$
+					$$R_4 = 15\,\mathrm{k}\Omega$$
+				</details>
+			</div>
 
-		<div class='example'>
-			<svg viewBox="-30 0 600 290" onmouseover="document.getElementById('volts-practice-3').style.opacity = '0.5';" onmouseout="document.getElementById('volts-practice-3').style.opacity='0';">
-				<g class="fade-volts" id="volts-practice-3" stroke-linejoin="round" fill='none' opacity="0">
-					<path d="M 50 146 v-96 h 400 v60  M 220 50 v60 M 330 50 v60" stroke="#ccc" stroke-width="40" />
-					<path d="M 180 250 h 270 v-60  M 220 250 v-60 M 330 250 v-60" stroke="#d77" stroke-width="45" />
-					<path d="M 50 162 v88 h 50" stroke="#f00" stroke-width="50" />
-				</g>
-				<path d="M 50 50 h 400
-				v 60 l10 10 l-20 10 l20 10 l-20 10 l20 10 l-20 10 l20 10 l-10 10 v60
-				h -270 l-10 10 l-10 -20 l-10 20 l-10 -20 l-10 20 l-10 -20 l-10 20 l-10 -10
-				h -50 v-87 m-40 0 h 80 m-20 -15 h-40 m20 0 v -100
-				M 220 50
-				v 60 l10 10 l-20 10 l20 10 l-20 10 l20 10 l-20 10 l20 10 l-10 10 v60
-				M 330 50
-				v 60 l10 10 l-20 10 l20 10 l-20 10 l20 10 l-20 10 l20 10 l-10 10 v60" fill='none' stroke="#333" stroke-width="4" stroke-linejoin="round" />
-				<text x="38" y="138" text-anchor="end" font-size="20" fill='#333'>10.0 V</text>
-				<text x="205" y="147" text-anchor="end" font-size="20" fill='#333'>100 kΩ</text>
-				<text x="205" y="173" text-anchor="end" font-size="20" fill='#333'>5.0 V</text>
-				<text x="315" y="157" text-anchor="end" font-size="20" fill='#333'>150 kΩ</text>
-				<text x="435" y="157" text-anchor="end" font-size="20" fill='#333'>300 kΩ</text>
-				<text x="140" y="283" text-anchor="middle" font-size="20" fill='#333'>50 kΩ</text>
-			</svg>
-			<strong>Example:</strong> Find the current from the battery in the circuit above.
-			<details>
-				<summary>solution</summary>
-				<p>The parallel section has a 5.0 V drop. The rest of the battery voltage is across the 50 kΩ resistor at the bottom.</p>
-				$$50 = 50000$$
-				$$V_4 = 10.0 - 5.0$$
-				$$V_4 = 5.0$$
-				$$I = \frac{V_4}{R_4}$$
-				$$I = \frac{5.0}{50000}$$
-				$$I = 0.000100\,\mathrm{A}$$
-				<p>The current from the battery is 0.100 mA.</p>
-			</details>
-		</div>
+			<div class='example printout-ignore' data-topic="Solving Complex Circuits" data-hard>
+				<svg viewBox="-30 0 600 290" onmouseover="document.getElementById('volts-practice-3').style.opacity = '0.5';" onmouseout="document.getElementById('volts-practice-3').style.opacity='0';">
+					<g class="fade-volts" id="volts-practice-3" stroke-linejoin="round" fill='none' opacity="0">
+						<path d="M 50 146 v-96 h 400 v60  M 220 50 v60 M 330 50 v60" stroke="#ccc" stroke-width="40" />
+						<path d="M 180 250 h 270 v-60  M 220 250 v-60 M 330 250 v-60" stroke="#d77" stroke-width="45" />
+						<path d="M 50 162 v88 h 50" stroke="#f00" stroke-width="50" />
+					</g>
+					<path d="M 50 50 h 400
+					v 60 l10 10 l-20 10 l20 10 l-20 10 l20 10 l-20 10 l20 10 l-10 10 v60
+					h -270 l-10 10 l-10 -20 l-10 20 l-10 -20 l-10 20 l-10 -20 l-10 20 l-10 -10
+					h -50 v-87 m-40 0 h 80 m-20 -15 h-40 m20 0 v -100
+					M 220 50
+					v 60 l10 10 l-20 10 l20 10 l-20 10 l20 10 l-20 10 l20 10 l-10 10 v60
+					M 330 50
+					v 60 l10 10 l-20 10 l20 10 l-20 10 l20 10 l-20 10 l20 10 l-10 10 v60" fill='none' stroke="#333" stroke-width="4" stroke-linejoin="round" />
+					<text x="38" y="138" text-anchor="end" font-size="20" fill='#333'>10.0 V</text>
+					<text x="205" y="147" text-anchor="end" font-size="20" fill='#333'>100 kΩ</text>
+					<text x="205" y="173" text-anchor="end" font-size="20" fill='#333'>5.0 V</text>
+					<text x="315" y="157" text-anchor="end" font-size="20" fill='#333'>150 kΩ</text>
+					<text x="435" y="157" text-anchor="end" font-size="20" fill='#333'>300 kΩ</text>
+					<text x="140" y="283" text-anchor="middle" font-size="20" fill='#333'>50 kΩ</text>
+				</svg>
+				<strong>Example:</strong> Find the current from the battery in the circuit above.
+				<details>
+					<summary>solution</summary>
+					<p>The parallel section has a 5.0 V drop. The rest of the battery voltage is across the 50 kΩ resistor at the bottom.</p>
+					$$50\,\mathrm{k}\Omega = 50000\,\Omega$$
+					$$V_4 = 10.0 - 5.0$$
+					$$V_4 = 5.0$$
+					$$I = \frac{V_4}{R_4}$$
+					$$I = \frac{5.0}{50000}$$
+					$$I = 0.000100\,\mathrm{A}$$
+					<p>The current from the battery is 0.100 mA.</p>
+				</details>
+			</div>
 
-		<div class='example'>
-			<strong>Example:</strong> A portable speaker uses a 6.0 V battery and draws 0.030 A through its circuit. What power does the battery provide?
-			<details>
-				<summary>solution</summary>
-				<p>This connects Kirchhoff circuit ideas with the power relationship from the previous page.</p>
-				$$P = IV$$
-				$$P = (0.030)(6.0)$$
-				$$P = 0.18\,\mathrm{W}$$
-			</details>
-		</div>
+			<div class='example' data-topic="Solving Complex Circuits" data-hard>
+				<svg viewBox="-30 0 600 290">
+					<path d="M 50 50 h 80
+					l10 10 l10 -20 l10 20 l10 -20 l10 20 l10 -20 l10 20 l 10 -10 h 250
+					v 10 l10 10 l-20 10 l20 10 l-20 10 l20 10 l-20 10 l20 10 l-10 10 v 20
+					l10 10 l-20 10 l20 10 l-20 10 l20 10 l-20 10 l20 10 l-10 10 v 10
+					h -410 v-87 m-40 0 h 80 m-20 -15 h-40 m20 0 v -100
+					M 290 50 v 60 l10 10 l-20 10 l20 10 l-20 10 l20 10 l-20 10 l20 10 l-10 10 v60" fill='none' stroke="#333" stroke-width="4" stroke-linejoin="round" />
+					<text x="45" y="140" text-anchor="end" font-size="20" fill='#333'>9.0 V</text>
+					<text x="170" y="33" text-anchor="middle" font-size="16" fill='#999'>R1</text>
+					<text x="170" y="85" text-anchor="middle" font-size="20" fill='#333'>100 Ω</text>
+					<text x="254" y="157" text-anchor="start" font-size="16" fill='#999'>R2</text>
+					<text x="305" y="157" text-anchor="start" font-size="20" fill='#333'>300 Ω</text>
+					<text x="424" y="107" text-anchor="start" font-size="16" fill='#999'>R3</text>
+					<text x="475" y="107" text-anchor="start" font-size="20" fill='#333'>200 Ω</text>
+					<text x="424" y="207" text-anchor="start" font-size="16" fill='#999'>R4</text>
+					<text x="475" y="207" text-anchor="start" font-size="20" fill='#333'>400 Ω</text>
+				</svg>
+				<strong>Example:</strong> In the circuit above, R3 and R4 are in series with each other, and that pair is in parallel with R2. Find the current through R4 and the voltage across R4.
+				<details>
+					<summary>solution</summary>
+					<p>R3 and R4 are on the same wire with no junction between them, so they are in series.</p>
+					$$R_{34} = R_3 + R_4$$
+					$$R_{34} = 200 + 400$$
+					$$R_{34} = 600\,\Omega$$
+					<p>That 600 Ω branch is in parallel with R2.</p>
+					$$\frac{1}{R_p} = \frac{1}{R_2} + \frac{1}{R_{34}}$$
+					$$\frac{1}{R_p} = \frac{1}{300} + \frac{1}{600}$$
+					$$\frac{1}{R_p} = 0.00500$$
+					$$R_p = 200\,\Omega$$
+					<p>The parallel section is in series with R1.</p>
+					$$R_{\mathrm{eq}} = R_1 + R_p$$
+					$$R_{\mathrm{eq}} = 100 + 200$$
+					$$R_{\mathrm{eq}} = 300\,\Omega$$
+					<br>
+					<p>Use Ohm's law to find the current from the battery. All of it flows through R1.</p>
+					$$I = \frac{V}{R_{\mathrm{eq}}}$$
+					$$I = \frac{9.0}{300}$$
+					$$I = 0.030\,\mathrm{A}$$
+					$$V_1 = IR_1$$
+					$$V_1 = (0.030)(100)$$
+					$$V_1 = 3.0\,\mathrm{V}$$
+					<p>Kirchhoff's voltage law says the rest of the battery's 9.0 V is across the parallel section. Both branches get the same voltage.</p>
+					$$V_p = 9.0 - 3.0$$
+					$$V_p = 6.0\,\mathrm{V}$$
+					<p>The right branch has 6.0 V across its 600 Ω, so its current is:</p>
+					$$I_{34} = \frac{V_p}{R_{34}}$$
+					$$I_{34} = \frac{6.0}{600}$$
+					$$I_{34} = 0.010\,\mathrm{A}$$
+					<p>R3 and R4 are in series, so both carry 0.010 A.</p>
+					$$V_4 = I_{34}R_4$$
+					$$V_4 = (0.010)(400)$$
+					$$V_4 = 4.0\,\mathrm{V}$$
+					<p>Check with Kirchhoff's laws. R2 carries 6.0 V / 300 Ω = 0.020 A, and 0.020 A + 0.010 A = 0.030 A, which matches the battery current. Around the right loop, 9.0 − 3.0 − 2.0 − 4.0 = 0, since R3 drops 2.0 V.</p>
+				</details>
+			</div>
+			<div class='example' data-topic="Solving Complex Circuits" data-hard>
+				<svg viewBox="-30 0 600 290">
+					<path d="M 50 50 h 160 l10 10 l10 -20 l10 20 l10 -20 l10 20 l10 -20 l10 20 l 10 -10 h 200 v 60 l10 10 l-20 10 l20 10 l-20 10 l20 10 l-20 10 l20 10 l-10 10 v 60 h -440 v-87 m-40 0 h 80 m-20 -15 h-40 m20 0 v -100
+	M 140 50 v 60 l10 10 l-20 10 l20 10 l-20 10 l20 10 l-20 10 l20 10 l-10 10 v 60
+	M 350 50 v 60 l10 10 l-20 10 l20 10 l-20 10 l20 10 l-20 10 l20 10 l-10 10 v 60" fill='none' stroke="#333" stroke-width="4" stroke-linejoin="round" />
+					<text x="45" y="140" text-anchor="end" font-size="20" fill='#333'>12 V</text>
+					<text x="104" y="157" text-anchor="start" font-size="16" fill='#999'>R1</text>
+					<text x="155" y="157" text-anchor="start" font-size="20" fill='#333'>600 Ω</text>
+					<text x="250" y="33" text-anchor="middle" font-size="16" fill='#999'>R2</text>
+					<text x="250" y="85" text-anchor="middle" font-size="20" fill='#333'>200 Ω</text>
+					<text x="314" y="157" text-anchor="start" font-size="16" fill='#999'>R3</text>
+					<text x="365" y="157" text-anchor="start" font-size="20" fill='#333'>300 Ω</text>
+					<text x="454" y="157" text-anchor="start" font-size="16" fill='#999'>R4</text>
+					<text x="505" y="157" text-anchor="start" font-size="20" fill='#333'>600 Ω</text>
+				</svg>
+				<strong>Example:</strong> Find the current from the battery and the current through R4 in the circuit above.
+				<details>
+					<summary>solution</summary>
+					<p>R1 connects straight across the battery, so it has the full 12 V across it.</p>
+					$$I_1 = \frac{V}{R_1}$$
+					$$I_1 = \frac{12}{600}$$
+					$$I_1 = 0.020\,\mathrm{A}$$
+					<p>The rest of the circuit is R2 in series with the parallel pair R3 and R4. Combine the pair first.</p>
+					$$\frac{1}{R_{34}} = \frac{1}{300} + \frac{1}{600}$$
+					$$\frac{1}{R_{34}} = 0.00500$$
+					$$R_{34} = 200\,\Omega$$
+					$$R_{\mathrm{branch}} = R_2 + R_{34}$$
+					$$R_{\mathrm{branch}} = 200 + 200$$
+					$$R_{\mathrm{branch}} = 400\,\Omega$$
+					<p>That branch also has the full 12 V across it.</p>
+					$$I_{\mathrm{branch}} = \frac{12}{400}$$
+					$$I_{\mathrm{branch}} = 0.030\,\mathrm{A}$$
+					<p>Kirchhoff's current law adds the two currents leaving the battery.</p>
+					$$I = I_1 + I_{\mathrm{branch}}$$
+					$$I = 0.020 + 0.030$$
+					$$I = 0.050\,\mathrm{A}$$
+					<br>
+					<p>To find the current in R4, find the voltage across the parallel pair.</p>
+					$$V_2 = I_{\mathrm{branch}}R_2$$
+					$$V_2 = (0.030)(200)$$
+					$$V_2 = 6.0\,\mathrm{V}$$
+					$$V_{34} = 12 - 6.0$$
+					$$V_{34} = 6.0\,\mathrm{V}$$
+					$$I_4 = \frac{V_{34}}{R_4}$$
+					$$I_4 = \frac{6.0}{600}$$
+					$$I_4 = 0.010\,\mathrm{A}$$
+					<p>Check: R3 carries 6.0 V / 300 Ω = 0.020 A, and 0.020 A + 0.010 A = 0.030 A, which matches the current through R2.</p>
+				</details>
+			</div>
+			<div class='example' data-topic="Solving Complex Circuits" data-hard>
+				<svg viewBox="-30 0 600 290">
+					<path d="M 50 50 h 360 v 10 l10 10 l-20 10 l20 10 l-20 10 l20 10 l-20 10 l20 10 l-10 10 v 20 l10 10 l-20 10 l20 10 l-20 10 l20 10 l-20 10 l20 10 l-10 10 v 10 h -360 v-87 m-40 0 h 80 m-20 -15 h-40 m20 0 v -100
+	M 250 50 v 10 l10 10 l-20 10 l20 10 l-20 10 l20 10 l-20 10 l20 10 l-10 10 v 20 l10 10 l-20 10 l20 10 l-20 10 l20 10 l-20 10 l20 10 l-10 10 v 10
+	M 250 150 h 160" fill='none' stroke="#333" stroke-width="4" stroke-linejoin="round" />
+					<text x="45" y="140" text-anchor="end" font-size="20" fill='#333'>V = ?</text>
+					<text x="214" y="107" text-anchor="start" font-size="16" fill='#999'>R1</text>
+					<text x="265" y="107" text-anchor="start" font-size="20" fill='#333'>300 Ω</text>
+					<text x="374" y="107" text-anchor="start" font-size="16" fill='#999'>R2</text>
+					<text x="425" y="107" text-anchor="start" font-size="20" fill='#333'>600 Ω</text>
+					<text x="214" y="207" text-anchor="start" font-size="16" fill='#999'>R3</text>
+					<text x="265" y="207" text-anchor="start" font-size="20" fill='#333'>150 Ω</text>
+					<text x="374" y="207" text-anchor="start" font-size="16" fill='#999'>R4</text>
+					<text x="425" y="207" text-anchor="start" font-size="20" fill='#333'>300 Ω</text>
+				</svg>
+				<strong>Example:</strong> An ammeter shows 10 mA through R2 in the circuit above. What is the battery voltage?
+				<details>
+					<summary>solution</summary>
+					<p>R1 and R2 are in parallel, so they have the same voltage. Use R2's current to find it.</p>
+					$$10\,\mathrm{mA} = 0.010\,\mathrm{A}$$
+					<br>
+					$$V_{12} = I_2R_2$$
+					$$V_{12} = (0.010)(600)$$
+					$$V_{12} = 6.0\,\mathrm{V}$$
+					$$I_1 = \frac{V_{12}}{R_1}$$
+					$$I_1 = \frac{6.0}{300}$$
+					$$I_1 = 0.020\,\mathrm{A}$$
+					<p>All the current from the top pair flows through the middle wire into the bottom pair.</p>
+					$$I = I_1 + I_2$$
+					$$I = 0.020 + 0.010$$
+					$$I = 0.030\,\mathrm{A}$$
+					<p>The bottom pair is R3 and R4 in parallel.</p>
+					$$\frac{1}{R_{34}} = \frac{1}{150} + \frac{1}{300}$$
+					$$\frac{1}{R_{34}} = 0.0100$$
+					$$R_{34} = 100\,\Omega$$
+					$$V_{34} = IR_{34}$$
+					$$V_{34} = (0.030)(100)$$
+					$$V_{34} = 3.0\,\mathrm{V}$$
+					<p>Kirchhoff's voltage law says the battery voltage equals the two drops added together.</p>
+					$$V = V_{12} + V_{34}$$
+					$$V = 6.0 + 3.0$$
+					$$V = 9.0\,\mathrm{V}$$
+				</details>
+			</div>
+			<div class='example' data-topic="Solving Complex Circuits" data-hard>
+				<svg viewBox="-30 0 600 290">
+					<path d="M 50 50 h 360 v 10 l10 10 l-20 10 l20 10 l-20 10 l20 10 l-20 10 l20 10 l-10 10 v 20 l10 10 l-20 10 l20 10 l-20 10 l20 10 l-20 10 l20 10 l-10 10 v 10 h -360 v-87 m-40 0 h 80 m-20 -15 h-40 m20 0 v -100
+	M 250 50 v 10 l10 10 l-20 10 l20 10 l-20 10 l20 10 l-20 10 l20 10 l-10 10 v 20 l10 10 l-20 10 l20 10 l-20 10 l20 10 l-20 10 l20 10 l-10 10 v 10" fill='none' stroke="#333" stroke-width="4" stroke-linejoin="round" />
+					<circle cx="250" cy="150" r="6" fill="#333" />
+					<circle cx="410" cy="150" r="6" fill="#333" />
+					<text x="45" y="140" text-anchor="end" font-size="20" fill='#333'>12 V</text>
+					<text x="214" y="107" text-anchor="start" font-size="16" fill='#999'>R1</text>
+					<text x="265" y="107" text-anchor="start" font-size="20" fill='#333'>200 Ω</text>
+					<text x="374" y="107" text-anchor="start" font-size="16" fill='#999'>R3</text>
+					<text x="425" y="107" text-anchor="start" font-size="20" fill='#333'>500 Ω</text>
+					<text x="214" y="207" text-anchor="start" font-size="16" fill='#999'>R2</text>
+					<text x="265" y="207" text-anchor="start" font-size="20" fill='#333'>400 Ω</text>
+					<text x="374" y="207" text-anchor="start" font-size="16" fill='#999'>R4</text>
+					<text x="425" y="207" text-anchor="start" font-size="20" fill='#333'>100 Ω</text>
+					<text x="236" y="157" text-anchor="end" font-size="20" fill='#333'><tspan font-weight="bold">A</tspan></text>
+					<text x="396" y="157" text-anchor="end" font-size="20" fill='#333'><tspan font-weight="bold">B</tspan></text>
+				</svg>
+				<strong>Example:</strong> The bottom wire connects to the battery's positive terminal, the longer line, so let the top wire be at 0 V. What is the electric potential at point A and at point B? What is the potential difference between A and B?
+				<details>
+					<summary>solution</summary>
+					<p>Each column connects straight across the battery, so each column has the full 12 V across it.</p>
+					<div class="col-group">
+						<div>
+					$$\text{left column}$$
+					$$R_{12} = 200 + 400$$
+					$$R_{12} = 600\,\Omega$$
+					$$I_{12} = \frac{12}{600}$$
+					$$I_{12} = 0.020\,\mathrm{A}$$
+						</div>
+						<div>
+					$$\text{right column}$$
+					$$R_{34} = 500 + 100$$
+					$$R_{34} = 600\,\Omega$$
+					$$I_{34} = \frac{12}{600}$$
+					$$I_{34} = 0.020\,\mathrm{A}$$
+						</div>
+					</div>
+					<p>The top wire is at 0 V. Point A is above R1's voltage drop, and point B is above R3's drop.</p>
+					<div class="col-group">
+						<div>
+					$$V_A = I_{12}R_1$$
+					$$V_A = (0.020)(200)$$
+					$$V_A = 4.0\,\mathrm{V}$$
+						</div>
+						<div>
+					$$V_B = I_{34}R_3$$
+					$$V_B = (0.020)(500)$$
+					$$V_B = 10\,\mathrm{V}$$
+						</div>
+					</div>
+					$$\Delta V = V_B - V_A$$
+					$$\Delta V = 10 - 4.0$$
+					$$\Delta V = 6.0\,\mathrm{V}$$
+					<p>Both columns carry the same current, but they split the 12 V differently. If you connected a wire from B to A, current would flow from B to A, from high potential to low potential.</p>
+				</details>
+			</div>
 
-		<div class='example'>
-			<strong>Example:</strong> A 24 V supply powers a series circuit with three resistors: 150 Ω, 250 Ω, and 800 Ω. What is the current, and what voltage drop occurs across the 800 Ω resistor?
-			<details>
-				<summary>solution</summary>
-				$$R_t = 150 + 250 + 800$$
-				$$R_t = 1200$$
-				$$I = \frac{24}{1200}$$
-				$$I = 0.020\,\mathrm{A}$$
-				$$V_3 = IR_3$$
-				$$V_3 = (0.020)(800)$$
-				$$V_3 = 16\,\mathrm{V}$$
-			</details>
-		</div>
+			<div class='example printout-ignore' data-topic="Electric Potential in Circuits">
+				<strong>Example:</strong> A portable speaker uses a 6.0 V battery and draws 0.030 A through its circuit. What power does the battery provide?
+				<details>
+					<summary>solution</summary>
+					<p>This connects Kirchhoff circuit ideas with the power relationship from the previous page.</p>
+					$$P = IV$$
+					$$P = (0.030)(6.0)$$
+					$$P = 0.18\,\mathrm{W}$$
+				</details>
+			</div>
 
-		<div class='example'>
-			<strong>Example:</strong> A lighting control board has three parallel indicator branches connected to a 5.0 V supply. The branch currents are 12 mA, 8.0 mA, and 5.0 mA. What total current leaves the supply?
-			<details>
-				<summary>solution</summary>
-				<p>Convert milliamps to amps or add in milliamps first. Here the final answer will be converted to amps.</p>
-				$$I_t = 12 + 8.0 + 5.0$$
-				$$I_t = 25$$
-				$$I_t = 0.025\,\mathrm{A}$$
-			</details>
-		</div>
+			<div class='example' data-topic="Resistors in Parallel">
+				<strong>Example:</strong> A kitchen outlet circuit runs at 120 V. A toaster (12 Ω) and a microwave (14.4 Ω) are plugged in at the same time, so they are in parallel. The circuit breaker trips above 15 A. Does it trip?
+				<details>
+					<summary>solution</summary>
+					<p>Each appliance gets the full 120 V because they're in parallel.</p>
+					<div class="col-group">
+						<div>
+					$$\text{toaster}$$
+					$$I_1 = \frac{V}{R_1}$$
+					$$I_1 = \frac{120}{12}$$
+					$$I_1 = 10\,\mathrm{A}$$
+						</div>
+						<div>
+					$$\text{microwave}$$
+					$$I_2 = \frac{V}{R_2}$$
+					$$I_2 = \frac{120}{14.4}$$
+					$$I_2 = 8.3\,\mathrm{A}$$
+						</div>
+					</div>
+					$$I_{\mathrm{in}} = I_{\mathrm{out}}$$
+					$$I_t = 10 + 8.3$$
+					$$I_t = 18.3\,\mathrm{A}$$
+					<p>Yes, 18.3 A is more than 15 A, so the breaker trips. Every appliance you add in parallel adds another path, which lowers the equivalent resistance and increases the total current.</p>
+				</details>
+			</div>
 
-		<div class='example'>
-			<strong>Example:</strong> A 9.0 V battery is connected to a 1.0 kΩ resistor in series with a parallel section. The parallel section has a 2.0 kΩ resistor and a 3.0 kΩ resistor. What is the total current?
-			<details>
-				<summary>solution</summary>
-				$$1.0 = 1000$$
-				$$2.0 = 2000$$
-				$$3.0 = 3000$$
-				$$\frac{1}{R_p} = \frac{1}{2000} + \frac{1}{3000}$$
-				$$\frac{1}{R_p} = 0.000833$$
-				$$R_p = 1200$$
-				$$R_t = 1000 + 1200$$
-				$$R_t = 2200$$
-				$$I = \frac{9.0}{2200}$$
-				$$I = 0.0041\,\mathrm{A}$$
-				<p>The total current is about 4.1 mA.</p>
-			</details>
-		</div>
+			<div class='example printout-ignore' data-topic="Resistors in Parallel">
+				<strong>Example:</strong> A lighting control board has three parallel indicator branches connected to a 5.0 V supply. The branch currents are 12 mA, 8.0 mA, and 5.0 mA. What total current leaves the supply?
+				<details>
+					<summary>solution</summary>
+					<p>Convert milliamps to amps or add in milliamps first. Here the final answer will be converted to amps.</p>
+					$$I_t = 12 + 8.0 + 5.0$$
+					$$I_t = 25$$
+					$$I_t = 0.025\,\mathrm{A}$$
+				</details>
+			</div>
 
-		<div class='example'>
-			<strong>Question:</strong> In a parallel circuit, why can the current split into different amounts while each branch still has the same voltage across it?
-			<details>
-				<summary>answer</summary>
-				<p>Current can split because charge has more than one path through the junction. The currents in the branches depend on the branch resistances.</p>
-				<p>The voltage across each branch is the same because each branch connects to the same two points in the circuit. Moving from one side of the branch to the other gives the same potential difference.</p>
-			</details>
-		</div>
+			<div class='example' data-topic="Solving Complex Circuits" data-hard>
+				<strong>Example:</strong> A 9.0 V battery is connected to a 1.0 kΩ resistor in series with a parallel section. The parallel section has a 2.0 kΩ resistor and a 3.0 kΩ resistor. What is the total current?
+				<details>
+					<summary>solution</summary>
+					$$1.0\,\mathrm{k}\Omega = 1000\,\Omega$$
+					$$2.0\,\mathrm{k}\Omega = 2000\,\Omega$$
+					$$3.0\,\mathrm{k}\Omega = 3000\,\Omega$$
+					$$\frac{1}{R_p} = \frac{1}{2000} + \frac{1}{3000}$$
+					$$\frac{1}{R_p} = 0.000833$$
+					$$R_p = 1200$$
+					$$R_t = 1000 + 1200$$
+					$$R_t = 2200$$
+					$$I = \frac{9.0}{2200}$$
+					$$I = 0.0041\,\mathrm{A}$$
+					<p>The total current is about 4.1 mA.</p>
+				</details>
+			</div>
+
+			<div class='example printout-ignore' data-topic="Resistors in Parallel">
+				<strong>Question:</strong> In a parallel circuit, why can the current split into different amounts while each branch still has the same voltage across it?
+				<details>
+					<summary>answer</summary>
+					<p>Current can split because charge has more than one path through the junction. The currents in the branches depend on the branch resistances.</p>
+					<p>The voltage across each branch is the same because each branch connects to the same two points in the circuit. Moving from one side of the branch to the other gives the same potential difference.</p>
+				</details>
+			</div>
+		</details>
+
 	</article>
 	<footer>
 		<a href="../../../">Back</a>
@@ -1838,6 +2068,7 @@
 	<script>
 		renderMathInElement(document.body);
 	</script>
+	<script defer src="../../../lib/practice-labels.js"></script>
 </body>
 
 </html>

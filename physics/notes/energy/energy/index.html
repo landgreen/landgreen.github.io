@@ -1042,279 +1042,330 @@
         </div>
 
     </article>
-	<article>
-<h1 class='underlined'>Practice <a class="printout-link" href="../../../output/pdf/energy-practice-questions.pdf">printout.pdf</a></h1>
-		<p>
-			In case you wanted more practice I used AI to make some more problems. The rest of the site I made by hand, but generating endless problems seemed safe. I did find mistakes in the AI generated problems, and there are probably some I didn't find. Let me know if something could be fixed. I also added a practice problem on each page with no solution. That's intentional. Have fun!
-		</p>
-		<p>
-			Keep the units in joules for energy and use Earth gravity unless the problem says otherwise.
-		</p>
+	<article class="practice-compact">
+		<details class="practice-menu">
+			<summary>practice problems (19)</summary>
+			<div class="derive practice-intro">
+				<p>
+					In case you wanted more practice I used AI to make some more problems. The rest of the site I made by hand, but generating endless problems seemed safe. I did find mistakes in the AI generated problems, and there are probably some I didn't find. Let me know if something could be fixed. I also added a practice problem on each page with no solution. That's intentional. Have fun!
+				</p>
+				<p>
+					Keep the units in joules for energy and use Earth gravity unless the problem says otherwise.
+				</p>
+				<p class="practice-controls">
+					<a class="printout-link practice-printout-link" href="../../../output/pdf/energy-practice-questions.pdf">printout.pdf</a>
+					<label class="practice-tag-toggle"><input type="checkbox"> show topics and mark harder problems</label>
+				</p>
+			</div>
 
-		<div class='example'>
-			<strong>Example:</strong> A student pushes a cart with an 18 N horizontal force while the cart moves 5 m forward across the lab floor. The cart squeaks, but the force and displacement are in the same direction. How much work does the student do on the cart?
-			<details>
-				<summary>solution</summary>
-				The force and motion point in the same direction, so the angle is 0 degrees.
-				$$W=F\Delta x\cos\theta$$
-				$$W=(18)(5)\cos(0)$$
-				$$W=90\,\mathrm{J}$$
-			</details>
-		</div>
+			<div class='example' data-topic="Work">
+				<strong>Example:</strong> A student pushes a cart with an 18 N horizontal force while the cart moves 5.0 m forward across the lab floor. How much work does the student do on the cart?
+				<details>
+					<summary>solution</summary>
+					<p>The force and the displacement point in the same direction, so the angle is 0°.</p>
+					$$W = F\Delta x\cos\theta$$
+					$$W = (18)(5.0)\cos(0\degree)$$
+					$$W = 90\,\mathrm{J}$$
+				</details>
+			</div>
 
-		<div class='example'>
-			<strong>Example:</strong> A box is pulled 250 cm across a smooth floor with a 40 N horizontal force. How much work is done by the pull?
-			<details>
-				<summary>solution</summary>
-				$$250=2.50$$
-				$$W=F\Delta x\cos\theta$$
-				$$W=(40)(2.50)\cos(0)$$
-				$$W=100\,\mathrm{J}$$
-			</details>
-		</div>
+			<div class='example' data-topic="Work">
+				<strong>Example:</strong> A box is pulled 250 cm across a smooth floor with a 40 N horizontal force. How much work does the pull do?
+				<details>
+					<summary>solution</summary>
+					$$\mathrm{c} = 0.01$$
+					$$250\,\mathrm{cm} = 250(0.01)\,\mathrm{m}$$
+					$$250\,\mathrm{cm} = 2.50\,\mathrm{m}$$
+					<br>
+					$$W = F\Delta x\cos\theta$$
+					$$W = (40)(2.50)\cos(0\degree)$$
+					$$W = 100\,\mathrm{J}$$
+				</details>
+			</div>
 
-		<div class='example'>
-			<strong>Example:</strong> A rope pulls a sled with a 60 N force at 30 degrees above the horizontal. The sled moves 4 m horizontally. How much work does the rope do?
-			<details>
-				<summary>solution</summary>
-				Only the part of the force in the direction of motion does work.
-				$$W=F\Delta x\cos\theta$$
-				$$W=(60)(4)\cos(30)$$
-				$$W=208\,\mathrm{J}$$
-			</details>
-		</div>
+			<div class='example' data-topic="Work" data-hard>
+				<strong>Example:</strong> A rope pulls a sled with a 60 N force at 30° above the horizontal. The sled moves 4.0 m across level snow. How much work does the rope do?
+				<details>
+					<summary>solution</summary>
+					<p>Make sure your calculator is in degree mode. The angle is between the rope and the direction the sled moves.</p>
+					$$W = F\Delta x\cos\theta$$
+					$$W = (60)(4.0)\cos(30\degree)$$
+					$$W = 208\,\mathrm{J}$$
+					<p>Only the part of the force along the ground does work. The upward part of the pull doesn't move the sled forward.</p>
+				</details>
+			</div>
 
-		<div class='example'>
-			<strong>Example:</strong> A sled slides 6 m forward while friction pushes backward with a 12 N force. How much work does friction do on the sled?
-			<details>
-				<summary>solution</summary>
-				Friction points opposite the motion, so the angle is 180 degrees.
-				$$W=F\Delta x\cos\theta$$
-				$$W=(12)(6)\cos(180)$$
-				$$W=-72\,\mathrm{J}$$
-				<p>The negative sign means friction removes energy from the sled.</p>
-			</details>
-		</div>
+			<div class='example' data-topic="Work">
+				<strong>Example:</strong> A 20 kg crate slides 6.0 m across a level floor. The coefficient of kinetic friction is 0.30. How much work does friction do on the crate?
+				<details>
+					<summary>solution</summary>
+					<p>First find the friction force, using the method from the <a href="../../force/friction/index.html">friction</a> page.</p>
+					$$F_N = mg$$
+					$$F_N = (20)(9.8)$$
+					$$F_N = 196\,\mathrm{N}$$
+					<br>
+					$$F_k = \mu_k F_N$$
+					$$F_k = (0.30)(196)$$
+					$$F_k = 58.8\,\mathrm{N}$$
+					<br>
+					<p>Friction points opposite the motion, so the angle is 180°.</p>
+					$$W = F\Delta x\cos\theta$$
+					$$W = (58.8)(6.0)\cos(180\degree)$$
+					$$W = -353\,\mathrm{J}$$
+					<p>The negative work means friction takes energy away from the crate's motion.</p>
+				</details>
+			</div>
 
-		<div class='example'>
-			<strong>Example:</strong> A person carries a 30 N bag horizontally across a room for 8 m while walking at a steady pace. The upward force from the person's hand is 30 N. How much work does the hand do on the bag?
-			<details>
-				<summary>solution</summary>
-				The force is upward, but the motion is horizontal. The angle is 90 degrees.
-				$$W=F\Delta x\cos\theta$$
-				$$W=(30)(8)\cos(90)$$
-				$$W=0\,\mathrm{J}$$
-			</details>
-		</div>
+			<div class='example' data-topic="Work">
+				<strong>Example:</strong> A person carries a 30 N grocery bag across a room at a steady pace. The bag moves 8.0 m horizontally, and the person's hand pushes up on it with 30 N. How much work does the hand do on the bag?
+				<details>
+					<summary>solution</summary>
+					<p>The force is up, but the motion is horizontal. The angle is 90°.</p>
+					$$W = F\Delta x\cos\theta$$
+					$$W = (30)(8.0)\cos(90\degree)$$
+					$$W = 0\,\mathrm{J}$$
+					<p>Carrying the bag may make your arm tired, but the upward force does no work on the bag, because the bag doesn't move up.</p>
+				</details>
+			</div>
 
-		<div class='example'>
-			<strong>Example:</strong> A 1500 g toy car rolls across the floor at 4 m/s after leaving a plastic ramp. What is its kinetic energy?
-			<details>
-				<summary>solution</summary>
-				$$1500=1.5$$
-				$$K=\tfrac{1}{2}mv^2$$
-				$$K=\tfrac{1}{2}(1.5)(4)^2$$
-				$$K=12\,\mathrm{J}$$
-			</details>
-		</div>
+			<div class='example' data-topic="Work">
+				<strong>Example:</strong> A person pushes a lawn mower with a 50 N force along its handle. The mower moves 3.0 m across the lawn. How much work does the push do?
+				<details>
+					<summary>solution</summary>
+					<p>This cannot be solved from the information given. The handle is tilted, so only part of the push points along the ground. The work depends on the angle between the handle and the ground, and the angle is missing.</p>
+				</details>
+			</div>
 
-		<div class='example'>
-			<strong>Example:</strong> A 60 kg skateboarder is moving at 3 m/s. What is the skateboarder's kinetic energy?
-			<details>
-				<summary>solution</summary>
-				$$K=\tfrac{1}{2}mv^2$$
-				$$K=\tfrac{1}{2}(60)(3)^2$$
-				$$K=270\,\mathrm{J}$$
-			</details>
-		</div>
+			<div class='example' data-topic="Kinetic Energy">
+				<strong>Example:</strong> A 1500 g toy car rolls across the floor at 4.0 m/s. What is its kinetic energy?
+				<details>
+					<summary>solution</summary>
+					$$1500\,\textcolor{DeepPink}{\mathrm{g}}\left(\frac{1\,\mathrm{kg}}{1000\,\textcolor{DeepPink}{\mathrm{g}}}\right)$$
+					$$1.5\,\mathrm{kg}$$
+					<br>
+					$$K = \tfrac{1}{2}mv^{2}$$
+					$$K = \tfrac{1}{2}(1.5)(4.0)^{2}$$
+					$$K = 12\,\mathrm{J}$$
+				</details>
+			</div>
 
-		<div class='example'>
-			<strong>Example:</strong> A 2 kg cart moves at 18 km/h. What is its kinetic energy?
-			<details>
-				<summary>solution</summary>
-				$$18=5$$
-				$$K=\tfrac{1}{2}mv^2$$
-				$$K=\tfrac{1}{2}(2)(5)^2$$
-				$$K=25\,\mathrm{J}$$
-			</details>
-		</div>
+			<div class='example' data-topic="Kinetic Energy">
+				<strong>Example:</strong> A 1200 kg car is moving at 54 km/h. How much kinetic energy does it have? How much kinetic energy does it have at 108 km/h, twice as fast?
+				<details>
+					<summary>solution</summary>
+					$$54\,\mathrm{\tfrac{\textcolor{DeepPink}{km}}{\textcolor{DodgerBlue}{h}}}\left(\frac{1000\,\mathrm{m}}{1\,\textcolor{DeepPink}{\mathrm{km}}}\right)\left(\frac{1\,\textcolor{DodgerBlue}{\mathrm{h}}}{3600\,\mathrm{s}}\right)$$
+					$$15\,\mathrm{\tfrac{m}{s}}$$
+					$$108\,\mathrm{\tfrac{\textcolor{DeepPink}{km}}{\textcolor{DodgerBlue}{h}}}\left(\frac{1000\,\mathrm{m}}{1\,\textcolor{DeepPink}{\mathrm{km}}}\right)\left(\frac{1\,\textcolor{DodgerBlue}{\mathrm{h}}}{3600\,\mathrm{s}}\right)$$
+					$$30\,\mathrm{\tfrac{m}{s}}$$
+					<br>
+					<div class="col-group">
+						<div>
+					$$\text{54 km/h}$$
+					$$K = \tfrac{1}{2}mv^{2}$$
+					$$K = \tfrac{1}{2}(1200)(15)^{2}$$
+					$$K = 135\,000\,\mathrm{J}$$
+						</div>
+						<div>
+					$$\text{108 km/h}$$
+					$$K = \tfrac{1}{2}mv^{2}$$
+					$$K = \tfrac{1}{2}(1200)(30)^{2}$$
+					$$K = 540\,000\,\mathrm{J}$$
+						</div>
+					</div>
+					<p>Doubling the speed makes the kinetic energy 4 times larger, because the speed is squared. That's why a car at highway speed needs about 4 times the braking distance of a car going half as fast.</p>
+				</details>
+			</div>
 
-		<div class='example'>
-			<strong>Example:</strong> A person pushes a box with a 50 N force while the box moves 3.0 m. How much work is done by the push?
-			<details>
-				<summary>answer</summary>
-				This cannot be solved from the information given. Work depends on the part of the force in the direction of motion, so the angle between the force and displacement is missing.
-			</details>
-		</div>
+			<div class='example' data-topic="Kinetic Energy">
+				<strong>Example:</strong> A 4.0 kg bowling ball rolls down the lane with 50 J of kinetic energy. How fast is it moving?
+				<details>
+					<summary>solution</summary>
+					$$K = \tfrac{1}{2}mv^{2}$$
+					$$50 = \tfrac{1}{2}(4.0)v^{2}$$
+					$$50 = 2.0v^{2}$$
+					$$v^{2} = 25$$
+					$$v = \sqrt{25}$$
+					$$v = 5.0\,\mathrm{\tfrac{m}{s}}$$
+				</details>
+			</div>
 
-		<div class='example'>
-			<strong>Example:</strong> A 4 kg cart has 50 J of kinetic energy. How fast is it moving?
-			<details>
-				<summary>solution</summary>
-				$$K=\tfrac{1}{2}mv^2$$
-				$$50=\tfrac{1}{2}(4)v^2$$
-				$$50=2v^2$$
-				$$v^2=25$$
-				$$v=\sqrt{25}$$
-				$$v=5\,\mathrm{m/s}$$
-			</details>
-		</div>
+			<div class='example' data-topic="Kinetic Energy">
+				<strong>Example:</strong> A shot put leaves an athlete's hand at 6.0 m/s with 72 J of kinetic energy. What is the mass of the shot?
+				<details>
+					<summary>solution</summary>
+					$$K = \tfrac{1}{2}mv^{2}$$
+					$$72 = \tfrac{1}{2}m(6.0)^{2}$$
+					$$72 = 18m$$
+					$$m = \frac{72}{18}$$
+					$$m = 4.0\,\mathrm{kg}$$
+					<p>That's the standard mass of a shot put for women's competitions.</p>
+				</details>
+			</div>
 
-		<div class='example'>
-			<strong>Example:</strong> A moving object has 72 J of kinetic energy and a speed of 6 m/s. What is its mass?
-			<details>
-				<summary>solution</summary>
-				$$K=\tfrac{1}{2}mv^2$$
-				$$72=\tfrac{1}{2}m(6)^2$$
-				$$72=18m$$
-				$$m=\frac{72}{18}$$
-				$$m=4\,\mathrm{kg}$$
-			</details>
-		</div>
+			<div class='example' data-topic="Gravitational Potential Energy">
+				<strong>Example:</strong> A 2.0 kg book falls from a shelf 1.5 m above the floor onto a desk that is 0.75 m tall. What is the change in the book's gravitational potential energy?
+				<details>
+					<summary>solution</summary>
+					<p>Choose the floor as zero height.</p>
+					$$\Delta U_g = mgh_f - mgh_i$$
+					$$\Delta U_g = (2.0)(9.8)(0.75) - (2.0)(9.8)(1.5)$$
+					$$\Delta U_g = 14.7 - 29.4$$
+					$$\Delta U_g = -14.7\,\mathrm{J}$$
+					<p>Only the change in height matters. Choosing the desk or the shelf as zero height would give the same change.</p>
+				</details>
+			</div>
 
-		<div class='example'>
-			<strong>Example:</strong> A 2 kg book is lifted from the floor to a shelf 1.5 m high. How much gravitational potential energy does it gain?
-			<details>
-				<summary>solution</summary>
-				$$U_g=mgh$$
-				$$U_g=(2)(9.8)(1.5)$$
-				$$U_g=29.4\,\mathrm{J}$$
-			</details>
-		</div>
+			<div class='example' data-topic="Gravitational Potential Energy">
+				<strong>Example:</strong> A 750 g water bottle is lifted 1.2 m from the floor onto a table. How much gravitational potential energy does it gain?
+				<details>
+					<summary>solution</summary>
+					$$750\,\textcolor{DeepPink}{\mathrm{g}}\left(\frac{1\,\mathrm{kg}}{1000\,\textcolor{DeepPink}{\mathrm{g}}}\right)$$
+					$$0.750\,\mathrm{kg}$$
+					<br>
+					$$U_g = mgh$$
+					$$U_g = (0.750)(9.8)(1.2)$$
+					$$U_g = 8.82\,\mathrm{J}$$
+				</details>
+			</div>
 
-		<div class='example'>
-			<strong>Example:</strong> A 750 g water bottle is lifted 1.2 m onto a table. How much gravitational potential energy does it gain?
-			<details>
-				<summary>solution</summary>
-				$$750=0.750$$
-				$$U_g=mgh$$
-				$$U_g=(0.750)(9.8)(1.2)$$
-				$$U_g=8.82\,\mathrm{J}$$
-			</details>
-		</div>
+			<div class='example' data-topic="Gravitational Potential Energy">
+				<strong>Example:</strong> A 10 kg box gains 196 J of gravitational potential energy when it is lifted. How high was it lifted?
+				<details>
+					<summary>solution</summary>
+					$$U_g = mgh$$
+					$$196 = (10)(9.8)h$$
+					$$196 = 98h$$
+					$$h = \frac{196}{98}$$
+					$$h = 2.0\,\mathrm{m}$$
+				</details>
+			</div>
 
-		<div class='example'>
-			<strong>Example:</strong> A 10 kg box gains 196 J of gravitational potential energy. How much higher was it lifted?
-			<details>
-				<summary>solution</summary>
-				$$U_g=mgh$$
-				$$196=(10)(9.8)h$$
-				$$196=98h$$
-				$$h=\frac{196}{98}$$
-				$$h=2.0\,\mathrm{m}$$
-			</details>
-		</div>
+			<div class='example' data-topic="Gravitational Potential Energy">
+				<strong>Example:</strong> An 80 kg rider rolls from the top of a 2.5 m tall ramp to the bottom. What is the change in the rider's gravitational potential energy?
+				<details>
+					<summary>solution</summary>
+					<p>Choose the top of the ramp as zero height, so the bottom is at -2.5 m.</p>
+					$$\Delta U_g = mgh_f - mgh_i$$
+					$$\Delta U_g = (80)(9.8)(-2.5) - (80)(9.8)(0)$$
+					$$\Delta U_g = -1960\,\mathrm{J}$$
+					<p>The rider loses 1960 J of gravitational potential energy. Most of it turns into kinetic energy.</p>
+				</details>
+			</div>
 
-		<div class='example'>
-			<strong>Example:</strong> An 80 kg rider goes from the top of a 2.5 m ramp to the bottom. How much gravitational potential energy is lost?
-			<details>
-				<summary>solution</summary>
-				The height decreases, so the change in gravitational potential energy is negative.
-				$$\Delta U_g=mg\Delta h$$
-				$$\Delta U_g=(80)(9.8)(-2.5)$$
-				$$\Delta U_g=-1960\,\mathrm{J}$$
-				<p>The rider loses 1960 J of gravitational potential energy.</p>
-			</details>
-		</div>
+			<div class='example' data-topic="Hooke&#x27;s Law">
+				<strong>Example:</strong> A spring with a spring constant of 180 N/m is stretched 0.20 m to the right of equilibrium. What force does the spring apply?
+				<details>
+					<summary>solution</summary>
+					$$F = -kx$$
+					$$F = -(180)(0.20)$$
+					$$F = -36\,\mathrm{N}$$
+					<p>The negative sign means the force points left, back toward equilibrium.</p>
+				</details>
+			</div>
 
-		<div class='example'>
-			<strong>Example:</strong> A 20 kg crate is moved onto a platform 1.2 m above the floor. One path is a short steep ramp, and another path is a long gentle ramp. How much gravitational potential energy does the crate gain either way?
-			<details>
-				<summary>solution</summary>
-				Gravitational potential energy depends on height, not the path taken.
-				$$U_g=mgh$$
-				$$U_g=(20)(9.8)(1.2)$$
-				$$U_g=235\,\mathrm{J}$$
-			</details>
-		</div>
+			<div class='example' data-topic="Hooke&#x27;s Law">
+				<strong>Example:</strong> To measure a spring's constant, a student hangs different masses from it and measures how far it stretches. Use the data to find the spring constant.
+				<table>
+					<tr>
+						<th>mass (kg)</th>
+						<td>0.10</td>
+						<td>0.20</td>
+						<td>0.30</td>
+					</tr>
+					<tr>
+						<th>stretch (cm)</th>
+						<td>4.9</td>
+						<td>9.8</td>
+						<td>14.7</td>
+					</tr>
+				</table>
+				<details>
+					<summary>solution</summary>
+					<p>When a mass hangs at rest, the spring force balances the mass's weight, from the <a href="../../force/forces/index.html">forces</a> page. Use the first row. Let down be negative.</p>
+					$$F_g = mg$$
+					$$F_g = (0.10)(9.8)$$
+					$$F_g = 0.98\,\mathrm{N}$$
+					<br>
+					$$4.9\,\mathrm{cm} = 4.9(0.01)\,\mathrm{m}$$
+					$$4.9\,\mathrm{cm} = 0.049\,\mathrm{m}$$
+					<br>
+					$$F = -kx$$
+					$$0.98 = -k(-0.049)$$
+					$$k = \frac{0.98}{0.049}$$
+					$$k = 20\,\mathrm{\tfrac{N}{m}}$$
+					<p>The other rows give the same answer. Doubling the mass doubles the stretch, which is exactly what Hooke's law predicts.</p>
+				</details>
+			</div>
 
-		<div class='example'>
-			<strong>Example:</strong> A spring has a spring constant of 180 N/m and is stretched 0.20 m from equilibrium. What force does the spring apply?
-			<details>
-				<summary>solution</summary>
-				Hooke's law gives the spring force. The negative sign means the force points back toward equilibrium.
-				$$F=-kx$$
-				$$F=-(180)(0.20)$$
-				$$F=-36\,\mathrm{N}$$
-			</details>
-		</div>
+			<div class='example' data-topic="Elastic Potential Energy">
+				<strong>Example:</strong> A 200 N/m spring is stretched 15 cm. How much elastic potential energy does it store? How much would it store if it were stretched twice as far?
+				<details>
+					<summary>solution</summary>
+					$$15\,\mathrm{cm} = 15(0.01)\,\mathrm{m}$$
+					$$15\,\mathrm{cm} = 0.15\,\mathrm{m}$$
+					<br>
+					<div class="col-group">
+						<div>
+					$$\text{15 cm}$$
+					$$U_s = \tfrac{1}{2}kx^{2}$$
+					$$U_s = \tfrac{1}{2}(200)(0.15)^{2}$$
+					$$U_s = 2.25\,\mathrm{J}$$
+						</div>
+						<div>
+					$$\text{30 cm}$$
+					$$U_s = \tfrac{1}{2}kx^{2}$$
+					$$U_s = \tfrac{1}{2}(200)(0.30)^{2}$$
+					$$U_s = 9.0\,\mathrm{J}$$
+						</div>
+					</div>
+					<p>Doubling the stretch stores 4 times the energy, because x is squared, just like v in kinetic energy.</p>
+				</details>
+			</div>
 
-		<div class='example'>
-			<strong>Example:</strong> A spring pulls back with a 12 N force when it is stretched 0.30 m. What is the spring constant?
-			<details>
-				<summary>solution</summary>
-				Use the size of the spring force.
-				$$F=kx$$
-				$$12=k(0.30)$$
-				$$k=\frac{12}{0.30}$$
-				$$k=40\,\mathrm{N/m}$$
-			</details>
-		</div>
+			<div class='example' data-topic="Hooke&#x27;s Law">
+				<strong>Example:</strong> A spring stores 4.0 J of energy when it is stretched. Its spring constant is 200 N/m. How far is it stretched?
+				<details>
+					<summary>solution</summary>
+					$$U_s = \tfrac{1}{2}kx^{2}$$
+					$$4.0 = \tfrac{1}{2}(200)x^{2}$$
+					$$4.0 = 100x^{2}$$
+					$$x^{2} = 0.040$$
+					$$x = \sqrt{0.040}$$
+					$$x = 0.20\,\mathrm{m}$$
+				</details>
+			</div>
 
-		<div class='example'>
-			<strong>Example:</strong> A 200 N/m spring is stretched 15 cm. How much elastic potential energy is stored?
-			<details>
-				<summary>solution</summary>
-				$$15=0.15$$
-				$$U_s=\tfrac{1}{2}kx^2$$
-				$$U_s=\tfrac{1}{2}(200)(0.15)^2$$
-				$$U_s=2.25\,\mathrm{J}$$
-			</details>
-		</div>
+			<div class='example' data-topic="Elastic Potential Energy">
+				<strong>Example:</strong> A spring launcher does 20 J of work on a 0.50 kg ball. Assuming all of that work becomes kinetic energy, how fast does the ball leave the launcher?
+				<details>
+					<summary>solution</summary>
+					<p>Kinetic energy equals the work done to bring a mass up to speed, as in the derivation on this page.</p>
+					$$W = K$$
+					$$20 = \tfrac{1}{2}(0.50)v^{2}$$
+					$$20 = 0.25v^{2}$$
+					$$v^{2} = 80$$
+					$$v = \sqrt{80}$$
+					$$v = 8.94\,\mathrm{\tfrac{m}{s}}$$
+				</details>
+			</div>
+			<div class='example'>
+				<p><strong>Reading (5 minutes):</strong> Read <a href="https://what-if.xkcd.com/95/">Pyramid Energy</a> by Randall Munroe from xkcd's What If? Then answer these questions.</p>
 
-		<div class='example'>
-			<strong>Example:</strong> A 50 N/m spring is compressed 0.40 m. How much elastic potential energy is stored?
-			<details>
-				<summary>solution</summary>
-				Elastic potential energy is positive for both stretching and compression.
-				$$U_s=\tfrac{1}{2}kx^2$$
-				$$U_s=\tfrac{1}{2}(50)(0.40)^2$$
-				$$U_s=4.0\,\mathrm{J}$$
-			</details>
-		</div>
+				What form of energy remains stored in the completed Great Pyramid, according to the article?
+				<details>
+					<summary>answer</summary>
+					<p>The raised stones have gravitational potential energy because they are higher above Earth's surface. The article estimates that most energy used during construction was instead transferred away by friction.</p>
+				</details>
+				<br>
 
-		<div class='example'>
-			<strong>Example:</strong> A spring stores 4.0 J of energy when stretched. If its spring constant is 200 N/m, how far is it stretched?
-			<details>
-				<summary>solution</summary>
-				$$U_s=\tfrac{1}{2}kx^2$$
-				$$4.0=\tfrac{1}{2}(200)x^2$$
-				$$4.0=100x^2$$
-				$$x^2=0.040$$
-				$$x=\sqrt{0.040}$$
-				$$x=0.20\,\mathrm{m}$$
-			</details>
-		</div>
+				Why is comparing the energy stored in a pyramid with the total effort of building it not a simple one-to-one comparison?
+				<details>
+					<summary>answer</summary>
+					<p>Much of the construction energy became thermal energy through friction and is not stored in the pyramid. Human work, planning, and time are also meaningful comparisons, but they measure something different from joules.</p>
+				</details>
+			</div>
+		</details>
 
-		<div class='example'>
-			<strong>Example:</strong> A spring launcher does 20 J of work on a 0.50 kg ball. The launcher is 18 cm long, but assume that all of that work becomes kinetic energy. How fast does the ball leave the launcher?
-			<details>
-				<summary>solution</summary>
-				The work becomes kinetic energy, so the ball has 20 J of kinetic energy.
-				$$K=\tfrac{1}{2}mv^2$$
-				$$20=\tfrac{1}{2}(0.50)v^2$$
-				$$20=0.25v^2$$
-				$$v^2=80$$
-				$$v=\sqrt{80}$$
-				$$v=8.94\,\mathrm{m/s}$$
-			</details>
-		</div>
-		<div class='example'>
-			<p><strong>Reading (5 minutes):</strong> Read <a href="https://what-if.xkcd.com/95/">Pyramid Energy</a> by Randall Munroe from xkcd's What If? Then answer these questions.</p>
-
-			What form of energy remains stored in the completed Great Pyramid, according to the article?
-			<details>
-				<summary>answer</summary>
-				<p>The raised stones have gravitational potential energy because they are higher above Earth's surface. The article estimates that most energy used during construction was instead transferred away by friction.</p>
-			</details>
-			<br>
-
-			Why is comparing the energy stored in a pyramid with the total effort of building it not a simple one-to-one comparison?
-			<details>
-				<summary>answer</summary>
-				<p>Much of the construction energy became thermal energy through friction and is not stored in the pyramid. Human work, planning, and time are also meaningful comparisons, but they measure something different from joules.</p>
-			</details>
-		</div>
     </article>
     <footer>
         <a href="../../../">Back</a>
@@ -1325,6 +1376,7 @@
         renderMathInElement(document.body);
     </script>
 
+	<script defer src="../../../lib/practice-labels.js"></script>
 </body>
 
 </html>

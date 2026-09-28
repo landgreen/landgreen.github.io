@@ -763,290 +763,301 @@
 		</div>
 
 	</article>
-	<article>
-<h1 class='underlined'>Practice <a class="printout-link" href="../../../output/pdf/circular-practice-questions.pdf">printout.pdf</a></h1>
-		<p>
-			In case you wanted more practice I used AI to make some more problems. The rest of the site I made by hand, but generating endless problems seemed safe. I did find mistakes in the AI generated problems, and there are probably some I didn't find. Let me know if something could be fixed. I also added a practice problem on each page with no solution. That's intentional. Have fun!
-		</p>
-		<p>
-			In orbit problems, gravity is the inward force, and the radius is measured from the center of the planet or moon, not from the surface.
-		</p>
+	<article class="practice-compact">
+		<details class="practice-menu">
+			<summary>practice problems (19)</summary>
+			<div class="derive practice-intro">
+				<p>
+					In case you wanted more practice I used AI to make some more problems. The rest of the site I made by hand, but generating endless problems seemed safe. I did find mistakes in the AI generated problems, and there are probably some I didn't find. Let me know if something could be fixed. I also added a practice problem on each page with no solution. That's intentional. Have fun!
+				</p>
+				<p>
+					In orbit problems, gravity is the inward force, and the radius is measured from the center of the planet or moon, not from the surface.
+				</p>
+				<p class="practice-controls">
+					<a class="printout-link practice-printout-link" href="../../../output/pdf/circular-practice-questions.pdf">printout.pdf</a>
+					<label class="practice-tag-toggle"><input type="checkbox"> show topics and mark harder problems</label>
+				</p>
+			</div>
 
-		<div class='example'>
-			<strong>Example:</strong> A 40 kg rider is on a circular ride with radius 8 m. The ride has bright lights around the edge, but the circular motion depends on radius and speed. If the rider moves at 6 m/s, what centripetal force is required, and which direction does it point?
-			<details>
-				<summary>solution</summary>
-				$$F = \frac{mv^2}{r}$$
-				$$F = \frac{(40)(6)^2}{8}$$
-				$$F = 180\,\mathrm{N}$$
-				<p>The force points toward the center of the circle.</p>
-			</details>
-		</div>
+			<div class='example' data-topic="Circular Motion">
+				<strong>Example:</strong> A 40 kg rider on a carnival ride moves in a circle with a radius of 8.0 m at 6.0 m/s. What centripetal force is required, and which direction does it point?
+				<details>
+					<summary>solution</summary>
+					$$F = \frac{mv^2}{r}$$
+					$$F = \frac{(40)(6.0)^2}{8.0}$$
+					$$F = 180\,\mathrm{N}$$
+					<p>The force points toward the center of the circle. The rider feels pushed outward, but that's just their inertia trying to keep them moving in a straight line.</p>
+				</details>
+			</div>
 
-		<div class='example'>
-			<strong>Example:</strong> A car moves through a circular highway curve with radius 75 m at a speed of 15 m/s. The road sign gives an advisory speed, but use the given speed here. What is the car's centripetal acceleration?
-			<details>
-				<summary>solution</summary>
-				$$a = \frac{v^2}{r}$$
-				$$a = \frac{(15)^2}{75}$$
-				$$a = 3.0\,\mathrm{m/s^2}$$
-				<p>The acceleration points toward the center of the curve, even if the car's speed is constant.</p>
-			</details>
-		</div>
+			<div class='example' data-topic="Circular Motion">
+				<strong>Example:</strong> A car drives around a flat, circular highway curve with a radius of 75 m. The coefficient of static friction between the tires and the dry road is 0.80. What is the fastest the car can go around the curve without sliding?
+				<details>
+					<summary>solution</summary>
+					<p>Static friction from the road is the only inward force. It can't be larger than its maximum value from the <a href="../../force/friction/index.html">friction</a> page.</p>
+					$$F_{s\mathrm{\,max}} = \mu_s F_N$$
+					$$F_{s\mathrm{\,max}} = \mu_s mg$$
+					<br>
+					$$\frac{mv^2}{r} = \mu_s mg$$
+					$$v^2 = \mu_s g r$$
+					$$v^2 = (0.80)(9.8)(75)$$
+					$$v^2 = 588$$
+					$$v = 24.2\,\mathrm{\tfrac{m}{s}}$$
+					<p>That's about 87 km/h. The car's mass cancels. On a wet or icy road, μs is smaller, so the safe speed drops.</p>
+				</details>
+			</div>
 
-		<div class='example'>
-			<strong>Example:</strong> A rotating space station design has radius 40 m, about the length of a large classroom hallway. How fast does the outer edge need to move to create an artificial gravity acceleration of 9.8 m/s²?
-			<details>
-				<summary>solution</summary>
-				$$a = \frac{v^2}{r}$$
-				$$v^2 = ar$$
-				$$v = \sqrt{ar}$$
-				$$v = \sqrt{(9.8)(40)}$$
-				$$v = 19.8\,\mathrm{m/s}$$
-				<p>A larger station can produce the same acceleration with a less extreme rotation rate.</p>
-			</details>
-		</div>
+			<div class='example' data-topic="Circular Motion">
+				<strong>Example:</strong> A rotating space station design has radius 40 m, about the length of a large classroom hallway. How fast does the outer edge need to move to create an artificial gravity acceleration of 9.8 m/s²?
+				<details>
+					<summary>solution</summary>
+					$$a = \frac{v^2}{r}$$
+					$$v^2 = ar$$
+					$$v = \sqrt{ar}$$
+					$$v = \sqrt{(9.8)(40)}$$
+					$$v = 19.8\,\mathrm{\tfrac{m}{s}}$$
+					<p>A larger station can produce the same acceleration with a less extreme rotation rate.</p>
+				</details>
+			</div>
 
-		<div class='example'>
-			<strong>Example:</strong> The outer edge of the 40 m radius station moves at 19.8 m/s. How long does one rotation take?
-			<details>
-				<summary>solution</summary>
-				<p>One rotation covers one circumference.</p>
-				$$C = 2\pi r$$
-				$$C = 2\pi(40)$$
-				$$C = 251$$
-				$$v = \frac{\Delta x}{\Delta t}$$
-				$$\Delta t = \frac{\Delta x}{v}$$
-				$$\Delta t = \frac{251}{19.8}$$
-				$$\Delta t = 12.7\,\mathrm{s}$$
-			</details>
-		</div>
+			<div class='example' data-topic="Circular Motion">
+				<strong>Example:</strong> The outer edge of the 40 m radius station moves at 19.8 m/s. How long does one rotation take?
+				<details>
+					<summary>solution</summary>
+					<p>One rotation covers one circumference.</p>
+					$$C = 2\pi r$$
+					$$C = 2\pi(40)$$
+					$$C = 251$$
+					$$v = \frac{\Delta x}{\Delta t}$$
+					$$\Delta t = \frac{\Delta x}{v}$$
+					$$\Delta t = \frac{251}{19.8}$$
+					$$\Delta t = 12.7\,\mathrm{s}$$
+				</details>
+			</div>
 
-		<div class='example'>
-			<strong>Example:</strong> A 1.8 m tall person stands with their feet on the outer edge of the same 40 m radius station. Their head is 38.2 m from the center. If one rotation takes 12.7 s, what acceleration does the person's head feel?
-			<details>
-				<summary>solution</summary>
-				<p>The head has the same rotation time, but a smaller circular path.</p>
-				$$C = 2\pi r$$
-				$$C = 2\pi(38.2)$$
-				$$C = 240$$
-				$$v = \frac{\Delta x}{\Delta t}$$
-				$$v = \frac{240}{12.7}$$
-				$$v = 18.9$$
-				$$a = \frac{v^2}{r}$$
-				$$a = \frac{(18.9)^2}{38.2}$$
-				$$a = 9.36\,\mathrm{m/s^2}$$
-				<p>The head feels slightly less artificial gravity than the feet.</p>
-			</details>
-		</div>
+			<div class='example' data-topic="Circular Motion" data-hard>
+				<strong>Example:</strong> Spinning faster than about 2 rotations per minute makes many people dizzy. A space station is designed to rotate once every 30 s and produce 9.8 m/s² at its outer edge. What radius does it need?
+				<details>
+					<summary>solution</summary>
+					<p>There are two unknowns, v and r. Write v in terms of r using the circumference, then substitute.</p>
+					$$v = \frac{2\pi r}{\Delta t}$$
+					$$a = \frac{v^2}{r}$$
+					$$a = \frac{\left(\frac{2\pi r}{\Delta t}\right)^2}{r}$$
+					$$a = \frac{4\pi^2 r}{\Delta t^2}$$
+					$$r = \frac{a\Delta t^2}{4\pi^2}$$
+					$$r = \frac{(9.8)(30)^2}{4\pi^2}$$
+					$$r = 223\,\mathrm{m}$$
+					<p>That's a much larger station than the 25 m radius design on this page. A bigger radius also reduces the difference in acceleration between a person's head and feet.</p>
+				</details>
+			</div>
 
-		<div class='example'>
-			<strong>Example:</strong> A 65 kg person in the rotating station has a head-level circular speed of 18.9 m/s at a radius of 38.2 m. What inward force would be needed if their whole mass were moving at that radius?
-			<details>
-				<summary>solution</summary>
-				$$F = \frac{mv^2}{r}$$
-				$$F = \frac{(65)(18.9)^2}{38.2}$$
-				$$F = 608\,\mathrm{N}$$
-				<p>This is smaller than the force needed for 9.8 m/s² because the acceleration is smaller.</p>
-			</details>
-		</div>
+			<div class='example' data-topic="Circular Motion">
+				<strong>Question:</strong> A ball on a string is swung in a horizontal circle. At one moment the string breaks. Which way does the ball go?
+				<details>
+					<summary>answer</summary>
+					<p>It flies off in a straight line along the direction it was moving at that moment, tangent to the circle. It does not fly straight outward from the center, and it doesn't keep curving.</p>
+					<p>Once the string breaks, there is no more inward force, so by Newton's first law the ball keeps its velocity at that instant.</p>
+				</details>
+			</div>
 
-		<div class='example'>
-			<strong>Example:</strong> A small satellite is 100 km above the Moon's surface. Use the Moon's mass as 7.346 × 10<sup>22</sup> kg and radius as 1.737 × 10<sup>6</sup> m. What circular orbital speed is needed?
-			<details>
-				<summary>solution</summary>
-				<p>The orbital radius is measured from the Moon's center.</p>
-				$$r = 1.737 \times 10^6 + 100\,000$$
-				$$r = 1.837 \times 10^6$$
-				$$v^2 = \frac{GM}{r}$$
-				$$v = \sqrt{\frac{GM}{r}}$$
-				$$v = \sqrt{\frac{(6.67 \times 10^{-11})(7.346 \times 10^{22})}{1.837 \times 10^6}}$$
-				$$v = 1.63 \times 10^3\,\mathrm{m/s}$$
-			</details>
-		</div>
+			<div class='example' data-topic="Circular Orbits">
+				<strong>Example:</strong> A small satellite is 100 km above the Moon's surface. Use the Moon's mass as 7.346 × 10<sup>22</sup> kg and radius as 1.737 × 10<sup>6</sup> m. What circular orbital speed is needed?
+				<details>
+					<summary>solution</summary>
+					<p>The orbital radius is measured from the Moon's center.</p>
+					$$r = 1.737 \times 10^6 + 100\,000$$
+					$$r = 1.837 \times 10^6$$
+					$$v^2 = \frac{GM}{r}$$
+					$$v = \sqrt{\frac{GM}{r}}$$
+					$$v = \sqrt{\frac{(6.67 \times 10^{-11})(7.346 \times 10^{22})}{1.837 \times 10^6}}$$
+					$$v = 1.63 \times 10^3\,\mathrm{\tfrac{m}{s}}$$
+				</details>
+			</div>
 
-		<div class='example'>
-			<strong>Example:</strong> A 500 kg satellite orbits 300 km above a planet's surface. What is its orbital speed?
-			<details>
-				<summary>answer</summary>
-				This cannot be solved from the information given. Orbital speed needs the planet's mass and the orbital radius from the planet's center, so the planet's radius is also missing.
-			</details>
-		</div>
+			<div class='example' data-topic="Circular Orbits">
+				<strong>Example:</strong> Astronomers discover a planet with a radius of 5.0 × 10<sup>6</sup> m. A 500 kg probe is put into a circular orbit 300 km above its surface. What is the probe's orbital speed?
+				<details>
+					<summary>solution</summary>
+					<p>This cannot be solved from the information given. We can find the orbital radius, 5.3 × 10<sup>6</sup> m, but the orbital speed equation needs the mass of the planet. The probe's mass doesn't matter, because it cancels out.</p>
+				</details>
+			</div>
 
-		<div class='example'>
-			<strong>Example:</strong> A satellite is 400 km above Earth's surface. Use Earth's mass as 5.972 × 10<sup>24</sup> kg and radius as 6.371 × 10<sup>6</sup> m. What circular orbital speed is needed?
-			<details>
-				<summary>solution</summary>
-				$$r = 6.371 \times 10^6 + 400\,000$$
-				$$r = 6.771 \times 10^6$$
-				$$v = \sqrt{\frac{GM}{r}}$$
-				$$v = \sqrt{\frac{(6.67 \times 10^{-11})(5.972 \times 10^{24})}{6.771 \times 10^6}}$$
-				$$v = 7.67 \times 10^3\,\mathrm{m/s}$$
-				<p>This is about 7.67 km/s.</p>
-			</details>
-		</div>
+			<div class='example' data-topic="Circular Orbits">
+				<strong>Example:</strong> A satellite is 400 km above Earth's surface. Use Earth's mass as 5.972 × 10<sup>24</sup> kg and radius as 6.371 × 10<sup>6</sup> m. What circular orbital speed is needed?
+				<details>
+					<summary>solution</summary>
+					$$r = 6.371 \times 10^6 + 400\,000$$
+					$$r = 6.771 \times 10^6$$
+					$$v = \sqrt{\frac{GM}{r}}$$
+					$$v = \sqrt{\frac{(6.67 \times 10^{-11})(5.972 \times 10^{24})}{6.771 \times 10^6}}$$
+					$$v = 7.67 \times 10^3\,\mathrm{\tfrac{m}{s}}$$
+					<p>This is about 7.67 km/s.</p>
+				</details>
+			</div>
 
-		<div class='example'>
-			<strong>Example:</strong> A very low circular orbit around Mars has radius 3.390 × 10<sup>6</sup> m from Mars's center. Use Mars's mass as 6.417 × 10<sup>23</sup> kg. What orbital speed is needed?
-			<details>
-				<summary>solution</summary>
-				$$v = \sqrt{\frac{GM}{r}}$$
-				$$v = \sqrt{\frac{(6.67 \times 10^{-11})(6.417 \times 10^{23})}{3.390 \times 10^6}}$$
-				$$v = 3.55 \times 10^3\,\mathrm{m/s}$$
-				<p>Mars needs a lower orbital speed than Earth because Mars has less mass.</p>
-			</details>
-		</div>
+			<div class='example' data-topic="Circular Orbits">
+				<strong>Example:</strong> A very low circular orbit around Mars has radius 3.390 × 10<sup>6</sup> m from Mars's center. Use Mars's mass as 6.417 × 10<sup>23</sup> kg. What orbital speed is needed?
+				<details>
+					<summary>solution</summary>
+					$$v = \sqrt{\frac{GM}{r}}$$
+					$$v = \sqrt{\frac{(6.67 \times 10^{-11})(6.417 \times 10^{23})}{3.390 \times 10^6}}$$
+					$$v = 3.55 \times 10^3\,\mathrm{\tfrac{m}{s}}$$
+					<p>Mars needs a lower orbital speed than Earth because Mars has less mass.</p>
+				</details>
+			</div>
 
-		<div class='example'>
-			<strong>Example:</strong> A 100 kg satellite and a 400 kg satellite both orbit Earth at a radius of 1.00 × 10<sup>7</sup> m. First find the orbital speed, then find the centripetal force needed for each satellite. Use Earth's mass as 5.972 × 10<sup>24</sup> kg.
-			<details>
-				<summary>solution</summary>
-				$$v = \sqrt{\frac{GM}{r}}$$
-				$$v = \sqrt{\frac{(6.67 \times 10^{-11})(5.972 \times 10^{24})}{1.00 \times 10^7}}$$
-				$$v = 6.31 \times 10^3\,\mathrm{m/s}$$
+			<div class='example' data-topic="Circular Orbits">
+				<strong>Example:</strong> A 100 kg satellite and a 400 kg satellite both orbit Earth at a radius of 1.00 × 10<sup>7</sup> m. First find the orbital speed, then find the centripetal force needed for each satellite. Use Earth's mass as 5.972 × 10<sup>24</sup> kg.
+				<details>
+					<summary>solution</summary>
+					$$v = \sqrt{\frac{GM}{r}}$$
+					$$v = \sqrt{\frac{(6.67 \times 10^{-11})(5.972 \times 10^{24})}{1.00 \times 10^7}}$$
+					$$v = 6.31 \times 10^3\,\mathrm{\tfrac{m}{s}}$$
+					<br>
+					$$F = \frac{mv^2}{r}$$
+					$$F_{100} = \frac{(100)(6.31 \times 10^3)^2}{1.00 \times 10^7}$$
+					$$F_{100} = 398\,\mathrm{N}$$
+					$$F_{400} = \frac{(400)(6.31 \times 10^3)^2}{1.00 \times 10^7}$$
+					$$F_{400} = 1590\,\mathrm{N}$$
+					<p>The satellites need the same speed, but the more massive satellite needs more force.</p>
+				</details>
+			</div>
+
+			<div class='example' data-topic="Circular Orbits">
+				<strong>Example:</strong> A satellite around Earth has a circular orbital speed of 6000 m/s. Use Earth's mass as 5.972 × 10<sup>24</sup> kg. What is the orbital radius, and what is the altitude above Earth's surface?
+				<details>
+					<summary>solution</summary>
+					$$v^2 = \frac{GM}{r}$$
+					$$r = \frac{GM}{v^2}$$
+					$$r = \frac{(6.67 \times 10^{-11})(5.972 \times 10^{24})}{(6000)^2}$$
+					$$r = 1.11 \times 10^7\,\mathrm{m}$$
+					$$\text{altitude} = r - R_E$$
+					$$\text{altitude} = 1.11 \times 10^7 - 6.371 \times 10^6$$
+					$$\text{altitude} = 4.69 \times 10^6\,\mathrm{m}$$
+					<p>The altitude is about 4690 km.</p>
+				</details>
+			</div>
+
+			<div class='example' data-topic="Circular Orbits">
+				<strong>Example:</strong> A GPS satellite has an orbital speed of about 3870 m/s. Use Earth's mass as 5.972 × 10<sup>24</sup> kg and Earth's radius as 6.371 × 10<sup>6</sup> m. Estimate its orbital radius and altitude.
+				<details>
+					<summary>solution</summary>
+					$$r = \frac{GM}{v^2}$$
+					$$r = \frac{(6.67 \times 10^{-11})(5.972 \times 10^{24})}{(3870)^2}$$
+					$$r = 2.66 \times 10^7\,\mathrm{m}$$
+					$$\text{altitude} = r - R_E$$
+					$$\text{altitude} = 2.66 \times 10^7 - 6.371 \times 10^6$$
+					$$\text{altitude} = 2.02 \times 10^7\,\mathrm{m}$$
+					<p>This is about 20 200 km above Earth's surface.</p>
+				</details>
+			</div>
+
+			<div class='example' data-topic="Circular Orbits">
+				<strong>Example:</strong> Use the 400 km altitude Earth satellite from earlier. Its orbital radius is 6.771 × 10<sup>6</sup> m and its speed is 7670 m/s. How long does one orbit take?
+				<details>
+					<summary>solution</summary>
+					$$C = 2\pi r$$
+					$$C = 2\pi(6.771 \times 10^6)$$
+					$$C = 4.25 \times 10^7$$
+					$$v = \frac{\Delta x}{\Delta t}$$
+					$$\Delta t = \frac{\Delta x}{v}$$
+					$$\Delta t = \frac{4.25 \times 10^7}{7670}$$
+					$$\Delta t = 5.55 \times 10^3\,\mathrm{s}$$
+					<p>That is about 92 minutes.</p>
+				</details>
+			</div>
+
+			<div class='example' data-topic="Circular Orbits">
+				<strong>Example:</strong> Around the same planet, satellite B orbits at 4 times the orbital radius of satellite A. How does satellite B's circular orbital speed compare to satellite A's?
+				<details>
+					<summary>solution</summary>
+					$$v = \sqrt{\frac{GM}{r}}$$
+					<p>The central mass is the same, so only the radius changes.</p>
+					$$v_B = \sqrt{\frac{GM}{4r_A}}$$
+					$$v_B = \frac{1}{2}\sqrt{\frac{GM}{r_A}}$$
+					$$v_B = \frac{1}{2}v_A$$
+					<p>Satellite B moves at half the speed of satellite A.</p>
+				</details>
+			</div>
+
+			<div class='example' data-topic="Circular Orbits">
+				<strong>Example:</strong> A satellite around Earth has orbital radius 4.22 × 10<sup>7</sup> m and speed 3070 m/s. If another circular orbit around Earth has one-fourth that radius, what speed would it need?
+				<details>
+					<summary>solution</summary>
+					<p>Both satellites orbit Earth, so the value of GM is the same for both orbits.</p>
+					$$v = \sqrt{\frac{GM}{r}}$$
+					<p>If the new radius is one-fourth as large, the fraction inside the square root becomes 4 times as large.</p>
+					$$v_{\mathrm{new}} = \sqrt{\frac{GM}{\frac{1}{4}r_{old}}}$$
+					$$v_{\mathrm{new}} = \sqrt{\frac{4GM}{r_{old}}}$$
+					$$v_{\mathrm{new}} = \sqrt{4}\sqrt{\frac{GM}{r_{old}}}$$
+					$$v_{\mathrm{new}} = 2v_{\mathrm{old}}$$
+					$$v_{\mathrm{new}} = 2(3070)$$
+					$$v_{\mathrm{new}} = 6140\,\mathrm{\tfrac{m}{s}}$$
+					<p>A smaller orbit needs a faster circular speed.</p>
+				</details>
+			</div>
+
+			<div class='example' data-topic="Circular Orbits">
+				<strong>Example:</strong> A 900 kg satellite is in a 400 km altitude circular orbit around Earth. Its orbital radius is 6.771 × 10<sup>6</sup> m and its speed is 7670 m/s. What centripetal force is required?
+				<details>
+					<summary>solution</summary>
+					$$F = \frac{mv^2}{r}$$
+					$$F = \frac{(900)(7670)^2}{6.771 \times 10^6}$$
+					$$F = 7.82 \times 10^3\,\mathrm{N}$$
+					<p>In orbit, this inward force is supplied by gravity.</p>
+				</details>
+			</div>
+
+			<div class='example' data-topic="Circular Orbits">
+				<strong>Example:</strong> A satellite is at an orbital radius of 1.00 × 10<sup>7</sup> m from Earth's center and is moving at 5500 m/s. Use Earth's mass as 5.972 × 10<sup>24</sup> kg. Is that fast enough for a circular orbit at that radius?
+				<details>
+					<summary>solution</summary>
+					$$v = \sqrt{\frac{GM}{r}}$$
+					$$v = \sqrt{\frac{(6.67 \times 10^{-11})(5.972 \times 10^{24})}{1.00 \times 10^7}}$$
+					$$v = 6.31 \times 10^3\,\mathrm{\tfrac{m}{s}}$$
+					<p>The satellite needs about 6310 m/s for a circular orbit. Since 5500 m/s is too slow, it will not maintain that circular orbit.</p>
+				</details>
+			</div>
+
+			<div class='example' data-topic="Circular Orbits">
+				<strong>Example:</strong> A satellite orbits 800 km above the Moon's surface while mapping crater shadows. Its orbital radius is 2.537 × 10<sup>6</sup> m and its circular speed is 1390 m/s. Estimate the time for one orbit.
+				<details>
+					<summary>solution</summary>
+					$$C = 2\pi r$$
+					$$C = 2\pi(2.537 \times 10^6)$$
+					$$C = 1.59 \times 10^7$$
+					$$\Delta t = \frac{\Delta x}{v}$$
+					$$\Delta t = \frac{1.59 \times 10^7}{1390}$$
+					$$\Delta t = 1.15 \times 10^4\,\mathrm{s}$$
+					<p>That is about 3.2 hours.</p>
+				</details>
+			</div>
+
+			<div class='example'>
+				<p><strong>Reading (10 minutes):</strong> Read <a href="https://www.snexplores.org/article/explainer-all-about-orbits">Explainer: All about orbits</a> from Science News Explores. Then answer these questions.</p>
+
+				Why does a planet move fastest when it is closest to the Sun?
+				<details>
+					<summary>answer</summary>
+					<p>Gravity is stronger when the planet is closer to the Sun. The stronger pull changes the planet's motion so that it moves faster along that part of its orbit.</p>
+				</details>
 				<br>
-				$$F = \frac{mv^2}{r}$$
-				$$F_{100} = \frac{(100)(6.31 \times 10^3)^2}{1.00 \times 10^7}$$
-				$$F_{100} = 398\,\mathrm{N}$$
-				$$F_{400} = \frac{(400)(6.31 \times 10^3)^2}{1.00 \times 10^7}$$
-				$$F_{400} = 1590\,\mathrm{N}$$
-				<p>The satellites need the same speed, but the more massive satellite needs more force.</p>
-			</details>
-		</div>
 
-		<div class='example'>
-			<strong>Example:</strong> A satellite around Earth has a circular orbital speed of 6000 m/s. Use Earth's mass as 5.972 × 10<sup>24</sup> kg. What is the orbital radius, and what is the altitude above Earth's surface?
-			<details>
-				<summary>solution</summary>
-				$$v^2 = \frac{GM}{r}$$
-				$$r = \frac{GM}{v^2}$$
-				$$r = \frac{(6.67 \times 10^{-11})(5.972 \times 10^{24})}{(6000)^2}$$
-				$$r = 1.11 \times 10^7\,\mathrm{m}$$
-				$$altitude = r - R_E$$
-				$$altitude = 1.11 \times 10^7 - 6.371 \times 10^6$$
-				$$altitude = 4.69 \times 10^6\,\mathrm{m}$$
-				<p>The altitude is about 4690 km.</p>
-			</details>
-		</div>
+				How can a spacecraft be continuously falling toward Earth without crashing into it?
+				<details>
+					<summary>answer</summary>
+					<p>It is moving sideways fast enough that, as it falls, Earth's surface curves away beneath it. Gravity continually bends its path into an orbit.</p>
+				</details>
+				<br>
 
-		<div class='example'>
-			<strong>Example:</strong> A GPS satellite has an orbital speed of about 3870 m/s. Use Earth's mass as 5.972 × 10<sup>24</sup> kg and Earth's radius as 6.371 × 10<sup>6</sup> m. Estimate its orbital radius and altitude.
-			<details>
-				<summary>solution</summary>
-				$$r = \frac{GM}{v^2}$$
-				$$r = \frac{(6.67 \times 10^{-11})(5.972 \times 10^{24})}{(3870)^2}$$
-				$$r = 2.66 \times 10^7\,\mathrm{m}$$
-				$$altitude = r - R_E$$
-				$$altitude = 2.66 \times 10^7 - 6.371 \times 10^6$$
-				$$altitude = 2.02 \times 10^7\,\mathrm{m}$$
-				<p>This is about 20 200 km above Earth's surface.</p>
-			</details>
-		</div>
+				Why must a spacecraft change its path around the Sun when traveling from Earth toward Mars?
+				<details>
+					<summary>answer</summary>
+					<p>It begins with Earth's orbital motion around the Sun. Its engines must change that orbit into an ellipse that reaches Mars at the right time.</p>
+				</details>
+			</div>
+		</details>
 
-		<div class='example'>
-			<strong>Example:</strong> Use the 400 km altitude Earth satellite from earlier. Its orbital radius is 6.771 × 10<sup>6</sup> m and its speed is 7670 m/s. How long does one orbit take?
-			<details>
-				<summary>solution</summary>
-				$$C = 2\pi r$$
-				$$C = 2\pi(6.771 \times 10^6)$$
-				$$C = 4.25 \times 10^7$$
-				$$v = \frac{\Delta x}{\Delta t}$$
-				$$\Delta t = \frac{\Delta x}{v}$$
-				$$\Delta t = \frac{4.25 \times 10^7}{7670}$$
-				$$\Delta t = 5.55 \times 10^3\,\mathrm{s}$$
-				<p>That is about 92 minutes.</p>
-			</details>
-		</div>
-
-		<div class='example'>
-			<strong>Example:</strong> Around the same planet, satellite B orbits at 4 times the orbital radius of satellite A. How does satellite B's circular orbital speed compare to satellite A's?
-			<details>
-				<summary>solution</summary>
-				$$v = \sqrt{\frac{GM}{r}}$$
-				<p>The central mass is the same, so only the radius changes.</p>
-				$$v_B = \sqrt{\frac{GM}{4r_A}}$$
-				$$v_B = \frac{1}{2}\sqrt{\frac{GM}{r_A}}$$
-				$$v_B = \frac{1}{2}v_A$$
-				<p>Satellite B moves at half the speed of satellite A.</p>
-			</details>
-		</div>
-
-		<div class='example'>
-			<strong>Example:</strong> A satellite around Earth has orbital radius 4.22 × 10<sup>7</sup> m and speed 3070 m/s. If another circular orbit around Earth has one-fourth that radius, what speed would it need?
-			<details>
-				<summary>solution</summary>
-				<p>Both satellites orbit Earth, so the value of GM is the same for both orbits.</p>
-				$$v = \sqrt{\frac{GM}{r}}$$
-				<p>If the new radius is one-fourth as large, the fraction inside the square root becomes 4 times as large.</p>
-				$$v_{new} = \sqrt{\frac{GM}{\frac{1}{4}r_{old}}}$$
-				$$v_{new} = \sqrt{\frac{4GM}{r_{old}}}$$
-				$$v_{new} = \sqrt{4}\sqrt{\frac{GM}{r_{old}}}$$
-				$$v_{new} = 2v_{old}$$
-				$$v_{new} = 2(3070)$$
-				$$v_{new} = 6140\,\mathrm{m/s}$$
-				<p>A smaller orbit needs a faster circular speed.</p>
-			</details>
-		</div>
-
-		<div class='example'>
-			<strong>Example:</strong> A 900 kg satellite is in a 400 km altitude circular orbit around Earth. Its orbital radius is 6.771 × 10<sup>6</sup> m and its speed is 7670 m/s. What centripetal force is required?
-			<details>
-				<summary>solution</summary>
-				$$F = \frac{mv^2}{r}$$
-				$$F = \frac{(900)(7670)^2}{6.771 \times 10^6}$$
-				$$F = 7.82 \times 10^3\,\mathrm{N}$$
-				<p>In orbit, this inward force is supplied by gravity.</p>
-			</details>
-		</div>
-
-		<div class='example'>
-			<strong>Example:</strong> A satellite is at an orbital radius of 1.00 × 10<sup>7</sup> m from Earth's center and is moving at 5500 m/s. Use Earth's mass as 5.972 × 10<sup>24</sup> kg. Is that fast enough for a circular orbit at that radius?
-			<details>
-				<summary>solution</summary>
-				$$v = \sqrt{\frac{GM}{r}}$$
-				$$v = \sqrt{\frac{(6.67 \times 10^{-11})(5.972 \times 10^{24})}{1.00 \times 10^7}}$$
-				$$v = 6.31 \times 10^3\,\mathrm{m/s}$$
-				<p>The satellite needs about 6310 m/s for a circular orbit. Since 5500 m/s is too slow, it will not maintain that circular orbit.</p>
-			</details>
-		</div>
-
-		<div class='example'>
-			<strong>Example:</strong> A satellite orbits 800 km above the Moon's surface while mapping crater shadows. Its orbital radius is 2.537 × 10<sup>6</sup> m and its circular speed is 1390 m/s. Estimate the time for one orbit.
-			<details>
-				<summary>solution</summary>
-				$$C = 2\pi r$$
-				$$C = 2\pi(2.537 \times 10^6)$$
-				$$C = 1.59 \times 10^7$$
-				$$\Delta t = \frac{\Delta x}{v}$$
-				$$\Delta t = \frac{1.59 \times 10^7}{1390}$$
-				$$\Delta t = 1.15 \times 10^4\,\mathrm{s}$$
-				<p>That is about 3.2 hours.</p>
-			</details>
-		</div>
-
-		<div class='example'>
-			<p><strong>Reading (10 minutes):</strong> Read <a href="https://www.snexplores.org/article/explainer-all-about-orbits">Explainer: All about orbits</a> from Science News Explores. Then answer these questions.</p>
-
-			Why does a planet move fastest when it is closest to the Sun?
-			<details>
-				<summary>answer</summary>
-				<p>Gravity is stronger when the planet is closer to the Sun. The stronger pull changes the planet's motion so that it moves faster along that part of its orbit.</p>
-			</details>
-			<br>
-
-			How can a spacecraft be continuously falling toward Earth without crashing into it?
-			<details>
-				<summary>answer</summary>
-				<p>It is moving sideways fast enough that, as it falls, Earth's surface curves away beneath it. Gravity continually bends its path into an orbit.</p>
-			</details>
-			<br>
-
-			Why must a spacecraft change its path around the Sun when traveling from Earth toward Mars?
-			<details>
-				<summary>answer</summary>
-				<p>It begins with Earth's orbital motion around the Sun. Its engines must change that orbit into an ellipse that reaches Mars at the right time.</p>
-			</details>
-		</div>
 	</article>
 	<footer>
 		<a href="../../../">Back</a>
@@ -1061,6 +1072,7 @@
 	<!-- <script defer src='https://cdnjs.cloudflare.com/ajax/libs/three.js/98/three.min.js'></script> -->
 	<!-- <script defer src='https://s3-us-west-2.amazonaws.com/s.cdpn.io/464612/orbitcontrols.js'></script> -->
 	<!-- <script defer src="orbit.js"></script> -->
+	<script defer src="../../../lib/practice-labels.js"></script>
 </body>
 
 </html>

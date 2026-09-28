@@ -667,7 +667,7 @@
 			A collision that doesn't lose any kinetic energy is called <strong>perfectly elastic</strong>.
 			This means that for perfectly bouncy collisions we can use two conservation equations.
 		</p>
-		$$m_1u_1 + m_2u_1 = m_1v_1 + m_2v_2$$
+		$$m_1u_1 + m_2u_2 = m_1v_1 + m_2v_2$$
 		$$\frac{1}{2}m_1u_1^2 + \frac{1}{2}m_2u_2^2 = \frac{1}{2}m_1v_1^2 + \frac{1}{2}m_2v_2^2$$
 		<p>
 			With two equations we can solve for two unknowns.
@@ -740,472 +740,462 @@
 		<!-- example of molecules colliding -->
 
 	</article>
-	<article>
-<h1 class='underlined'>Practice <a class="printout-link" href="../../../output/pdf/energy-conservation-practice-questions.pdf">printout.pdf</a></h1>
-		<p>
-			In case you wanted more practice I used AI to make some more problems. The rest of the site I made by hand, but generating endless problems seemed safe. I did find mistakes in the AI generated problems, and there are probably some I didn't find. Let me know if something could be fixed. I also added a practice problem on each page with no solution. That's intentional. Have fun!
-		</p>
-		<p>
-			Assume Earth gravity and no air resistance unless the problem says otherwise.
-		</p>
+	<article class="practice-compact">
+		<details class="practice-menu">
+			<summary>practice problems (25)</summary>
+			<div class="derive practice-intro">
+				<p>
+					In case you wanted more practice I used AI to make some more problems. The rest of the site I made by hand, but generating endless problems seemed safe. I did find mistakes in the AI generated problems, and there are probably some I didn't find. Let me know if something could be fixed. I also added a practice problem on each page with no solution. That's intentional. Have fun!
+				</p>
+				<p>
+					Assume Earth gravity and no air resistance unless the problem says otherwise.
+				</p>
+				<p class="practice-controls">
+					<a class="printout-link practice-printout-link" href="../../../output/pdf/energy-conservation-practice-questions.pdf">printout.pdf</a>
+					<label class="practice-tag-toggle"><input type="checkbox"> show topics and mark harder problems</label>
+				</p>
+			</div>
 
-		<div class='example'>
-			<strong>Example:</strong> A 2.0 kg cart rolls down a smooth classroom track and drops 1.5 m in height. The track is curved, but ignore friction. How much gravitational potential energy does it lose, and how much kinetic energy does it gain?
-			<details>
-				<summary>solution</summary>
-				Gravitational potential energy changes because height changes.
-				$$\Delta U_g=mg\Delta h$$
-				$$\Delta U_g=(2.0)(9.8)(-1.5)$$
-				$$\Delta U_g=-29.4\,\mathrm{J}$$
-				<p>The cart loses 29.4 J of gravitational potential energy.</p>
-				$$\Delta K=29.4\,\mathrm{J}$$
-				<p>If no energy is lost, that same amount becomes kinetic energy.</p>
-			</details>
-		</div>
+			<div class='example' data-topic="Conservation of Energy">
+				<strong>Example:</strong> A 2.0 kg cart rolls down a curved, frictionless track and drops 1.5 m in height. How much gravitational potential energy does it lose, and how much kinetic energy does it gain?
+				<details>
+					<summary>solution</summary>
+					<p>Choose the starting height as zero, so the cart ends at -1.5 m.</p>
+					$$\Delta U_g = mgh_f - mgh_i$$
+					$$\Delta U_g = (2.0)(9.8)(-1.5) - 0$$
+					$$\Delta U_g = -29.4\,\mathrm{J}$$
+					<p>Energy is conserved, so the 29.4 J of gravitational potential energy the cart loses becomes 29.4 J of kinetic energy. The curve of the track doesn't matter, only the change in height.</p>
+				</details>
+			</div>
 
-		<div class='example'>
-			<strong>Example:</strong> A spring launcher releases a cart. The spring energy decreases by 18 J while the cart stays at the same height. How much does the cart's kinetic energy change?
-			<details>
-				<summary>solution</summary>
-				The cart stays at the same height, so gravitational potential energy does not change.
-				$$\Delta U_s=-18$$
-				$$\Delta U_g=0$$
-				$$\Delta K+\Delta U_s+\Delta U_g=0$$
-				$$\Delta K+(-18)+0=0$$
-				$$\Delta K=18\,\mathrm{J}$$
-				<p>The cart gains 18 J of kinetic energy.</p>
-			</details>
-		</div>
+			<div class='example printout-ignore' data-topic="Conservation of Energy">
+				<strong>Example:</strong> A spring launcher pushes a cart along a level track. The spring's energy decreases by 18 J. How much kinetic energy does the cart gain?
+				<details>
+					<summary>solution</summary>
+					<p>The cart stays at the same height, so only spring energy and kinetic energy change.</p>
+					$$K_i + U_{si} = K_f + U_{sf}$$
+					$$K_f - K_i = U_{si} - U_{sf}$$
+					$$\Delta K = 18\,\mathrm{J}$$
+					<p>Every joule the spring loses becomes kinetic energy of the cart.</p>
+				</details>
+			</div>
 
-		<div class='example'>
-			<strong>Example:</strong> A 0.50 kg ball is dropped from rest from a 3.0 m shelf in a storage room. Ignoring air resistance, what speed does it have just before it reaches the floor?
-			<details>
-				<summary>solution</summary>
-				Choose the floor as zero height. The mass cancels out, so the ball's mass does not affect the speed.
-				$$E_i=E_f$$
-				$$U_{gi}=K_f$$
-				$$mgh=\tfrac{1}{2}mv^2$$
-				$$(0.50)(9.8)(3.0)=\tfrac{1}{2}(0.50)v^2$$
-				$$14.7=0.25v^2$$
-				$$v=\sqrt{\frac{14.7}{0.25}}$$
-				$$v=7.67\,\mathrm{m/s}$$
-			</details>
-		</div>
+			<div class='example' data-topic="Conservation of Energy">
+				<strong>Example:</strong> A skateboarder is moving at 6.0 m/s at the bottom of a smooth hill. Ignoring friction, how high up the hill can the skateboarder coast before stopping?
+				<details>
+					<summary>solution</summary>
+					<p>Choose the bottom of the hill as zero height. At the highest point the speed is zero.</p>
+					$$K_i + U_{gi} = K_f + U_{gf}$$
+					$$\tfrac{1}{2}mu^{2} + 0 = 0 + mgh$$
+					$$\tfrac{1}{2}\cancel{m}(6.0)^{2} = \cancel{m}(9.8)h$$
+					$$18 = 9.8h$$
+					$$h = \frac{18}{9.8}$$
+					$$h = 1.84\,\mathrm{m}$$
+					<p>The mass cancels, so a heavier skateboarder would coast to the same height.</p>
+				</details>
+			</div>
 
-		<div class='example'>
-			<strong>Example:</strong> A 2.0 kg cart starts from rest at the top of a 1.2 m frictionless ramp. What speed does it have at the bottom?
-			<details>
-				<summary>solution</summary>
-				The cart starts with gravitational potential energy and ends with kinetic energy.
-				$$E_i=E_f$$
-				$$U_{gi}=K_f$$
-				$$mgh=\tfrac{1}{2}mv^2$$
-				$$(2.0)(9.8)(1.2)=\tfrac{1}{2}(2.0)v^2$$
-				$$23.52=1v^2$$
-				$$v=\sqrt{\frac{23.52}{1}}$$
-				$$v=4.85\,\mathrm{m/s}$$
-			</details>
-		</div>
+			<div class='example' data-topic="Conservation of Energy">
+				<strong>Example:</strong> A 4.0 kg cart moving at 5.0 m/s rolls up a frictionless track. How much kinetic energy does it still have at a point 0.80 m higher?
+				<details>
+					<summary>solution</summary>
+					$$K_i + U_{gi} = K_f + U_{gf}$$
+					$$\tfrac{1}{2}(4.0)(5.0)^{2} + 0 = K_f + (4.0)(9.8)(0.80)$$
+					$$50 = K_f + 31.4$$
+					$$K_f = 18.6\,\mathrm{J}$$
+					<p>The cart traded 31.4 J of kinetic energy for gravitational potential energy, and it is still moving.</p>
+				</details>
+			</div>
 
-		<div class='example'>
-			<strong>Example:</strong> A skateboarder moves at 6.0 m/s at the bottom of a smooth hill. The board has 54 mm wheels, but ignore losses. How high can the skateboarder coast before stopping?
-			<details>
-				<summary>solution</summary>
-				At the bottom the energy is kinetic. At the highest point the speed is zero, so the energy is gravitational potential.
-				$$E_i=E_f$$
-				$$K_i=U_{gf}$$
-				$$\tfrac{1}{2}mv^2=mgh$$
-				$$\tfrac{1}{2}(m)(6.0)^2=(m)(9.8)h$$
-				$$18m=9.8mh$$
-				$$18=9.8h$$
-				$$h=\frac{18}{9.8}$$
-				$$h=1.84\,\mathrm{m}$$
-			</details>
-		</div>
+			<div class='example printout-ignore' data-topic="Conservation of Energy">
+				<strong>Example:</strong> A 1500 g toy car starts from rest at the top of a track that is 0.90 m tall. Ignoring friction, how fast is it moving at the bottom?
+				<details>
+					<summary>solution</summary>
+					<p>The mass cancels, so we don't need to convert grams to kilograms.</p>
+					$$K_i + U_{gi} = K_f + U_{gf}$$
+					$$0 + mgh = \tfrac{1}{2}mv^{2} + 0$$
+					$$\cancel{m}(9.8)(0.90) = \tfrac{1}{2}\cancel{m}v^{2}$$
+					$$8.82 = 0.5v^{2}$$
+					$$v^{2} = 17.6$$
+					$$v = 4.20\,\mathrm{\tfrac{m}{s}}$$
+				</details>
+			</div>
 
-		<div class='example'>
-			<strong>Example:</strong> A 4.0 kg cart moving at 5.0 m/s climbs a frictionless track. At a point 0.80 m higher, how much kinetic energy does the cart still have?
-			<details>
-				<summary>solution</summary>
-				The cart trades some kinetic energy for gravitational potential energy.
-				$$K_i=K_f+U_{gf}$$
-				$$\tfrac{1}{2}(4.0)(5.0)^2=K_f+(4.0)(9.8)(0.80)$$
-				$$50=K_f+31.36$$
-				$$K_f=50-31.36$$
-				$$K_f=18.6\,\mathrm{J}$$
-			</details>
-		</div>
+			<div class='example printout-ignore' data-topic="Conservation of Energy">
+				<strong>Example:</strong> A cart is moving at 8.0 m/s at the bottom of a frictionless track. What is its speed after it climbs 2.0 m higher?
+				<details>
+					<summary>solution</summary>
+					$$K_i + U_{gi} = K_f + U_{gf}$$
+					$$\tfrac{1}{2}mu^{2} + 0 = \tfrac{1}{2}mv^{2} + mgh$$
+					$$\tfrac{1}{2}\cancel{m}(8.0)^{2} = \tfrac{1}{2}\cancel{m}v^{2} + \cancel{m}(9.8)(2.0)$$
+					$$32 = 0.5v^{2} + 19.6$$
+					$$12.4 = 0.5v^{2}$$
+					$$v^{2} = 24.8$$
+					$$v = 4.98\,\mathrm{\tfrac{m}{s}}$$
+					<p>We didn't need the mass, because every term has m in it.</p>
+				</details>
+			</div>
 
-		<div class='example'>
-			<strong>Example:</strong> A 1500 g toy car starts from rest at the top of a 0.90 m track. Ignoring losses, what is its speed at the bottom?
-			<details>
-				<summary>solution</summary>
-				First convert the mass, even though it cancels out later.
-				$$1500=1.5$$
-				$$mgh=\tfrac{1}{2}mv^2$$
-				$$(1.5)(9.8)(0.90)=\tfrac{1}{2}(1.5)v^2$$
-				$$13.23=0.75v^2$$
-				$$v=\sqrt{\frac{13.23}{0.75}}$$
-				$$v=4.20\,\mathrm{m/s}$$
-			</details>
-		</div>
+			<div class='example' data-topic="Conservation of Energy">
+				<strong>Example:</strong> A 2.0 kg cart starts from rest and rolls down a frictionless ramp that is 5.0 m long. How fast is it moving at the bottom?
+				<details>
+					<summary>solution</summary>
+					<p>This cannot be solved from the information given. Conservation of energy needs the change in height, not the length of the ramp. A 5.0 m ramp could be almost flat or very steep. The angle of the ramp or its height is missing.</p>
+				</details>
+			</div>
 
-		<div class='example'>
-			<strong>Example:</strong> A ball is thrown straight upward at 12 m/s from a student's hand. Ignoring air resistance, how high above the hand does it rise?
-			<details>
-				<summary>solution</summary>
-				At the top, the ball's speed is zero.
-				$$E_i=E_f$$
-				$$K_i=U_{gf}$$
-				$$\tfrac{1}{2}mv^2=mgh$$
-				$$\tfrac{1}{2}(m)(12)^2=(m)(9.8)h$$
-				$$72m=9.8mh$$
-				$$72=9.8h$$
-				$$h=\frac{72}{9.8}$$
-				$$h=7.35\,\mathrm{m}$$
-			</details>
-		</div>
+			<div class='example' data-topic="Conservation of Energy">
+				<strong>Example:</strong> A 0.30 kg cart is launched by a spring compressed 15 cm. The spring constant is 120 N/m. What speed does the cart have when it leaves the spring on a level track?
+				<details>
+					<summary>solution</summary>
+					$$15\,\mathrm{cm} = 15(0.01)\,\mathrm{m}$$
+					$$15\,\mathrm{cm} = 0.15\,\mathrm{m}$$
+					<br>
+					$$U_{si} = K_f$$
+					$$\tfrac{1}{2}kx^{2} = \tfrac{1}{2}mv^{2}$$
+					$$\tfrac{1}{2}(120)(0.15)^{2} = \tfrac{1}{2}(0.30)v^{2}$$
+					$$1.35 = 0.15v^{2}$$
+					$$v^{2} = 9.0$$
+					$$v = 3.0\,\mathrm{\tfrac{m}{s}}$$
+				</details>
+			</div>
 
-		<div class='example'>
-			<strong>Example:</strong> A cart is moving at 8.0 m/s at the bottom of a track. What is its speed after it climbs 2.0 m higher?
-			<details>
-				<summary>solution</summary>
-				Mass cancels because every term contains mass.
-				$$K_i=K_f+U_{gf}$$
-				$$\tfrac{1}{2}mv_i^2=\tfrac{1}{2}mv_f^2+mgh$$
-				$$\tfrac{1}{2}m(8.0)^2=\tfrac{1}{2}mv_f^2+m(9.8)(2.0)$$
-				$$32m=0.5mv_f^2+19.6m$$
-				$$32=0.5v_f^2+19.6$$
-				$$12.4=0.5v_f^2$$
-				$$v_f=\sqrt{24.8}$$
-				$$v_f=4.98\,\mathrm{m/s}$$
-			</details>
-		</div>
+			<div class='example' data-topic="Conservation of Energy">
+				<strong>Example:</strong> A 0.60 kg cart moving at 2.0 m/s runs into a 150 N/m spring bumper on a level frictionless track. How far does the spring compress before the cart stops?
+				<details>
+					<summary>solution</summary>
+					$$K_i = U_{sf}$$
+					$$\tfrac{1}{2}mu^{2} = \tfrac{1}{2}kx^{2}$$
+					$$\tfrac{1}{2}(0.60)(2.0)^{2} = \tfrac{1}{2}(150)x^{2}$$
+					$$1.2 = 75x^{2}$$
+					$$x^{2} = 0.016$$
+					$$x = 0.126\,\mathrm{m}$$
+					<p>That's about 13 cm. After the cart stops, the spring pushes it back out at 2.0 m/s.</p>
+				</details>
+			</div>
 
-		<div class='example'>
-			<strong>Example:</strong> A 0.20 kg ball is released from rest 80 cm above the floor. Ignoring air resistance, what kinetic energy does it have just before it hits the floor?
-			<details>
-				<summary>solution</summary>
-				The lost gravitational potential energy becomes kinetic energy.
-				$$80=0.80$$
-				$$K_f=U_{gi}$$
-				$$K_f=mgh$$
-				$$K_f=(0.20)(9.8)(0.80)$$
-				$$K_f=1.57\,\mathrm{J}$$
-			</details>
-		</div>
+			<div class='example' data-topic="Conservation of Energy">
+				<strong>Example:</strong> A spring with k = 80 N/m is compressed 0.25 m. It launches a 0.50 kg cart up a frictionless ramp. How high does the cart rise before it stops?
+				<details>
+					<summary>solution</summary>
+					$$U_{si} = U_{gf}$$
+					$$\tfrac{1}{2}kx^{2} = mgh$$
+					$$\tfrac{1}{2}(80)(0.25)^{2} = (0.50)(9.8)h$$
+					$$2.5 = 4.9h$$
+					$$h = 0.510\,\mathrm{m}$$
+				</details>
+			</div>
 
-		<div class='example'>
-			<strong>Example:</strong> A 200 N/m spring is compressed 0.10 m and launches a 0.50 kg cart on a level frictionless track. What speed does the cart have after leaving the spring?
-			<details>
-				<summary>solution</summary>
-				Spring potential energy becomes kinetic energy.
-				$$U_{si}=K_f$$
-				$$\tfrac{1}{2}kx^2=\tfrac{1}{2}mv^2$$
-				$$\tfrac{1}{2}(200)(0.10)^2=\tfrac{1}{2}(0.50)v^2$$
-				$$1=0.25v^2$$
-				$$v^2=4$$
-				$$v=\sqrt{4}$$
-				$$v=2.0\,\mathrm{m/s}$$
-			</details>
-		</div>
+			<div class='example' data-topic="Conservation of Energy">
+				<strong>Example:</strong> A pole vaulter sprints down the runway at 9.0 m/s. If all of that kinetic energy became gravitational potential energy, how high could the vaulter raise their center of mass?
+				<details>
+					<summary>solution</summary>
+					$$K_i = U_{gf}$$
+					$$\tfrac{1}{2}\cancel{m}v^{2} = \cancel{m}gh$$
+					$$\tfrac{1}{2}(9.0)^{2} = (9.8)h$$
+					$$40.5 = 9.8h$$
+					$$h = 4.13\,\mathrm{m}$$
+					<p>Elite vaulters clear about 6 m. Their center of mass already starts about 1 m off the ground, and they push up on the pole with their arms at the top, adding a little more energy.</p>
+				</details>
+			</div>
 
-		<div class='example'>
-			<strong>Example:</strong> A spring launcher stores 6.0 J of energy and launches a 0.75 kg glider on a level frictionless track. What speed does the glider have?
-			<details>
-				<summary>solution</summary>
-				The spring energy becomes kinetic energy.
-				$$U_s=K$$
-				$$6.0=\tfrac{1}{2}(0.75)v^2$$
-				$$6.0=0.375v^2$$
-				$$v^2=16$$
-				$$v=\sqrt{16}$$
-				$$v=4.0\,\mathrm{m/s}$$
-			</details>
-		</div>
+			<div class='example' data-topic="Conservation of Energy" data-hard>
+				<strong>Example:</strong> A 500 kg roller coaster car starts from rest at point A, 20 m above the ground. Ignoring friction, fill in the table for points B and C.
+				<table>
+					<tr>
+						<th>point</th>
+						<th>height (m)</th>
+						<th>U<sub>g</sub> (J)</th>
+						<th>K (J)</th>
+						<th>speed (m/s)</th>
+					</tr>
+					<tr>
+						<td>A</td>
+						<td>20</td>
+						<td>?</td>
+						<td>0</td>
+						<td>0</td>
+					</tr>
+					<tr>
+						<td>B</td>
+						<td>5</td>
+						<td>?</td>
+						<td>?</td>
+						<td>?</td>
+					</tr>
+					<tr>
+						<td>C</td>
+						<td>12</td>
+						<td>?</td>
+						<td>?</td>
+						<td>?</td>
+					</tr>
+				</table>
+				<details>
+					<summary>solution</summary>
+					$$E_A = mgh$$
+					$$E_A = (500)(9.8)(20)$$
+					$$E_A = 98\,000\,\mathrm{J}$$
+					<p>The total energy stays 98 000 J at every point. Subtract the gravitational potential energy to find the kinetic energy.</p>
+					<div class="col-group">
+						<div>
+					$$\text{point B}$$
+					$$U_g = (500)(9.8)(5)$$
+					$$U_g = 24\,500\,\mathrm{J}$$
+					$$K = 98\,000 - 24\,500$$
+					$$K = 73\,500\,\mathrm{J}$$
+					$$73\,500 = \tfrac{1}{2}(500)v^{2}$$
+					$$v = 17.1\,\mathrm{\tfrac{m}{s}}$$
+						</div>
+						<div>
+					$$\text{point C}$$
+					$$U_g = (500)(9.8)(12)$$
+					$$U_g = 58\,800\,\mathrm{J}$$
+					$$K = 98\,000 - 58\,800$$
+					$$K = 39\,200\,\mathrm{J}$$
+					$$39\,200 = \tfrac{1}{2}(500)v^{2}$$
+					$$v = 12.5\,\mathrm{\tfrac{m}{s}}$$
+						</div>
+					</div>
+					<p>The lower the car goes, the faster it moves.</p>
+				</details>
+			</div>
 
-		<div class='example'>
-			<strong>Example:</strong> A 0.30 kg cart is launched by a spring compressed 15 cm. The spring constant is 120 N/m. What launch speed should the cart have?
-			<details>
-				<summary>solution</summary>
-				Convert the spring compression to meters.
-				$$15=0.15$$
-				$$\tfrac{1}{2}kx^2=\tfrac{1}{2}mv^2$$
-				$$\tfrac{1}{2}(120)(0.15)^2=\tfrac{1}{2}(0.30)v^2$$
-				$$1.35=0.15v^2$$
-				$$v^2=9$$
-				$$v=\sqrt{9}$$
-				$$v=3.0\,\mathrm{m/s}$$
-			</details>
-		</div>
+			<div class='example' data-topic="Conservation of Energy">
+				<strong>Example:</strong> A 70 kg skier starts from rest at the top of a 12 m tall hill. Ignoring friction, how fast is the skier moving at the bottom? Why doesn't the mass matter?
+				<details>
+					<summary>solution</summary>
+					$$U_{gi} = K_f$$
+					$$mgh = \tfrac{1}{2}mv^{2}$$
+					$$(70)(9.8)(12) = \tfrac{1}{2}(70)v^{2}$$
+					$$8232 = 35v^{2}$$
+					$$v^{2} = 235$$
+					$$v = 15.3\,\mathrm{\tfrac{m}{s}}$$
+					<p>A heavier skier starts with more gravitational potential energy, but also needs more kinetic energy to reach the same speed. The two effects cancel exactly.</p>
+				</details>
+			</div>
 
-		<div class='example'>
-			<strong>Example:</strong> A 2.0 kg cart starts from rest and rolls down a 5.0 m long ramp. What is its speed at the bottom?
-			<details>
-				<summary>answer</summary>
-				This cannot be solved from the information given. Conservation of energy needs the vertical height change, not just the length of the ramp.
-			</details>
-		</div>
+			<div class='example' data-topic="Conservation of Energy">
+				<strong>Example:</strong> A 0.40 kg ball is moving at 3.0 m/s when it is 1.2 m above the floor. Ignoring air resistance, how fast is it moving when it reaches the floor?
+				<details>
+					<summary>solution</summary>
+					<p>The ball starts with both kinetic and gravitational potential energy. Choose the floor as zero height.</p>
+					$$K_i + U_{gi} = K_f + U_{gf}$$
+					$$\tfrac{1}{2}mu^{2} + mgh = \tfrac{1}{2}mv^{2} + 0$$
+					$$\tfrac{1}{2}(0.40)(3.0)^{2} + (0.40)(9.8)(1.2) = \tfrac{1}{2}(0.40)v^{2}$$
+					$$1.8 + 4.70 = 0.20v^{2}$$
+					$$6.50 = 0.20v^{2}$$
+					$$v^{2} = 32.5$$
+					$$v = 5.70\,\mathrm{\tfrac{m}{s}}$$
+					<p>The direction the ball was moving at 3.0 m/s doesn't matter. Energy is a scalar.</p>
+				</details>
+			</div>
 
-		<div class='example'>
-			<strong>Example:</strong> A 0.60 kg cart moving at 2.0 m/s compresses a 150 N/m spring on a level frictionless track. How far does the spring compress before the cart stops?
-			<details>
-				<summary>solution</summary>
-				Kinetic energy becomes spring potential energy.
-				$$K_i=U_{sf}$$
-				$$\tfrac{1}{2}mv^2=\tfrac{1}{2}kx^2$$
-				$$\tfrac{1}{2}(0.60)(2.0)^2=\tfrac{1}{2}(150)x^2$$
-				$$1.2=75x^2$$
-				$$x^2=0.016$$
-				$$x=\sqrt{0.016}$$
-				$$x=0.126\,\mathrm{m}$$
-			</details>
-		</div>
+			<div class='example' data-topic="Conservation of Energy">
+				<strong>Question:</strong> From the top of a cliff, you throw one rock straight up at 10 m/s and an identical rock straight down at 10 m/s. Ignoring air resistance, which rock is moving faster when it hits the ground below?
+				<details>
+					<summary>answer</summary>
+					<p>They hit the ground at the same speed.</p>
+					<p>Both rocks start at the same height with the same speed, so they start with the same total energy. Energy is a scalar, so the direction of the throw doesn't matter. The rock thrown up rises, stops, and falls back past the cliff edge moving down at 10 m/s, just like the other rock.</p>
+				</details>
+			</div>
 
-		<div class='example'>
-			<strong>Example:</strong> A spring with k = 80 N/m is compressed 0.25 m and launches a 0.50 kg cart up a frictionless ramp. If the cart leaves the spring at the bottom of the ramp, how high does it rise before stopping?
-			<details>
-				<summary>solution</summary>
-				Spring potential energy becomes gravitational potential energy.
-				$$U_{si}=U_{gf}$$
-				$$\tfrac{1}{2}kx^2=mgh$$
-				$$\tfrac{1}{2}(80)(0.25)^2=(0.50)(9.8)h$$
-				$$2.5=4.9h$$
-				$$h=\frac{2.5}{4.9}$$
-				$$h=0.510\,\mathrm{m}$$
-			</details>
-		</div>
+			<div class='example' data-topic="Conservation of Energy">
+				<strong>Example:</strong> A cart moves at 7.0 m/s at the bottom of a frictionless track. It reaches the top of a hill still moving at 3.0 m/s. How tall is the hill?
+				<details>
+					<summary>solution</summary>
+					$$K_i + U_{gi} = K_f + U_{gf}$$
+					$$\tfrac{1}{2}mu^{2} + 0 = \tfrac{1}{2}mv^{2} + mgh$$
+					$$\tfrac{1}{2}\cancel{m}(7.0)^{2} = \tfrac{1}{2}\cancel{m}(3.0)^{2} + \cancel{m}(9.8)h$$
+					$$24.5 = 4.5 + 9.8h$$
+					$$20 = 9.8h$$
+					$$h = 2.04\,\mathrm{m}$$
+				</details>
+			</div>
 
-		<div class='example'>
-			<strong>Example:</strong> A 0.25 kg ball is launched upward by a spring and leaves the spring moving at 7.0 m/s. How high above the launch point does it rise?
-			<details>
-				<summary>solution</summary>
-				After the ball leaves the spring, kinetic energy becomes gravitational potential energy.
-				$$K_i=U_{gf}$$
-				$$\tfrac{1}{2}mv^2=mgh$$
-				$$\tfrac{1}{2}(0.25)(7.0)^2=(0.25)(9.8)h$$
-				$$6.125=2.45h$$
-				$$h=\frac{6.125}{2.45}$$
-				$$h=2.50\,\mathrm{m}$$
-			</details>
-		</div>
+			<div class='example printout-ignore' data-topic="Conservation of Energy">
+				<strong>Example:</strong> A 0.50 kg glider moving at 2.0 m/s runs into a spring bumper and stops after compressing it 0.20 m. What is the spring constant?
+				<details>
+					<summary>solution</summary>
+					$$K_i = U_{sf}$$
+					$$\tfrac{1}{2}mu^{2} = \tfrac{1}{2}kx^{2}$$
+					$$\tfrac{1}{2}(0.50)(2.0)^{2} = \tfrac{1}{2}k(0.20)^{2}$$
+					$$1.0 = 0.020k$$
+					$$k = 50\,\mathrm{\tfrac{N}{m}}$$
+				</details>
+			</div>
 
-		<div class='example'>
-			<strong>Example:</strong> A 2.0 kg cart starts at rest 5.0 m above the bottom of a frictionless track. How fast is it moving when it is still 1.5 m above the bottom?
-			<details>
-				<summary>solution</summary>
-				Use only the drop in height, not the total height above the bottom.
-				$$\Delta h=5.0-1.5$$
-				$$\Delta h=3.5$$
-				$$mg\Delta h=\tfrac{1}{2}mv^2$$
-				$$(2.0)(9.8)(3.5)=\tfrac{1}{2}(2.0)v^2$$
-				$$68.6=v^2$$
-				$$v=\sqrt{68.6}$$
-				$$v=8.28\,\mathrm{m/s}$$
-			</details>
-		</div>
+			<div class='example' data-topic="Conservation of Energy">
+				<strong>Example:</strong> A 1.2 kg ball is thrown straight up at 5.0 m/s. A motion sensor shows that the ball stops rising after 0.51 s. Use kinematics to find how high it rises, then check your answer with conservation of energy.
+				<details>
+					<summary>solution</summary>
+					<div class="col-group">
+						<div>
+					$$\text{kinematics}$$
+					$$\Delta y = u\Delta t + \tfrac{1}{2}a\Delta t^{2}$$
+					$$\Delta y = (5.0)(0.51) + \tfrac{1}{2}(-9.8)(0.51)^{2}$$
+					$$\Delta y = 1.28\,\mathrm{m}$$
+						</div>
+						<div>
+					$$\text{energy}$$
+					$$K_i = U_{gf}$$
+					$$\tfrac{1}{2}mu^{2} = mgh$$
+					$$\tfrac{1}{2}(1.2)(5.0)^{2} = (1.2)(9.8)h$$
+					$$15 = 11.76h$$
+					$$h = 1.28\,\mathrm{m}$$
+						</div>
+					</div>
+					<p>The two methods agree. The energy method didn't need the time.</p>
+				</details>
+			</div>
 
-		<div class='example'>
-			<strong>Example:</strong> A 70 kg skier starts from rest at the top of a 12 m hill. Ignoring friction, what speed does the skier have at the bottom, and why did the mass not matter?
-			<details>
-				<summary>solution</summary>
-				Both gravitational potential energy and kinetic energy contain mass, so mass cancels.
-				$$mgh=\tfrac{1}{2}mv^2$$
-				$$(70)(9.8)(12)=\tfrac{1}{2}(70)v^2$$
-				$$8232=35v^2$$
-				$$v=\sqrt{\frac{8232}{35}}$$
-				$$v=15.3\,\mathrm{m/s}$$
-				<p>The mass does not matter because a heavier skier has more starting energy but also needs more energy for the same speed.</p>
-			</details>
-		</div>
+			<div class='example' data-topic="Conservation of Energy">
+				<strong>Example:</strong> A 900 kg car is moving at 18 km/h. If all of its kinetic energy could be stored in a giant spring bumper with k = 20 000 N/m, how far would the spring compress?
+				<details>
+					<summary>solution</summary>
+					$$18\,\mathrm{\tfrac{\textcolor{DeepPink}{km}}{\textcolor{DodgerBlue}{h}}}\left(\frac{1000\,\mathrm{m}}{1\,\textcolor{DeepPink}{\mathrm{km}}}\right)\left(\frac{1\,\textcolor{DodgerBlue}{\mathrm{h}}}{3600\,\mathrm{s}}\right)$$
+					$$5.0\,\mathrm{\tfrac{m}{s}}$$
+					<br>
+					$$K_i = U_{sf}$$
+					$$\tfrac{1}{2}mu^{2} = \tfrac{1}{2}kx^{2}$$
+					$$\tfrac{1}{2}(900)(5.0)^{2} = \tfrac{1}{2}(20\,000)x^{2}$$
+					$$11\,250 = 10\,000x^{2}$$
+					$$x^{2} = 1.125$$
+					$$x = 1.06\,\mathrm{m}$$
+					<p>Even at a slow 18 km/h, a car needs a very stiff spring and more than a meter to stop gently.</p>
+				</details>
+			</div>
 
-		<div class='example'>
-			<strong>Example:</strong> A 0.40 kg ball moving at 3.0 m/s is 1.2 m above the floor. If it later reaches the floor with no energy lost, what is its speed there?
-			<details>
-				<summary>solution</summary>
-				The ball starts with both kinetic and gravitational potential energy.
-				$$K_i+U_{gi}=K_f$$
-				$$\tfrac{1}{2}mv_i^2+mgh=\tfrac{1}{2}mv_f^2$$
-				$$\tfrac{1}{2}(0.40)(3.0)^2+(0.40)(9.8)(1.2)=\tfrac{1}{2}(0.40)v_f^2$$
-				$$1.8+4.704=0.20v_f^2$$
-				$$6.504=0.20v_f^2$$
-				$$v_f=\sqrt{32.52}$$
-				$$v_f=5.71\,\mathrm{m/s}$$
-			</details>
-		</div>
+			<div class='example' data-topic="Conservation of Energy" data-hard>
+				<strong>Example:</strong> A 0.20 kg cart starts at rest against a spring compressed 10 cm. The spring constant is 180 N/m. The cart leaves the spring and climbs a frictionless track. What is its speed after it rises 0.50 m?
+				<details>
+					<summary>solution</summary>
+					$$10\,\mathrm{cm} = 10(0.01)\,\mathrm{m}$$
+					$$10\,\mathrm{cm} = 0.10\,\mathrm{m}$$
+					<br>
+					$$U_{si} = K_f + U_{gf}$$
+					$$\tfrac{1}{2}kx^{2} = \tfrac{1}{2}mv^{2} + mgh$$
+					$$\tfrac{1}{2}(180)(0.10)^{2} = \tfrac{1}{2}(0.20)v^{2} + (0.20)(9.8)(0.50)$$
+					$$0.90 = 0.10v^{2} + 0.98$$
+					$$-0.08 = 0.10v^{2}$$
+					<p>A squared speed can't be negative, so the cart never reaches 0.50 m. The spring only stores 0.90 J, but rising 0.50 m takes 0.98 J. The cart's highest point is:</p>
+					$$0.90 = (0.20)(9.8)h$$
+					$$h = 0.46\,\mathrm{m}$$
+				</details>
+			</div>
 
-		<div class='example'>
-			<strong>Example:</strong> A cart moves at 7.0 m/s at the bottom of a frictionless track. It reaches the top of a hill moving at 3.0 m/s. How high is the hill?
-			<details>
-				<summary>solution</summary>
-				Some of the cart's kinetic energy becomes gravitational potential energy.
-				$$K_i=K_f+U_g$$
-				$$\tfrac{1}{2}mv_i^2=\tfrac{1}{2}mv_f^2+mgh$$
-				$$\tfrac{1}{2}m(7.0)^2=\tfrac{1}{2}m(3.0)^2+m(9.8)h$$
-				$$24.5m=4.5m+9.8mh$$
-				$$24.5=4.5+9.8h$$
-				$$20=9.8h$$
-				$$h=\frac{20}{9.8}$$
-				$$h=2.04\,\mathrm{m}$$
-			</details>
-		</div>
+			<div class='example printout-ignore' data-topic="Conservation of Energy" data-hard>
+				<strong>Example:</strong> A 0.50 kg cart starts at rest against a spring compressed 20 cm. The spring constant is 250 N/m. The cart leaves the spring, climbs a frictionless hill, and is still moving at 3.0 m/s at the top. How tall is the hill?
+				<details>
+					<summary>solution</summary>
+					$$20\,\mathrm{cm} = 20(0.01)\,\mathrm{m}$$
+					$$20\,\mathrm{cm} = 0.20\,\mathrm{m}$$
+					<br>
+					$$U_{si} = K_f + U_{gf}$$
+					$$\tfrac{1}{2}kx^{2} = \tfrac{1}{2}mv^{2} + mgh$$
+					$$\tfrac{1}{2}(250)(0.20)^{2} = \tfrac{1}{2}(0.50)(3.0)^{2} + (0.50)(9.8)h$$
+					$$5.0 = 2.25 + 4.9h$$
+					$$2.75 = 4.9h$$
+					$$h = 0.561\,\mathrm{m}$$
+				</details>
+			</div>
 
-		<div class='example'>
-			<strong>Example:</strong> A 0.50 kg glider moving at 2.0 m/s reaches a compressed spring and stops after compressing it 0.20 m. What is the spring constant?
-			<details>
-				<summary>solution</summary>
-				Kinetic energy becomes spring potential energy.
-				$$K_i=U_{sf}$$
-				$$\tfrac{1}{2}mv^2=\tfrac{1}{2}kx^2$$
-				$$\tfrac{1}{2}(0.50)(2.0)^2=\tfrac{1}{2}k(0.20)^2$$
-				$$1=0.020k$$
-				$$k=\frac{1}{0.020}$$
-				$$k=50\,\mathrm{N/m}$$
-			</details>
-		</div>
+			<div class='example' data-topic="Conservation of Energy" data-hard>
+				<strong>Example:</strong> A 0.30 kg block slides from rest down a frictionless track, dropping 1.4 m in height. At the bottom it runs into a 400 N/m spring. How far does the spring compress when the block first stops?
+				<details>
+					<summary>solution</summary>
+					<p>At the end the block is stopped, so all the lost gravitational potential energy is stored in the spring.</p>
+					$$U_{gi} = U_{sf}$$
+					$$mgh = \tfrac{1}{2}kx^{2}$$
+					$$(0.30)(9.8)(1.4) = \tfrac{1}{2}(400)x^{2}$$
+					$$4.12 = 200x^{2}$$
+					$$x^{2} = 0.0206$$
+					$$x = 0.143\,\mathrm{m}$$
+				</details>
+			</div>
 
-		<div class='example'>
-			<strong>Example:</strong> A 1.2 kg ball is thrown straight upward at 5.0 m/s. A motion sensor shows the ball stops rising after 0.51 s. Use motion from earlier in the course to find the height, then check the result with energy.
-			<details>
-				<summary>solution</summary>
-				At the top, vertical speed has gone to zero. Use vertical motion to find the height.
-				$$\Delta y=u\Delta t+\tfrac{1}{2}a\Delta t^2$$
-				$$\Delta y=(5.0)(0.51)+\tfrac{1}{2}(-9.8)(0.51)^2$$
-				$$\Delta y=1.28$$
-				Now compare with energy.
-				$$\tfrac{1}{2}mv^2=mgh$$
-				$$\tfrac{1}{2}(1.2)(5.0)^2=(1.2)(9.8)h$$
-				$$15=11.76h$$
-				$$h=\frac{15}{11.76}$$
-				$$h=1.28\,\mathrm{m}$$
-			</details>
-		</div>
+			<div class='example' data-topic="Conservation of Energy" data-hard>
+				<strong>Example:</strong> A 0.010 kg bullet is fired into a 2.0 kg wooden block hanging from strings. The bullet stays in the block, and the block swings up 0.32 m. How fast was the bullet moving?
+				<details>
+					<summary>solution</summary>
+					<p>Work backward. Use conservation of energy for the swing, then conservation of <a href="../../momentum/conservation/index.html">momentum</a> for the collision.</p>
+					$$\text{swing}$$
+					$$K_i = U_{gf}$$
+					$$\tfrac{1}{2}\cancel{m}v^{2} = \cancel{m}gh$$
+					$$\tfrac{1}{2}v^{2} = (9.8)(0.32)$$
+					$$v^{2} = 6.27$$
+					$$v = 2.50\,\mathrm{\tfrac{m}{s}}$$
+					<br>
+					$$\text{collision}$$
+					$$m_1u_1 + m_2u_2 = (m_1 + m_2)v$$
+					$$(0.010)u_1 + (2.0)(0) = (2.010)(2.50)$$
+					$$0.010u_1 = 5.03$$
+					$$u_1 = 503\,\mathrm{\tfrac{m}{s}}$$
+					<p>Kinetic energy isn't conserved in the collision, because the bullet sticking in the wood produces heat. That's why we use momentum for the collision and energy only for the swing.</p>
+				</details>
+			</div>
 
-		<div class='example'>
-			<strong>Example:</strong> A 900 kg car is moving at 18 km/h on a level road. If all of its kinetic energy could be stored in a spring with k = 20 000 N/m, how far would the spring compress?
-			<details>
-				<summary>solution</summary>
-				Convert the speed first.
-				$$18=5.0$$
-				$$K_i=U_{sf}$$
-				$$\tfrac{1}{2}mv^2=\tfrac{1}{2}kx^2$$
-				$$\tfrac{1}{2}(900)(5.0)^2=\tfrac{1}{2}(20\,000)x^2$$
-				$$11250=10000x^2$$
-				$$x^2=1.125$$
-				$$x=\sqrt{1.125}$$
-				$$x=1.06\,\mathrm{m}$$
-			</details>
-		</div>
+			<div class='example' data-topic="Perfectly Elastic Collisions">
+				<strong>Example:</strong> Two equal-mass hockey pucks collide elastically on frictionless ice. Puck A moves right at 4.0 m/s, and puck B moves left at 1.0 m/s. What are their velocities after the collision?
+				<details>
+					<summary>solution</summary>
+					<p>In an elastic collision between equal masses, the objects trade velocities.</p>
+					$$v_A = -1.0\,\mathrm{\tfrac{m}{s}}$$
+					$$v_B = 4.0\,\mathrm{\tfrac{m}{s}}$$
+					<p>Puck A now moves left at 1.0 m/s, and puck B moves right at 4.0 m/s.</p>
+				</details>
+			</div>
 
-		<div class='example'>
-			<strong>Example:</strong> A 0.20 kg cart starts at rest on a spring compressed 10 cm. The spring constant is 180 N/m. The cart leaves the spring and climbs a frictionless track. What speed does it have after rising 0.50 m?
-			<details>
-				<summary>solution</summary>
-				The spring energy becomes both kinetic energy and gravitational potential energy.
-				$$10=0.10$$
-				$$U_{si}=K_f+U_{gf}$$
-				$$\tfrac{1}{2}kx^2=\tfrac{1}{2}mv^2+mgh$$
-				$$\tfrac{1}{2}(180)(0.10)^2=\tfrac{1}{2}(0.20)v^2+(0.20)(9.8)(0.50)$$
-				$$0.90=0.10v^2+0.98$$
-				$$-0.08=0.10v^2$$
-				$$v^2=-0.80$$
-				<p>A real speed cannot have a negative square, so the cart cannot reach 0.50 m.</p>
-			</details>
-		</div>
+			<div class='example' data-topic="Perfectly Elastic Collisions" data-hard>
+				<strong>Example:</strong> A 2.0 kg cart moving right at 4.0 m/s collides elastically with a 6.0 kg cart at rest. After the collision, the 2.0 kg cart bounces left at 2.0 m/s. Use conservation of momentum to find the 6.0 kg cart's velocity, then check that kinetic energy is conserved.
+				<details>
+					<summary>solution</summary>
+					$$m_1u_1 + m_2u_2 = m_1v_1 + m_2v_2$$
+					$$(2.0)(4.0) + (6.0)(0) = (2.0)(-2.0) + (6.0)v_2$$
+					$$8.0 = -4.0 + 6.0v_2$$
+					$$v_2 = 2.0\,\mathrm{\tfrac{m}{s}}$$
+					<br>
+					<div class="col-group">
+						<div>
+					$$\text{before}$$
+					$$K = \tfrac{1}{2}(2.0)(4.0)^{2}$$
+					$$K = 16\,\mathrm{J}$$
+						</div>
+						<div>
+					$$\text{after}$$
+					$$K = \tfrac{1}{2}(2.0)(-2.0)^{2} + \tfrac{1}{2}(6.0)(2.0)^{2}$$
+					$$K = 4.0 + 12$$
+					$$K = 16\,\mathrm{J}$$
+						</div>
+					</div>
+					<p>The kinetic energy is the same before and after, so the collision really is elastic. You can also check with the elastic collision equations on this page.</p>
+				</details>
+			</div>
+			<div class='example'>
+				<p><strong>Reading (6 minutes):</strong> Read <a href="https://www.snexplores.org/article/explainer-kinetic-potential-energy-physics">Explainer: Kinetic and potential energy</a> from Science News Explores. Then answer these questions.</p>
 
-		<div class='example'>
-			<strong>Example:</strong> A 0.50 kg cart starts at rest on a spring compressed 20 cm. The spring constant is 250 N/m. The cart leaves the spring, climbs a frictionless hill, and is still moving at 3.0 m/s at the top. How high is the hill?
-			<details>
-				<summary>solution</summary>
-				Spring energy becomes kinetic energy and gravitational potential energy.
-				$$20=0.20$$
-				$$U_{si}=K_f+U_{gf}$$
-				$$\tfrac{1}{2}kx^2=\tfrac{1}{2}mv^2+mgh$$
-				$$\tfrac{1}{2}(250)(0.20)^2=\tfrac{1}{2}(0.50)(3.0)^2+(0.50)(9.8)h$$
-				$$5=2.25+4.9h$$
-				$$2.75=4.9h$$
-				$$h=\frac{2.75}{4.9}$$
-				$$h=0.561\,\mathrm{m}$$
-			</details>
-		</div>
+				Why does doubling an object's speed make its kinetic energy four times larger rather than two times larger?
+				<details>
+					<summary>answer</summary>
+					<p>Kinetic energy depends on speed squared. Doubling the speed multiplies the squared speed by four.</p>
+				</details>
+				<br>
 
-		<div class='example'>
-			<strong>Example:</strong> A 0.30 kg block slides down from rest, drops 1.4 m in height, and then compresses a 400 N/m spring on a frictionless track. How far does the spring compress when the block first stops?
-			<details>
-				<summary>solution</summary>
-				At the final moment the block is stopped, so the lost gravitational potential energy is stored in the spring.
-				$$U_{gi}=U_{sf}$$
-				$$mg\Delta h=\tfrac{1}{2}kx^2$$
-				$$(0.30)(9.8)(1.4)=\tfrac{1}{2}(400)x^2$$
-				$$4.116=200x^2$$
-				$$x^2=0.02058$$
-				$$x=\sqrt{0.02058}$$
-				$$x=0.143\,\mathrm{m}$$
-			</details>
-		</div>
+				A skateboarder rolls up a ramp and slows down. What energy change is taking place, and what happens as the skateboarder rolls back down?
+				<details>
+					<summary>answer</summary>
+					<p>As the skateboarder rises, kinetic energy changes into gravitational potential energy. On the way down, gravitational potential energy changes back into kinetic energy.</p>
+				</details>
+				<br>
 
-		<div class='example'>
-			<strong>Example:</strong> Two carts collide elastically on a level track. A 0.40 kg cart moving right at 3.0 m/s hits a 0.40 kg cart at rest. What are their final velocities?
-			<details>
-				<summary>solution</summary>
-				For a perfectly elastic collision between equal masses, the moving cart transfers its velocity to the cart at rest.
-				$$v_1=0\,\mathrm{m/s}$$
-				$$v_2=3.0\,\mathrm{m/s}$$
-				<p>The first cart stops, and the second cart moves right at 3.0 m/s.</p>
-			</details>
-		</div>
+				The article compares doubling mass with doubling speed. Which change has the larger effect on kinetic energy, and why?
+				<details>
+					<summary>answer</summary>
+					<p>Doubling speed has the larger effect because it makes kinetic energy four times larger. Doubling mass only doubles kinetic energy.</p>
+				</details>
+			</div>
+		</details>
 
-		<div class='example'>
-			<strong>Example:</strong> Two equal-mass pucks collide elastically on frictionless ice. Puck A moves right at 4.0 m/s, and puck B moves left at 1.0 m/s before the collision. What are their velocities after the collision?
-			<details>
-				<summary>solution</summary>
-				For a perfectly elastic collision between equal masses, the objects trade velocities.
-				$$v_A=-1.0\,\mathrm{m/s}$$
-				$$v_B=4.0\,\mathrm{m/s}$$
-				<p>Puck A moves left at 1.0 m/s, and puck B moves right at 4.0 m/s.</p>
-			</details>
-		</div>
-
-		<div class='example'>
-			<strong>Example:</strong> A 2.0 kg cart moving right at 4.0 m/s collides elastically with a 6.0 kg cart at rest on a low-friction track. After the collision, the 2.0 kg cart bounces left at 2.0 m/s. Use momentum from earlier and energy from this page to find the 6.0 kg cart's final speed, then check that kinetic energy is conserved.
-			<details>
-				<summary>solution</summary>
-				Use momentum first.
-				$$m_1u_1+m_2u_2=m_1v_1+m_2v_2$$
-				$$(2.0)(4.0)+(6.0)(0)=(2.0)(-2.0)+(6.0)v_2$$
-				$$8.0=-4.0+6.0v_2$$
-				$$v_2=2.0\,\mathrm{m/s}$$
-				Now check kinetic energy.
-				$$K_i=\tfrac{1}{2}(2.0)(4.0)^2$$
-				$$K_i=16$$
-				$$K_f=\tfrac{1}{2}(2.0)(-2.0)^2+\tfrac{1}{2}(6.0)(2.0)^2$$
-				$$K_f=16\,\mathrm{J}$$
-			</details>
-		</div>
-
-		<div class='example'>
-			<p><strong>Reading (6 minutes):</strong> Read <a href="https://www.snexplores.org/article/explainer-kinetic-potential-energy-physics">Explainer: Kinetic and potential energy</a> from Science News Explores. Then answer these questions.</p>
-
-			Why does doubling an object's speed make its kinetic energy four times larger rather than two times larger?
-			<details>
-				<summary>answer</summary>
-				<p>Kinetic energy depends on speed squared. Doubling the speed multiplies the squared speed by four.</p>
-			</details>
-			<br>
-
-			A skateboarder rolls up a ramp and slows down. What energy change is taking place, and what happens as the skateboarder rolls back down?
-			<details>
-				<summary>answer</summary>
-				<p>As the skateboarder rises, kinetic energy changes into gravitational potential energy. On the way down, gravitational potential energy changes back into kinetic energy.</p>
-			</details>
-			<br>
-
-			The article compares doubling mass with doubling speed. Which change has the larger effect on kinetic energy, and why?
-			<details>
-				<summary>answer</summary>
-				<p>Doubling speed has the larger effect because it makes kinetic energy four times larger. Doubling mass only doubles kinetic energy.</p>
-			</details>
-		</div>
 	</article>
 	<footer>
 		<a href="../../../">Back</a>
@@ -1214,6 +1204,7 @@
 	<script>
 		renderMathInElement(document.body);
 	</script>
+	<script defer src="../../../lib/practice-labels.js"></script>
 </body>
 
 </html>

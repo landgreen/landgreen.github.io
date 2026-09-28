@@ -429,3 +429,79 @@ footer a {
     display: block;
   }
 }
+/* Practice topic tags (lib/practice-labels.js) ______________________________*/
+.practice-tag-toggle {
+  display: block;
+  margin: 1.5em 0 0 0;
+  cursor: pointer;
+  user-select: none;
+}
+
+.practice-tag-toggle input {
+  width: auto;
+  margin: 0 0.4em 0 0;
+  vertical-align: middle;
+}
+
+.practice-tags {
+  display: none;
+  margin-bottom: 0.4em;
+}
+
+.show-practice-tags .practice-tags {
+  display: block;
+}
+
+.practice-tag {
+  display: inline-block;
+  padding: 0.1em 0.7em;
+  margin-right: 0.4em;
+  border-radius: 1em;
+  font-size: 0.8em;
+  color: #345;
+  background-color: var(--def-color);
+}
+
+.practice-tag-hard {
+  color: #fff;
+  background-color: #e06;
+}
+
+.practice-menu {
+  margin: 2em 0;
+}
+
+.practice-menu > summary {
+  font-size: 1.2em;
+  padding: 0.6em 1em;
+  border-radius: 0.5em;
+  background-color: var(--def-color);
+}
+
+.practice-menu[open] > summary {
+  margin-bottom: 1em;
+}
+
+.practice-compact .practice-menu > summary {
+  padding: 0.6em 0;
+  background-color: transparent;
+}
+
+.practice-intro p {
+  margin: 0 0 0.8em 0;
+}
+
+.practice-intro .practice-controls {
+  margin: 0;
+}
+
+.practice-controls .practice-tag-toggle {
+  display: inline;
+  margin: 0;
+}
+
+.practice-controls .practice-printout-link {
+  float: right;
+  position: static;
+  font-size: 1em;
+}

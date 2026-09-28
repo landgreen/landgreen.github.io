@@ -312,239 +312,321 @@
         </details>
         </div>
     </article>
-	<article>
-<h1 class='underlined'>Practice <a class="printout-link" href="../../../output/pdf/momentum-conservation-practice-questions.pdf">printout.pdf</a></h1>
-		<p>
-			In case you wanted more practice I used AI to make some more problems. The rest of the site I made by hand, but generating endless problems seemed safe. I did find mistakes in the AI generated problems, and there are probably some I didn't find. Let me know if something could be fixed. I also added a practice problem on each page with no solution. That's intentional. Have fun!
-		</p>
+	<article class="practice-compact">
+		<details class="practice-menu">
+			<summary>practice problems (19)</summary>
+			<div class="derive practice-intro">
+				<p>
+					In case you wanted more practice I used AI to make some more problems. The rest of the site I made by hand, but generating endless problems seemed safe. I did find mistakes in the AI generated problems, and there are probably some I didn't find. Let me know if something could be fixed. I also added a practice problem on each page with no solution. That's intentional. Have fun!
+				</p>
+				<p class="practice-controls">
+					<a class="printout-link practice-printout-link" href="../../../output/pdf/momentum-conservation-practice-questions.pdf">printout.pdf</a>
+					<label class="practice-tag-toggle"><input type="checkbox"> show topics and mark harder problems</label>
+				</p>
+			</div>
 
-		<div class='example'>
-			<strong>Example:</strong> On a low-friction track, a 2000 g cart moves right at 3 m/s while a 1000 g cart waits at rest. What is the total momentum of the two-cart system?
-			<details>
-				<summary>solution</summary>
-				$$2000=2$$
-				$$1000=1$$
-				$$p_t=m_1u_1+m_2u_2$$
-				$$p_t=(2)(3)+(1)(0)$$
-				$$p_t=6\,\mathrm{kg\,m/s}$$
-			</details>
-		</div>
+			<div class='example' data-topic="Conservation of Momentum">
+				<strong>Example:</strong> On a low-friction track, a 500 g cart moves right at 0.80 m/s while a 250 g cart waits at rest. What is the total momentum of the two-cart system?
+				<details>
+					<summary>solution</summary>
+					$$500\,\textcolor{DeepPink}{\mathrm{g}}\left(\frac{1\,\mathrm{kg}}{1000\,\textcolor{DeepPink}{\mathrm{g}}}\right)$$
+					$$0.50\,\mathrm{kg}$$
+					$$250\,\textcolor{DeepPink}{\mathrm{g}}\left(\frac{1\,\mathrm{kg}}{1000\,\textcolor{DeepPink}{\mathrm{g}}}\right)$$
+					$$0.25\,\mathrm{kg}$$
+					<br>
+					$$\sum p = m_1u_1 + m_2u_2$$
+					$$\sum p = (0.50)(0.80) + (0.25)(0)$$
+					$$\sum p = 0.40\,\mathrm{kg\tfrac{m}{s}}$$
+					<p>After the carts collide, the total momentum will still be 0.40 kg m/s.</p>
+				</details>
+			</div>
 
-		<div class='example'>
-			<strong>Example:</strong> A 4 kg cart moves right at 2 m/s and a 2 kg cart moves left at 3 m/s. What is the total momentum? Use right as positive.
-			<details>
-				<summary>solution</summary>
-				$$p_t=m_1u_1+m_2u_2$$
-				$$p_t=(4)(2)+(2)(-3)$$
-				$$p_t=2\,\mathrm{kg\,m/s}$$
-				<p>The total momentum is 2 kg m/s to the right.</p>
-			</details>
-		</div>
+			<div class='example' data-topic="Conservation of Momentum">
+				<strong>Example:</strong> A 4.0 kg cart moves right at 2.0 m/s, and a 2.0 kg cart moves left at 3.0 m/s. What is the total momentum? Let right be positive.
+				<details>
+					<summary>solution</summary>
+					$$\sum p = m_1u_1 + m_2u_2$$
+					$$\sum p = (4.0)(2.0) + (2.0)(-3.0)$$
+					$$\sum p = 8.0 - 6.0$$
+					$$\sum p = 2.0\,\mathrm{kg\tfrac{m}{s}}$$
+					<p>The total momentum is 2.0 kg m/s to the right. The two momenta partly cancel because they point in opposite directions.</p>
+				</details>
+			</div>
 
-		<div class='example'>
-			<strong>Example:</strong> A 2 kg cart moving right at 3 m/s collides with a 1 kg cart at rest. After the collision, the 2 kg cart moves right at 1 m/s. What is the final velocity of the 1 kg cart?
-			<details>
-				<summary>solution</summary>
-				$$m_1u_1+m_2u_2=m_1v_1+m_2v_2$$
-				$$(2)(3)+(1)(0)=(2)(1)+(1)v_2$$
-				$$6=2+v_2$$
-				$$v_2=4\,\mathrm{m/s}$$
-			</details>
-		</div>
+			<div class='example' data-topic="Conservation of Momentum" data-hard>
+				<strong>Example:</strong> A 2.0 kg cart moving right at 3.0 m/s collides with a 1.0 kg cart at rest. After the collision, the 2.0 kg cart moves right at 1.0 m/s. What is the final velocity of the 1.0 kg cart? The collision lasts 0.020 s. What average force does each cart feel?
+				<details>
+					<summary>solution</summary>
+					$$m_1 = 2.0\,\mathrm{kg}$$
+					$$u_1 = 3.0\,\mathrm{\tfrac{m}{s}}$$
+					$$v_1 = 1.0\,\mathrm{\tfrac{m}{s}}$$
+					$$m_2 = 1.0\,\mathrm{kg}$$
+					$$u_2 = 0$$
+					$$v_2 = \,?$$
+					<br>
+					$$m_1u_1 + m_2u_2 = m_1v_1 + m_2v_2$$
+					$$(2.0)(3.0) + (1.0)(0) = (2.0)(1.0) + (1.0)v_2$$
+					$$6.0 = 2.0 + 1.0v_2$$
+					$$v_2 = 4.0\,\mathrm{\tfrac{m}{s}}$$
+					<br>
+					<p>Use the impulse equation from the <a href="../momentum/index.html#impulse">momentum</a> page for each cart.</p>
+					<div class="col-group">
+						<div>
+					$$\text{1.0 kg cart}$$
+					$$F\Delta t = mv - mu$$
+					$$F(0.020) = (1.0)(4.0) - (1.0)(0)$$
+					$$F = 200\,\mathrm{N}$$
+						</div>
+						<div>
+					$$\text{2.0 kg cart}$$
+					$$F\Delta t = mv - mu$$
+					$$F(0.020) = (2.0)(1.0) - (2.0)(3.0)$$
+					$$F = -200\,\mathrm{N}$$
+						</div>
+					</div>
+					<p>The forces are equal and opposite, just like Newton's third law says. That's why the total momentum doesn't change.</p>
+				</details>
+			</div>
 
-		<div class='example'>
-			<strong>Example:</strong> A 3 kg cart moving right at 4 m/s collides with a 2 kg cart moving left at 1 m/s. After the collision, the 3 kg cart moves right at 2 m/s. What is the final velocity of the 2 kg cart?
-			<details>
-				<summary>solution</summary>
-				$$m_1u_1+m_2u_2=m_1v_1+m_2v_2$$
-				$$(3)(4)+(2)(-1)=(3)(2)+(2)v_2$$
-				$$10=6+2v_2$$
-				$$4=2v_2$$
-				$$v_2=2\,\mathrm{m/s}$$
-			</details>
-		</div>
+			<div class='example' data-topic="Conservation of Momentum">
+				<strong>Example:</strong> At an amusement park, a 180 kg bumper car (including its rider) moving right at 4.0 m/s hits a 120 kg bumper car moving left at 1.0 m/s. After the collision, the 180 kg car moves right at 2.0 m/s. What is the velocity of the 120 kg car?
+				<details>
+					<summary>solution</summary>
+					<p>Let right be positive.</p>
+					$$m_1u_1 + m_2u_2 = m_1v_1 + m_2v_2$$
+					$$(180)(4.0) + (120)(-1.0) = (180)(2.0) + (120)v_2$$
+					$$720 - 120 = 360 + 120v_2$$
+					$$240 = 120v_2$$
+					$$v_2 = 2.0\,\mathrm{\tfrac{m}{s}}$$
+					<p>The 120 kg car reverses direction and now moves right at 2.0 m/s.</p>
+				</details>
+			</div>
 
-		<div class='example'>
-			<strong>Example:</strong> A 2 kg cart moving right at 21.6 km/h sticks to a 4 kg cart at rest after their Velcro bumpers connect. What is their final velocity?
-			<details>
-				<summary>solution</summary>
-				$$21.6=6$$
-				$$m_1u_1+m_2u_2=(m_1+m_2)v$$
-				$$(2)(6)+(4)(0)=(2+4)v$$
-				$$12=6v$$
-				$$v=2\,\mathrm{m/s}$$
-			</details>
-		</div>
+			<div class='example' data-topic="Perfectly Inelastic Collisions">
+				<strong>Example:</strong> A 90 kg linebacker running at 5.0 m/s tackles a 75 kg running back who is running straight toward him at 6.0 m/s. They hold on to each other. What is their velocity right after the tackle?
+				<details>
+					<summary>solution</summary>
+					<p>Let the linebacker's direction be positive. They stick together, so this is a perfectly inelastic collision.</p>
+					$$m_1u_1 + m_2u_2 = (m_1 + m_2)v$$
+					$$(90)(5.0) + (75)(-6.0) = (90 + 75)v$$
+					$$450 - 450 = 165v$$
+					$$0 = 165v$$
+					$$v = 0$$
+					<p>The two players stop dead. They had the same size momentum in opposite directions, so the total momentum was zero before the tackle and stays zero after it.</p>
+				</details>
+			</div>
 
-		<div class='example'>
-			<strong>Example:</strong> A 1.5 kg cart moving right at 8 m/s sticks to a 2.5 kg cart moving left at 2 m/s. What is their final velocity?
-			<details>
-				<summary>solution</summary>
-				$$m_1u_1+m_2u_2=(m_1+m_2)v$$
-				$$(1.5)(8)+(2.5)(-2)=(1.5+2.5)v$$
-				$$7=4v$$
-				$$v=1.75\,\mathrm{m/s}$$
-				<p>The carts move right after sticking together.</p>
-			</details>
-		</div>
+			<div class='example' data-topic="Perfectly Inelastic Collisions">
+				<strong>Example:</strong> A 1.5 kg lump of clay is thrown right at 8.0 m/s. It hits and sticks to a 2.5 kg cart that is rolling left at 2.0 m/s. What is their final velocity?
+				<details>
+					<summary>solution</summary>
+					$$m_1u_1 + m_2u_2 = (m_1 + m_2)v$$
+					$$(1.5)(8.0) + (2.5)(-2.0) = (1.5 + 2.5)v$$
+					$$12 - 5.0 = 4.0v$$
+					$$7.0 = 4.0v$$
+					$$v = 1.75\,\mathrm{\tfrac{m}{s}}$$
+					<p>The clay had more momentum, so the combined object moves right.</p>
+				</details>
+			</div>
 
-		<div class='example'>
-			<strong>Example:</strong> A 1 kg cart moving right at 5 m/s sticks to a 3 kg cart moving right at 1 m/s. What is their final velocity?
-			<details>
-				<summary>solution</summary>
-				$$m_1u_1+m_2u_2=(m_1+m_2)v$$
-				$$(1)(5)+(3)(1)=(1+3)v$$
-				$$8=4v$$
-				$$v=2\,\mathrm{m/s}$$
-			</details>
-		</div>
+			<div class='example' data-topic="Perfectly Inelastic Collisions">
+				<strong>Example:</strong> A 30 000 kg railroad car rolling at 2.0 m/s bumps into and couples with a 20 000 kg car rolling in the same direction at 0.50 m/s. How fast do the coupled cars move?
+				<details>
+					<summary>solution</summary>
+					$$m_1u_1 + m_2u_2 = (m_1 + m_2)v$$
+					$$(30\,000)(2.0) + (20\,000)(0.50) = (30\,000 + 20\,000)v$$
+					$$60\,000 + 10\,000 = 50\,000v$$
+					$$70\,000 = 50\,000v$$
+					$$v = 1.4\,\mathrm{\tfrac{m}{s}}$$
+					<p>The answer falls between the two starting speeds, which makes sense for objects that stick together.</p>
+				</details>
+			</div>
 
-		<div class='example'>
-			<strong>Example:</strong> A 5 kg cart moving right sticks to a 3 kg cart at rest after a strip of tape connects them. After they stick together, they move right at 2 m/s. How fast was the 5 kg cart moving before the collision?
-			<details>
-				<summary>solution</summary>
-				$$m_1u_1+m_2u_2=(m_1+m_2)v$$
-				$$(5)u_1+(3)(0)=(5+3)(2)$$
-				$$5u_1=16$$
-				$$u_1=3.2\,\mathrm{m/s}$$
-			</details>
-		</div>
+			<div class='example' data-topic="Perfectly Inelastic Collisions">
+				<strong>Example:</strong> A 0.010 kg bullet is fired into a 2.0 kg wooden block resting on ice. The bullet stays in the block, and the block slides away at 2.5 m/s. How fast was the bullet moving?
+				<details>
+					<summary>solution</summary>
+					$$m_1 = 0.010\,\mathrm{kg}$$
+					$$u_1 = \,?$$
+					$$m_2 = 2.0\,\mathrm{kg}$$
+					$$u_2 = 0$$
+					$$v = 2.5\,\mathrm{\tfrac{m}{s}}$$
+					<br>
+					$$m_1u_1 + m_2u_2 = (m_1 + m_2)v$$
+					$$(0.010)u_1 + (2.0)(0) = (0.010 + 2.0)(2.5)$$
+					$$0.010u_1 = 5.03$$
+					$$u_1 = \frac{5.03}{0.010}$$
+					$$u_1 = 503\,\mathrm{\tfrac{m}{s}}$$
+					<p>This is a real method, called a ballistic pendulum, for measuring bullet speeds. A slow, easy-to-measure block tells you the speed of a very fast bullet.</p>
+				</details>
+			</div>
 
-		<div class='example'>
-			<strong>Example:</strong> Two carts are initially at rest together. After a spring pushes them apart, a 2 kg cart moves right at 3 m/s. What is the velocity of the 3 kg cart?
-			<details>
-				<summary>solution</summary>
-				<p>The starting momentum is zero because both carts begin at rest.</p>
-				$$(m_1+m_2)u=m_1v_1+m_2v_2$$
-				$$(2+3)(0)=(2)(3)+(3)v_2$$
-				$$0=6+3v_2$$
-				$$v_2=-2\,\mathrm{m/s}$$
-				<p>The 3 kg cart moves left.</p>
-			</details>
-		</div>
+			<div class='example' data-topic="Conservation of Momentum">
+				<strong>Example:</strong> Two carts on a track are held together at rest with a compressed spring between them. When the spring is released, the 2.0 kg cart moves right at 3.0 m/s. What is the velocity of the 3.0 kg cart?
+				<details>
+					<summary>solution</summary>
+					<p>Both carts start at rest, so the starting momentum is zero.</p>
+					$$(m_1 + m_2)u = m_1v_1 + m_2v_2$$
+					$$(2.0 + 3.0)(0) = (2.0)(3.0) + (3.0)v_2$$
+					$$0 = 6.0 + 3.0v_2$$
+					$$-6.0 = 3.0v_2$$
+					$$v_2 = -2.0\,\mathrm{\tfrac{m}{s}}$$
+					<p>The 3.0 kg cart moves left. The heavier cart moves more slowly, so the two momenta still add to zero.</p>
+				</details>
+			</div>
 
-		<div class='example'>
-			<strong>Example:</strong> A 2 kg cart moving at 5 m/s sticks to another cart at rest. After the collision, both carts move together. What is their final velocity?
-			<details>
-				<summary>answer</summary>
-				This cannot be solved from the information given. Conservation of momentum also needs the mass of the cart that was initially at rest.
-			</details>
-		</div>
+			<div class='example' data-topic="Perfectly Inelastic Collisions">
+				<strong>Example:</strong> A 60 kg hockey player gliding at 5.0 m/s grabs onto a teammate who is standing still on the ice. They glide off together. What is their velocity?
+				<details>
+					<summary>solution</summary>
+					<p>This cannot be solved from the information given. Conservation of momentum needs the mass of the teammate. The more massive the teammate, the slower they'll glide together.</p>
+					$$(60)(5.0) + m_2(0) = (60 + m_2)v$$
+					<p>With two unknowns, m₂ and v, one equation isn't enough.</p>
+				</details>
+			</div>
 
-		<div class='example'>
-			<strong>Example:</strong> A 2 kg cart and a 1 kg cart move together at 4 m/s. They separate. After separating, the 2 kg cart moves right at 3 m/s. What is the velocity of the 1 kg cart?
-			<details>
-				<summary>solution</summary>
-				$$(m_1+m_2)u=m_1v_1+m_2v_2$$
-				$$(2+1)(4)=(2)(3)+(1)v_2$$
-				$$12=6+v_2$$
-				$$v_2=6\,\mathrm{m/s}$$
-			</details>
-		</div>
+			<div class='example' data-topic="Conservation of Momentum">
+				<strong>Example:</strong> A 3000 kg spacecraft is coasting at 4000 m/s. Explosive bolts separate it into a 2000 kg capsule and a 1000 kg empty rocket stage. After the separation, the capsule moves forward at 4500 m/s. What is the velocity of the rocket stage?
+				<details>
+					<summary>solution</summary>
+					$$(m_1 + m_2)u = m_1v_1 + m_2v_2$$
+					$$(2000 + 1000)(4000) = (2000)(4500) + (1000)v_2$$
+					$$12\,000\,000 = 9\,000\,000 + 1000v_2$$
+					$$3\,000\,000 = 1000v_2$$
+					$$v_2 = 3000\,\mathrm{\tfrac{m}{s}}$$
+					<p>The stage keeps moving forward, but more slowly. The push from the bolts sped up the capsule and slowed down the stage.</p>
+				</details>
+			</div>
 
-		<div class='example'>
-			<strong>Example:</strong> A 70 kg skater is standing still while holding a 5000 g backpack. The skater throws the backpack right at 6 m/s. What is the skater's velocity after the throw?
-			<details>
-				<summary>solution</summary>
-				$$5000=5$$
-				$$(m_1+m_2)u=m_1v_1+m_2v_2$$
-				$$(70+5)(0)=(70)v_1+(5)(6)$$
-				$$0=70v_1+30$$
-				$$-30=70v_1$$
-				$$v_1=-0.43\,\mathrm{m/s}$$
-				<p>The skater recoils left.</p>
-			</details>
-		</div>
+			<div class='example' data-topic="Conservation of Momentum" data-hard>
+				<strong>Example:</strong> A 55 kg astronaut is floating at rest 20 m from the space station. To get back, she throws a 2.0 kg wrench directly away from the station at 8.0 m/s. How long does it take her to reach the station?
+				<details>
+					<summary>solution</summary>
+					<p>Let the direction of the wrench be positive.</p>
+					$$(m_1 + m_2)u = m_1v_1 + m_2v_2$$
+					$$(55 + 2.0)(0) = (55)v_1 + (2.0)(8.0)$$
+					$$0 = 55v_1 + 16$$
+					$$v_1 = \frac{-16}{55}$$
+					$$v_1 = -0.29\,\mathrm{\tfrac{m}{s}}$$
+					<br>
+					<p>She moves toward the station at a constant 0.29 m/s, because there's no friction in space.</p>
+					$$v = \frac{\Delta x}{\Delta t}$$
+					$$0.29 = \frac{20}{\Delta t}$$
+					$$\Delta t = \frac{20}{0.29}$$
+					$$\Delta t = 69\,\mathrm{s}$$
+					<p>It takes a little over a minute. Throwing something is one of the only ways to change your velocity in space.</p>
+				</details>
+			</div>
 
-		<div class='example'>
-			<strong>Example:</strong> A 60 kg skater holding a 5 kg backpack moves right at 2 m/s. The skater throws the backpack forward at 6 m/s. What is the skater's velocity after the throw?
-			<details>
-				<summary>solution</summary>
-				$$(m_1+m_2)u=m_1v_1+m_2v_2$$
-				$$(60+5)(2)=(60)v_1+(5)(6)$$
-				$$130=60v_1+30$$
-				$$100=60v_1$$
-				$$v_1=1.67\,\mathrm{m/s}$$
-				<p>The skater continues forward, but slower than before.</p>
-			</details>
-		</div>
+			<div class='example' data-topic="Perfectly Inelastic Collisions">
+				<strong>Example:</strong> A 70 kg skater standing still on smooth ice catches a 5.0 kg backpack thrown at 6.0 m/s. What is the skater's velocity after the catch?
+				<details>
+					<summary>solution</summary>
+					$$m_1u_1 + m_2u_2 = (m_1 + m_2)v$$
+					$$(70)(0) + (5.0)(6.0) = (70 + 5.0)v$$
+					$$30 = 75v$$
+					$$v = 0.40\,\mathrm{\tfrac{m}{s}}$$
+					<p>Catching the backpack pushes the skater in the direction the backpack was moving.</p>
+				</details>
+			</div>
 
-		<div class='example'>
-			<strong>Example:</strong> Three carts collide. A 2 kg cart moves right at 3 m/s, a 1 kg cart moves left at 4 m/s, and a 5 kg cart is at rest. After the collision, the 1 kg cart moves right at 1 m/s and the 5 kg cart moves right at 0.5 m/s. What is the final velocity of the 2 kg cart?
-			<details>
-				<summary>solution</summary>
-				$$m_1u_1+m_2u_2+m_3u_3=m_1v_1+m_2v_2+m_3v_3$$
-				$$(2)(3)+(1)(-4)+(5)(0)=(2)v_1+(1)(1)+(5)(0.5)$$
-				$$2=2v_1+3.5$$
-				$$-1.5=2v_1$$
-				$$v_1=-0.75\,\mathrm{m/s}$$
-			</details>
-		</div>
+			<div class='example' data-topic="Conservation of Momentum">
+				<strong>Example:</strong> Three air-track gliders collide. A 2.0 kg glider moves right at 3.0 m/s, a 1.0 kg glider moves left at 4.0 m/s, and a 5.0 kg glider is at rest. After the collision, the 1.0 kg glider moves right at 1.0 m/s and the 5.0 kg glider moves right at 0.50 m/s. What is the final velocity of the 2.0 kg glider?
+				<details>
+					<summary>solution</summary>
+					$$m_1u_1 + m_2u_2 + m_3u_3 = m_1v_1 + m_2v_2 + m_3v_3$$
+					$$(2.0)(3.0) + (1.0)(-4.0) + (5.0)(0) = (2.0)v_1 + (1.0)(1.0) + (5.0)(0.50)$$
+					$$2.0 = 2.0v_1 + 3.5$$
+					$$-1.5 = 2.0v_1$$
+					$$v_1 = -0.75\,\mathrm{\tfrac{m}{s}}$$
+					<p>The 2.0 kg glider bounces back to the left.</p>
+				</details>
+			</div>
 
-		<div class='example'>
-			<strong>Example:</strong> A 4 kg cart moving right at 5 m/s collides with a 2 kg cart. After the collision, the 4 kg cart moves right at 2 m/s and the 2 kg cart moves right at 7 m/s. What was the initial velocity of the 2 kg cart?
-			<details>
-				<summary>solution</summary>
-				$$m_1u_1+m_2u_2=m_1v_1+m_2v_2$$
-				$$(4)(5)+(2)u_2=(4)(2)+(2)(7)$$
-				$$20+2u_2=22$$
-				$$2u_2=2$$
-				$$u_2=1\,\mathrm{m/s}$$
-			</details>
-		</div>
+			<div class='example' data-topic="Conservation of Momentum">
+				<strong>Example:</strong> A 0.40 kg air-track glider moving right at 0.50 m/s runs into a 0.20 kg glider that is moving right more slowly. After the collision, the 0.40 kg glider moves right at 0.30 m/s and the 0.20 kg glider moves right at 0.60 m/s. How fast was the 0.20 kg glider moving before the collision?
+				<details>
+					<summary>solution</summary>
+					$$m_1u_1 + m_2u_2 = m_1v_1 + m_2v_2$$
+					$$(0.40)(0.50) + (0.20)u_2 = (0.40)(0.30) + (0.20)(0.60)$$
+					$$0.20 + 0.20u_2 = 0.12 + 0.12$$
+					$$0.20u_2 = 0.04$$
+					$$u_2 = 0.20\,\mathrm{\tfrac{m}{s}}$$
+					<p>This makes sense. The front glider had to be moving slower than 0.50 m/s, or the back glider would never have caught up.</p>
+				</details>
+			</div>
 
-		<div class='example'>
-			<strong>Example:</strong> A cart explodes into two pieces. Before the explosion, its horizontal momentum is zero. A 1 kg piece moves right at 4 m/s. A 2 kg piece moves away horizontally. What is the horizontal velocity of the 2 kg piece?
-			<details>
-				<summary>solution</summary>
-				<p>Only use horizontal momentum here.</p>
-				$$p_{xi}=p_{xf}$$
-				$$0=m_1v_1+m_2v_2$$
-				$$0=(1)(4)+(2)v_2$$
-				$$-4=2v_2$$
-				$$v_2=-2\,\mathrm{m/s}$$
-			</details>
-		</div>
+			<div class='example' data-topic="2-D Conservation of Momentum" data-hard>
+				<strong>Example:</strong> On a pool table, a 0.17 kg cue ball moving east at 2.0 m/s hits a 0.17 kg ball at rest. After the collision, the cue ball moves 1.0 m/s east and 0.87 m/s north. What are the east and north velocity components of the other ball?
+				<details>
+					<summary>solution</summary>
+					<p>Solve the east-west and north-south directions separately. Let east and north be positive.</p>
+					<div class="col-group">
+						<div>
+					$$\text{east-west}$$
+					$$m_1u_1 + m_2u_2 = m_1v_1 + m_2v_2$$
+					$$(0.17)(2.0) + (0.17)(0) = (0.17)(1.0) + (0.17)v_2$$
+					$$0.34 = 0.17 + 0.17v_2$$
+					$$v_2 = 1.0\,\mathrm{\tfrac{m}{s}}$$
+						</div>
+						<div>
+					$$\text{north-south}$$
+					$$m_1u_1 + m_2u_2 = m_1v_1 + m_2v_2$$
+					$$(0.17)(0) + (0.17)(0) = (0.17)(0.87) + (0.17)v_2$$
+					$$0 = 0.148 + 0.17v_2$$
+					$$v_2 = -0.87\,\mathrm{\tfrac{m}{s}}$$
+						</div>
+					</div>
+					<p>The other ball moves 1.0 m/s east and 0.87 m/s south. The north-south momentum started at zero, so the two balls have to move in opposite north-south directions. Using the <a href="../../review/units/index.html#trigonometry">Pythagorean theorem</a>, the ball's speed is 1.3 m/s.</p>
+				</details>
+			</div>
 
-		<div class='example'>
-			<strong>Example:</strong> A puck breaks into two pieces. Before the break, the vertical momentum is zero. A 0.50 kg piece moves upward at 3 m/s. A 0.75 kg piece moves vertically after the break. What is the vertical velocity of the 0.75 kg piece?
-			<details>
-				<summary>solution</summary>
-				<p>Only use vertical momentum here.</p>
-				$$p_{yi}=p_{yf}$$
-				$$0=m_1v_1+m_2v_2$$
-				$$0=(0.50)(3)+(0.75)v_2$$
-				$$-1.5=0.75v_2$$
-				$$v_2=-2\,\mathrm{m/s}$$
-				<p>The negative sign means the 0.75 kg piece moves downward.</p>
-			</details>
-		</div>
+			<div class='example' data-topic="Perfectly Inelastic Collisions">
+				<strong>Example:</strong> A 200 g toy car moving right at 1.2 m/s sticks to a 300 g toy truck moving left at 0.30 m/s. What is their final velocity?
+				<details>
+					<summary>solution</summary>
+					$$200\,\textcolor{DeepPink}{\mathrm{g}}\left(\frac{1\,\mathrm{kg}}{1000\,\textcolor{DeepPink}{\mathrm{g}}}\right)$$
+					$$0.20\,\mathrm{kg}$$
+					$$300\,\textcolor{DeepPink}{\mathrm{g}}\left(\frac{1\,\mathrm{kg}}{1000\,\textcolor{DeepPink}{\mathrm{g}}}\right)$$
+					$$0.30\,\mathrm{kg}$$
+					<br>
+					$$m_1u_1 + m_2u_2 = (m_1 + m_2)v$$
+					$$(0.20)(1.2) + (0.30)(-0.30) = (0.20 + 0.30)v$$
+					$$0.24 - 0.09 = 0.50v$$
+					$$0.15 = 0.50v$$
+					$$v = 0.30\,\mathrm{\tfrac{m}{s}}$$
+					<p>The pair moves right, the direction of the car's larger momentum.</p>
+				</details>
+			</div>
 
-		<div class='example'>
-			<strong>Example:</strong> A 200 g toy car moving right at 12 m/s sticks to a 300 g toy truck moving left at 3 m/s. What is their final velocity?
-			<details>
-				<summary>solution</summary>
-				$$200=0.20$$
-				$$300=0.30$$
-				$$m_1u_1+m_2u_2=(m_1+m_2)v$$
-				$$(0.20)(12)+(0.30)(-3)=(0.20+0.30)v$$
-				$$1.5=0.50v$$
-				$$v=3.0\,\mathrm{m/s}$$
-			</details>
-		</div>
+			<div class='example' data-topic="Perfectly Inelastic Collisions">
+				<strong>Example:</strong> In a simplified crash model, a 900 kg compact car moving at 36 km/h rear-ends a 1500 kg van moving in the same direction at 18 km/h. The two vehicles lock together. Ignore braking during the short collision. What is their speed right after the collision?
+				<details>
+					<summary>solution</summary>
+					$$36\,\mathrm{\tfrac{\textcolor{DeepPink}{km}}{\textcolor{DodgerBlue}{h}}}\left(\frac{1000\,\mathrm{m}}{1\,\textcolor{DeepPink}{\mathrm{km}}}\right)\left(\frac{1\,\textcolor{DodgerBlue}{\mathrm{h}}}{3600\,\mathrm{s}}\right)$$
+					$$10\,\mathrm{\tfrac{m}{s}}$$
+					$$18\,\mathrm{\tfrac{\textcolor{DeepPink}{km}}{\textcolor{DodgerBlue}{h}}}\left(\frac{1000\,\mathrm{m}}{1\,\textcolor{DeepPink}{\mathrm{km}}}\right)\left(\frac{1\,\textcolor{DodgerBlue}{\mathrm{h}}}{3600\,\mathrm{s}}\right)$$
+					$$5.0\,\mathrm{\tfrac{m}{s}}$$
+					<br>
+					$$m_1u_1 + m_2u_2 = (m_1 + m_2)v$$
+					$$(900)(10) + (1500)(5.0) = (900 + 1500)v$$
+					$$9000 + 7500 = 2400v$$
+					$$16\,500 = 2400v$$
+					$$v = 6.9\,\mathrm{\tfrac{m}{s}}$$
+					<p>That's about 25 km/h. The van speeds up and the car slows down.</p>
+				</details>
+			</div>
 
-		<div class='example'>
-			<strong>Example:</strong> In a simplified crash model, a 900 kg compact car moving right at 21.6 km/h sticks to a 1500 kg van moving right at 7.2 km/h. Ignore braking during the short collision. What is their speed immediately after the collision?
-			<details>
-				<summary>solution</summary>
-				$$21.6=6$$
-				$$7.2=2$$
-				$$m_1u_1+m_2u_2=(m_1+m_2)v$$
-				$$(900)(6)+(1500)(2)=(900+1500)v$$
-				$$8400=2400v$$
-				$$v=3.5\,\mathrm{m/s}$$
-			</details>
-		</div>
+			<div class='example' data-topic="Conservation of Momentum">
+				<strong>Question:</strong> When you jump, your momentum changes from zero to a large upward momentum. Does that break the law of conservation of momentum?
+				<details>
+					<summary>answer</summary>
+					<p>No. Your legs push down on the Earth, and the Earth pushes up on you. The Earth gets exactly as much downward momentum as you get upward momentum, so the total stays zero.</p>
+					<p>The Earth's mass is so huge that its change in velocity is far too small to notice. This is the same reason the total momentum seemed to change when the objects hit the walls in the simulation on this page.</p>
+				</details>
+			</div>
+		</details>
+
 	</article>
     <footer>
         <a href="../../../">Back</a>
@@ -561,6 +643,7 @@
     <script src="stickyCollision0.js"></script>
     <script src="stickyCollision1.js"></script>
     <script src="collision2D.js"></script>
+	<script defer src="../../../lib/practice-labels.js"></script>
 </body>
 
 </html>

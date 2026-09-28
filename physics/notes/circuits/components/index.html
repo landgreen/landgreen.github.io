@@ -1151,213 +1151,243 @@
 		<h2 class='underlined'>Ground</h2>
 		<h2 class='underlined'>Motor / Generator / Electromagnets</h2> -->
 	</article>
-	<article>
-<h1 class='underlined'>Practice <a class="printout-link" href="../../../output/pdf/components-practice-questions.pdf">printout.pdf</a></h1>
-		<p>
-			In case you wanted more practice I used AI to make some more problems. The rest of the site I made by hand, but generating endless problems seemed safe. I did find mistakes in the AI generated problems, and there are probably some I didn't find. Let me know if something could be fixed. I also added a practice problem on each page with no solution. That's intentional. Have fun!
-		</p>
-		<p>
-			For LED questions, use Kirchhoff's voltage idea to find the resistor's voltage drop, then use Ohm's law or power. For logic gates, treat high as 1 and low as 0 unless a voltage value is given.
-		</p>
+	<article class="practice-compact">
+		<details class="practice-menu">
+			<summary>practice problems (14)</summary>
+			<div class="derive practice-intro">
+				<p>
+					In case you wanted more practice I used AI to make some more problems. The rest of the site I made by hand, but generating endless problems seemed safe. I did find mistakes in the AI generated problems, and there are probably some I didn't find. Let me know if something could be fixed. I also added a practice problem on each page with no solution. That's intentional. Have fun!
+				</p>
+				<p>
+					For LED questions, use Kirchhoff's voltage idea to find the resistor's voltage drop, then use Ohm's law or power. For logic gates, treat high as 1 and low as 0 unless a voltage value is given.
+				</p>
+				<p class="practice-controls">
+					<a class="printout-link practice-printout-link" href="../../../output/pdf/components-practice-questions.pdf">printout.pdf</a>
+					<label class="practice-tag-toggle"><input type="checkbox"> show topics and mark harder problems</label>
+				</p>
+			</div>
 
-		<div class='example'>
-			<svg viewBox="-20 -50 600 340">
-				<g transform="translate(228 8) rotate(65)">
-					<line x1="1" y1="0" x2="25" y2="0" stroke-width="2" fill="none" stroke="#f00" />
-					<polygon transform="translate(-2 0)" points="0,0 8,4 8,-4" fill="#f00" stroke="none" />
-				</g>
-				<g transform="translate(238 3) rotate(65)">
-					<line x1="1" y1="0" x2="25" y2="0" stroke-width="2" fill="none" stroke="#f00" />
-					<polygon transform="translate(-2 0)" points="0,0 8,4 8,-4" fill="#f00" stroke="none" />
-				</g>
+			<div class='example' data-topic="Light Emitting Diode">
+				<svg viewBox="-20 -50 600 340">
+					<g transform="translate(228 8) rotate(65)">
+						<line x1="1" y1="0" x2="25" y2="0" stroke-width="2" fill="none" stroke="#f00" />
+						<polygon transform="translate(-2 0)" points="0,0 8,4 8,-4" fill="#f00" stroke="none" />
+					</g>
+					<g transform="translate(238 3) rotate(65)">
+						<line x1="1" y1="0" x2="25" y2="0" stroke-width="2" fill="none" stroke="#f00" />
+						<polygon transform="translate(-2 0)" points="0,0 8,4 8,-4" fill="#f00" stroke="none" />
+					</g>
 
-				<path d="M 100 50 h 125
-						m0 20 v-40 m0 20 l40 20 m-40 -20 l40 -20 v40 m0 -20 h135
-						v 200
-						h -110 l-10 10 l-10 -20 l-10 20 l-10 -20 l-10 20 l-10 -20 l-10 20 l-10 -10	h -110
-						v-70 m-40 0 h 80 m-20 -15 h-40 m20 0 v -50  m-40 0 h 80 m-20 -15 h-40 m20 0 v-50" fill='none' stroke="#333" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" />
-				<g font-size="20" fill='#333'>
-					<text x="250" y="283" text-anchor="middle">R = ?</text>
-					<text x="55" y="115" text-anchor="end">4.5 V</text>
-					<text x="55" y="180" text-anchor="end">4.5 V</text>
-				</g>
-			</svg>
-			<strong>Example:</strong> A blue LED has a forward voltage of 3.2 V and should run at 20 mA. The circuit uses two 4.5 V batteries as shown. What resistance is needed?
-			<details>
-				<summary>solution</summary>
-				<p>The batteries provide 9.0 V total. The resistor gets the voltage left after the LED drop.</p>
-				$$V_b = 4.5 + 4.5$$
-				$$V_b = 9.0$$
-				$$V_R = V_b - V_{LED}$$
-				$$V_R = 9.0 - 3.2$$
-				$$V_R = 5.8$$
-				$$20 = 0.020$$
-				$$R = \frac{V_R}{I}$$
-				$$R = \frac{5.8}{0.020}$$
-				$$R = 290\,\Omega$$
-			</details>
-		</div>
+					<path d="M 100 50 h 125
+							m0 20 v-40 m0 20 l40 20 m-40 -20 l40 -20 v40 m0 -20 h135
+							v 200
+							h -110 l-10 10 l-10 -20 l-10 20 l-10 -20 l-10 20 l-10 -20 l-10 20 l-10 -10	h -110
+							v-70 m-40 0 h 80 m-20 -15 h-40 m20 0 v -50  m-40 0 h 80 m-20 -15 h-40 m20 0 v-50" fill='none' stroke="#333" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" />
+					<g font-size="20" fill='#333'>
+						<text x="250" y="283" text-anchor="middle">R = ?</text>
+						<text x="55" y="115" text-anchor="end">4.5 V</text>
+						<text x="55" y="180" text-anchor="end">4.5 V</text>
+					</g>
+				</svg>
+				<strong>Example:</strong> A blue LED has a forward voltage of 3.2 V and should run at 20 mA. The circuit uses two 4.5 V batteries as shown. What resistance is needed?
+				<details>
+					<summary>solution</summary>
+					<p>The two batteries are in series, so their voltages add. Use Kirchhoff's voltage law around the loop.</p>
+					$$0 = V_{\mathrm{bat1}} + V_{\mathrm{bat2}} + V_R + V_{\mathrm{LED}}$$
+					$$0 = 4.5 + 4.5 + V_R - 3.2$$
+					$$V_R = -5.8\,\mathrm{V}$$
+					<br>
+					$$20\,\mathrm{mA} = 0.020\,\mathrm{A}$$
+					<br>
+					$$R = \frac{V}{I}$$
+					$$R = \frac{5.8}{0.020}$$
+					$$R = 290\,\Omega$$
+				</details>
+			</div>
 
-		<div class='example'>
-			<strong>Question:</strong> Why does an LED need to be placed in the correct direction in a circuit?
-			<details>
-				<summary>answer</summary>
-				<p>An LED is a diode, so it only allows current to flow in one direction. If it is reversed, the current is blocked and the LED will not light.</p>
-			</details>
-		</div>
+			<div class='example' data-topic="Light Emitting Diode">
+				<strong>Question:</strong> Why does an LED need to be placed in the correct direction in a circuit?
+				<details>
+					<summary>answer</summary>
+					<p>An LED is a diode, so it only allows current to flow in one direction. If it is reversed, the current is blocked and the LED will not light.</p>
+				</details>
+			</div>
 
-		<div class='example'>
-			<strong>Example:</strong> A small red indicator LED has a 2.0 V drop and is connected to a 5.0 V supply through a 150 Ω resistor. What current flows through the LED?
-			<details>
-				<summary>solution</summary>
-				$$V_R = V_b - V_{LED}$$
-				$$V_R = 5.0 - 2.0$$
-				$$V_R = 3.0$$
-				$$I = \frac{V_R}{R}$$
-				$$I = \frac{3.0}{150}$$
-				$$I = 0.020\,\mathrm{A}$$
-				<p>The LED current is 20 mA.</p>
-			</details>
-		</div>
+			<div class='example' data-topic="Light Emitting Diode">
+				<strong>Example:</strong> A small red indicator LED has a 2.0 V drop and is connected to a 5.0 V supply through a 150 Ω resistor. What current flows through the LED?
+				<details>
+					<summary>solution</summary>
+					$$0 = V_{\mathrm{bat}} + V_R + V_{\mathrm{LED}}$$
+					$$0 = 5.0 + V_R - 2.0$$
+					$$V_R = -3.0\,\mathrm{V}$$
+					$$I = \frac{V}{R}$$
+					$$I = \frac{3.0}{150}$$
+					$$I = 0.020\,\mathrm{A}$$
+					<p>The LED current is 20 mA.</p>
+				</details>
+			</div>
 
-		<div class='example'>
-			<strong>Question:</strong> Why can thermal runaway be a problem for an LED?
-			<details>
-				<summary>answer</summary>
-				<p>As an LED warms up, its resistance can decrease. Lower resistance can allow more current, and more current can make the LED warmer, which can continue the cycle.</p>
-			</details>
-		</div>
+			<div class='example' data-topic="Light Emitting Diode">
+				<strong>Question:</strong> Why can thermal runaway be a problem for an LED?
+				<details>
+					<summary>answer</summary>
+					<p>As an LED warms up, its resistance can decrease. Lower resistance can allow more current, and more current can make the LED warmer, which can continue the cycle.</p>
+				</details>
+			</div>
 
-		<div class='example'>
-			<strong>Example:</strong> A green LED has a 2.2 V drop and should run at 15 mA from a 6.0 V battery pack. What resistor should be placed in series with it?
-			<details>
-				<summary>solution</summary>
-				$$V_R = V_b - V_{LED}$$
-				$$V_R = 6.0 - 2.2$$
-				$$V_R = 3.8$$
-				$$15 = 0.015$$
-				$$R = \frac{V_R}{I}$$
-				$$R = \frac{3.8}{0.015}$$
-				$$R = 253\,\Omega$$
-				<p>A nearby standard value like 250 Ω would be reasonable for this ideal calculation.</p>
-			</details>
-		</div>
+			<div class='example' data-topic="Light Emitting Diode">
+				<strong>Example:</strong> A green LED has a 2.2 V drop and should run at 15 mA from a 6.0 V battery pack. What resistor should be placed in series with it?
+				<details>
+					<summary>solution</summary>
+					<p>Use Kirchhoff's voltage law around the loop, like the LED examples on this page.</p>
+					$$0 = V_{\mathrm{bat}} + V_R + V_{\mathrm{LED}}$$
+					$$0 = 6.0 + V_R - 2.2$$
+					$$V_R = -3.8\,\mathrm{V}$$
+					<br>
+					$$15\,\mathrm{mA} = 0.015\,\mathrm{A}$$
+					<br>
+					$$R = \frac{V}{I}$$
+					$$R = \frac{3.8}{0.015}$$
+					$$R = 253\,\Omega$$
+					<p>Resistors come in standard values, so you'd pick a nearby one like 270 Ω. A slightly larger resistor is safer, because it keeps the current a little under 15 mA.</p>
+				</details>
+			</div>
 
-		<div class='example'>
-			<strong>Example:</strong> An LED circuit uses a 12 V supply and draws 25 mA when lit. What power is supplied by the battery?
-			<details>
-				<summary>solution</summary>
-				$$25 = 0.025$$
-				$$P = IV$$
-				$$P = (0.025)(12)$$
-				$$P = 0.30\,\mathrm{W}$$
-			</details>
-		</div>
+			<div class='example' data-topic="Light Emitting Diode">
+				<strong>Example:</strong> A red indicator LED has a 2.0 V drop and runs at 20 mA from a 5.0 V supply through a 150 Ω resistor. How much power does the LED use, and how much power turns into heat in the resistor?
+				<details>
+					<summary>solution</summary>
+					<p>The resistor has the rest of the voltage, 3.0 V. The same 20 mA flows through both parts.</p>
+					<div class="col-group">
+						<div>
+					$$\text{LED}$$
+					$$P = IV$$
+					$$P = (0.020)(2.0)$$
+					$$P = 0.040\,\mathrm{W}$$
+						</div>
+						<div>
+					$$\text{resistor}$$
+					$$P = IV$$
+					$$P = (0.020)(3.0)$$
+					$$P = 0.060\,\mathrm{W}$$
+						</div>
+					</div>
+					<p>More power is wasted in the resistor than is used to make light. That's why battery-powered devices often use lower supply voltages for their LEDs.</p>
+				</details>
+			</div>
 
-		<div class='example'>
-			<strong>Example:</strong> A hobby kit has only 100 Ω resistors. About how many identical 100 Ω resistors in parallel are needed to get close to 20 Ω for an LED circuit?
-			<details>
-				<summary>solution</summary>
-				<p>For identical resistors in parallel, the equivalent resistance is one resistor divided by the number of branches.</p>
-				$$R_{eq} = \frac{100}{n}$$
-				$$20 = \frac{100}{n}$$
-				$$n = \frac{100}{20}$$
-				$$n = 5$$
-				<p>Five 100 Ω resistors in parallel gives about 20 Ω.</p>
-			</details>
-		</div>
+			<div class='example' data-topic="Light Emitting Diode">
+				<strong>Example:</strong> Two red LEDs are wired in series with one resistor and a 9.0 V battery. Each LED has a 2.0 V drop and should run at 20 mA. What resistor is needed?
+				<details>
+					<summary>solution</summary>
+					$$0 = V_{\mathrm{bat}} + V_R + V_{\mathrm{LED1}} + V_{\mathrm{LED2}}$$
+					$$0 = 9.0 + V_R - 2.0 - 2.0$$
+					$$V_R = -5.0\,\mathrm{V}$$
+					<br>
+					$$R = \frac{V}{I}$$
+					$$R = \frac{5.0}{0.020}$$
+					$$R = 250\,\Omega$$
+					<p>Both LEDs are in series, so the same 20 mA flows through both of them and through the resistor.</p>
+				</details>
+			</div>
 
-		<div class='example'>
-			<strong>Question:</strong> Why is a transistor useful as a switch in a logic circuit?
-			<details>
-				<summary>answer</summary>
-				<p>A transistor can use the voltage at a control terminal to turn current on or off. That switching behavior can represent the high and low states used by logic gates.</p>
-			</details>
-		</div>
+			<div class='example' data-topic="Transistor">
+				<strong>Question:</strong> Why is a transistor useful as a switch in a logic circuit?
+				<details>
+					<summary>answer</summary>
+					<p>A transistor can use the voltage at a control terminal to turn current on or off. That switching behavior can represent the high and low states used by logic gates.</p>
+				</details>
+			</div>
 
-		<div class='example'>
-			<strong>Example:</strong> A NOT gate uses 5.0 V for high and 0 V for low. If the input is 5.0 V, what output voltage should it produce?
-			<details>
-				<summary>solution</summary>
-				<p>A NOT gate outputs the opposite state.</p>
-				$$\mathrm{input} = 5.0$$
-				$$\mathrm{output} = 0\,\mathrm{V}$$
-			</details>
-		</div>
+			<div class='example' data-topic="Logic Gate">
+				<strong>Example:</strong> A NOT gate uses 5.0 V for high and 0 V for low. If the input is 5.0 V, what output voltage should it produce?
+				<details>
+					<summary>solution</summary>
+					<p>A NOT gate outputs the opposite state.</p>
+					$$\mathrm{input} = 5.0$$
+					$$\mathrm{output} = 0\,\mathrm{V}$$
+				</details>
+			</div>
 
-		<div class='example'>
-			<strong>Example:</strong> An AND gate uses 5.0 V for high and 0 V for low. Input A is 5.0 V and input B is 0 V. What output voltage should it produce?
-			<details>
-				<summary>solution</summary>
-				<p>An AND gate is high only when both inputs are high.</p>
-				$$A = 1$$
-				$$B = 0$$
-				$$\mathrm{output} = 0\,\mathrm{V}$$
-			</details>
-		</div>
+			<div class='example' data-topic="Logic Gate">
+				<strong>Example:</strong> An AND gate uses 5.0 V for high and 0 V for low. Input A is 5.0 V and input B is 0 V. What output voltage should it produce?
+				<details>
+					<summary>solution</summary>
+					<p>An AND gate is high only when both inputs are high.</p>
+					$$A = 1$$
+					$$B = 0$$
+					$$\mathrm{output} = 0\,\mathrm{V}$$
+				</details>
+			</div>
 
-		<div class='example'>
-			<strong>Example:</strong> An LED circuit has a 9.0 V battery and should use 20 mA of current. What resistor should be used?
-			<details>
-				<summary>solution</summary>
-				<p>This cannot be solved from the information given. The LED voltage drop is missing.</p>
-				<p>Without the LED voltage, we cannot find how much voltage is across the resistor, so Ohm's law cannot give the resistor value.</p>
-			</details>
-		</div>
+			<div class='example' data-topic="Light Emitting Diode">
+				<strong>Example:</strong> An LED circuit has a 9.0 V battery and should use 20 mA of current. What resistor should be used?
+				<details>
+					<summary>solution</summary>
+					<p>This cannot be solved from the information given. The LED voltage drop is missing.</p>
+					<p>Without the LED voltage, we cannot find how much voltage is across the resistor, so Ohm's law cannot give the resistor value.</p>
+				</details>
+			</div>
 
-		<div class='example'>
-			<strong>Question:</strong> How is an OR gate different from an AND gate?
-			<details>
-				<summary>answer</summary>
-				<p>An OR gate outputs high if either input is high. An AND gate only outputs high when both inputs are high.</p>
-			</details>
-		</div>
+			<div class='example' data-topic="Measurement Devices">
+				<strong>Example:</strong> A student builds a circuit with a resistor. A multimeter set to measure voltage, connected across the resistor, reads 3.3 V. A multimeter set to measure current, connected in series with the resistor, reads 15 mA. What is the resistance?
+				<details>
+					<summary>solution</summary>
+					$$15\,\mathrm{mA} = 0.015\,\mathrm{A}$$
+					<br>
+					$$R = \frac{V}{I}$$
+					$$R = \frac{3.3}{0.015}$$
+					$$R = 220\,\Omega$$
+					<p>Voltage is measured across a component, and current is measured in series with it, so the current flows through the meter.</p>
+				</details>
+			</div>
 
-		<div class='example'>
-			<strong>Example:</strong> An OR gate uses 5.0 V for high and 0 V for low. Input A is 0 V and input B is 5.0 V. What output voltage should it produce?
-			<details>
-				<summary>solution</summary>
-				<p>An OR gate is high when at least one input is high.</p>
-				$$A = 0$$
-				$$B = 1$$
-				$$\mathrm{output} = 5.0\,\mathrm{V}$$
-			</details>
-		</div>
+			<div class='example' data-topic="Logic Gate">
+				<strong>Example:</strong> An OR gate uses 5.0 V for high and 0 V for low. Input A is 0 V and input B is 5.0 V. What output voltage should it produce?
+				<details>
+					<summary>solution</summary>
+					<p>An OR gate is high when at least one input is high.</p>
+					$$A = 0$$
+					$$B = 1$$
+					$$\mathrm{output} = 5.0\,\mathrm{V}$$
+				</details>
+			</div>
 
-		<div class='example'>
-			<strong>Example:</strong> An XOR gate uses 5.0 V for high and 0 V for low. If both inputs are 5.0 V, what output voltage should it produce?
-			<details>
-				<summary>solution</summary>
-				<p>An XOR gate outputs high when exactly one input is high. With both inputs high, the output is low.</p>
-				$$A = 1$$
-				$$B = 1$$
-				$$\mathrm{output} = 0\,\mathrm{V}$$
-			</details>
-		</div>
+			<div class='example' data-topic="Logic Gate">
+				<strong>Example:</strong> An XOR gate uses 5.0 V for high and 0 V for low. If both inputs are 5.0 V, what output voltage should it produce?
+				<details>
+					<summary>solution</summary>
+					<p>An XOR gate outputs high when exactly one input is high. With both inputs high, the output is low.</p>
+					$$A = 1$$
+					$$B = 1$$
+					$$\mathrm{output} = 0\,\mathrm{V}$$
+				</details>
+			</div>
 
-		<div class='example'>
-			<p><strong>Reading (6 minutes):</strong> Read <a href="https://www.snexplores.org/article/explainer-batteries-capacitors">Explainer: How batteries and capacitors differ</a> from Science News Explores. Then answer these questions.</p>
+			<div class='example'>
+				<p><strong>Reading (6 minutes):</strong> Read <a href="https://www.snexplores.org/article/explainer-batteries-capacitors">Explainer: How batteries and capacitors differ</a> from Science News Explores. Then answer these questions.</p>
 
-			How does a battery store energy differently from a capacitor?
-			<details>
-				<summary>answer</summary>
-				<p>A battery stores energy through chemical changes. A capacitor stores energy in an electric field between separated charges.</p>
-			</details>
-			<br>
+				How does a battery store energy differently from a capacitor?
+				<details>
+					<summary>answer</summary>
+					<p>A battery stores energy through chemical changes. A capacitor stores energy in an electric field between separated charges.</p>
+				</details>
+				<br>
 
-			Why might a circuit use a capacitor when it needs a quick burst of energy?
-			<details>
-				<summary>answer</summary>
-				<p>A capacitor can charge and discharge very quickly. That makes it useful when a circuit needs to release energy in a short time.</p>
-			</details>
-			<br>
+				Why might a circuit use a capacitor when it needs a quick burst of energy?
+				<details>
+					<summary>answer</summary>
+					<p>A capacitor can charge and discharge very quickly. That makes it useful when a circuit needs to release energy in a short time.</p>
+				</details>
+				<br>
 
-			What does electric potential, or voltage, allow charges to do in a circuit?
-			<details>
-				<summary>answer</summary>
-				<p>Electric potential provides energy per unit charge. A potential difference can drive charges through a circuit as an electric current.</p>
-			</details>
-		</div>
+				What does electric potential, or voltage, allow charges to do in a circuit?
+				<details>
+					<summary>answer</summary>
+					<p>Electric potential provides energy per unit charge. A potential difference can drive charges through a circuit as an electric current.</p>
+				</details>
+			</div>
+		</details>
 
 	</article>
 	<footer>
@@ -1367,6 +1397,7 @@
 	<script>
 		renderMathInElement(document.body);
 	</script>
+	<script defer src="../../../lib/practice-labels.js"></script>
 </body>
 
 </html>

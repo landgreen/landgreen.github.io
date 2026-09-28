@@ -254,7 +254,7 @@
 			<p>
 				The total energy of an isolated system is <a href="https://www.youtube.com/watch?v=4b8ZsFszE8I">conserved</a>, but it's not when energy leaves or enters that system.
 				The <strong>first law of thermodynamics</strong> says that the change in internal energy of a system is equal to the total heat and work entering and exiting the system.
-				$$\Delta E = Q - W$$
+				$$\Delta E = W - Q$$
 				We can make it look more like our familiar conservation of energy equation by unpacking the ΔE into final and initial energy.
 			</p>
 			<div class='definition'>
@@ -1138,156 +1138,207 @@
 			<!-- <li>For a large number of particles over a long time, the probability that a system will become ordered approaches the impossible.</li> -->
 		</div>
 	</article>
-	<article>
-<h1 class='underlined'>Practice <a class="printout-link" href="../../../output/pdf/thermo-practice-questions.pdf">printout.pdf</a></h1>
-		<p>
-			In case you wanted more practice I used AI to make some more problems. The rest of the site I made by hand, but generating endless problems seemed safe. I did find mistakes in the AI generated problems, and there are probably some I didn't find. Let me know if something could be fixed. I also added a practice problem on each page with no solution. That's intentional. Have fun!
-		</p>
-		<p>
-			For the first law problems, use the page's sign convention: Q is heat exiting the system, and W is work done on the system.
-		</p>
+	<article class="practice-compact">
+		<details class="practice-menu">
+			<summary>practice problems (12)</summary>
+			<div class="derive practice-intro">
+				<p>
+					In case you wanted more practice I used AI to make some more problems. The rest of the site I made by hand, but generating endless problems seemed safe. I did find mistakes in the AI generated problems, and there are probably some I didn't find. Let me know if something could be fixed. I also added a practice problem on each page with no solution. That's intentional. Have fun!
+				</p>
+				<p>
+					For the first law problems, use the page's sign convention: Q is heat exiting the system, and W is work done on the system.
+				</p>
+				<p class="practice-controls">
+					<a class="printout-link practice-printout-link" href="../../../output/pdf/thermo-practice-questions.pdf">printout.pdf</a>
+					<label class="practice-tag-toggle"><input type="checkbox"> show topics and mark harder problems</label>
+				</p>
+			</div>
 
-		<div class='example'>
-			<strong>Question:</strong> A hot ceramic mug and a cool wooden table are touching. Which direction does heat flow, and when does the flow mostly stop?
-			<details>
-				<summary>answer</summary>
-				<p>Heat flows from the hotter mug into the cooler table. The flow mostly stops when they reach the same temperature.</p>
-			</details>
-		</div>
+			<div class='example' data-topic="Heat">
+				<strong>Question:</strong> A hot ceramic mug sits on a cool wooden table. Which way does heat flow, and when does it mostly stop?
+				<details>
+					<summary>answer</summary>
+					<p>Heat flows from the hotter mug into the cooler table. The flow mostly stops when the mug and the table reach the same temperature.</p>
+				</details>
+			</div>
 
-		<div class='example'>
-			<strong>Question:</strong> A metal chair and a wooden chair have been in the same room all night at 21°C. They are at the same temperature, but the metal feels colder. Why?
-			<details>
-				<summary>answer</summary>
-				<p>The metal conducts heat away from your body faster. It feels colder because heat leaves your hand more quickly, not because the metal is actually at a lower temperature.</p>
-			</details>
-		</div>
+			<div class='example' data-topic="Heat">
+				<strong>Example:</strong> A gas loses 30 J of heat to its surroundings while a piston does 80 J of work on it. What is the change in the gas's internal energy?
+				<details>
+					<summary>solution</summary>
+					<p>Heat exits the gas, so Q is positive. Work is done on the gas, so W is positive.</p>
+					$$Q = 30\,\mathrm{J}$$
+					$$W = 80\,\mathrm{J}$$
+					<br>
+					$$E_i = E_f + Q - W$$
+					$$E_i = E_f + 30 - 80$$
+					$$E_i = E_f - 50$$
+					$$E_f - E_i = 50\,\mathrm{J}$$
+					<p>The internal energy increases by 50 J. More energy came in as work than left as heat, so the gas warms up.</p>
+				</details>
+			</div>
 
-		<div class='example'>
-			<strong>Question:</strong> A drop of food coloring spreads through a cup of water. Does the system move toward higher entropy or lower entropy?
-			<details>
-				<summary>answer</summary>
-				<p>It moves toward higher entropy. The concentrated dye spreads out into many more possible arrangements.</p>
-			</details>
-		</div>
+			<div class='example' data-topic="Heat">
+				<strong>Example:</strong> A gas loses 120 J of heat and does 40 J of work on its surroundings as it expands. What is the change in the gas's internal energy?
+				<details>
+					<summary>solution</summary>
+					<p>Heat exits the gas, so Q is positive. The gas does the work, so the work done on the gas is negative.</p>
+					$$Q = 120\,\mathrm{J}$$
+					$$W = -40\,\mathrm{J}$$
+					<br>
+					$$E_i = E_f + Q - W$$
+					$$E_i = E_f + 120 - (-40)$$
+					$$E_i = E_f + 160$$
+					$$E_f - E_i = -160\,\mathrm{J}$$
+					<p>The gas loses energy both ways, so its internal energy drops by 160 J.</p>
+				</details>
+			</div>
 
-		<div class='example'>
-			<strong>Question:</strong> A video shows spilled milk jumping back into a glass. What thermodynamics idea makes that look wrong?
-			<details>
-				<summary>answer</summary>
-				<p>The second law of thermodynamics. Real isolated systems tend to move from organized states toward more disordered states, not the reverse.</p>
-			</details>
-		</div>
+			<div class='example' data-topic="Heat">
+				<strong>Example:</strong> A gas receives 80 J of heat and expands for 2.0 s. What is the change in the gas's internal energy?
+				<details>
+					<summary>solution</summary>
+					<p>This cannot be solved from the information given. The first law needs both the heat and the work. The gas expands, so it does work on its surroundings, but we don't know how much. The time doesn't tell us the work.</p>
+				</details>
+			</div>
 
-		<div class='example'>
-			<strong>Example:</strong> A gas loses 30 J as heat while 80 J of work is done on it by a piston. What is the change in the gas's internal energy?
-			<details>
-				<summary>solution</summary>
-				Heat exits the system, so Q is positive. Work is done on the system, so W is positive.
-				$$\Delta E=W-Q$$
-				$$\Delta E=80-30$$
-				$$\Delta E=50\,\mathrm{J}$$
-				<p>The internal energy increases by 50 J.</p>
-			</details>
-		</div>
+			<div class='example' data-topic="Heat">
+				<strong>Example:</strong> A system starts with 500 J of internal energy. During a process, 120 J of heat leaves the system and 80 J of work is done on it. What is its final internal energy?
+				<details>
+					<summary>solution</summary>
+					$$E_i = 500\,\mathrm{J}$$
+					$$Q = 120\,\mathrm{J}$$
+					$$W = 80\,\mathrm{J}$$
+					$$E_f = \,?$$
+					<br>
+					$$E_i = E_f + Q - W$$
+					$$500 = E_f + 120 - 80$$
+					$$500 = E_f + 40$$
+					$$E_f = 460\,\mathrm{J}$$
+				</details>
+			</div>
 
-		<div class='example'>
-			<strong>Example:</strong> A gas loses 120 J as heat and does 40 J of work on the surroundings. What is the change in internal energy of the gas?
-			<details>
-				<summary>solution</summary>
-				Heat exits the gas, so Q is positive. The gas does work, so work done on the gas is negative.
-				$$W=-40$$
-				$$\Delta E=W-Q$$
-				$$\Delta E=-40-120$$
-				$$\Delta E=-160\,\mathrm{J}$$
-				<p>The gas's internal energy decreases by 160 J.</p>
-			</details>
-		</div>
+			<div class='example' data-topic="Heat">
+				<strong>Example:</strong> In a refrigerator, the compressor does 200 J of work on the refrigerant gas while 0.50 kJ of heat leaves the gas through the coils on the back. What is the change in the gas's internal energy?
+				<details>
+					<summary>solution</summary>
+					$$0.50\,\mathrm{kJ} = 0.50(1000)\,\mathrm{J}$$
+					$$0.50\,\mathrm{kJ} = 500\,\mathrm{J}$$
+					<br>
+					$$E_i = E_f + Q - W$$
+					$$E_i = E_f + 500 - 200$$
+					$$E_i = E_f + 300$$
+					$$E_f - E_i = -300\,\mathrm{J}$$
+					<p>The gas cools off. That lets it pull more heat out of the inside of the refrigerator on the next cycle.</p>
+				</details>
+			</div>
 
-		<div class='example'>
-			<strong>Example:</strong> A gas receives 80 J of heat and expands for 2.0 s. What is the change in internal energy?
-			<details>
-				<summary>answer</summary>
-				This cannot be solved from the information given. The first law needs the work done by or on the gas. The time does not replace the missing work value.
-			</details>
-		</div>
+			<div class='example' data-topic="Heat">
+				<strong>Example:</strong> You rub your hands together, doing 30 J of work on them. During that time, 10 J of heat escapes from your hands into the air. How much does the internal energy of your hands change?
+				<details>
+					<summary>solution</summary>
+					$$W = 30\,\mathrm{J}$$
+					$$Q = 10\,\mathrm{J}$$
+					<br>
+					$$E_i = E_f + Q - W$$
+					$$E_i = E_f + 10 - 30$$
+					$$E_i = E_f - 20$$
+					$$E_f - E_i = 20\,\mathrm{J}$$
+					<p>Your hands gain 20 J of internal energy, which is why they feel warmer.</p>
+				</details>
+			</div>
 
-		<div class='example'>
-			<strong>Example:</strong> A system starts with 500 J of internal energy. During a process, 120 J of heat exits and 80 J of work is done on the system. What is the final internal energy?
-			<details>
-				<summary>solution</summary>
-				Use the change in internal energy first.
-				$$\Delta E=W-Q$$
-				$$\Delta E=80-120$$
-				$$\Delta E=-40$$
-				Now add the change to the initial energy.
-				$$E_f=E_i+\Delta E$$
-				$$E_f=500+(-40)$$
-				$$E_f=460\,\mathrm{J}$$
-			</details>
-		</div>
+			<div class='example' data-topic="Heat">
+				<strong>Example:</strong> A 50 kg skateboarder drops into a half-pipe from rest at the top edge, 3.0 m above the bottom. They roll up the other side and stop 2.6 m above the bottom. How much energy left the skateboarder's system as heat?
+				<details>
+					<summary>solution</summary>
+					<p>The skateboarder starts and ends at rest, so only gravitational potential energy changes. Choose the bottom as zero height.</p>
+					$$K_i + U_{gi} = K_f + U_{gf} + Q$$
+					$$0 + mgh_i = 0 + mgh_f + Q$$
+					$$(50)(9.8)(3.0) = (50)(9.8)(2.6) + Q$$
+					$$1470 = 1274 + Q$$
+					$$Q = 196\,\mathrm{J}$$
+					<p>Friction and air resistance turned 196 J into thermal energy. That's why skaters have to pump to keep going.</p>
+				</details>
+			</div>
 
-		<div class='example'>
-			<strong>Example:</strong> A small engine loses 0.50 kJ as heat during one cycle. In the same cycle, 200 J of work is done on the engine by a moving piston. What is the change in internal energy?
-			<details>
-				<summary>solution</summary>
-				Convert the heat loss to joules.
-				$$0.50=500$$
-				$$\Delta E=W-Q$$
-				$$\Delta E=200-500$$
-				$$\Delta E=-300\,\mathrm{J}$$
-				<p>The internal energy decreases by 300 J.</p>
-			</details>
-		</div>
+			<div class='example' data-topic="Heat">
+				<strong>Example:</strong> A 58 g tennis ball is dropped from rest 2.0 m above the floor. It bounces back up to a height of 1.1 m. How much energy left the ball as heat during the bounce? What fraction of its energy did it lose?
+				<details>
+					<summary>solution</summary>
+					$$58\,\textcolor{DeepPink}{\mathrm{g}}\left(\frac{1\,\mathrm{kg}}{1000\,\textcolor{DeepPink}{\mathrm{g}}}\right)$$
+					$$0.058\,\mathrm{kg}$$
+					<br>
+					$$U_{gi} = U_{gf} + Q$$
+					$$mgh_i = mgh_f + Q$$
+					$$(0.058)(9.8)(2.0) = (0.058)(9.8)(1.1) + Q$$
+					$$1.14 = 0.625 + Q$$
+					$$Q = 0.51\,\mathrm{J}$$
+					<br>
+					$$\frac{Q}{E_i} = \frac{0.51}{1.14}$$
+					$$\frac{Q}{E_i} = 0.45$$
+					<p>The ball lost 45% of its energy, mostly as heat and sound during the squish of the bounce.</p>
+				</details>
+			</div>
 
-		<div class='example'>
-			<strong>Example:</strong> A 1000 kg car moving at 36 km/h skids to a stop on level ground. If the car's kinetic energy leaves the car as heat, how much heat exits the car's system?
-			<details>
-				<summary>solution</summary>
-				First convert the speed.
-				$$36=10$$
-				The kinetic energy becomes heat.
-				$$Q=K_i$$
-				$$Q=\tfrac{1}{2}mv^2$$
-				$$Q=\tfrac{1}{2}(1000)(10)^2$$
-				$$Q=50\,000\,\mathrm{J}$$
-			</details>
-		</div>
+			<div class='example' data-topic="Heat" data-hard>
+				<strong>Example:</strong> A 30 kg sled starts from rest at the top of a hill 10 m tall and reaches the bottom moving at 12 m/s. How much energy left as heat? The slope is 50 m long. What was the average friction force?
+				<details>
+					<summary>solution</summary>
+					$$K_i + U_{gi} = K_f + U_{gf} + Q$$
+					$$0 + (30)(9.8)(10) = \tfrac{1}{2}(30)(12)^{2} + 0 + Q$$
+					$$2940 = 2160 + Q$$
+					$$Q = 780\,\mathrm{J}$$
+					<br>
+					<p>The friction force did the work that removed this energy. Use the work equation from the <a href="../energy/index.html#work">energy</a> page.</p>
+					$$W = F\Delta x$$
+					$$780 = F(50)$$
+					$$F = 15.6\,\mathrm{N}$$
+				</details>
+			</div>
 
-		<div class='example'>
-			<strong>Example:</strong> A 0.40 kg ball starts with 20 J of kinetic energy and rolls through grass until it stops. If the ball ends at the same height, how much heat leaves the ball's system?
-			<details>
-				<summary>solution</summary>
-				The ball loses its kinetic energy, and there is no height change.
-				$$K_i=Q$$
-				$$Q=20\,\mathrm{J}$$
-				<p>20 J leaves the ball's system as heat.</p>
-			</details>
-		</div>
+			<div class='example' data-topic="Entropy">
+				<strong>Question:</strong> A refrigerator makes the food inside colder and more orderly. Doesn't that decrease entropy and break the second law of thermodynamics?
+				<details>
+					<summary>answer</summary>
+					<p>No. The second law applies to the whole system, not just the inside of the refrigerator.</p>
+					<p>To cool the inside, the refrigerator uses electrical energy and pushes even more heat out into the kitchen through the coils on the back. The entropy of the kitchen goes up more than the entropy of the inside goes down. Like the powered rotor in the simulation on this page, lowering entropy in one place needs energy from somewhere else.</p>
+				</details>
+			</div>
 
-		<div class='example'>
-			<p><strong>Reading (20 minutes):</strong> Read <a href="https://www.quantamagazine.org/what-is-entropy-a-measure-of-just-how-little-we-really-know-20241213/">What Is Entropy? A Measure of Just How Little We Really Know.</a> from Quanta Magazine. Then answer these questions.</p>
+			<div class='example' data-topic="The Arrow of Time">
+				<strong>Question:</strong> A video shows spilled milk jumping up off the floor and back into a glass. What thermodynamics idea makes that look wrong?
+				<details>
+					<summary>answer</summary>
+					<p>The second law of thermodynamics. Spilled milk is a higher entropy state than milk in a glass. Isolated systems move toward higher entropy, so we only ever see milk spill, never unspill.</p>
+					<p>That one-way direction is the arrow of time. It's how you can tell the video is playing backward.</p>
+				</details>
+			</div>
+			<div class='example'>
+				<p><strong>Reading (20 minutes):</strong> Read <a href="https://www.quantamagazine.org/what-is-entropy-a-measure-of-just-how-little-we-really-know-20241213/">What Is Entropy? A Measure of Just How Little We Really Know.</a> from Quanta Magazine. Then answer these questions.</p>
 
-			The article begins with Sadi Carnot's effort to improve steam engines. Why did his work lead to the conclusion that no heat engine can turn all of its supplied thermal energy into useful work?
-			<details>
-				<summary>answer</summary>
-				<p>A heat engine works because energy flows from a hotter region toward a colder one. Carnot found that even an ideal engine must release some heat to the colder region instead of converting all of it into work. Real engines lose still more useful energy through friction, vibration, and other unwanted motion. The energy is conserved, but some of it becomes more spread out and less available for work.</p>
-			</details>
-			<br>
+				The article begins with Sadi Carnot's effort to improve steam engines. Why did his work lead to the conclusion that no heat engine can turn all of its supplied thermal energy into useful work?
+				<details>
+					<summary>answer</summary>
+					<p>A heat engine works because energy flows from a hotter region toward a colder one. Carnot found that even an ideal engine must release some heat to the colder region instead of converting all of it into work. Real engines lose still more useful energy through friction, vibration, and other unwanted motion. The energy is conserved, but some of it becomes more spread out and less available for work.</p>
+				</details>
+				<br>
 
-			Boltzmann described entropy using microstates and macrostates. Why does a scattered arrangement of checkers represent a higher-entropy macrostate than a carefully arranged star?
-			<details>
-				<summary>answer</summary>
-				<p>There are relatively few exact arrangements that make the checkers form a recognizable star. There are vastly more individual arrangements that look scattered. A scattered macrostate can therefore be produced by many more microstates, making it more probable and higher in entropy.</p>
-			</details>
-			<br>
+				Boltzmann described entropy using microstates and macrostates. Why does a scattered arrangement of checkers represent a higher-entropy macrostate than a carefully arranged star?
+				<details>
+					<summary>answer</summary>
+					<p>There are relatively few exact arrangements that make the checkers form a recognizable star. There are vastly more individual arrangements that look scattered. A scattered macrostate can therefore be produced by many more microstates, making it more probable and higher in entropy.</p>
+				</details>
+				<br>
 
-			Oil and water can separate after being shaken, which looks like an increase in order. Why does the article say this does not violate the second law of thermodynamics?
-			<details>
-				<summary>answer</summary>
-				<p>The visible liquids become more organized, but their separation releases energy into molecular motion. The increase in microscopic thermal disorder is greater than the visible increase in order. Entropy can decrease in one part or description of a system while the total entropy still increases.</p>
-			</details>
-		</div>
+				Oil and water can separate after being shaken, which looks like an increase in order. Why does the article say this does not violate the second law of thermodynamics?
+				<details>
+					<summary>answer</summary>
+					<p>The visible liquids become more organized, but their separation releases energy into molecular motion. The increase in microscopic thermal disorder is greater than the visible increase in order. Entropy can decrease in one part or description of a system while the total entropy still increases.</p>
+				</details>
+			</div>
+		</details>
+
 	</article>
 	<footer>
 		<a href="../../../">Back</a>
@@ -1296,6 +1347,7 @@
 	<script>
 		renderMathInElement(document.body);
 	</script>
+	<script defer src="../../../lib/practice-labels.js"></script>
 </body>
 
 </html>

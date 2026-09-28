@@ -410,245 +410,270 @@
 			</details>
 		</div>
 	</article>
-	<article>
-		<h1 class='underlined'>Practice <a class="printout-link" href="../../../output/pdf/power-practice-questions.pdf">printout.pdf</a></h1>
-		<p>
-			In case you wanted more practice I used AI to make some more problems. The rest of the site I made by hand, but generating endless problems seemed safe. I did find mistakes in the AI generated problems, and there are probably some I didn't find. Let me know if something could be fixed. I also added a practice problem on each page with no solution. That's intentional. Have fun!
-		</p>
-		<p>
-			For home energy problems, remember that kilowatt hours measure energy, not power. Convert watts to kilowatts and seconds or minutes to hours when the answer should be in kWh.
-		</p>
+	<article class="practice-compact">
+		<details class="practice-menu">
+			<summary>practice problems (18)</summary>
+			<div class="derive practice-intro">
+				<p>
+					In case you wanted more practice I used AI to make some more problems. The rest of the site I made by hand, but generating endless problems seemed safe. I did find mistakes in the AI generated problems, and there are probably some I didn't find. Let me know if something could be fixed. I also added a practice problem on each page with no solution. That's intentional. Have fun!
+				</p>
+				<p>
+					For home energy problems, remember that kilowatt hours measure energy, not power. Convert watts to kilowatts and seconds or minutes to hours when the answer should be in kWh.
+				</p>
+				<p class="practice-controls">
+					<a class="printout-link practice-printout-link" href="../../../output/pdf/power-practice-questions.pdf">printout.pdf</a>
+					<label class="practice-tag-toggle"><input type="checkbox"> show topics and mark harder problems</label>
+				</p>
+			</div>
 
-		<div class='example'>
-			<strong>Question:</strong> A power bill charges for kilowatt hours. Is a kilowatt hour a unit of power or a unit of energy?
-			<details>
-				<summary>answer</summary>
-				A kilowatt hour is a unit of energy. A kilowatt tells the rate of energy transfer, and multiplying by time gives the total energy transferred.
-			</details>
-		</div>
+			<div class='example' data-topic="Energy and Power">
+				<strong>Question:</strong> A power bill charges for kilowatt hours. Is a kilowatt hour a unit of power or a unit of energy?
+				<details>
+					<summary>answer</summary>
+					<p>A kilowatt hour is a unit of energy. A kilowatt tells the rate of energy transfer, and multiplying by time gives the total energy transferred.</p>
+				</details>
+			</div>
 
-		<div class='example'>
-			<strong>Example:</strong> A small oil-filled radiator heater is warming a room. This type of heater takes longer to heat up, but it provides quiet, steady warmth after it gets hot. If it transfers 1800 J of energy to the air in 3.0 s, what is its power use?
-			<details>
-				<summary>solution</summary>
-				$$P = \frac{W}{\Delta t}$$
-				$$P = \frac{1800}{3.0}$$
-				$$P = 600 \, \mathrm{W}$$
-			</details>
-		</div>
+			<div class='example' data-topic="Energy and Power">
+				<strong>Example:</strong> A small oil-filled radiator heater is warming a room. This type of heater takes longer to heat up, but it provides quiet, steady warmth after it gets hot. If it transfers 1800 J of energy to the air in 3.0 s, what is its power use?
+				<details>
+					<summary>solution</summary>
+					$$P = \frac{W}{\Delta t}$$
+					$$P = \frac{1800}{3.0}$$
+					$$P = 600 \, \mathrm{W}$$
+				</details>
+			</div>
 
-		<div class='example'>
-			<strong>Example:</strong> A phone charger with a 1.8 m cable transfers energy at 12 W for 15 minutes while a phone is below 20% battery. How many joules of energy does it transfer?
-			<details>
-				<summary>solution</summary>
-				Convert minutes to seconds.
-				$$\Delta t = 900$$
-				$$P = \frac{W}{\Delta t}$$
-				$$W = P\Delta t$$
-				$$W = (12)(900)$$
-				$$W = 10800 \, \mathrm{J}$$
-			</details>
-		</div>
+			<div class='example' data-topic="Energy and Power">
+				<strong>Example:</strong> A phone charger with a 1.8 m cable transfers energy at 12 W for 15 minutes while a phone is below 20% battery. How many joules of energy does it transfer?
+				<details>
+					<summary>solution</summary>
+					<p>Convert minutes to seconds.</p>
+					$$\Delta t = 900$$
+					$$P = \frac{W}{\Delta t}$$
+					$$W = P\Delta t$$
+					$$W = (12)(900)$$
+					$$W = 10800 \, \mathrm{J}$$
+				</details>
+			</div>
 
-		<div class='example'>
-			<strong>Example:</strong> A 1500 W space heater runs under a desk for 2.5 hours on a cold morning. The room is 3.0 m wide, but the energy use depends on power and time. How much energy does it use in kWh?
-			<details>
-				<summary>solution</summary>
-				Convert watts to kilowatts.
-				$$P = 1.5$$
-				$$W = P\Delta t$$
-				$$W = (1.5)(2.5)$$
-				$$W = 3.75 \, \mathrm{kWh}$$
-			</details>
-		</div>
+			<div class='example' data-topic="Energy and Power">
+				<strong>Example:</strong> A 1500 W space heater runs under a desk for 2.5 hours on a cold morning. How much energy does it use in kWh?
+				<details>
+					<summary>solution</summary>
+					$$1500\,\textcolor{DeepPink}{\mathrm{W}}\left(\frac{1\,\mathrm{kW}}{1000\,\textcolor{DeepPink}{\mathrm{W}}}\right)$$
+					$$1.5\,\mathrm{kW}$$
+					<br>
+					$$W = P\Delta t$$
+					$$W = (1.5\,\mathrm{kW})(2.5\,\mathrm{h})$$
+					$$W = 3.75\,\mathrm{kWh}$$
+				</details>
+			</div>
 
-		<div class='example'>
-			<strong>Example:</strong> Electricity costs 18 cents for each kWh. How much would the 3.75 kWh from the heater in the previous example cost?
-			<details>
-				<summary>solution</summary>
-				$$\mathrm{cost} = (3.75)(18)$$
-				$$\mathrm{cost} = 67.5 \, \mathrm{cents}$$
-				The cost is about 68 cents.
-			</details>
-		</div>
+			<div class='example' data-topic="Energy and Power">
+				<strong>Example:</strong> Electricity costs $0.18 for each kWh. How much does the 3.75 kWh from the heater in the previous example cost?
+				<details>
+					<summary>solution</summary>
+					$$3.75\,\textcolor{DeepPink}{\mathrm{kWh}}\left(\frac{\$0.18}{1\,\textcolor{DeepPink}{\mathrm{kWh}}}\right)$$
+					$$\$0.68$$
+					<p>Running that heater every morning for a month would cost about $20.</p>
+				</details>
+			</div>
 
-		<div class='example'>
-			<strong>Example:</strong> A roof solar panel is about 1.7 m tall and 1.0 m wide. On a clear day it averages 420 W for 6.0 hours. How much energy does it produce in kWh?
-			<details>
-				<summary>solution</summary>
-				Convert watts to kilowatts.
-				$$P = 0.420$$
-				$$W = P\Delta t$$
-				$$W = (0.420)(6.0)$$
-				$$W = 2.52 \, \mathrm{kWh}$$
-			</details>
-		</div>
+			<div class='example' data-topic="Energy and Power">
+				<strong>Example:</strong> A roof solar panel is about 1.7 m tall and 1.0 m wide. On a clear day it averages 420 W for 6.0 hours. How much energy does it produce in kWh?
+				<details>
+					<summary>solution</summary>
+					$$420\,\textcolor{DeepPink}{\mathrm{W}}\left(\frac{1\,\mathrm{kW}}{1000\,\textcolor{DeepPink}{\mathrm{W}}}\right)$$
+					$$0.420\,\mathrm{kW}$$
+					<br>
+					$$W = P\Delta t$$
+					$$W = (0.420\,\mathrm{kW})(6.0\,\mathrm{h})$$
+					$$W = 2.52\,\mathrm{kWh}$$
+					<p>That's enough to run the space heater from the earlier example for about 1.7 hours.</p>
+				</details>
+			</div>
 
-		<div class='example'>
-			<strong>Example:</strong> A battery adds energy to a small circuit at 9.0 V while the current is 0.095 A. The circuit board is labeled for a science fair display, but the label does not affect the calculation. What power does the battery provide?
-			<details>
-				<summary>solution</summary>
-				$$P = IV$$
-				$$P = (0.095)(9.0)$$
-				$$P = 0.855 \, \mathrm{W}$$
-			</details>
-		</div>
+			<div class='example' data-topic="Energy and Power" data-hard>
+				<strong>Example:</strong> A 2000 kg electric car accelerates from rest to 27 m/s. Its motor delivers 150 kW of power. Ignoring losses, how long does it take?
+				<details>
+					<summary>solution</summary>
+					<p>The motor's work becomes the car's kinetic energy, from the <a href="../../energy/energy/index.html#kinetic">energy</a> page.</p>
+					$$K = \tfrac{1}{2}mv^2$$
+					$$K = \tfrac{1}{2}(2000)(27)^2$$
+					$$K = 729\,000\,\mathrm{J}$$
+					<br>
+					$$P = \frac{W}{\Delta t}$$
+					$$\Delta t = \frac{W}{P}$$
+					$$\Delta t = \frac{729\,000}{150\,000}$$
+					$$\Delta t = 4.9\,\mathrm{s}$$
+					<p>Real electric cars take a little longer, because some energy is lost as heat and to air resistance.</p>
+				</details>
+			</div>
 
-		<div class='example'>
-			<strong>Example:</strong> A device runs for 12 minutes on a 9.0 V battery. How much energy does it use?
-			<details>
-				<summary>answer</summary>
-				This cannot be solved from the information given. Energy use needs power and time. The voltage alone is not enough because the current is missing.
-			</details>
-		</div>
+			<div class='example' data-topic="DC Electric Power">
+				<strong>Example:</strong> A device runs for 12 minutes on a 9.0 V battery. How much energy does it use?
+				<details>
+					<summary>solution</summary>
+					<p>This cannot be solved from the information given. Energy use needs power and time. The voltage alone is not enough because the current is missing.</p>
+				</details>
+			</div>
 
-		<div class='example'>
-			<strong>Example:</strong> A 12 V LED strip under a shelf draws 0.75 A. The strip is 2.0 m long and has many small LEDs, but treat it as one device. How much power does it use, and how much energy does it convert in 5.0 minutes?
-			<details>
-				<summary>solution</summary>
-				First find the power.
-				$$P = IV$$
-				$$P = (0.75)(12)$$
-				$$P = 9.0 \, \mathrm{W}$$
-				Convert minutes to seconds.
-				$$\Delta t = 300$$
-				$$W = P\Delta t$$
-				$$W = (9.0)(300)$$
-				$$W = 2700 \, \mathrm{J}$$
-			</details>
-		</div>
+			<div class='example' data-topic="DC Electric Power">
+				<strong>Example:</strong> A 12 V LED strip under a shelf draws 0.75 A. The strip is 2.0 m long. How much power does it use, and how much energy does it convert in 5.0 minutes?
+				<details>
+					<summary>solution</summary>
+					$$P = IV$$
+					$$P = (0.75)(12)$$
+					$$P = 9.0\,\mathrm{W}$$
+					<br>
+					$$5.0\,\textcolor{DeepPink}{\mathrm{min}}\left(\frac{60\,\mathrm{s}}{1\,\textcolor{DeepPink}{\mathrm{min}}}\right)$$
+					$$300\,\mathrm{s}$$
+					<br>
+					$$W = P\Delta t$$
+					$$W = (9.0)(300)$$
+					$$W = 2700\,\mathrm{J}$$
+				</details>
+			</div>
 
-		<div class='example'>
-			<strong>Example:</strong> A 60 W light bulb is connected to 120 V. What current does it draw?
-			<details>
-				<summary>solution</summary>
-				$$P = IV$$
-				$$I = \frac{P}{V}$$
-				$$I = \frac{60}{120}$$
-				$$I = 0.50 \, \mathrm{A}$$
-			</details>
-		</div>
+			<div class='example' data-topic="DC Electric Power">
+				<strong>Example:</strong> A 60 W light bulb is connected to 120 V. What current does it draw?
+				<details>
+					<summary>solution</summary>
+					$$P = IV$$
+					$$I = \frac{P}{V}$$
+					$$I = \frac{60}{120}$$
+					$$I = 0.50 \, \mathrm{A}$$
+				</details>
+			</div>
 
-		<div class='example'>
-			<strong>Example:</strong> A laptop charger label says it can accept 100-240 V from the wall. On its output side, it provides 65 W at 20 V. What current does it provide to the laptop?
-			<details>
-				<summary>solution</summary>
-				$$P = IV$$
-				$$I = \frac{P}{V}$$
-				$$I = \frac{65}{20}$$
-				$$I = 3.25 \, \mathrm{A}$$
-			</details>
-		</div>
+			<div class='example' data-topic="DC Electric Power">
+				<strong>Example:</strong> A laptop charger label says it can accept 100-240 V from the wall. On its output side, it provides 65 W at 20 V. What current does it provide to the laptop?
+				<details>
+					<summary>solution</summary>
+					$$P = IV$$
+					$$I = \frac{P}{V}$$
+					$$I = \frac{65}{20}$$
+					$$I = 3.25 \, \mathrm{A}$$
+				</details>
+			</div>
 
-		<div class='example'>
-			<strong>Question:</strong> The resistance of a resistor stays the same. If the voltage across it doubles, what happens to the power dissipated by the resistor?
-			<details>
-				<summary>answer</summary>
-				The power becomes four times larger. For a constant resistance, use P = V²/R, so doubling voltage makes the voltage squared four times larger.
-			</details>
-		</div>
+			<div class='example' data-topic="DC Electric Power">
+				<strong>Question:</strong> The resistance of a resistor stays the same. If the voltage across it doubles, what happens to the power dissipated by the resistor?
+				<details>
+					<summary>answer</summary>
+					<p>The power becomes four times larger. For a constant resistance, use P = V²/R, so doubling voltage makes the voltage squared four times larger.</p>
+				</details>
+			</div>
 
-		<div class='example'>
-			<strong>Example:</strong> A 30 Ω resistor has 0.20 A through it. How much power does it dissipate?
-			<details>
-				<summary>solution</summary>
-				$$P = I^2R$$
-				$$P = (0.20)^2(30)$$
-				$$P = 1.2 \, \mathrm{W}$$
-			</details>
-		</div>
+			<div class='example' data-topic="DC Electric Power">
+				<strong>Example:</strong> A 30 Ω resistor has 0.20 A through it. How much power does it dissipate?
+				<details>
+					<summary>solution</summary>
+					$$P = I^2R$$
+					$$P = (0.20)^2(30)$$
+					$$P = 1.2 \, \mathrm{W}$$
+				</details>
+			</div>
 
-		<div class='example'>
-			<strong>Example:</strong> A 240 Ω resistor has 12 V across it during a lab test. The resistor is rated for 0.25 W, but first calculate the power it would dissipate.
-			<details>
-				<summary>solution</summary>
-				$$P = \frac{V^2}{R}$$
-				$$P = \frac{(12)^2}{240}$$
-				$$P = 0.60 \, \mathrm{W}$$
-				This is more than 0.25 W, so that resistor would get too hot.
-			</details>
-		</div>
+			<div class='example' data-topic="DC Electric Power">
+				<strong>Example:</strong> A 240 Ω resistor has 12 V across it during a lab test. The resistor is rated for 0.25 W, but first calculate the power it would dissipate.
+				<details>
+					<summary>solution</summary>
+					$$P = \frac{V^2}{R}$$
+					$$P = \frac{(12)^2}{240}$$
+					$$P = 0.60 \, \mathrm{W}$$
+					<p>This is more than 0.25 W, so that resistor would get too hot.</p>
+				</details>
+			</div>
 
-		<div class='example'>
-			<strong>Example:</strong> A 2.0 kΩ resistor has 15 mA through it. How much power does it dissipate?
-			<details>
-				<summary>solution</summary>
-				Convert the units first.
-				$$R = 2000$$
-				$$I = 0.015$$
-				$$P = I^2R$$
-				$$P = (0.015)^2(2000)$$
-				$$P = 0.45 \, \mathrm{W}$$
-			</details>
-		</div>
+			<div class='example' data-topic="Energy and Power">
+				<strong>Example:</strong> A 10 W LED bulb gives the same light as a 60 W incandescent bulb. A lamp is on for 5.0 hours a day for a year. At $0.15 per kWh, how much money does the LED bulb save?
+				<details>
+					<summary>solution</summary>
+					<p>The LED uses 50 W less power.</p>
+					$$\Delta t = (5.0\,\mathrm{h})(365)$$
+					$$\Delta t = 1825\,\mathrm{h}$$
+					<br>
+					$$W = P\Delta t$$
+					$$W = (0.050\,\mathrm{kW})(1825\,\mathrm{h})$$
+					$$W = 91.3\,\mathrm{kWh}$$
+					<br>
+					$$91.3\,\textcolor{DeepPink}{\mathrm{kWh}}\left(\frac{\$0.15}{1\,\textcolor{DeepPink}{\mathrm{kWh}}}\right)$$
+					$$\$13.69$$
+					<p>About $14 a year for one bulb. Most of the incandescent bulb's energy becomes heat, not light.</p>
+				</details>
+			</div>
 
-		<div class='example'>
-			<strong>Example:</strong> A small heating element for a cup warmer should use 48 W when connected to 24 V. The metal plate is 8 cm across, but the resistance is set by the electrical values. What resistance should it have?
-			<details>
-				<summary>solution</summary>
-				$$P = \frac{V^2}{R}$$
-				$$R = \frac{V^2}{P}$$
-				$$R = \frac{(24)^2}{48}$$
-				$$R = 12 \, \Omega$$
-			</details>
-		</div>
+			<div class='example' data-topic="DC Electric Power">
+				<strong>Example:</strong> A small cup-warmer plate should use 48 W when it's connected to 24 V. What resistance should its heating element have?
+				<details>
+					<summary>solution</summary>
+					$$P = \frac{V^2}{R}$$
+					$$R = \frac{V^2}{P}$$
+					$$R = \frac{(24)^2}{48}$$
+					$$R = 12\,\Omega$$
+				</details>
+			</div>
 
-		<div class='example'>
-			<strong>Example:</strong> A 12 V motor rated for 36 W spins a small fan in a desk cooler. The fan has three blades, but model the motor as one electrical device. What current does it draw, and what is its effective resistance while running?
-			<details>
-				<summary>solution</summary>
-				Find the current from electric power.
-				$$P = IV$$
-				$$I = \frac{P}{V}$$
-				$$I = \frac{36}{12}$$
-				$$I = 3.0 \, \mathrm{A}$$
-				Now use Ohm's law.
-				$$V = IR$$
-				$$R = \frac{V}{I}$$
-				$$R = \frac{12}{3.0}$$
-				$$R = 4.0 \, \Omega$$
-			</details>
-		</div>
+			<div class='example' data-topic="DC Electric Power">
+				<strong>Example:</strong> A 12 V motor rated for 36 W spins the three-blade fan in a desk cooler. What current does it draw, and what is its effective resistance while it's running?
+				<details>
+					<summary>solution</summary>
+					$$P = IV$$
+					$$I = \frac{P}{V}$$
+					$$I = \frac{36}{12}$$
+					$$I = 3.0\,\mathrm{A}$$
+					<br>
+					$$V = IR$$
+					$$R = \frac{V}{I}$$
+					$$R = \frac{12}{3.0}$$
+					$$R = 4.0\,\Omega$$
+				</details>
+			</div>
 
-		<div class='example'>
-			<strong>Example:</strong> A 150 Ω resistor is connected across 9.0 V for 10 minutes inside a simple timing circuit. The plastic case is 6 cm long, but ignore temperature changes in the resistor. How much energy does it convert to heat?
-			<details>
-				<summary>solution</summary>
-				First find the power.
-				$$P = \frac{V^2}{R}$$
-				$$P = \frac{(9.0)^2}{150}$$
-				$$P = 0.54$$
-				Convert minutes to seconds.
-				$$\Delta t = 600$$
-				$$W = P\Delta t$$
-				$$W = (0.54)(600)$$
-				$$W = 324 \, \mathrm{J}$$
-			</details>
-		</div>
+			<div class='example' data-topic="DC Electric Power">
+				<strong>Example:</strong> A 150 Ω resistor is connected across 9.0 V for 10 minutes in a simple timing circuit. How much energy does it convert to heat?
+				<details>
+					<summary>solution</summary>
+					$$P = \frac{V^2}{R}$$
+					$$P = \frac{(9.0)^2}{150}$$
+					$$P = 0.54\,\mathrm{W}$$
+					<br>
+					$$10\,\textcolor{DeepPink}{\mathrm{min}}\left(\frac{60\,\mathrm{s}}{1\,\textcolor{DeepPink}{\mathrm{min}}}\right)$$
+					$$600\,\mathrm{s}$$
+					<br>
+					$$W = P\Delta t$$
+					$$W = (0.54)(600)$$
+					$$W = 324\,\mathrm{J}$$
+				</details>
+			</div>
 
-		<div class='example'>
-			<p><strong>Reading (7 minutes):</strong> Read <a href="https://www.snexplores.org/article/explainer-what-electric-grid">Explainer: What is the electric grid?</a> from Science News Explores. Then answer these questions.</p>
+			<div class='example'>
+				<p><strong>Reading (7 minutes):</strong> Read <a href="https://www.snexplores.org/article/explainer-what-electric-grid">Explainer: What is the electric grid?</a> from Science News Explores. Then answer these questions.</p>
 
-			Why must grid operators closely match the amount of electrical power supplied with the amount people are using?
-			<details>
-				<summary>answer</summary>
-				<p>Too little supplied power can lead to outages, while too much can overheat wires or damage equipment. The grid must stay balanced moment by moment.</p>
-			</details>
-			<br>
+				Why must grid operators closely match the amount of electrical power supplied with the amount people are using?
+				<details>
+					<summary>answer</summary>
+					<p>Too little supplied power can lead to outages, while too much can overheat wires or damage equipment. The grid must stay balanced moment by moment.</p>
+				</details>
+				<br>
 
-			Why can a heat wave make operating an electric grid more difficult?
-			<details>
-				<summary>answer</summary>
-				<p>More people use air conditioners during a heat wave, so demand rises sharply. Grid operators must find enough generation to meet that extra demand.</p>
-			</details>
-			<br>
+				Why can a heat wave make operating an electric grid more difficult?
+				<details>
+					<summary>answer</summary>
+					<p>More people use air conditioners during a heat wave, so demand rises sharply. Grid operators must find enough generation to meet that extra demand.</p>
+				</details>
+				<br>
 
-			The article says many outages occur locally. Give one local problem that can interrupt electrical service.
-			<details>
-				<summary>answer</summary>
-				<p>A storm can knock down a power line, equipment can fail, or damage to a local wire can interrupt service. These problems can happen even when the larger grid is working.</p>
-			</details>
-		</div>
+				The article says many outages occur locally. Give one local problem that can interrupt electrical service.
+				<details>
+					<summary>answer</summary>
+					<p>A storm can knock down a power line, equipment can fail, or damage to a local wire can interrupt service. These problems can happen even when the larger grid is working.</p>
+				</details>
+			</div>
+		</details>
+
 	</article>
 	<footer>
 		<a href="../../../">Back</a>
@@ -657,6 +682,7 @@
 	<script>
 		renderMathInElement(document.body);
 	</script>
+	<script defer src="../../../lib/practice-labels.js"></script>
 </body>
 
 </html>

@@ -1595,130 +1595,198 @@
 		</div>
 	</article>
 
-	<article>
-		<h1 class='underlined'>Practice <a class="printout-link" href="../../../output/pdf/waveproperties-practice-questions.pdf">printout.pdf</a></h1>
-		<p>
-			In case you wanted more practice I used AI to make some more problems. The rest of the site I made by hand, but generating endless problems seemed safe. I did find mistakes in the AI generated problems, and there are probably some I didn't find. Let me know if something could be fixed. I also added a practice problem on each page with no solution. That's intentional. Have fun!
-		</p>
+	<article class="practice-compact">
+		<details class="practice-menu">
+			<summary>practice problems (13)</summary>
+			<div class="derive practice-intro">
+				<p>
+					In case you wanted more practice I used AI to make some more problems. The rest of the site I made by hand, but generating endless problems seemed safe. I did find mistakes in the AI generated problems, and there are probably some I didn't find. Let me know if something could be fixed. I also added a practice problem on each page with no solution. That's intentional. Have fun!
+				</p>
+				<p class="practice-controls">
+					<a class="printout-link practice-printout-link" href="../../../output/pdf/waveproperties-practice-questions.pdf">printout.pdf</a>
+					<label class="practice-tag-toggle"><input type="checkbox"> show topics and mark harder problems</label>
+				</p>
+			</div>
 
-		<div class='example'><strong>Question:</strong> Two small pulses travel toward each other on the same rope. For a moment they occupy the same section of rope, and then each pulse continues on. Why is this different from two carts colliding on a track?
-			<details>
-				<summary>answer</summary>
-				<p>Waves can be in superposition. While the pulses overlap, the rope's observed displacement is the sum of the displacements from both pulses.</p>
-				<p>After the overlap, the pulses continue through each other. They do not bounce away like carts because the waves are not separate objects made of matter; they are disturbances moving through the medium.</p>
-			</details>
-		</div>
+			<div class='example' data-topic="Interference"><strong>Question:</strong> Two small pulses travel toward each other on the same rope. For a moment they occupy the same section of rope, and then each pulse continues on. Why is this different from two carts colliding on a track?
+				<details>
+					<summary>answer</summary>
+					<p>Waves can be in superposition. While the pulses overlap, the rope's observed displacement is the sum of the displacements from both pulses.</p>
+					<p>After the overlap, the pulses continue through each other. They do not bounce away like carts because the waves are not separate objects made of matter; they are disturbances moving through the medium.</p>
+				</details>
+			</div>
 
-		<div class='example'><strong>Question:</strong> At a crowded surf spot, an incoming ocean wave reflects from a wall and overlaps with the next incoming wave. In one place the water suddenly rises higher than either wave by itself. What kind of interference is happening there?
-			<details>
-				<summary>answer</summary>
-				<p>This is constructive interference.</p>
-				<p>The two waves have displacements in the same direction at that location, so their amplitudes add. In water, that can make a higher crest or a deeper trough than either individual wave would make alone.</p>
-			</details>
-		</div>
+			<div class='example' data-topic="Interference">
+				<strong>Example:</strong> A pulse with a 0.20 m crest travels along a rope toward a pulse with a 0.15 m trough. What is the rope's displacement at the moment the crest and trough overlap?
+				<details>
+					<summary>solution</summary>
+					<p>In superposition, the displacements add. A trough is a negative displacement.</p>
+					$$y = 0.20 + (-0.15)$$
+					$$y = 0.05\,\mathrm{m}$$
+					<p>The rope is only 5 cm above equilibrium for that moment. Then both pulses continue on unchanged.</p>
+				</details>
+			</div>
 
-		<div class='example'><strong>Question:</strong> Noise-canceling headphones play a sound wave that is carefully timed against the outside noise. What has to be true about the headphone wave near your ear for the outside sound to get quieter?
-			<details>
-				<summary>answer</summary>
-				<p>The headphone wave needs to be out of phase with the outside sound at your ear.</p>
-				<p>When a compression from the outside sound lines up with an opposite displacement from the headphone speaker, the waves add destructively. The superposition has a smaller amplitude, so the sound is quieter.</p>
-			</details>
-		</div>
+			<div class='example' data-topic="Interference"><strong>Question:</strong> Noise-canceling headphones play a sound wave that is carefully timed against the outside noise. What has to be true about the headphone wave near your ear for the outside sound to get quieter?
+				<details>
+					<summary>answer</summary>
+					<p>The headphone wave needs to be out of phase with the outside sound at your ear.</p>
+					<p>When a compression from the outside sound lines up with an opposite displacement from the headphone speaker, the waves add destructively. The superposition has a smaller amplitude, so the sound is quieter.</p>
+				</details>
+			</div>
 
-		<div class='example'><strong>Question:</strong> A piano plays several notes at the same time. Your ear receives one combined pressure wave, but you can still hear separate pitches inside the chord. How does this connect to superposition?
-			<details>
-				<summary>answer</summary>
-				<p>The air near your ear is in superposition from many sound waves at once. The observed pressure pattern is the sum of the different notes.</p>
-				<p>Your ear and brain can respond to the different frequencies inside that combined waveform. That is why a chord can be one physical wave pattern in the air but still be heard as multiple notes.</p>
-			</details>
-		</div>
+			<div class='example' data-topic="The Sound of Music"><strong>Question:</strong> Two musicians are tuning together. Their notes are close but not exactly the same, and they hear the loudness slowly pulse louder and softer. What wave pattern are they hearing, and what should happen as the tuning improves?
+				<details>
+					<summary>answer</summary>
+					<p>They are hearing beats. Beats happen when two similar frequencies interfere and the superposition alternates between more constructive and more destructive interference.</p>
+					<p>As the notes get closer to the same frequency, the beats slow down. When the notes match, the slow pulsing disappears.</p>
+				</details>
+			</div>
 
-		<div class='example'><strong>Question:</strong> Two musicians are tuning together. Their notes are close but not exactly the same, and they hear the loudness slowly pulse louder and softer. What wave pattern are they hearing, and what should happen as the tuning improves?
-			<details>
-				<summary>answer</summary>
-				<p>They are hearing beats. Beats happen when two similar frequencies interfere and the superposition alternates between more constructive and more destructive interference.</p>
-				<p>As the notes get closer to the same frequency, the beats slow down. When the notes match, the slow pulsing disappears.</p>
-			</details>
-		</div>
+			<div class='example' data-topic="Diffraction"><strong>Question:</strong> You can hear someone talking around a hallway corner even when you cannot see them. Which wave property makes this possible, and why does it work better for sound than for a narrow beam of light?
+				<details>
+					<summary>answer</summary>
+					<p>This is diffraction. Waves spread after passing an edge or opening, so some sound bends into the region around the corner.</p>
+					<p>Sound has wavelengths that are large enough for everyday openings and corners to cause noticeable spreading. Visible light has much smaller wavelengths, so it usually does not spread around hallway corners in a way you can easily notice.</p>
+				</details>
+			</div>
 
-		<div class='example'><strong>Question:</strong> You can hear someone talking around a hallway corner even when you cannot see them. Which wave property makes this possible, and why does it work better for sound than for a narrow beam of light?
-			<details>
-				<summary>answer</summary>
-				<p>This is diffraction. Waves spread after passing an edge or opening, so some sound bends into the region around the corner.</p>
-				<p>Sound has wavelengths that are large enough for everyday openings and corners to cause noticeable spreading. Visible light has much smaller wavelengths, so it usually does not spread around hallway corners in a way you can easily notice.</p>
-			</details>
-		</div>
+			<div class='example' data-topic="Standing Waves">
+				<strong>Example:</strong> A guitar string is 0.65 m long and fixed at both ends. What are the three longest wavelengths that can form standing waves on it?
+				<details>
+					<summary>solution</summary>
+					<p>Use the standing wave condition with n = 1, 2, and 3.</p>
+					$$2L = n\lambda$$
+					<br>
+					<div class="col-group">
+						<div>
+					$$n = 1$$
+					$$\lambda = \frac{2(0.65)}{1}$$
+					$$\lambda = 1.30\,\mathrm{m}$$
+						</div>
+						<div>
+					$$n = 2$$
+					$$\lambda = \frac{2(0.65)}{2}$$
+					$$\lambda = 0.65\,\mathrm{m}$$
+						</div>
+						<div>
+					$$n = 3$$
+					$$\lambda = \frac{2(0.65)}{3}$$
+					$$\lambda = 0.43\,\mathrm{m}$$
+						</div>
+					</div>
+					<p>The longest standing wave fits half a wavelength on the string.</p>
+				</details>
+			</div>
+			<div class='example' data-topic="Standing Waves">
+				<strong>Example:</strong> Waves travel at 143 m/s on the guitar string from the previous problem. What are the frequencies of its first two standing waves?
+				<details>
+					<summary>solution</summary>
+					<p>Use the wave equation from the <a href="../waves/index.html">waves</a> page with the wavelengths from the previous problem.</p>
+					$$v = f\lambda$$
+					$$f_1 = \frac{v}{\lambda_1}$$
+					$$f_1 = \frac{143}{1.30}$$
+					$$f_1 = 110\,\mathrm{Hz}$$
+					<br>
+					$$f_2 = \frac{v}{\lambda_2}$$
+					$$f_2 = \frac{143}{0.65}$$
+					$$f_2 = 220\,\mathrm{Hz}$$
+					<p>110 Hz is the note A2, the fifth string on a guitar. The second standing wave is exactly twice the frequency.</p>
+				</details>
+			</div>
 
-		<div class='example'><strong>Question:</strong> In a double-slit experiment, two openings act like two wave sources. Why does the screen show alternating bright and dark bands instead of just two bright spots behind the openings?
-			<details>
-				<summary>answer</summary>
-				<p>Each opening sends out waves that spread by diffraction. Those waves overlap on the screen.</p>
-				<p>Bright bands happen where the waves arrive in phase and interfere constructively. Dark bands happen where the waves arrive out of phase and interfere destructively.</p>
-			</details>
-		</div>
+			<div class='example' data-topic="The Doppler Effect"><strong>Question:</strong> An ambulance siren sounds higher pitched as it drives toward you and lower pitched after it passes you. What is changing at your ear, and what is the name of this effect?
+				<details>
+					<summary>answer</summary>
+					<p>This is the Doppler effect.</p>
+					<p>When the ambulance moves toward you, wave crests reach you more often, so the frequency you hear is higher and the wavelength is shorter. When it moves away, crests reach you less often, so the frequency is lower and the wavelength is longer.</p>
+				</details>
+			</div>
 
-		<div class='example'><strong>Question:</strong> An ambulance siren sounds higher pitched as it drives toward you and lower pitched after it passes you. What is changing at your ear, and what is the name of this effect?
-			<details>
-				<summary>answer</summary>
-				<p>This is the Doppler effect.</p>
-				<p>When the ambulance moves toward you, wave crests reach you more often, so the frequency you hear is higher and the wavelength is shorter. When it moves away, crests reach you less often, so the frequency is lower and the wavelength is longer.</p>
-			</details>
-		</div>
+			<div class='example' data-topic="Standing Waves">
+				<strong>Example:</strong> A 1.2 m string is vibrating in a standing wave with 3 antinodes. What is the frequency of the vibration?
+				<details>
+					<summary>solution</summary>
+					<p>This cannot be solved from the information given. We can find the wavelength: 3 antinodes means n = 3, so λ = 2(1.2)/3 = 0.80 m.</p>
+					<p>But finding the frequency with v = fλ also needs the wave speed on the string, which depends on its tension and mass. The wave speed is missing.</p>
+				</details>
+			</div>
 
-		<div class='example'><strong>Question:</strong> A distant galaxy has spectral lines shifted toward the red side of the spectrum. What does that redshift suggest about the galaxy's motion relative to us?
-			<details>
-				<summary>answer</summary>
-				<p>Redshift suggests the galaxy is moving away from us.</p>
-				<p>For light, a longer observed wavelength is described as redshift. The page connects this idea to Hubble's observation that most galaxies are redshifted, which is evidence for an expanding universe.</p>
-			</details>
-		</div>
+			<div class='example' data-topic="The Doppler Effect"><strong>Question:</strong> A distant galaxy has spectral lines shifted toward the red side of the spectrum. What does that redshift suggest about the galaxy's motion relative to us?
+				<details>
+					<summary>answer</summary>
+					<p>Redshift suggests the galaxy is moving away from us.</p>
+					<p>For light, a longer observed wavelength is described as redshift. The page connects this idea to Hubble's observation that most galaxies are redshifted, which is evidence for an expanding universe.</p>
+				</details>
+			</div>
 
-		<div class='example'><strong>Question:</strong> A child on a swing moves much higher when pushed at just the right time, even if each push is gentle. Why is this an example of resonance?
-			<details>
-				<summary>answer</summary>
-				<p>The swing has a natural frequency. If the pushes match that timing, each push adds energy in a way that increases the amplitude of the motion.</p>
-				<p>That matching of the driving frequency to the natural frequency is resonance. The size of the oscillation grows because the pushes keep reinforcing the motion instead of fighting it.</p>
-			</details>
-		</div>
+			<div class='example' data-topic="Resonance"><strong>Question:</strong> A child on a swing moves much higher when pushed at just the right time, even if each push is gentle. Why is this an example of resonance?
+				<details>
+					<summary>answer</summary>
+					<p>The swing has a natural frequency. If the pushes match that timing, each push adds energy in a way that increases the amplitude of the motion.</p>
+					<p>That matching of the driving frequency to the natural frequency is resonance. The size of the oscillation grows because the pushes keep reinforcing the motion instead of fighting it.</p>
+				</details>
+			</div>
 
-		<div class='example'><strong>Question:</strong> A guitar string is fixed at both ends. When it is played at certain frequencies, some points on the string barely move while other points move a lot. What are those two kinds of points called, and why do they appear?
-			<details>
-				<summary>answer</summary>
-				<p>The points that barely move are nodes. The points that move the most are antinodes.</p>
-				<p>They appear because waves reflect from the fixed ends and interfere with themselves. At the resonant frequencies, the superposition forms a standing wave instead of a wave pattern that simply travels down the string.</p>
-			</details>
-		</div>
+			<div class='example' data-topic="Standing Waves">
+				<strong>Example:</strong> A student makes a standing wave on a 2.0 m rope. The wavelength is 0.50 m. How many loops (antinodes) does the standing wave have?
+				<details>
+					<summary>solution</summary>
+					$$2L = n\lambda$$
+					$$n = \frac{2L}{\lambda}$$
+					$$n = \frac{2(2.0)}{0.50}$$
+					$$n = 8$$
+					<p>The standing wave has 8 loops. Each loop is half a wavelength long, 0.25 m.</p>
+				</details>
+			</div>
+			<div class='example' data-topic="Standing Waves">
+				<strong>Example:</strong> A violin's G string is 0.325 m long. When it plays its lowest standing wave, the frequency is 196 Hz. What is the wave speed on the string?
+				<details>
+					<summary>solution</summary>
+					<p>The lowest standing wave has n = 1.</p>
+					$$2L = n\lambda$$
+					$$\lambda = \frac{2(0.325)}{1}$$
+					$$\lambda = 0.650\,\mathrm{m}$$
+					<br>
+					$$v = f\lambda$$
+					$$v = (196)(0.650)$$
+					$$v = 127\,\mathrm{\tfrac{m}{s}}$$
+					<p>Pressing the string against the fingerboard shortens L, which shortens the wavelength and raises the frequency.</p>
+				</details>
+			</div>
 
-		<div class='example'>
-			<p><strong>Reading (10 minutes):</strong> Read <a href="why-do-ducklings-swim-in-a-line.pdf">Why Do Ducklings Swim in a Line Behind Their Mother?</a> from Science Journal for Kids. Then answer these questions.</p>
+			<div class='example'>
+				<p><strong>Reading (10 minutes):</strong> Read <a href="why-do-ducklings-swim-in-a-line.pdf">Why Do Ducklings Swim in a Line Behind Their Mother?</a> from Science Journal for Kids. Then answer these questions.</p>
 
-			Figure 1 uses CDR to describe how the formation changes wave drag. What does a positive CDR mean, and what is special about a CDR of 100% or more?
-			<details>
-				<summary>answer</summary>
-				<p>A positive CDR means the duckling experiences less wave drag than it would while swimming alone. At 100% or more, the wave drag has been reduced enough that the resulting wave force propels the duckling forward.</p>
-			</details>
-			<br>
+				Figure 1 uses CDR to describe how the formation changes wave drag. What does a positive CDR mean, and what is special about a CDR of 100% or more?
+				<details>
+					<summary>answer</summary>
+					<p>A positive CDR means the duckling experiences less wave drag than it would while swimming alone. At 100% or more, the wave drag has been reduced enough that the resulting wave force propels the duckling forward.</p>
+				</details>
+				<br>
 
-			The article says useful positions occur only at specific distances and when the ducklings match their mother's speed. Explain why both conditions matter to the interference pattern.
-			<details>
-				<summary>answer</summary>
-				<p>The spacing determines where each duckling sits within the combined waves. At the useful distance, the front of the duckling stays in a trough that produces a forward push. Matching the mother's speed keeps that position from drifting. With the wrong spacing or speed, the duckling moves out of the helpful part of the interference pattern and loses the boost.</p>
-			</details>
-			<br>
+				The article says useful positions occur only at specific distances and when the ducklings match their mother's speed. Explain why both conditions matter to the interference pattern.
+				<details>
+					<summary>answer</summary>
+					<p>The spacing determines where each duckling sits within the combined waves. At the useful distance, the front of the duckling stays in a trough that produces a forward push. Matching the mother's speed keeps that position from drifting. With the wrong spacing or speed, the duckling moves out of the helpful part of the interference pattern and loses the boost.</p>
+				</details>
+				<br>
 
-			How is wave riding different from wave passing, and how does each one help the line of ducklings?
-			<details>
-				<summary>answer</summary>
-				<p>During wave riding, interference between the mother's wave and a duckling's wave creates a force that propels the first ducklings forward. During wave passing, each duckling gathers wave energy and concentrates it behind itself, making that energy available to the next duckling. Wave passing helps the benefit continue even after the mother's own wave becomes smaller farther down the line.</p>
-			</details>
-			<br>
+				How is wave riding different from wave passing, and how does each one help the line of ducklings?
+				<details>
+					<summary>answer</summary>
+					<p>During wave riding, interference between the mother's wave and a duckling's wave creates a force that propels the first ducklings forward. During wave passing, each duckling gathers wave energy and concentrates it behind itself, making that energy available to the next duckling. Wave passing helps the benefit continue even after the mother's own wave becomes smaller farther down the line.</p>
+				</details>
+				<br>
 
-			The authors suggest that cargo boats might save energy by traveling in a line. What evidence from the model supports this idea, and what additional evidence would you want before applying it to real ships?
-			<details>
-				<summary>answer</summary>
-				<p>The model predicts reduced wave drag for every duckling behind the mother, so it gives a physical reason that a line of boats might require less energy. However, it does not prove that full-size ships will receive the same benefit. Tests with realistic hull shapes, ship spacing, speeds, waves, and fuel use would be needed before reaching that conclusion.</p>
-			</details>
-		</div>
+				The authors suggest that cargo boats might save energy by traveling in a line. What evidence from the model supports this idea, and what additional evidence would you want before applying it to real ships?
+				<details>
+					<summary>answer</summary>
+					<p>The model predicts reduced wave drag for every duckling behind the mother, so it gives a physical reason that a line of boats might require less energy. However, it does not prove that full-size ships will receive the same benefit. Tests with realistic hull shapes, ship spacing, speeds, waves, and fuel use would be needed before reaching that conclusion.</p>
+				</details>
+			</div>
+		</details>
+
 	</article>
 	<footer>
 		<a href="../../../">Back</a>
@@ -1727,6 +1795,7 @@
 	<script>
 		renderMathInElement(document.body);
 	</script>
+	<script defer src="../../../lib/practice-labels.js"></script>
 </body>
 
 </html>

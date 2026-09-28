@@ -2592,8 +2592,8 @@
 				<summary>answer</summary>
 				<div class="col-group">
 					<div>
-						$$C = K + 273.15$$
-						$$C = 5778 + 273.15$$
+						$$C = K - 273.15$$
+						$$C = 5778 - 273.15$$
 						$$5504.85 \degree C$$
 					</div>
 					<div>
@@ -2651,323 +2651,286 @@
 		</div>
 
 	</article>
-	<article>
-<h1 class='underlined'>Practice <a class="printout-link" href="../../../output/pdf/light-practice-questions.pdf">printout.pdf</a></h1>
-		<p>
-			In case you wanted more practice I used AI to make some more problems. The rest of the site I made by hand, but generating endless problems seemed safe. I did find mistakes in the AI generated problems, and there are probably some I didn't find. Let me know if something could be fixed. I also added a practice problem on each page with no solution. That's intentional. Have fun!
-		</p>
+	<article class="practice-compact">
+		<details class="practice-menu">
+			<summary>practice problems (21)</summary>
+			<div class="derive practice-intro">
+				<p>
+					In case you wanted more practice I used AI to make some more problems. The rest of the site I made by hand, but generating endless problems seemed safe. I did find mistakes in the AI generated problems, and there are probably some I didn't find. Let me know if something could be fixed. I also added a practice problem on each page with no solution. That's intentional. Have fun!
+				</p>
+				<p class="practice-controls">
+					<a class="printout-link practice-printout-link" href="../../../output/pdf/light-practice-questions.pdf">printout.pdf</a>
+					<label class="practice-tag-toggle"><input type="checkbox"> show topics and mark harder problems</label>
+				</p>
+			</div>
 
-		<div class='example'><strong>Question:</strong> A charged particle in an antenna is forced to accelerate back and forth. Why can that produce radio light even though no visible glow is seen?
-			<details>
-				<summary>answer</summary>
-				<p>Accelerating charge changes the electric and magnetic fields around it. That changing electromagnetic field propagates outward as light.</p>
-				<p>Radio waves are light, but their frequency is much lower and their wavelength is much longer than visible light, so our eyes cannot see them.</p>
-			</details>
-		</div>
+			<div class='example' data-topic="The Electromagnetic Spectrum"><strong>Question:</strong> A charged particle in an antenna is forced to accelerate back and forth. Why can that produce radio light even though no visible glow is seen?
+				<details>
+					<summary>answer</summary>
+					<p>Accelerating charge changes the electric and magnetic fields around it. That changing electromagnetic field propagates outward as light.</p>
+					<p>Radio waves are light, but their frequency is much lower and their wavelength is much longer than visible light, so our eyes cannot see them.</p>
+				</details>
+			</div>
 
-		<div class='example'><strong>Example:</strong> A Wi-Fi router uses light with frequency 2.4 × 10<sup>9</sup> Hz. The signal carries data through walls and across a room, even though your eyes cannot detect it. What is the wavelength of this microwave signal in air? Use 3.00 × 10<sup>8</sup> m/s for the speed of light.
-			<details>
-				<summary>solution</summary>
-				<p>Use the light wave equation.</p>
-				$$c = f\lambda$$
-				$$\lambda = \frac{c}{f}$$
-				$$\lambda = \frac{3.00 \times 10^8}{2.4 \times 10^9}$$
-				$$\lambda = 0.125\,\mathrm{m}$$
-				<p>The wavelength is <strong>0.125 m</strong>, or <strong>12.5 cm</strong>.</p>
-			</details>
-		</div>
+			<div class='example' data-topic="The Electromagnetic Spectrum"><strong>Example:</strong> A Wi-Fi router uses light with frequency 2.4 × 10<sup>9</sup> Hz. The signal carries data through walls and across a room, even though your eyes cannot detect it. What is the wavelength of this microwave signal in air? Use 3.00 × 10<sup>8</sup> m/s for the speed of light.
+				<details>
+					<summary>solution</summary>
+					<p>Use the light wave equation.</p>
+					$$c = f\lambda$$
+					$$\lambda = \frac{c}{f}$$
+					$$\lambda = \frac{3.00 \times 10^8}{2.4 \times 10^9}$$
+					$$\lambda = 0.125\,\mathrm{m}$$
+					<p>The wavelength is <strong>0.125 m</strong>, or <strong>12.5 cm</strong>.</p>
+				</details>
+			</div>
 
-		<div class='example'><strong>Example:</strong> A red laser pointer has wavelength 650 nm. It is useful in a classroom because the light is concentrated and easy for human cone cells to detect. What is the frequency of the red light?
-			<details>
-				<summary>solution</summary>
-				<p>Convert nanometers to meters first.</p>
-				$$\lambda = 650\left(\frac{1}{1.0 \times 10^9}\right)$$
-				$$\lambda = 6.50 \times 10^{-7}$$
-				$$c = f\lambda$$
-				$$f = \frac{c}{\lambda}$$
-				$$f = \frac{3.00 \times 10^8}{6.50 \times 10^{-7}}$$
-				$$f = 4.62 \times 10^{14}\,\mathrm{Hz}$$
-				<p>The frequency is <strong>4.62 × 10<sup>14</sup> Hz</strong>.</p>
-			</details>
-		</div>
+			<div class='example' data-topic="The Electromagnetic Spectrum"><strong>Example:</strong> A red laser pointer has wavelength 650 nm. It is useful in a classroom because the light is concentrated and easy for human cone cells to detect. What is the frequency of the red light?
+				<details>
+					<summary>solution</summary>
+					<p>Convert nanometers to meters first.</p>
+					$$\lambda = 650\,\mathrm{nm}\left(\frac{1\,\mathrm{m}}{10^{9}\,\mathrm{nm}}\right)$$
+					$$\lambda = 6.50 \times 10^{-7}$$
+					$$c = f\lambda$$
+					$$f = \frac{c}{\lambda}$$
+					$$f = \frac{3.00 \times 10^8}{6.50 \times 10^{-7}}$$
+					$$f = 4.62 \times 10^{14}\,\mathrm{Hz}$$
+					<p>The frequency is <strong>4.62 × 10<sup>14</sup> Hz</strong>.</p>
+				</details>
+			</div>
 
-		<div class='example'><strong>Question:</strong> Put these spectrum regions in order from lowest frequency to highest frequency: x-ray, infrared, visible, radio, ultraviolet, microwave, gamma ray.
-			<details>
-				<summary>answer</summary>
-				<p>From lowest frequency to highest frequency:</p>
-				<p><strong>radio, microwave, infrared, visible, ultraviolet, x-ray, gamma ray</strong></p>
-				<p>Lowest frequency also means longest wavelength. Highest frequency means shortest wavelength.</p>
-			</details>
-		</div>
+			<div class='example' data-topic="The Electromagnetic Spectrum"><strong>Question:</strong> Put these spectrum regions in order from lowest frequency to highest frequency: x-ray, infrared, visible, radio, ultraviolet, microwave, gamma ray.
+				<details>
+					<summary>answer</summary>
+					<p>From lowest frequency to highest frequency:</p>
+					<p><strong>radio, microwave, infrared, visible, ultraviolet, x-ray, gamma ray</strong></p>
+					<p>Lowest frequency also means longest wavelength. Highest frequency means shortest wavelength.</p>
+				</details>
+			</div>
 
-		<div class='example'><strong>Example:</strong> An airport radar system uses electromagnetic waves with wavelength 3.0 cm. The beam sweeps across the sky many times per minute, but the wave itself moves at light speed. What is the frequency of the radar wave?
-			<details>
-				<summary>solution</summary>
-				<p>Convert centimeters to meters.</p>
-				$$\lambda = 3.0\left(\frac{1}{100}\right)$$
-				$$\lambda = 0.030$$
-				$$f = \frac{c}{\lambda}$$
-				$$f = \frac{3.00 \times 10^8}{0.030}$$
-				$$f = 1.0 \times 10^{10}\,\mathrm{Hz}$$
-				<p>The frequency is <strong>1.0 × 10<sup>10</sup> Hz</strong>, which is in the microwave range.</p>
-			</details>
-		</div>
+			<div class='example' data-topic="The Electromagnetic Spectrum"><strong>Example:</strong> An airport radar system uses electromagnetic waves with wavelength 3.0 cm. The beam sweeps across the sky many times per minute, but the wave itself moves at light speed. What is the frequency of the radar wave?
+				<details>
+					<summary>solution</summary>
+					<p>Convert centimeters to meters.</p>
+					$$\lambda = 3.0\,\mathrm{cm}\left(\frac{1\,\mathrm{m}}{100\,\mathrm{cm}}\right)$$
+					$$\lambda = 0.030$$
+					$$f = \frac{c}{\lambda}$$
+					$$f = \frac{3.00 \times 10^8}{0.030}$$
+					$$f = 1.0 \times 10^{10}\,\mathrm{Hz}$$
+					<p>The frequency is <strong>1.0 × 10<sup>10</sup> Hz</strong>, which is in the microwave range.</p>
+				</details>
+			</div>
 
-		<div class='example'><strong>Example:</strong> Some vitamin D chemistry in skin is triggered by ultraviolet light with wavelength around 290 nm. What is the frequency of this ultraviolet light?
-			<details>
-				<summary>solution</summary>
-				<p>Convert nanometers to meters.</p>
-				$$\lambda = 290\left(\frac{1}{1.0 \times 10^9}\right)$$
-				$$\lambda = 2.90 \times 10^{-7}$$
-				$$f = \frac{c}{\lambda}$$
-				$$f = \frac{3.00 \times 10^8}{2.90 \times 10^{-7}}$$
-				$$f = 1.03 \times 10^{15}\,\mathrm{Hz}$$
-				<p>The frequency is about <strong>1.03 × 10<sup>15</sup> Hz</strong>.</p>
-			</details>
-		</div>
+			<div class='example' data-topic="The Electromagnetic Spectrum"><strong>Example:</strong> Some vitamin D chemistry in skin is triggered by ultraviolet light with wavelength around 290 nm. What is the frequency of this ultraviolet light?
+				<details>
+					<summary>solution</summary>
+					<p>Convert nanometers to meters.</p>
+					$$\lambda = 290\,\mathrm{nm}\left(\frac{1\,\mathrm{m}}{10^{9}\,\mathrm{nm}}\right)$$
+					$$\lambda = 2.90 \times 10^{-7}$$
+					$$f = \frac{c}{\lambda}$$
+					$$f = \frac{3.00 \times 10^8}{2.90 \times 10^{-7}}$$
+					$$f = 1.03 \times 10^{15}\,\mathrm{Hz}$$
+					<p>The frequency is about <strong>1.03 × 10<sup>15</sup> Hz</strong>.</p>
+				</details>
+			</div>
 
-		<div class='example'><strong>Question:</strong> In the visible spectrum, red is on the long-wavelength side and violet is on the short-wavelength side. Which color has the higher frequency, and why?
-			<details>
-				<summary>answer</summary>
-				<p>Violet has the higher frequency.</p>
-				<p>For light in the same medium, speed is fixed by the medium. Since speed equals frequency times wavelength, a shorter wavelength means a higher frequency.</p>
-			</details>
-		</div>
+			<div class='example' data-topic="The Speed of Light">
+				<strong>Example:</strong> When Mars is at an average distance from Earth, it is about 2.25 × 10<sup>11</sup> m away. How long does a radio command from Earth take to reach a rover on Mars?
+				<details>
+					<summary>solution</summary>
+					$$v = \frac{\Delta x}{\Delta t}$$
+					$$\Delta t = \frac{\Delta x}{c}$$
+					$$\Delta t = \frac{2.25 \times 10^{11}}{3.00 \times 10^{8}}$$
+					$$\Delta t = 750\,\mathrm{s}$$
+					<br>
+					$$750\,\textcolor{DeepPink}{\mathrm{s}}\left(\frac{1\,\mathrm{min}}{60\,\textcolor{DeepPink}{\mathrm{s}}}\right)$$
+					$$12.5\,\mathrm{min}$$
+					<p>A rover driver can't steer in real time. A reply takes at least 25 minutes to come back, so rovers are programmed to drive themselves.</p>
+				</details>
+			</div>
 
-		<div class='example'><strong>Example:</strong> The Sun is about 1.50 × 10<sup>8</sup> km from Earth. Sunlight carries the energy that drives weather, photosynthesis, and most food chains. How long does sunlight take to reach Earth?
-			<details>
-				<summary>solution</summary>
-				<p>Convert kilometers to meters, then use speed equals distance divided by time.</p>
-				$$d = 1.50 \times 10^8\left(\frac{1000}{1}\right)$$
-				$$d = 1.50 \times 10^{11}$$
-				$$v = \frac{d}{t}$$
-				$$t = \frac{d}{v}$$
-				$$t = \frac{1.50 \times 10^{11}}{3.00 \times 10^8}$$
-				$$t = 500$$
-				$$t = 8.33\,\mathrm{min}$$
-				<p>Sunlight takes about <strong>500 s</strong>, or <strong>8.33 min</strong>, to reach Earth.</p>
-			</details>
-		</div>
+			<div class='example' data-topic="The Speed of Light">
+				<strong>Example:</strong> The Voyager 1 space probe is about 2.5 × 10<sup>13</sup> m from Earth. How long does a radio signal from Voyager take to reach us, in hours?
+				<details>
+					<summary>solution</summary>
+					$$\Delta t = \frac{\Delta x}{c}$$
+					$$\Delta t = \frac{2.5 \times 10^{13}}{3.00 \times 10^{8}}$$
+					$$\Delta t = 8.3 \times 10^{4}\,\mathrm{s}$$
+					<br>
+					$$8.3 \times 10^{4}\,\textcolor{DeepPink}{\mathrm{s}}\left(\frac{1\,\mathrm{h}}{3600\,\textcolor{DeepPink}{\mathrm{s}}}\right)$$
+					$$23\,\mathrm{h}$$
+					<p>Radio waves are light, so they travel at c. Even at light speed, a message takes almost a full day each way.</p>
+				</details>
+			</div>
 
-		<div class='example'><strong>Example:</strong> A laser pulse is sent from Earth to a retroreflector on the Moon and back. The center-to-center Earth-Moon distance is 384 400 km, and the reflected pulse returns to the telescope. What is the round-trip travel time for the light?
-			<details>
-				<summary>solution</summary>
-				<p>The light travels to the Moon and back, so double the distance.</p>
-				$$d = 2(384400)$$
-				$$d = 768800$$
-				$$d = 768800\left(\frac{1000}{1}\right)$$
-				$$d = 7.688 \times 10^8$$
-				$$t = \frac{d}{c}$$
-				$$t = \frac{7.688 \times 10^8}{3.00 \times 10^8}$$
-				$$t = 2.56\,\mathrm{s}$$
-				<p>The round-trip time is about <strong>2.56 s</strong>.</p>
-			</details>
-		</div>
+			<div class='example' data-topic="The Speed of Light"><strong>Question:</strong> The page says light moves slower in dense media. What is happening to the light inside matter that makes the wave delayed?
+				<details>
+					<summary>answer</summary>
+					<p>The light interacts with matter by inducing electric polarization. The polarized matter radiates new light.</p>
+					<p>That new light interferes with the original light wave in a way that produces a delayed wave. The result is a lower light speed in the medium.</p>
+				</details>
+			</div>
 
-		<div class='example'><strong>Question:</strong> The page says light moves slower in dense media. What is happening to the light inside matter that makes the wave delayed?
-			<details>
-				<summary>answer</summary>
-				<p>The light interacts with matter by inducing electric polarization. The polarized matter radiates new light.</p>
-				<p>That new light interferes with the original light wave in a way that produces a delayed wave. The result is a lower light speed in the medium.</p>
-			</details>
-		</div>
+			<div class='example' data-topic="The Speed of Light"><strong>Example:</strong> A tiny sparkle travels through a 2.0 mm thick diamond chip. Use 1.20 × 10<sup>8</sup> m/s for the speed of light in diamond. How long does the light take to cross the diamond?
+				<details>
+					<summary>solution</summary>
+					<p>Convert millimeters to meters.</p>
+					$$d = 2.0\,\mathrm{mm}\left(\frac{1\,\mathrm{m}}{1000\,\mathrm{mm}}\right)$$
+					$$d = 0.0020$$
+					$$t = \frac{d}{v}$$
+					$$t = \frac{0.0020}{1.20 \times 10^8}$$
+					$$t = 1.67 \times 10^{-11}\,\mathrm{s}$$
+					<p>The light takes about <strong>1.67 × 10<sup>-11</sup> s</strong>.</p>
+				</details>
+			</div>
 
-		<div class='example'><strong>Example:</strong> A tiny sparkle travels through a 2.0 mm thick diamond chip. Use 1.20 × 10<sup>8</sup> m/s for the speed of light in diamond. How long does the light take to cross the diamond?
-			<details>
-				<summary>solution</summary>
-				<p>Convert millimeters to meters.</p>
-				$$d = 2.0\left(\frac{1}{1000}\right)$$
-				$$d = 0.0020$$
-				$$t = \frac{d}{v}$$
-				$$t = \frac{0.0020}{1.20 \times 10^8}$$
-				$$t = 1.67 \times 10^{-11}\,\mathrm{s}$$
-				<p>The light takes about <strong>1.67 × 10<sup>-11</sup> s</strong>.</p>
-			</details>
-		</div>
+			<div class='example' data-topic="The Speed of Light"><strong>Example:</strong> Green light has frequency 5.0 × 10<sup>14</sup> Hz. In water, light travels at about 2.25 × 10<sup>8</sup> m/s. What is the wavelength of this green light in water?
+				<details>
+					<summary>solution</summary>
+					<p>Use the light speed in water, not the vacuum speed.</p>
+					$$v = f\lambda$$
+					$$\lambda = \frac{v}{f}$$
+					$$\lambda = \frac{2.25 \times 10^8}{5.0 \times 10^{14}}$$
+					$$\lambda = 4.5 \times 10^{-7}\,\mathrm{m}$$
+					<p>The wavelength in water is <strong>4.5 × 10<sup>-7</sup> m</strong>. The wavelength is shorter than it would be in vacuum because the light is slower in water.</p>
+				</details>
+			</div>
 
-		<div class='example'><strong>Example:</strong> Green light has frequency 5.0 × 10<sup>14</sup> Hz. In water, light travels at about 2.25 × 10<sup>8</sup> m/s. What is the wavelength of this green light in water?
-			<details>
-				<summary>solution</summary>
-				<p>Use the light speed in water, not the vacuum speed.</p>
-				$$v = f\lambda$$
-				$$\lambda = \frac{v}{f}$$
-				$$\lambda = \frac{2.25 \times 10^8}{5.0 \times 10^{14}}$$
-				$$\lambda = 4.5 \times 10^{-7}\,\mathrm{m}$$
-				<p>The wavelength in water is <strong>4.5 × 10<sup>-7</sup> m</strong>. The wavelength is shorter than it would be in vacuum because the light is slower in water.</p>
-			</details>
-		</div>
+			<div class='example' data-topic="The Speed of Light"><strong>Example:</strong> A science article says a star is 2.84 × 10<sup>17</sup> m away. Convert that distance to light-years using 9.46 × 10<sup>15</sup> m for one light-year.
+				<details>
+					<summary>solution</summary>
+					<p>Divide by the number of meters in one light-year.</p>
+					$$d = \frac{2.84 \times 10^{17}}{9.46 \times 10^{15}}$$
+					$$d = 30.0\,\mathrm{ly}$$
+					<p>The star is about <strong>30.0 light-years</strong> away.</p>
+				</details>
+			</div>
 
-		<div class='example'><strong>Question:</strong> White light enters a glass prism and spreads into colors. Which color bends more, red or violet, and what does that tell you about their speeds in glass?
-			<details>
-				<summary>answer</summary>
-				<p>Violet bends more than red.</p>
-				<p>The page's prism example shows blue and violet refracting at the most extreme angle. That means violet light slows down more in glass than red light does.</p>
-			</details>
-		</div>
+			<div class='example' data-topic="Color Vision"><strong>Question:</strong> A phone screen makes yellow by turning on red and green light in the same small pixel. Is this additive color or subtractive color, and why?
+				<details>
+					<summary>answer</summary>
+					<p>This is additive color.</p>
+					<p>A screen makes color by adding light sources. Red light plus green light is interpreted by our visual system as yellow.</p>
+				</details>
+			</div>
 
-		<div class='example'><strong>Example:</strong> A nearby star is 6.2 light-years away. A light-year is the distance light travels in one year, about 9.46 × 10<sup>15</sup> m. How far away is the star in meters?
-			<details>
-				<summary>solution</summary>
-				<p>Convert light-years to meters.</p>
-				$$d = 6.2\left(\frac{9.46 \times 10^{15}}{1}\right)$$
-				$$d = 5.87 \times 10^{16}\,\mathrm{m}$$
-				<p>The star is about <strong>5.87 × 10<sup>16</sup> m</strong> away.</p>
-			</details>
-		</div>
+			<div class='example' data-topic="Color Vision"><strong>Question:</strong> A printer puts cyan and yellow ink on white paper to make green. Is this additive color or subtractive color, and what colors are being removed?
+				<details>
+					<summary>answer</summary>
+					<p>This is subtractive color.</p>
+					<p>Cyan dye removes red light. Yellow dye removes blue light. The light left to reflect is mostly green, so the paper looks green.</p>
+				</details>
+			</div>
 
-		<div class='example'><strong>Example:</strong> A science article says a star is 2.84 × 10<sup>17</sup> m away. Convert that distance to light-years using 9.46 × 10<sup>15</sup> m for one light-year.
-			<details>
-				<summary>solution</summary>
-				<p>Divide by the number of meters in one light-year.</p>
-				$$d = \frac{2.84 \times 10^{17}}{9.46 \times 10^{15}}$$
-				$$d = 30.0\,\mathrm{ly}$$
-				<p>The star is about <strong>30.0 light-years</strong> away.</p>
-			</details>
-		</div>
+			<div class='example' data-topic="Polarization"><strong>Question:</strong> A pair of polarized sunglasses reduces glare from sunlight reflecting off a lake. What does the filter do to the light wave, and why is polarization a property of transverse waves?
+				<details>
+					<summary>answer</summary>
+					<p>A polarization filter only lets through light oscillating in one direction. Glare from a flat surface is often strongly polarized, so the sunglasses can block much of that reflected light.</p>
+					<p>Polarization describes the direction of oscillation. That only makes sense for transverse waves because their oscillation is perpendicular to the direction the wave travels.</p>
+				</details>
+			</div>
 
-		<div class='example'><strong>Question:</strong> Why do humans mostly lose color vision in a very dark room, even if objects are still faintly visible?
-			<details>
-				<summary>answer</summary>
-				<p>Rods are more sensitive in low light, but they do not detect color.</p>
-				<p>Cones specialize in wavelength and color, but they need more light. In a dark room, rod signals dominate, so the scene looks mostly black, white, and gray.</p>
-			</details>
-		</div>
+			<div class='example' data-topic="The Speed of Light">
+				<strong>Example:</strong> A green beam with a wavelength of 530 nm hits the flat face of a glass prism at 35° from the normal. The prism is 4.0 cm thick. What angle does the beam make with the normal inside the glass?
+				<details>
+					<summary>solution</summary>
+					<p>This cannot be solved from the information given. Snell's law from the <a href="../waves/index.html#snell">waves</a> page would find the angle, but it needs the glass's index of refraction, and that is missing.</p>
+					<p>The wavelength and thickness don't replace the index. Different kinds of glass bend light by different amounts.</p>
+				</details>
+			</div>
 
-		<div class='example'><strong>Question:</strong> A phone screen makes yellow by turning on red and green light in the same small pixel. Is this additive color or subtractive color, and why?
-			<details>
-				<summary>answer</summary>
-				<p>This is additive color.</p>
-				<p>A screen makes color by adding light sources. Red light plus green light is interpreted by our visual system as yellow.</p>
-			</details>
-		</div>
+			<div class='example' data-topic="Thermal Radiation"><strong>Example:</strong> A tungsten filament in an old incandescent bulb is about 3000 K when glowing. Convert this temperature to Celsius and Fahrenheit.
+				<details>
+					<summary>solution</summary>
+					<p>Convert Kelvin to Celsius first.</p>
+					$$C = K - 273.15$$
+					$$C = 3000 - 273.15$$
+					$$C = 2726.85^\circ\mathrm{C}$$
+					<p>Now convert Celsius to Fahrenheit.</p>
+					$$F = \frac{9}{5}C + 32$$
+					$$F = \frac{9}{5}(2726.85) + 32$$
+					$$F = 4940.33^\circ\mathrm{F}$$
+					<p>The temperature is about <strong>2727°C</strong> and <strong>4940°F</strong>.</p>
+				</details>
+			</div>
 
-		<div class='example'><strong>Question:</strong> A printer puts cyan and yellow ink on white paper to make green. Is this additive color or subtractive color, and what colors are being removed?
-			<details>
-				<summary>answer</summary>
-				<p>This is subtractive color.</p>
-				<p>Cyan dye removes red light. Yellow dye removes blue light. The light left to reflect is mostly green, so the paper looks green.</p>
-			</details>
-		</div>
+			<div class='example' data-topic="Thermal Radiation"><strong>Question:</strong> Objects at room temperature give off light, but people do not usually glow visibly in a dark room. What kind of light are they mostly emitting?
+				<details>
+					<summary>answer</summary>
+					<p>They are mostly emitting infrared light.</p>
+					<p>All matter gives off thermal radiation, but room-temperature objects mostly emit wavelengths too long for human eyes to detect.</p>
+				</details>
+			</div>
 
-		<div class='example'><strong>Question:</strong> A pair of polarized sunglasses reduces glare from sunlight reflecting off a lake. What does the filter do to the light wave, and why is polarization a property of transverse waves?
-			<details>
-				<summary>answer</summary>
-				<p>A polarization filter only lets through light oscillating in one direction. Glare from a flat surface is often strongly polarized, so the sunglasses can block much of that reflected light.</p>
-				<p>Polarization describes the direction of oscillation. That only makes sense for transverse waves because their oscillation is perpendicular to the direction the wave travels.</p>
-			</details>
-		</div>
+			<div class='example' data-topic="Thermal Radiation">
+				<strong>Example:</strong> Lava from a volcano is about 1200°C when it flows. What is that temperature in kelvin?
+				<details>
+					<summary>solution</summary>
+					$$C = K - 273.15$$
+					$$K = C + 273.15$$
+					$$K = 1200 + 273.15$$
+					$$K = 1473\,\mathrm{K}$$
+					<p>At about 1500 K, lava glows orange-red from thermal radiation. It's much cooler than the Sun's 5778 K surface, which glows white.</p>
+				</details>
+			</div>
 
-		<div class='example'><strong>Example:</strong> A green beam with wavelength 530 nm hits a glass prism at 35°. The prism is 4.0 cm thick. What angle does the beam leave the prism at?
-			<details>
-				<summary>solution</summary>
-				<p>This cannot be determined from the given information.</p>
-				<p>The wavelength and incoming angle are not enough. You would also need the prism shape and enough information about how much the light slows in that material. This page explains that refraction and dispersion happen, but it does not give a full equation for this angle.</p>
-				<p>The correct conclusion is that the exit angle <strong>cannot be solved</strong> from the information given.</p>
-			</details>
-		</div>
+			<div class='example' data-topic="The Electromagnetic Spectrum"><strong>Example:</strong> The visible spectrum runs roughly from 380 nm violet light to 750 nm red light. Find the frequency at each end of the visible spectrum.
+				<details>
+					<summary>solution</summary>
+					<p>First convert 380 nm to meters.</p>
+					$$\lambda_v = 380\,\mathrm{nm}\left(\frac{1\,\mathrm{m}}{10^{9}\,\mathrm{nm}}\right)$$
+					$$\lambda_v = 3.80 \times 10^{-7}$$
+					$$f_v = \frac{c}{\lambda_v}$$
+					$$f_v = \frac{3.00 \times 10^8}{3.80 \times 10^{-7}}$$
+					$$f_v = 7.89 \times 10^{14}\,\mathrm{Hz}$$
+					<p>Now convert 750 nm to meters.</p>
+					$$\lambda_r = 750\,\mathrm{nm}\left(\frac{1\,\mathrm{m}}{10^{9}\,\mathrm{nm}}\right)$$
+					$$\lambda_r = 7.50 \times 10^{-7}$$
+					$$f_r = \frac{c}{\lambda_r}$$
+					$$f_r = \frac{3.00 \times 10^8}{7.50 \times 10^{-7}}$$
+					$$f_r = 4.00 \times 10^{14}\,\mathrm{Hz}$$
+					<p>The violet end is about <strong>7.89 × 10<sup>14</sup> Hz</strong>. The red end is about <strong>4.00 × 10<sup>14</sup> Hz</strong>.</p>
+				</details>
+			</div>
 
-		<div class='example'><strong>Example:</strong> A tungsten filament in an old incandescent bulb is about 3000 K when glowing. Convert this temperature to Celsius and Fahrenheit.
-			<details>
-				<summary>solution</summary>
-				<p>Convert Kelvin to Celsius first.</p>
-				$$C = K - 273.15$$
-				$$C = 3000 - 273.15$$
-				$$C = 2726.85^\circ\mathrm{C}$$
-				<p>Now convert Celsius to Fahrenheit.</p>
-				$$F = \frac{9}{5}C + 32$$
-				$$F = \frac{9}{5}(2726.85) + 32$$
-				$$F = 4940.33^\circ\mathrm{F}$$
-				<p>The temperature is about <strong>2727°C</strong> and <strong>4940°F</strong>.</p>
-			</details>
-		</div>
+			<div class='example' data-topic="The Speed of Light"><strong>Example:</strong> A video call signal goes from Earth up to a geostationary satellite 36 000 km above the ground and then back down to another station. Ignoring electronics delay and atmosphere, how long does the light-speed signal take for the up-and-down trip?
+				<details>
+					<summary>solution</summary>
+					<p>The signal travels up and back down, so double the distance.</p>
+					$$d = 2(36000)$$
+					$$d = 72000$$
+					$$d = 72000\,\mathrm{km}\left(\frac{1000\,\mathrm{m}}{1\,\mathrm{km}}\right)$$
+					$$d = 7.20 \times 10^7$$
+					$$t = \frac{d}{c}$$
+					$$t = \frac{7.20 \times 10^7}{3.00 \times 10^8}$$
+					$$t = 0.240\,\mathrm{s}$$
+					<p>The light-speed travel time is about <strong>0.240 s</strong>.</p>
+				</details>
+			</div>
+			<div class='example'>
+				<p><strong>Reading (15 minutes):</strong> Read <a href="https://what-if.xkcd.com/13/">Laser Pointer</a> by Randall Munroe from xkcd's What If? Then answer these questions.</p>
 
-		<div class='example'><strong>Question:</strong> Objects at room temperature give off light, but people do not usually glow visibly in a dark room. What kind of light are they mostly emitting?
-			<details>
-				<summary>answer</summary>
-				<p>They are mostly emitting infrared light.</p>
-				<p>All matter gives off thermal radiation, but room-temperature objects mostly emit wavelengths too long for human eyes to detect.</p>
-			</details>
-		</div>
+				Why would billions of ordinary laser pointers still have little visible effect on the bright side of the Moon?
+				<details>
+					<summary>answer</summary>
+					<p>Each pointer has very low power compared with sunlight, and its beam spreads across a large lunar area. Even many pointers are overwhelmed by the Sun's illumination.</p>
+				</details>
+				<br>
 
-		<div class='example'><strong>Example:</strong> A photography light is labeled 4500 K. This is a color temperature, not the air temperature in the room. Convert 4500 K to Celsius and Fahrenheit.
-			<details>
-				<summary>solution</summary>
-				<p>Convert Kelvin to Celsius.</p>
-				$$C = K - 273.15$$
-				$$C = 4500 - 273.15$$
-				$$C = 4226.85^\circ\mathrm{C}$$
-				<p>Convert Celsius to Fahrenheit.</p>
-				$$F = \frac{9}{5}C + 32$$
-				$$F = \frac{9}{5}(4226.85) + 32$$
-				$$F = 7640.33^\circ\mathrm{F}$$
-				<p>The color temperature corresponds to about <strong>4227°C</strong> and <strong>7640°F</strong>.</p>
-			</details>
-		</div>
+				The article compares illumination in lux from different light sources. What physical comparison does this help make?
+				<details>
+					<summary>answer</summary>
+					<p>It compares how much visible light reaches a surface per unit area. That lets the article judge whether the added laser light would be noticeable next to moonlight or sunlight.</p>
+				</details>
+				<br>
 
-		<div class='example'><strong>Example:</strong> The visible spectrum runs roughly from 380 nm violet light to 750 nm red light. Find the frequency at each end of the visible spectrum.
-			<details>
-				<summary>solution</summary>
-				<p>First convert 380 nm to meters.</p>
-				$$\lambda_v = 380\left(\frac{1}{1.0 \times 10^9}\right)$$
-				$$\lambda_v = 3.80 \times 10^{-7}$$
-				$$f_v = \frac{c}{\lambda_v}$$
-				$$f_v = \frac{3.00 \times 10^8}{3.80 \times 10^{-7}}$$
-				$$f_v = 7.89 \times 10^{14}\,\mathrm{Hz}$$
-				<p>Now convert 750 nm to meters.</p>
-				$$\lambda_r = 750\left(\frac{1}{1.0 \times 10^9}\right)$$
-				$$\lambda_r = 7.50 \times 10^{-7}$$
-				$$f_r = \frac{c}{\lambda_r}$$
-				$$f_r = \frac{3.00 \times 10^8}{7.50 \times 10^{-7}}$$
-				$$f_r = 4.00 \times 10^{14}\,\mathrm{Hz}$$
-				<p>The violet end is about <strong>7.89 × 10<sup>14</sup> Hz</strong>. The red end is about <strong>4.00 × 10<sup>14</sup> Hz</strong>.</p>
-			</details>
-		</div>
+				At the article's most extreme laser power, how could light begin changing the Moon's motion instead of merely making it brighter?
+				<details>
+					<summary>answer</summary>
+					<p>Light carries momentum, so an intense beam exerts radiation pressure. The energy would also vaporize lunar material, and the escaping material could push the Moon like a rocket exhaust.</p>
+				</details>
+			</div>
+		</details>
 
-		<div class='example'><strong>Question:</strong> A gas stove flame can look blue, while a wood fire often looks yellow-orange. Why is flame color not always a simple thermal radiation color?
-			<details>
-				<summary>answer</summary>
-				<p>Only part of a flame's color comes from thermal radiation.</p>
-				<p>Chemical reactions can release specific colors of light when electrons rearrange. A gas flame can look blue from oxygen reacting with fuel, while yellow-orange fire often includes glowing soot particles.</p>
-			</details>
-		</div>
-
-		<div class='example'><strong>Example:</strong> A video call signal goes from Earth up to a geostationary satellite 36 000 km above the ground and then back down to another station. Ignoring electronics delay and atmosphere, how long does the light-speed signal take for the up-and-down trip?
-			<details>
-				<summary>solution</summary>
-				<p>The signal travels up and back down, so double the distance.</p>
-				$$d = 2(36000)$$
-				$$d = 72000$$
-				$$d = 72000\left(\frac{1000}{1}\right)$$
-				$$d = 7.20 \times 10^7$$
-				$$t = \frac{d}{c}$$
-				$$t = \frac{7.20 \times 10^7}{3.00 \times 10^8}$$
-				$$t = 0.240\,\mathrm{s}$$
-				<p>The light-speed travel time is about <strong>0.240 s</strong>.</p>
-			</details>
-		</div>
-		<div class='example'>
-			<p><strong>Reading (15 minutes):</strong> Read <a href="https://what-if.xkcd.com/13/">Laser Pointer</a> by Randall Munroe from xkcd's What If? Then answer these questions.</p>
-
-			Why would billions of ordinary laser pointers still have little visible effect on the bright side of the Moon?
-			<details>
-				<summary>answer</summary>
-				<p>Each pointer has very low power compared with sunlight, and its beam spreads across a large lunar area. Even many pointers are overwhelmed by the Sun's illumination.</p>
-			</details>
-			<br>
-
-			The article compares illumination in lux from different light sources. What physical comparison does this help make?
-			<details>
-				<summary>answer</summary>
-				<p>It compares how much visible light reaches a surface per unit area. That lets the article judge whether the added laser light would be noticeable next to moonlight or sunlight.</p>
-			</details>
-			<br>
-
-			At the article's most extreme laser power, how could light begin changing the Moon's motion instead of merely making it brighter?
-			<details>
-				<summary>answer</summary>
-				<p>Light carries momentum, so an intense beam exerts radiation pressure. The energy would also vaporize lunar material, and the escaping material could push the Moon like a rocket exhaust.</p>
-			</details>
-		</div>
 	</article>
 	<footer>
 		<a href="../../../">Back</a>
@@ -2979,6 +2942,7 @@
 	<!-- <script src='../../../lib/chargeclass.js'></script> -->
 	<!-- <script src="chargeWave.js"></script> -->
 
+	<script defer src="../../../lib/practice-labels.js"></script>
 </body>
 
 </html>
