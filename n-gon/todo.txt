@@ -1,25 +1,9 @@
 
-pause menu: type javascript into the console at the bottom of the console log
-console.log, console.warn, and console.error are copied into the in-game console with the file and line they came from
-  repeated log entries are ignored
 
-
-bound state: wave gun arcs now alternate reflecting left and right each wave
-standing in the exit mirror makes you invulnerable
-
-tech: quantum non-demolition - when paused, select your field, guns, or other tech to stay the same when you enter an alternate reality
-tech: optimization - when paused, select your skin from a dropdown menu
-
-community map: lake by Richard0820 - cross a slime lake on floating planks, and don't trust the arrows
 
 
 bug fixes
-  negative mass, tungsten carbide, and plasma ball no longer freeze the game the first time they're used; the delay happens when you pick them
-  undefined tech choice has the same padding and border as other tech
-  time dilation can pick up power ups while out of energy or on cooldown
-  optimization is ejected when an eigenstate dies, so it can't revive your other state
-  errors in the in-game console show the file and line number for each step of the stack trace
-
+  
 
 *********************************************************** TODO *****************************************************
 
