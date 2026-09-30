@@ -7,7 +7,7 @@ let todayMinutes = 0;
 let startMinutes = 440;
 let timeMode = 0;
 let date = new Date();
-let stopwatchStart;
+let stopwatchStart = null;
 const MinutesInDay = 7 * 60 + 10 + 10;
 let scale = 200 / MinutesInDay * 2.5;
 let centerOnNow = true;
@@ -23,6 +23,7 @@ const color = {
 const schedule = {
   current: "regular",
   mouse: 0,
+  stopwatchActive: false,
   setCurrentByDate: function () {
     // if (schedule.current !== "rally" || date.getHours() > 22) {
     if (date.getDay() === 5) {
@@ -33,7 +34,15 @@ const schedule = {
     // }
   },
   setCurrent: function (name) {
+    if (name === "stopwatch") {
+      schedule.stopwatchActive = true;
+      stopwatchStart = Date.now();
+      drawDigitalClock();
+      return;
+    }
     if (!Array.isArray(schedule[name])) return;
+    schedule.stopwatchActive = false;
+    stopwatchStart = null;
     schedule.current = name;
     update();
   },
@@ -717,6 +726,126 @@ const schedule = {
   {
     start: 14 * 60 + 40,
     long: 50,
+    name: "P6",
+    showName: true,
+    fill: color.period
+  },
+  {
+    start: 15 * 60 + 30,
+    long: 8 * 60 + 30,
+    name: "",
+    showName: false,
+    fill: color.passing
+  }
+  ],
+  clubRush: [{
+    start: 0,
+    long: 8 * 60 + 30,
+    name: "",
+    showName: false,
+    fill: color.passing
+  },
+  {
+    start: 8 * 60 + 30,
+    long: 45,
+    name: "P1",
+    showName: true,
+    fill: color.period
+  },
+  {
+    start: 9 * 60 + 15,
+    long: 3,
+    name: "",
+    showName: false,
+    fill: color.passing
+  },
+  {
+    start: 9 * 60 + 18,
+    long: 45,
+    name: "P2",
+    showName: true,
+    fill: color.period
+  },
+  {
+    start: 10 * 60 + 3,
+    long: 3,
+    name: "",
+    showName: false,
+    fill: color.passing
+  },
+  {
+    start: 10 * 60 + 6,
+    long: 45,
+    name: "P3",
+    showName: true,
+    fill: color.period
+  },
+  {
+    start: 10 * 60 + 51,
+    long: 15,
+    name: "brunch",
+    showName: false,
+    fill: color.lunch
+  },
+  {
+    start: 11 * 60 + 6,
+    long: 63,
+    name: "Club Rush",
+    showName: true,
+    fill: color.period
+  },
+  {
+    start: 12 * 60 + 9,
+    long: 27,
+    name: "A",
+    showName: true,
+    fill: color.period
+  },
+  {
+    start: 12 * 60 + 36,
+    long: 3,
+    name: "",
+    showName: false,
+    fill: color.passing
+  },
+  {
+    start: 12 * 60 + 39,
+    long: 45,
+    name: "P4",
+    showName: true,
+    fill: color.period
+  },
+  {
+    start: 13 * 60 + 24,
+    long: 30,
+    name: "lunch",
+    showName: false,
+    fill: color.lunch
+  },
+  {
+    start: 13 * 60 + 54,
+    long: 3,
+    name: "",
+    showName: false,
+    fill: color.passing
+  },
+  {
+    start: 13 * 60 + 57,
+    long: 45,
+    name: "P5",
+    showName: true,
+    fill: color.period
+  },
+  {
+    start: 14 * 60 + 42,
+    long: 3,
+    name: "",
+    showName: false,
+    fill: color.passing
+  },
+  {
+    start: 14 * 60 + 45,
+    long: 45,
     name: "P6",
     showName: true,
     fill: color.period
@@ -1434,10 +1563,24 @@ function getClockDisplay(currentDate, scheduleName = schedule.current) {
   };
 }
 
+function getStopwatchDisplay(currentTime = Date.now()) {
+  const elapsedSeconds = Math.max(0, Math.floor((currentTime - stopwatchStart) / 1000));
+  const minutes = Math.floor(elapsedSeconds / 60);
+  const seconds = String(elapsedSeconds % 60).padStart(2, "0");
+  return `${minutes}:${seconds}`;
+}
+
 function drawDigitalClock() {
   date = new Date();
-  const clockDisplay = getClockDisplay(date);
   const clock = document.getElementById("time");
+
+  if (schedule.stopwatchActive) {
+    clock.textContent = getStopwatchDisplay();
+    clock.setAttribute("font-size", "55px");
+    return;
+  }
+
+  const clockDisplay = getClockDisplay(date);
   clock.textContent = clockDisplay.text;
   clock.setAttribute("font-size", clockDisplay.showSeconds ? "43px" : "55px");
   // document.getElementById("week-day").textContent = dayOfWeekAsString(date.getDay());
@@ -1558,7 +1701,7 @@ function moveSVGPeriods(b) {
     document.getElementById("period-zone").setAttribute("transform", "translate(-27,77)");
   }
   // Keep the menu in sync when the schedule changes automatically for a new day.
-  document.getElementById("schedule-selector").value = schedule.current;
+  document.getElementById("schedule-selector").value = schedule.stopwatchActive ? "stopwatch" : schedule.current;
   // hide all periods
   for (let i = 0, len = 18; i < len; ++i) {
     document.getElementById(i).setAttribute("width", 0);
