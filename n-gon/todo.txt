@@ -1,22 +1,42 @@
 
 
+field: portal - only available through lore
+  coupling: +1 energy after going through a portal
+  tech: beam splitter - power ups that go into a portal have a 33% chance to duplicate out of the other one
+  tech: Einstein-Rosen bridge - 1.5x larger portals, 0.6x damage taken
+  tech: quantum foam - 0.8x smaller portals, invulnerable for 4 seconds after coming out of a portal
+  holographic principle, patch, dazzler, vacuum fluctuation, Lorentz transformation, time crystals, invariant, commensalism, and no-cloning theorem work with portal
+  wormhole has its lavender energy colors back
 
 
 bug fixes
-  
+  getting rocket-propelled grenade while neutron bombs are in the air no longer crashes the game
+  elephants toothpaste mines no longer fire nails when there's too much foam
+  the null level no longer saves a checkpoint
+  blast ball mines no longer crash the game, and sentry mines no longer fire every frame
+  portals: big blocks come out in front of the portal instead of stuck in the wall, and heal attract only pulls nearby heals through
+
 
 *********************************************************** TODO *****************************************************
+
+
+ 
+
+
+
+
+
 
 new version of history boss with legs and it looks in the same direction the player looked in but +180
   also has a sword?
   also shots bullets?
 
+bugs
+  sentry is firing too fast
 
-some times the game freezes for 0.2s
-  on negative mass field activation
-  on tungsten carbide skin
-  plasma ball
-
+improve portal physics
+is it possible to make portals anywhere?
+  issues with wall collision
 
 constraint idea - mobs recover 80% of damage done to them over 5s
   text: mobs regenerate

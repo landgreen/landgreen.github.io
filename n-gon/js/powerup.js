@@ -187,7 +187,7 @@ const powerUps = {
     totalPowerUps: 0, //used for tech that count power ups at the end of a level
     do() { },
     setPowerUpMode() { //choose the per cycle power up work once, instead of checking tech every cycle
-        const isDuplication = tech.duplicationChance() > 0 || tech.isAnthropicTech || tech.isGUT
+        const isDuplication = tech.duplicationChance() > 0 || tech.isAnthropicTech || tech.isGUT || tech.isPortalDuplicate //beam splitter
         const isExplode = isDuplication && tech.isPowerUpsVanish //metastability
         const isAttract = tech.isHealAttract //accretion
         powerUps.draw = isDuplication ? powerUps.drawDup : powerUps.drawCircle
@@ -438,7 +438,7 @@ const powerUps = {
  powerUps.instructions.effect()     //reproduce this message
  powerUps.warp.effect()             //warp to any level
  tech.giveTech("name")              //replace "name" with tech name
- m.setField("name")                 //standing wave  perfect diamagnetism  negative mass  molecular assembler  plasma torch  time dilation  metamaterial cloaking  pilot wave  wormhole  grappling hook
+ m.setField("name")                 //standing wave  perfect diamagnetism  negative mass  molecular assembler  plasma torch  time dilation  metamaterial cloaking  pilot wave  wormhole  grappling hook  portal
  b.giveGuns("name")                 //nail gun  shotgun  super balls  wave  missiles  grenades  spores  drones  foam  harpoon  mine  laser
  m.damageDone *= 2                  //2x damage
  m.immuneCycle = Infinity           //immune to damage            
@@ -1348,7 +1348,7 @@ const powerUps = {
             if (m.alive) {
                 let options = [];
                 for (let i = 1; i < m.fieldUpgrades.length; i++) { //skip field emitter
-                    if (i !== m.fieldMode) options.push(i);
+                    if (i !== m.fieldMode && !m.fieldUpgrades[i].isLoreField) options.push(i);
                 }
                 let totalChoices = 2 + tech.extraChoices + (tech.isInPilot ? 6 : 3) * (m.fieldMode === 8) - level.fewerChoices
                 if (tech.isCancelTech && tech.cancelTechCount === 1) {
@@ -1503,7 +1503,7 @@ const powerUps = {
                         } else {
                             let fieldOptions = [];
                             for (let i = 1; i < m.fieldUpgrades.length; i++) { //skip field emitter
-                                if (i !== m.fieldMode) fieldOptions.push(i);
+                                if (i !== m.fieldMode && !m.fieldUpgrades[i].isLoreField) fieldOptions.push(i);
                             }
                             const pick = fieldOptions[Math.floor(Math.seededRandom(0, fieldOptions.length))] //pick an element from the array of options
                             text += powerUps.fieldText(pick, `powerUps.choose('field',${pick})`)
