@@ -438,7 +438,11 @@ const titlePage = {
         for (const letter of titlePage.letters) titlePage.removeLetter(letter)
         titlePage.letters = []
     },
-    updateLetters() { //a letter the player touches becomes a falling block
+    pieces(who) { //the convex pieces of a body, so the gaps in n and g aren't solid
+        return who.parts.length > 1 ? who.parts.slice(1) : [who]
+    },
+    updateLetters() { //a letter the player or a block touches becomes a falling block
+        const touchers = [playerBody, playerHead, ...titlePage.blocks().flatMap(titlePage.pieces)] //the block, the dash, and fallen letters
         for (const letter of titlePage.letters) {
             const who = letter.body
             if (letter.isFalling) {
@@ -453,8 +457,8 @@ const titlePage = {
                     who.force.y += who.mass * simulation.g //holdable letters are in body, simulation.gravity() pulls those
                 }
             } else {
-                const parts = who.parts.length > 1 ? who.parts.slice(1) : [who] //the pieces, not the whole, so the gaps in n and g aren't solid
-                if (Matter.Query.collides(playerBody, parts).length || Matter.Query.collides(playerHead, parts).length) {
+                const pieces = titlePage.pieces(who)
+                if (touchers.some(part => Matter.Query.collides(part, pieces).length)) {
                     letter.isFalling = true
                     letter.fill.style.visibility = "hidden" //titlePage.drawLetterSpots() draws a faint copy behind everything instead
                     letter.outline.style.visibility = "hidden"
