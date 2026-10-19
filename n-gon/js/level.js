@@ -4854,11 +4854,13 @@ const level = {
                 if (level.levelsCleared === 0) powerUps.directSpawn(-60, -950, "difficulty", false);
 
                 if (!simulation.isCheating && !m.isShipMode && !build.isExperimentRun) {
-                    spawn.wireFoot();
-                    spawn.wireFootLeft();
-                    spawn.wireKnee();
-                    spawn.wireKneeLeft();
-                    spawn.wireHead();
+                    if (!titlePage.isSecretRun) { //the title page easter egg drops the player in from above, without wires
+                        spawn.wireFoot();
+                        spawn.wireFootLeft();
+                        spawn.wireKnee();
+                        spawn.wireKneeLeft();
+                        spawn.wireHead();
+                    }
                 } else {
                     simulation.isCheating = true;
                 }
