@@ -4854,7 +4854,7 @@ const level = {
                 if (level.levelsCleared === 0) powerUps.directSpawn(-60, -950, "difficulty", false);
 
                 if (!simulation.isCheating && !m.isShipMode && !build.isExperimentRun) {
-                    if (!titlePage.isSecretRun) { //the title page easter egg drops the player in from above, without wires
+                    if (!titlePage.isSecretRun) { //the title page easter egg drops the player in from above, without wires, see titlePage.secretStart() in js/title.js
                         spawn.wireFoot();
                         spawn.wireFootLeft();
                         spawn.wireKnee();
@@ -4986,6 +4986,7 @@ const level = {
             wires.lineTo(2600, -690)
 
             // let isSpawnedWarp = false
+            const tubeCycle = m.cycle + 300 //power ups fall down the tube for 5 seconds after the level starts, m.cycle isn't reset between runs
             level.custom = () => {
                 //push around power ups stuck in the tube wall
                 if (!(simulation.cycle % 30)) {
@@ -4997,7 +4998,7 @@ const level = {
                                 break
                             }
                         } else if (powerUp[i].position.y < -1000) {
-                            if (m.cycle > 900) {
+                            if (m.cycle > tubeCycle) { //still in the tube, move it out
                                 Matter.Body.setPosition(powerUp[i], {
                                     x: 2075 + 50 * Math.random(),
                                     y: -900 + 100 * Math.random()

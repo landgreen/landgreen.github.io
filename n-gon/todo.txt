@@ -1,7 +1,7 @@
-title screen: the player fades in, try moving, jumping, and throwing a block, climb the keys, mouse, buttons, and open menus
+title screen: the player drops in, try moving, jumping, and throwing a block, climb the keys, mouse, buttons, and open menus, knock down the logo
 
 bug fixes
-
+power ups on the first level fall down their tube every run, they used to jump out of it on every run after the first, and sometimes bounced onto the exit shelf
 
 
 
