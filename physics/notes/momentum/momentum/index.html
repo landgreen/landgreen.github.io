@@ -31,6 +31,14 @@
     </h1>
   </header>
   <article>
+    <!-- <p>
+      Inertia is an object's resistance to changes in velocity and depends on its mass.
+      Momentum is mass times velocity, so an object at rest has inertia but zero momentum.
+    </p>
+    <p>
+      Momentum is useful because the total momentum of colliding objects is conserved when the net external force on them is zero.
+      This lets us predict how objects move after a collision, whether they bounce apart or stick together.
+    </p> -->
     <p>
       The concept of momentum developed slowly. <a href="https://en.wikipedia.org/wiki/Aristotle">Aristotle</a> (384-322 BCE) described motion as something that needed a continuing cause, which seems reasonable when you watch carts, rocks, and people eventually stop.
     </p>
@@ -82,7 +90,7 @@
 
     <div class='example'>
       <strong>Example:</strong> What is the momentum of a bowling ball (in kg&nbsp;m/s)?
-      <br>A typical mass is 5 kg and a typical and velocity is around 18 mph.
+      <br>A typical mass is 5 kg and a typical velocity is around 18 mph.
       <details>
         <summary>solution</summary>
         $$ 18 \left( \mathrm{ \frac{\color{red}{mile}}{\color{Teal}{hour}}} \right)\left(\frac{1609\,\mathrm{m}}{1 \,\color{red}{\mathrm{mile} }}\right)\left(\frac{1\, \color{Teal}{ \mathrm{hour} }}{3600\,\mathrm{s}}\right) = 8.0 \mathrm{\tfrac{m}{s}} $$
@@ -115,29 +123,53 @@
 
     <h1 class='underlined' id="newtons-law-and-momentum">Newton's Law and Momentum</h1>
     <p>
-      Newton's second law can be written as a change in momentum with time.
-      Force changes an object's momentum.
+      Newton's second law relates the net force on an object to how quickly its momentum changes.
+      A net force changes momentum. If the net force is zero, momentum stays constant, even if the object is moving.
     </p>
     <details class='derive'>
       <summary>derivation</summary>
       <p>
-        If the mass stays constant, the change in momentum comes from the change in velocity.
+        Start with Newton's second law. For this derivation, assume the object's mass and the net force stay constant during the time interval.
       </p>
-      $$\sum F = \frac{\Delta p}{\Delta t}$$
-      $$\Delta p = m\Delta v$$
-      $$\sum F = \frac{m\Delta v}{\Delta t}$$
-      $$a = \frac{\Delta v}{\Delta t}$$
       $$\sum F = ma$$
       <p>
-        So force equals mass times acceleration is a special case of the momentum version of Newton's second law.
+        Acceleration is the change in velocity divided by the time interval. Substitute this for \(a\).
+      </p>
+      $$a = \frac{\Delta v}{\Delta t}$$
+      $$\sum F = m\frac{\Delta v}{\Delta t}$$
+      <p>
+        The change in velocity is the final velocity minus the initial velocity. Then distribute the mass to both velocities.
+      </p>
+      $$\Delta v = v_f - v_i$$
+      $$\sum F = \frac{m(v_f - v_i)}{\Delta t}$$
+      $$\sum F = \frac{mv_f - mv_i}{\Delta t}$$
+      <p>
+        Momentum is mass times velocity, so \(mv_f\) is the final momentum and \(mv_i\) is the initial momentum.
+      </p>
+      $$\sum F = \frac{p_f - p_i}{\Delta t}$$
+      <p>
+        Final momentum minus initial momentum is the change in momentum.
+      </p>
+      $$\Delta p = p_f - p_i$$
+      $$\sum F = \frac{\Delta p}{\Delta t}$$
+      <p>
+        For constant mass, these two forms of Newton's second law describe the same relationship.
       </p>
     </details>
     <div class='definition'>
       <h1>$$\sum F = \frac{\Delta p}{\Delta t}$$</h1>
-      \(\sum F\) = net force [N]
-      <br>\(\Delta p\) = change in momentum [kg m/s]
+      \(\sum F\) = net force (average over the time interval) [N] <em>vector</em>
+      <br>\(\Delta p\) = change in momentum [kg m/s] <em>vector</em>
       <br>\(\Delta t\) = time interval [s]
     </div>
+    <p>
+      If the net force changes during the time interval, this equation gives the average net force, not the force at each instant.
+      If the net force stays constant, the average is the same as the force throughout the interval.
+    </p>
+    <p>
+      Use the change in momentum, not just the final momentum.
+      Momentum and force are vectors. In one dimension, choose a positive direction and use signs for the velocities when finding the change in momentum.
+    </p>
     <div class='example'>
       <strong>Example:</strong> A 1200 kg car speeds up from 5 m/s to 25 m/s in 8.0 s. What is the car's change in momentum, and what average net force acted on it?
       <details>
@@ -270,7 +302,7 @@
         $$\frac{31770}{2250}=a$$
         $$a = 14.12 \,\mathrm{ \tfrac{m}{s^2} }$$
         <p>
-          It's almost one and half times the acceleration of gravity. How would that feel?
+          It's almost one and a half times the acceleration of gravity. How would that feel?
         </p>
         $$ g = 9.81 \, \mathrm{\tfrac{m}{s^2}} $$
       </details>
@@ -350,7 +382,7 @@
         <summary>solution</summary>
         <p>
           A vehicle with more mass will experience less acceleration.
-          A large SUV is safer in a collision then a motorcycle.
+          A large SUV is safer in a collision than a motorcycle.
           On the other hand, a larger vehicle is safer for you, but more dangerous for whatever you crash into.
         </p>
         <p>
@@ -375,232 +407,232 @@
         </p>
       </div>
 
-  		<div class='example' data-topic="Momentum">
-  			<strong>Example:</strong> A 160 g hockey puck slides across the ice at 30 m/s after a slap shot. What is its momentum?
-  			<details>
-  				<summary>solution</summary>
-  				$$160\,\textcolor{DeepPink}{\mathrm{g}}\left(\frac{1\,\mathrm{kg}}{1000\,\textcolor{DeepPink}{\mathrm{g}}}\right)$$
-  				$$0.16\,\mathrm{kg}$$
-  				<br>
-  				$$p = mv$$
-  				$$p = (0.16)(30)$$
-  				$$p = 4.8\,\mathrm{kg\tfrac{m}{s}}$$
-  			</details>
-  		</div>
+      <div class='example' data-topic="Momentum">
+        <strong>Example:</strong> A 160 g hockey puck slides across the ice at 30 m/s after a slap shot. What is its momentum?
+        <details>
+          <summary>solution</summary>
+          $$160\,\textcolor{DeepPink}{\mathrm{g}}\left(\frac{1\,\mathrm{kg}}{1000\,\textcolor{DeepPink}{\mathrm{g}}}\right)$$
+          $$0.16\,\mathrm{kg}$$
+          <br>
+          $$p = mv$$
+          $$p = (0.16)(30)$$
+          $$p = 4.8\,\mathrm{kg\tfrac{m}{s}}$$
+        </details>
+      </div>
 
-  		<div class='example' data-topic="Momentum">
-  			<strong>Example:</strong> A 0.060 kg tennis ball is moving left at 25 m/s just after leaving a racket. What is the ball's momentum?
-  			<details>
-  				<summary>solution</summary>
-  				<p>Left is the negative direction, so the velocity is -25 m/s.</p>
-  				$$p = mv$$
-  				$$p = (0.060)(-25)$$
-  				$$p = -1.5\,\mathrm{kg\tfrac{m}{s}}$$
-  				<p>The negative sign means the momentum points left. Momentum is a vector, so it has the same direction as the velocity.</p>
-  			</details>
-  		</div>
+      <div class='example' data-topic="Momentum">
+        <strong>Example:</strong> A 0.060 kg tennis ball is moving left at 25 m/s just after leaving a racket. What is the ball's momentum?
+        <details>
+          <summary>solution</summary>
+          <p>Left is the negative direction, so the velocity is -25 m/s.</p>
+          $$p = mv$$
+          $$p = (0.060)(-25)$$
+          $$p = -1.5\,\mathrm{kg\tfrac{m}{s}}$$
+          <p>The negative sign means the momentum points left. Momentum is a vector, so it has the same direction as the velocity.</p>
+        </details>
+      </div>
 
-  		<div class='example' data-topic="Momentum">
-  			<strong>Example:</strong> Which has more momentum: a 2000 kg car rolling through a parking lot at 1.0 m/s, or a 70 kg runner sprinting at 9.0 m/s?
-  			<details>
-  				<summary>solution</summary>
-  				<div class="col-group">
-  					<div>
-  				$$\text{car}$$
-  				$$p = mv$$
-  				$$p = (2000)(1.0)$$
-  				$$p = 2000\,\mathrm{kg\tfrac{m}{s}}$$
-  					</div>
-  					<div>
-  				$$\text{runner}$$
-  				$$p = mv$$
-  				$$p = (70)(9.0)$$
-  				$$p = 630\,\mathrm{kg\tfrac{m}{s}}$$
-  					</div>
-  				</div>
-  				<p>The slow car has about three times as much momentum as the fast runner. A large mass can make up for a small velocity. That's why a slowly rolling car is still very hard to stop by hand.</p>
-  			</details>
-  		</div>
+      <div class='example' data-topic="Momentum">
+        <strong>Example:</strong> Which has more momentum: a 2000 kg car rolling through a parking lot at 1.0 m/s, or a 70 kg runner sprinting at 9.0 m/s?
+        <details>
+          <summary>solution</summary>
+          <div class="col-group">
+            <div>
+              $$\text{car}$$
+              $$p = mv$$
+              $$p = (2000)(1.0)$$
+              $$p = 2000\,\mathrm{kg\tfrac{m}{s}}$$
+            </div>
+            <div>
+              $$\text{runner}$$
+              $$p = mv$$
+              $$p = (70)(9.0)$$
+              $$p = 630\,\mathrm{kg\tfrac{m}{s}}$$
+            </div>
+          </div>
+          <p>The slow car has about three times as much momentum as the fast runner. A large mass can make up for a small velocity. That's why a slowly rolling car is still very hard to stop by hand.</p>
+        </details>
+      </div>
 
-  		<div class='example' data-topic="Momentum">
-  			<strong>Example:</strong> A 70 kg runner has 420 kg m/s of momentum. How fast is the runner moving?
-  			<details>
-  				<summary>solution</summary>
-  				$$p = mv$$
-  				$$420 = 70v$$
-  				$$v = \frac{420}{70}$$
-  				$$v = 6.0\,\mathrm{\tfrac{m}{s}}$$
-  			</details>
-  		</div>
+      <div class='example' data-topic="Momentum">
+        <strong>Example:</strong> A 70 kg runner has 420 kg m/s of momentum. How fast is the runner moving?
+        <details>
+          <summary>solution</summary>
+          $$p = mv$$
+          $$420 = 70v$$
+          $$v = \frac{420}{70}$$
+          $$v = 6.0\,\mathrm{\tfrac{m}{s}}$$
+        </details>
+      </div>
 
-  		<div class='example' data-topic="Impulse">
-  			<strong>Example:</strong> A fan pushes a 2.0 kg dynamics cart, and the cart speeds up from 1.0 m/s to 5.0 m/s. What impulse did the fan give the cart?
-  			<details>
-  				<summary>solution</summary>
-  				$$m = 2.0\,\mathrm{kg}$$
-  				$$u = 1.0\,\mathrm{\tfrac{m}{s}}$$
-  				$$v = 5.0\,\mathrm{\tfrac{m}{s}}$$
-  				$$J = \,?$$
-  				<br>
-  				$$J = \Delta p$$
-  				$$J = mv - mu$$
-  				$$J = (2.0)(5.0) - (2.0)(1.0)$$
-  				$$J = 8.0\,\mathrm{N\,s}$$
-  				<p>The units N s and kg m/s are the same unit, so impulse and change in momentum can be set equal.</p>
-  			</details>
-  		</div>
+      <div class='example' data-topic="Impulse">
+        <strong>Example:</strong> A fan pushes a 2.0 kg dynamics cart, and the cart speeds up from 1.0 m/s to 5.0 m/s. What impulse did the fan give the cart?
+        <details>
+          <summary>solution</summary>
+          $$m = 2.0\,\mathrm{kg}$$
+          $$u = 1.0\,\mathrm{\tfrac{m}{s}}$$
+          $$v = 5.0\,\mathrm{\tfrac{m}{s}}$$
+          $$J = \,?$$
+          <br>
+          $$J = \Delta p$$
+          $$J = mv - mu$$
+          $$J = (2.0)(5.0) - (2.0)(1.0)$$
+          $$J = 8.0\,\mathrm{N\,s}$$
+          <p>The units N s and kg m/s are the same unit, so impulse and change in momentum can be set equal.</p>
+        </details>
+      </div>
 
-  		<div class='example' data-topic="Impulse">
-  			<strong>Example:</strong> A student pushes a box with an average force of 75 N for 0.20 s. What impulse does the student give the box?
-  			<details>
-  				<summary>solution</summary>
-  				$$J = F\Delta t$$
-  				$$J = (75)(0.20)$$
-  				$$J = 15\,\mathrm{N\,s}$$
-  			</details>
-  		</div>
+      <div class='example' data-topic="Impulse">
+        <strong>Example:</strong> A student pushes a box with an average force of 75 N for 0.20 s. What impulse does the student give the box?
+        <details>
+          <summary>solution</summary>
+          $$J = F\Delta t$$
+          $$J = (75)(0.20)$$
+          $$J = 15\,\mathrm{N\,s}$$
+        </details>
+      </div>
 
-  		<div class='example' data-topic="Impulse">
-  			<strong>Example:</strong> A soccer player kicks a 0.45 kg ball from rest, and it leaves the player's foot at 25 m/s. What average force does the foot apply to the ball?
-  			<details>
-  				<summary>solution</summary>
-  				<p>This cannot be solved from the information given. We can find the change in momentum, 11 kg m/s, but the force also depends on how long the foot touches the ball. The contact time is missing.</p>
-  				<p>A very short kick needs a large force, and a longer push needs a smaller force to produce the same change in momentum.</p>
-  			</details>
-  		</div>
+      <div class='example' data-topic="Impulse">
+        <strong>Example:</strong> A soccer player kicks a 0.45 kg ball from rest, and it leaves the player's foot at 25 m/s. What average force does the foot apply to the ball?
+        <details>
+          <summary>solution</summary>
+          <p>This cannot be solved from the information given. We can find the change in momentum, 11 kg m/s, but the force also depends on how long the foot touches the ball. The contact time is missing.</p>
+          <p>A very short kick needs a large force, and a longer push needs a smaller force to produce the same change in momentum.</p>
+        </details>
+      </div>
 
-  		<div class='example' data-topic="Impulse">
-  			<strong>Example:</strong> A 0.60 kg basketball hits the floor moving down at 6.0 m/s and bounces back up at 4.5 m/s. The ball touches the floor for 0.020 s. What is the average net force on the ball during the bounce?
-  			<details>
-  				<summary>solution</summary>
-  				<p>Let up be positive. The ball starts moving down, so u is negative.</p>
-  				$$m = 0.60\,\mathrm{kg}$$
-  				$$u = -6.0\,\mathrm{\tfrac{m}{s}}$$
-  				$$v = 4.5\,\mathrm{\tfrac{m}{s}}$$
-  				$$\Delta t = 0.020\,\mathrm{s}$$
-  				<br>
-  				$$\Delta p = mv - mu$$
-  				$$\Delta p = (0.60)(4.5) - (0.60)(-6.0)$$
-  				$$\Delta p = 2.7 + 3.6$$
-  				$$\Delta p = 6.3\,\mathrm{kg\tfrac{m}{s}}$$
-  				<br>
-  				$$\sum F = \frac{\Delta p}{\Delta t}$$
-  				$$\sum F = \frac{6.3}{0.020}$$
-  				$$\sum F = 315\,\mathrm{N}$$
-  				<p>The force points up. If you forget the negative sign on the starting velocity, you'd get a change in momentum of only 0.9 kg m/s. A bounce changes the momentum more than just stopping would.</p>
-  			</details>
-  		</div>
+      <div class='example' data-topic="Impulse">
+        <strong>Example:</strong> A 0.60 kg basketball hits the floor moving down at 6.0 m/s and bounces back up at 4.5 m/s. The ball touches the floor for 0.020 s. What is the average net force on the ball during the bounce?
+        <details>
+          <summary>solution</summary>
+          <p>Let up be positive. The ball starts moving down, so u is negative.</p>
+          $$m = 0.60\,\mathrm{kg}$$
+          $$u = -6.0\,\mathrm{\tfrac{m}{s}}$$
+          $$v = 4.5\,\mathrm{\tfrac{m}{s}}$$
+          $$\Delta t = 0.020\,\mathrm{s}$$
+          <br>
+          $$\Delta p = mv - mu$$
+          $$\Delta p = (0.60)(4.5) - (0.60)(-6.0)$$
+          $$\Delta p = 2.7 + 3.6$$
+          $$\Delta p = 6.3\,\mathrm{kg\tfrac{m}{s}}$$
+          <br>
+          $$\sum F = \frac{\Delta p}{\Delta t}$$
+          $$\sum F = \frac{6.3}{0.020}$$
+          $$\sum F = 315\,\mathrm{N}$$
+          <p>The force points up. If you forget the negative sign on the starting velocity, you'd get a change in momentum of only 0.9 kg m/s. A bounce changes the momentum more than just stopping would.</p>
+        </details>
+      </div>
 
-  		<div class='example' data-topic="Impulse">
-  			<strong>Example:</strong> A 1200 kg car (including its passengers) slows from 72 km/h to rest. The average braking force is 6000 N opposite the motion. How long does it take to stop?
-  			<details>
-  				<summary>solution</summary>
-  				$$72\,\mathrm{\tfrac{\textcolor{DeepPink}{km}}{\textcolor{DodgerBlue}{h}}}\left(\frac{1000\,\mathrm{m}}{1\,\textcolor{DeepPink}{\mathrm{km}}}\right)\left(\frac{1\,\textcolor{DodgerBlue}{\mathrm{h}}}{3600\,\mathrm{s}}\right)$$
-  				$$20\,\mathrm{\tfrac{m}{s}}$$
-  				<br>
-  				<p>Let the car's original direction be positive, so the braking force is negative.</p>
-  				$$m = 1200\,\mathrm{kg}$$
-  				$$u = 20\,\mathrm{\tfrac{m}{s}}$$
-  				$$v = 0$$
-  				$$F = -6000\,\mathrm{N}$$
-  				$$\Delta t = \,?$$
-  				<br>
-  				$$F\Delta t = mv - mu$$
-  				$$-6000\Delta t = (1200)(0) - (1200)(20)$$
-  				$$-6000\Delta t = -24\,000$$
-  				$$\Delta t = \frac{-24\,000}{-6000}$$
-  				$$\Delta t = 4.0\,\mathrm{s}$$
-  			</details>
-  		</div>
+      <div class='example' data-topic="Impulse">
+        <strong>Example:</strong> A 1200 kg car (including its passengers) slows from 72 km/h to rest. The average braking force is 6000 N opposite the motion. How long does it take to stop?
+        <details>
+          <summary>solution</summary>
+          $$72\,\mathrm{\tfrac{\textcolor{DeepPink}{km}}{\textcolor{DodgerBlue}{h}}}\left(\frac{1000\,\mathrm{m}}{1\,\textcolor{DeepPink}{\mathrm{km}}}\right)\left(\frac{1\,\textcolor{DodgerBlue}{\mathrm{h}}}{3600\,\mathrm{s}}\right)$$
+          $$20\,\mathrm{\tfrac{m}{s}}$$
+          <br>
+          <p>Let the car's original direction be positive, so the braking force is negative.</p>
+          $$m = 1200\,\mathrm{kg}$$
+          $$u = 20\,\mathrm{\tfrac{m}{s}}$$
+          $$v = 0$$
+          $$F = -6000\,\mathrm{N}$$
+          $$\Delta t = \,?$$
+          <br>
+          $$F\Delta t = mv - mu$$
+          $$-6000\Delta t = (1200)(0) - (1200)(20)$$
+          $$-6000\Delta t = -24\,000$$
+          $$\Delta t = \frac{-24\,000}{-6000}$$
+          $$\Delta t = 4.0\,\mathrm{s}$$
+        </details>
+      </div>
 
-  		<div class='example' data-topic="Momentum">
-  			<strong>Example:</strong> A pitcher throws a 0.145 kg baseball at 90 miles per hour. What is the ball's momentum? (1 mile = 1609 m)
-  			<details>
-  				<summary>solution</summary>
-  				$$90\,\mathrm{\tfrac{\textcolor{DeepPink}{mile}}{\textcolor{DodgerBlue}{hour}}}\left(\frac{1609\,\mathrm{m}}{1\,\textcolor{DeepPink}{\mathrm{mile}}}\right)\left(\frac{1\,\textcolor{DodgerBlue}{\mathrm{hour}}}{3600\,\mathrm{s}}\right)$$
-  				$$40.2\,\mathrm{\tfrac{m}{s}}$$
-  				<br>
-  				$$p = mv$$
-  				$$p = (0.145)(40.2)$$
-  				$$p = 5.83\,\mathrm{kg\tfrac{m}{s}}$$
-  			</details>
-  		</div>
+      <div class='example' data-topic="Momentum">
+        <strong>Example:</strong> A pitcher throws a 0.145 kg baseball at 90 miles per hour. What is the ball's momentum? (1 mile = 1609 m)
+        <details>
+          <summary>solution</summary>
+          $$90\,\mathrm{\tfrac{\textcolor{DeepPink}{mile}}{\textcolor{DodgerBlue}{hour}}}\left(\frac{1609\,\mathrm{m}}{1\,\textcolor{DeepPink}{\mathrm{mile}}}\right)\left(\frac{1\,\textcolor{DodgerBlue}{\mathrm{hour}}}{3600\,\mathrm{s}}\right)$$
+          $$40.2\,\mathrm{\tfrac{m}{s}}$$
+          <br>
+          $$p = mv$$
+          $$p = (0.145)(40.2)$$
+          $$p = 5.83\,\mathrm{kg\tfrac{m}{s}}$$
+        </details>
+      </div>
 
-  		<div class='example' data-topic="Impulse">
-  			<strong>Example:</strong> A 5.0 kg cart starts from rest. A steady 10 N net force pushes it for 3.0 s. What is the cart's final velocity?
-  			<details>
-  				<summary>solution</summary>
-  				$$m = 5.0\,\mathrm{kg}$$
-  				$$u = 0$$
-  				$$F = 10\,\mathrm{N}$$
-  				$$\Delta t = 3.0\,\mathrm{s}$$
-  				$$v = \,?$$
-  				<br>
-  				$$F\Delta t = mv - mu$$
-  				$$(10)(3.0) = (5.0)v - (5.0)(0)$$
-  				$$30 = 5.0v$$
-  				$$v = 6.0\,\mathrm{\tfrac{m}{s}}$$
-  				<p>You could also find a = 2.0 m/s² with Newton's second law and then use kinematics. Impulse gets there in one step.</p>
-  			</details>
-  		</div>
+      <div class='example' data-topic="Impulse">
+        <strong>Example:</strong> A 5.0 kg cart starts from rest. A steady 10 N net force pushes it for 3.0 s. What is the cart's final velocity?
+        <details>
+          <summary>solution</summary>
+          $$m = 5.0\,\mathrm{kg}$$
+          $$u = 0$$
+          $$F = 10\,\mathrm{N}$$
+          $$\Delta t = 3.0\,\mathrm{s}$$
+          $$v = \,?$$
+          <br>
+          $$F\Delta t = mv - mu$$
+          $$(10)(3.0) = (5.0)v - (5.0)(0)$$
+          $$30 = 5.0v$$
+          $$v = 6.0\,\mathrm{\tfrac{m}{s}}$$
+          <p>You could also find a = 2.0 m/s² with Newton's second law and then use kinematics. Impulse gets there in one step.</p>
+        </details>
+      </div>
 
-  		<div class='example' data-topic="Momentum">
-  			<strong>Example:</strong> A 3.0 kg remote control boat starts from rest and accelerates at 2.0 m/s² for 4.0 s. What is its momentum at the end?
-  			<details>
-  				<summary>solution</summary>
-  				<p>First use <a href="../../motion/kinematics/index.html">kinematics</a> to find the final velocity.</p>
-  				$$u = 0$$
-  				$$a = 2.0\,\mathrm{\tfrac{m}{s^{2}}}$$
-  				$$\Delta t = 4.0\,\mathrm{s}$$
-  				$$v = \,?$$
-  				<br>
-  				$$v = u + a\Delta t$$
-  				$$v = 0 + (2.0)(4.0)$$
-  				$$v = 8.0\,\mathrm{\tfrac{m}{s}}$$
-  				<br>
-  				$$p = mv$$
-  				$$p = (3.0)(8.0)$$
-  				$$p = 24\,\mathrm{kg\tfrac{m}{s}}$$
-  			</details>
-  		</div>
+      <div class='example' data-topic="Momentum">
+        <strong>Example:</strong> A 3.0 kg remote control boat starts from rest and accelerates at 2.0 m/s² for 4.0 s. What is its momentum at the end?
+        <details>
+          <summary>solution</summary>
+          <p>First use <a href="../../motion/kinematics/index.html">kinematics</a> to find the final velocity.</p>
+          $$u = 0$$
+          $$a = 2.0\,\mathrm{\tfrac{m}{s^{2}}}$$
+          $$\Delta t = 4.0\,\mathrm{s}$$
+          $$v = \,?$$
+          <br>
+          $$v = u + a\Delta t$$
+          $$v = 0 + (2.0)(4.0)$$
+          $$v = 8.0\,\mathrm{\tfrac{m}{s}}$$
+          <br>
+          $$p = mv$$
+          $$p = (3.0)(8.0)$$
+          $$p = 24\,\mathrm{kg\tfrac{m}{s}}$$
+        </details>
+      </div>
 
-  		<div class='example' data-topic="Impulse">
-  			<strong>Question:</strong> An egg dropped onto a pillow survives, but the same egg dropped from the same height onto a hard floor breaks. Both eggs stop, so they have the same change in momentum. Why does only one break?
-  			<details>
-  				<summary>answer</summary>
-  				<p>The pillow increases the stopping time. The impulse, FΔt, has to equal the same change in momentum in both cases. If Δt is larger, the force F is smaller.</p>
-  				<p>The floor stops the egg in a tiny fraction of a second, so the force is large enough to crack the shell. Airbags, bending your knees when you land, and catching a ball with your hands moving back all work the same way.</p>
-  			</details>
-  		</div>
+      <div class='example' data-topic="Impulse">
+        <strong>Question:</strong> An egg dropped onto a pillow survives, but the same egg dropped from the same height onto a hard floor breaks. Both eggs stop, so they have the same change in momentum. Why does only one break?
+        <details>
+          <summary>answer</summary>
+          <p>The pillow increases the stopping time. The impulse, FΔt, has to equal the same change in momentum in both cases. If Δt is larger, the force F is smaller.</p>
+          <p>The floor stops the egg in a tiny fraction of a second, so the force is large enough to crack the shell. Airbags, bending your knees when you land, and catching a ball with your hands moving back all work the same way.</p>
+        </details>
+      </div>
 
-  		<div class='example' data-topic="Impulse">
-  			<strong>Example:</strong> In a crash test, a 75 kg driver slows from 54 km/h to rest. Compare the average force on the driver if the stopping time is 0.10 s with the average force if an airbag and crumple zone stretch the stopping time to 0.60 s.
-  			<details>
-  				<summary>solution</summary>
-  				$$54\,\mathrm{\tfrac{\textcolor{DeepPink}{km}}{\textcolor{DodgerBlue}{h}}}\left(\frac{1000\,\mathrm{m}}{1\,\textcolor{DeepPink}{\mathrm{km}}}\right)\left(\frac{1\,\textcolor{DodgerBlue}{\mathrm{h}}}{3600\,\mathrm{s}}\right)$$
-  				$$15\,\mathrm{\tfrac{m}{s}}$$
-  				<br>
-  				$$\Delta p = mv - mu$$
-  				$$\Delta p = (75)(0) - (75)(15)$$
-  				$$\Delta p = -1125\,\mathrm{kg\tfrac{m}{s}}$$
-  				<br>
-  				<div class="col-group">
-  					<div>
-  				$$\text{no airbag}$$
-  				$$\sum F = \frac{\Delta p}{\Delta t}$$
-  				$$\sum F = \frac{-1125}{0.10}$$
-  				$$\sum F = -11\,250\,\mathrm{N}$$
-  					</div>
-  					<div>
-  				$$\text{airbag}$$
-  				$$\sum F = \frac{\Delta p}{\Delta t}$$
-  				$$\sum F = \frac{-1125}{0.60}$$
-  				$$\sum F = -1875\,\mathrm{N}$$
-  					</div>
-  				</div>
-  				<p>Stretching the stopping time by a factor of 6 cuts the force by a factor of 6. The change in momentum is the same either way.</p>
-  			</details>
-  		</div>
+      <div class='example' data-topic="Impulse">
+        <strong>Example:</strong> In a crash test, a 75 kg driver slows from 54 km/h to rest. Compare the average force on the driver if the stopping time is 0.10 s with the average force if an airbag and crumple zone stretch the stopping time to 0.60 s.
+        <details>
+          <summary>solution</summary>
+          $$54\,\mathrm{\tfrac{\textcolor{DeepPink}{km}}{\textcolor{DodgerBlue}{h}}}\left(\frac{1000\,\mathrm{m}}{1\,\textcolor{DeepPink}{\mathrm{km}}}\right)\left(\frac{1\,\textcolor{DodgerBlue}{\mathrm{h}}}{3600\,\mathrm{s}}\right)$$
+          $$15\,\mathrm{\tfrac{m}{s}}$$
+          <br>
+          $$\Delta p = mv - mu$$
+          $$\Delta p = (75)(0) - (75)(15)$$
+          $$\Delta p = -1125\,\mathrm{kg\tfrac{m}{s}}$$
+          <br>
+          <div class="col-group">
+            <div>
+              $$\text{no airbag}$$
+              $$\sum F = \frac{\Delta p}{\Delta t}$$
+              $$\sum F = \frac{-1125}{0.10}$$
+              $$\sum F = -11\,250\,\mathrm{N}$$
+            </div>
+            <div>
+              $$\text{airbag}$$
+              $$\sum F = \frac{\Delta p}{\Delta t}$$
+              $$\sum F = \frac{-1125}{0.60}$$
+              $$\sum F = -1875\,\mathrm{N}$$
+            </div>
+          </div>
+          <p>Stretching the stopping time by a factor of 6 cuts the force by a factor of 6. The change in momentum is the same either way.</p>
+        </details>
+      </div>
     </details>
 
   </article>
@@ -613,7 +645,7 @@
   </script>
   <script src='../../../lib/matter.min.js'></script>
   <script src="newtonsCradle.js"></script>
-	<script defer src="../../../lib/practice-labels.js"></script>
+  <script defer src="../../../lib/practice-labels.js"></script>
 </body>
 
 </html>

@@ -60,7 +60,7 @@
 				<p>
 					If the relative velocity between two bodies is too low they will collide.
 					If the velocity is too high they will move away from each other.
-					In between these extremes exist a range of stable orbits that can repeat with almost no change.
+					In between these extremes exists a range of stable orbits that can repeat with almost no change.
 				</p>
 				<p>
 					Yet, over time orbits degrade.
@@ -76,7 +76,7 @@
 		<div class="example">
 			<h1 class="underlined">Circular Motion</h1>
 			<p>
-				Any object moving in a <a href="https://www.youtube.com/watch?v=ZlleypTKfGY&list=WL">circular</a> path has a net force pointed at the center of the circle.
+				An object moving at constant speed in a <a href="https://www.youtube.com/watch?v=ZlleypTKfGY&list=WL">circular</a> path has a net force pointed at the center of the circle.
 				The velocity of the object will always be perpendicular to the force.
 				When you need the distance traveled in one full trip around the circle, use the circumference, \(C = 2\pi r\).
 			</p>
@@ -141,7 +141,7 @@
 			</div>
 			<p>
 				The term <strong>centripetal</strong> means pointing at the center.
-				In all circular motion force and acceleration always points at the center of the circle.
+				In uniform circular motion, net force and acceleration point at the center of the circle. If the speed also changes, there is a tangential acceleration as well.
 				This is often confused with centrifugal, which means away from the center.
 			</p>
 			<p>
@@ -855,12 +855,24 @@
 				<strong>Question:</strong> A ball on a string is swung in a horizontal circle. At one moment the string breaks. Which way does the ball go?
 				<details>
 					<summary>answer</summary>
+					<svg class="center" viewBox="0 0 520 320" style="width: 520px; max-width: 100%; height: auto;" role="img" aria-labelledby="orbits-broken-string-title">
+					<title id="orbits-broken-string-title">Viewed from above, the ball travels in a straight tangent to its circular path when the string breaks.</title>
+					<g font-family="Arial, sans-serif">
+					<circle cx="170" cy="165" r="100" fill="none" stroke="#999" stroke-width="2" stroke-dasharray="5 5"/><circle cx="170" cy="165" r="3" fill="#222" stroke="#222" stroke-width="2" /><circle cx="270" cy="165" r="12" fill="#abc" stroke="#222" stroke-width="2" /><path d="M170 165 H210 M225 165 H258" fill="none" stroke="#000" stroke-width="2" /><path d="M212 159 l8 12 M217 159 l8 12" fill="none" stroke="#000" stroke-width="2" /><path d="M270 150 L270 35" fill="none" stroke="#000" stroke-width="2" /><polygon points="270.00,35.00 266.00,45.00 274.00,45.00"/><text x="293" y="54" font-size="17" text-anchor="start" fill="#000">tangent</text><text x="170" y="195" font-size="17" text-anchor="middle" fill="#000">center</text><text x="369" y="182" font-size="16" text-anchor="middle" fill="#000">string breaks</text><path d="M307 180 L224 166" fill="none" stroke="#777" stroke-width="1" /><text x="385" y="94" font-size="17" text-anchor="middle" fill="#000">straight path</text><text x="170" y="296" font-size="15" text-anchor="middle" fill="#000">view from above</text>
+					</g>
+					</svg>
 					<p>It flies off in a straight line along the direction it was moving at that moment, tangent to the circle. It does not fly straight outward from the center, and it doesn't keep curving.</p>
 					<p>Once the string breaks, there is no more inward force, so by Newton's first law the ball keeps its velocity at that instant.</p>
 				</details>
 			</div>
 
 			<div class='example' data-topic="Circular Orbits">
+				<svg class="center" viewBox="0 0 520 365" style="width: 520px; max-width: 100%; height: auto;" role="img" aria-labelledby="orbits-moon-radius-title">
+				<title id="orbits-moon-radius-title">A satellite follows a circular path around the Moon. Velocity is tangent, gravity is inward, and orbital radius includes the Moon’s radius plus 100 kilometers.</title>
+				<g font-family="Arial, sans-serif">
+				<circle cx="175" cy="170" r="85" fill="#fff" stroke="#222" stroke-width="2" /><circle cx="175" cy="170" r="89.9" fill="none" stroke="#222" stroke-width="2" stroke-dasharray="5 5"/><circle cx="264.9" cy="170" r="2.5" fill="#abc" stroke="#222" stroke-width="2" /><circle cx="175" cy="170" r="2" fill="#222" stroke="#222" stroke-width="2" /><text x="159" y="194" font-size="17" text-anchor="middle" fill="#000">Moon</text><path d="M264.9 164 L264.9 65" fill="none" stroke="#000" stroke-width="2" /><polygon points="264.90,65.00 260.90,75.00 268.90,75.00"/><text x="291" y="79" font-size="17" text-anchor="start" fill="#000">v = ?</text><path d="M256.9 170 L210 170" fill="none" stroke="#000" stroke-width="2" /><polygon points="210.00,170.00 220.00,174.00 220.00,166.00"/><text x="235" y="152" font-size="19" text-anchor="middle" fill="#000">F</text><text x="405" y="135" font-size="15" text-anchor="middle" fill="#000">gravity inward</text><path d="M340 141 L245 169" fill="none" stroke="#777" stroke-width="1" /><path d="M175 170 H85.1" fill="none" stroke="#999" stroke-width="1" stroke-dasharray="4 4"/><text x="130" y="155" font-size="19" text-anchor="middle" fill="#000">r</text><path d="M175 257 V315 M260 180 V292 M264.9 180 V315" fill="none" stroke="#999" stroke-width="1" stroke-dasharray="4 4"/><path d="M175 285 v10 M175 290 H260 M260 285 v10" fill="none" stroke="#000" stroke-width="2" /><text x="217.5" y="313" font-size="17" text-anchor="middle" fill="#000">R</text><path d="M260 285 v10 M260 290 H264.9 M264.9 285 v10" fill="none" stroke="#000" stroke-width="2" /><text x="365" y="280" font-size="16" text-anchor="middle" fill="#000">h = 100 km</text><path d="M308 280 L270 290" fill="none" stroke="#777" stroke-width="1" /><path d="M175 320 v10 M175 325 H264.9 M264.9 320 v10" fill="none" stroke="#000" stroke-width="2" /><text x="219.95" y="348" font-size="17" text-anchor="middle" fill="#000">r = R + h</text><text x="145" y="30" font-size="16" text-anchor="middle" fill="#000">R = 1.737 × 10⁶ m</text>
+				</g>
+				</svg>
 				<strong>Example:</strong> A small satellite is 100 km above the Moon's surface. Use the Moon's mass as 7.346 × 10<sup>22</sup> kg and radius as 1.737 × 10<sup>6</sup> m. What circular orbital speed is needed?
 				<details>
 					<summary>solution</summary>
