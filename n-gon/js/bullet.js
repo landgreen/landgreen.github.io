@@ -3956,19 +3956,26 @@ const b = {
                 const isPushed = who.streamPushCycle > simulation.cycle
                 const r = who.size + reach + (isPushed ? 25 : 0) //a power up already on the wire holds on from a bit farther
                 if (x > minX - r && x < maxX + r && y > minY - r && y < maxY + r) {
+                    //use the closest checked point, the first one in reach can be several points toward the tip, since reach is much wider than the gap between points
+                    let closest = -1
+                    let closestDist2 = r * r
                     for (let i = simulation.cycle % stride, len = wire.length; i < len; i += stride) {
-                        const p = wire[i]
-                        const dx = p.x - x
-                        const dy = p.y - y
-                        if (dx * dx + dy * dy > r * r) continue
-                        let next = m.pos //aim at a point 3 closer to the nose, so it's pulled onto the wire as it goes, or straight to the player from the end of a line
-                        for (let j = i + 1; j < len && j < i + 4 && !wire[j].isBranch; j++) next = wire[j]
+                        const dx = wire[i].x - x
+                        const dy = wire[i].y - y
+                        const dist2 = dx * dx + dy * dy
+                        if (dist2 < closestDist2) {
+                            closest = i
+                            closestDist2 = dist2
+                        }
+                    }
+                    if (closest > -1) {
+                        let next = m.pos //aim at a point 5 closer to the nose, past the closest point skipped by the stride, so it's pulled onto the wire as it goes, or straight to the player from the end of a line
+                        for (let j = closest + 1; j < wire.length && j < closest + 6 && !wire[j].isBranch; j++) next = wire[j]
                         const ux = next.x - x
                         const uy = next.y - y
                         const length = Math.sqrt(ux * ux + uy * uy) || 1
                         who.streamPush = { x: ux / length, y: uy / length }
                         who.streamPushCycle = simulation.cycle + 2 * stride
-                        break
                     }
                 }
                 if (who.streamPushCycle > simulation.cycle) { //friction and a strong pull, easing toward 27 speed down the wire, with no gravity

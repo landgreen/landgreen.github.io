@@ -5989,7 +5989,7 @@ const tech = {
         name: "vacuum energy",
         descriptionFunction() {
             return `after using ${powerUps.orb.coupling(1)} ${powerUps.orb.ammo(1)} ${powerUps.orb.boost(1)} ${powerUps.orb.heal(1)} ${powerUps.orb.Casimir(1)} ${powerUps.orb.research(1)} ${powerUps.orb.qubit(1)}<br>
-            set <strong class='energy' data-help='energy'>energy</strong> to <strong>1000</strong>, or <strong>25%</strong> of the time set it to <strong>0</strong>`
+            set <strong class='energy' data-help='energy'>energy</strong> to <strong>${(600 * m.maxEnergy).toFixed(0)}</strong>, or <strong>25%</strong> of the time set it to <strong>0</strong>`
         },
         maxCount: 1,
         count: 0,
