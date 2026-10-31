@@ -1,9 +1,70 @@
+settings: level editor - draw map and blocks, add boosts, movers, lasers, mobs, power ups, and preset shapes, edit vertices, set gravity and line of sight, or start from any level, export levels as javascript, levels save locally for the level pool
+settings: level pool - drag or click levels into and out of the random level pool, it replaces the banned levels box and the community maps checkbox
 
 
 
 
 
 *********************************************************** TODO *****************************************************
+
+
+level order
+  in settings add details menu to the bottom of that menu that opens to show list of levels - this menu might need to be extra wide
+    several grids of possible levels
+      grid of locked levels
+        intro - greyed out since it can't change
+        reactor - greyed out
+        reservoir, factory, or interferometer - greyed out
+        subway - greyed out
+        final - greyed out
+      grid of possible "random playable levels"
+        starts with the "playableLevels" array
+      grid of baned playable levels
+      grid of community levels
+      grid of possible local storage levels
+        this isn't added yet, but it will come from the upcoming level editor
+    drop and drag levels name into and out of the random playable levels grid
+      if dragged out they show up in their origin grid (community, localstorage, or banned if they are an original level)
+    remember this level order in local storage
+
+
+
+
+level editor
+  starts from a button in settings to the right of level pool
+  player can move around and jump and everything inside the editor
+    pressing T will still open the testing interface for teleportation.
+  style
+    this is mostly a tool for me, the developer, so it should priorities a clean quick, utilitarian interface, we don't need extra text info explaining things
+    when possible try to use similar style guide as menus in n-gon settings / experiment / pause, but don't shy away from inventing a new standard to improve quick utilitarian and power ful interfaces
+  loads a blank level with enter and exit 1000 apart and 1 ground map element to walk on
+    but if there is a recent level in localstorage that they were editing load that
+  
+  left interface menus
+    menus:
+      toggle map/block/none draw mode
+      add level elements
+        this is for advanced elements like movers, buttons, boost, lasers, ...
+        after adding a new element give it focus so it shows up on the right side info menu
+      load level - pick any level already written in: community, local, playable levels, ...
+        of course this can't overwrite existing levels so changes will generate a new local level that can be found in the level pool editor interface
+      export to javascript text - do this later, just put a placeholder
+      add bosses and mobs - do this later, just put a placeholder
+      add power ups - do this later, just put a placeholder
+       
+  right side info about focused elements
+    on top right side of screen
+    try to use a code oriented style for things like the information menus
+    clicking on an element gives information about the element and editable properties
+      edit mass, restitution, friction, rictionAir, ...
+    more complex custom elements like lasers, boosts, elevators, movers, have adjustable properties as well, like speed height, ...
+    allow map and block types to be switched
+    a complex map/block vertices editor - do this later, just put a placeholder
+    
+
+
+
+
 
 add alternator-like swing code to other situations
   every 3 swings make one with a much bigger range?

@@ -777,6 +777,157 @@ body.has-autosave #start-button {
     background-color: var(--card-color);
 }
 
+#settings-details>.details-div {
+    max-width: 24rem;
+}
+
+/* level pool pop up, opened by the button at the bottom of settings, see levelPoolMenu in js/index.js
+levelPoolMenu.place() sets its position, width, and height */
+#level-pool {
+    inset: auto;
+    margin: 0;
+    box-sizing: border-box;
+    overflow-y: auto;
+    padding: 10px;
+    border: 2px #333 solid;
+    border-radius: 8px;
+    background-color: var(--card-color);
+    color: #000;
+    font-size: 0.825rem;
+    line-height: 130%;
+}
+
+.level-pool-button-open {
+    background-color: var(--hover-card-color);
+}
+
+.level-pool-header {
+    display: flex;
+    align-items: baseline;
+    gap: 0.5em;
+    margin: 12px 0 4px;
+    font-size: 1.1em;
+}
+
+#level-pool>.level-pool-header:first-child {
+    margin-top: 0;
+}
+
+.level-pool-button {
+    margin-left: auto;
+    font-size: 0.85em;
+    padding: 1px 7px;
+}
+
+/* about the size of the words in settings */
+.level-route {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 5px;
+    font-size: 1.25rem;
+    margin-top: 12px;
+}
+
+/* a dash and the step after it wrap together */
+.level-route-step {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.level-route-dash,
+.level-route-locked {
+    color: #aaa;
+}
+
+.level-route-random {
+    white-space: nowrap;
+}
+
+/* levels packed together like the experiment grid, each level draws the line on its right and bottom into the 1px gaps */
+.level-pool-zone {
+    --level-pool-line: #444; /* the same as the card lines in experiment mode */
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(7.6em, 1fr));
+    gap: 1px;
+    min-height: 1.9em;
+    border: 1px solid var(--level-pool-line);
+    transition: background-color 0.1s;
+}
+
+.level-pool-target {
+    outline: 1px dashed #333;
+    outline-offset: 1px;
+    background-color: var(--hover-card-color);
+}
+
+.level-pool-empty {
+    grid-column: 1 / -1;
+    align-self: center;
+    text-align: center;
+    color: #4a525e;
+}
+
+.level-pool-columns {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0 12px;
+}
+
+.level-chip {
+    padding: 4px 8px;
+    background-color: var(--card-color);
+    box-shadow: 1px 0 0 var(--level-pool-line), 0 1px 0 var(--level-pool-line);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    cursor: grab;
+    user-select: none;
+}
+
+.level-chip:hover {
+    background-color: var(--hover-card-color);
+}
+
+.level-chip:active {
+    cursor: grabbing;
+}
+
+.level-chip:focus-visible {
+    outline: 2px solid #333;
+    outline-offset: -2px;
+}
+
+/* levels waiting outside the pool */
+.level-chip-out {
+    color: #888;
+}
+
+.level-chip-out:hover {
+    color: #000;
+}
+
+.level-chip-dragging {
+    opacity: 0.3;
+}
+
+.level-pool-shake {
+    animation: level-pool-shake 0.3s;
+}
+
+@keyframes level-pool-shake {
+
+    25%,
+    75% {
+        transform: translateX(-3px);
+    }
+
+    50% {
+        transform: translateX(3px);
+    }
+}
+
 
 #dmg {
     position: absolute;
@@ -2267,4 +2418,389 @@ the gaps show the border color through, so the lines are only between options an
     padding: 7px;
     margin-bottom: 10px;
     /* box-shadow: 4px 4px 4px hsla(240, 0%, 17%, 0.14); */
+}
+/* level editor, see js/level-editor.js
+the panels show while body has .level-editor, the HUD it replaces is hidden */
+.le-panel {
+    display: none;
+    position: absolute;
+    z-index: 2;
+    box-sizing: border-box;
+    max-height: calc(100vh - 54px);
+    overflow-y: auto;
+    scrollbar-width: thin;
+    padding: 6px;
+    border: 2px solid #333;
+    border-radius: 8px;
+    background-color: var(--card-color);
+    color: #000;
+    font-size: 13px;
+    line-height: 1.35;
+    cursor: auto;
+    user-select: none;
+}
+
+body.level-editor .le-panel {
+    display: block;
+}
+
+body.level-editor #guns,
+body.level-editor #field,
+body.level-editor #right-HUD,
+body.level-editor #right-HUD-constraint {
+    display: none !important;
+}
+
+/* under the health bar */
+#level-editor-left {
+    top: 44px;
+    left: 10px;
+    width: 244px;
+}
+
+#level-editor-right {
+    top: 10px;
+    right: 10px;
+    width: 270px;
+    font-family: monospace;
+}
+
+.le-section+.le-section {
+    margin-top: 6px;
+    padding-top: 6px;
+    border-top: 1px solid #ddd;
+}
+
+.le-panel summary {
+    cursor: pointer;
+    color: #555;
+    margin-bottom: 3px;
+}
+
+.le-row {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 3px;
+}
+
+.le-row+.le-row {
+    margin-top: 4px;
+}
+
+.le-fill {
+    flex: 1;
+}
+
+.le-label {
+    min-width: 34px;
+    color: #777;
+}
+
+.le-button {
+    padding: 1px 6px;
+    border: 1px solid #333;
+    border-radius: 4px;
+    background-color: #fff;
+    color: #000;
+    font: inherit;
+    line-height: 1.35;
+}
+
+.le-button:hover {
+    background-color: var(--hover-card-color);
+}
+
+.le-button:disabled {
+    border-color: #ccc;
+    color: #aaa;
+    background-color: #fff;
+}
+
+.le-button.le-on {
+    background-color: #333;
+    color: #fff;
+}
+
+/* joined buttons, one is on */
+.le-segment {
+    display: inline-flex;
+}
+
+.le-segment .le-button {
+    border-radius: 0;
+}
+
+.le-segment .le-button+.le-button {
+    border-left: none;
+}
+
+.le-segment .le-button:first-child {
+    border-radius: 4px 0 0 4px;
+}
+
+.le-segment .le-button:last-child {
+    border-radius: 0 4px 4px 0;
+}
+
+.le-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 3px;
+}
+
+.le-grid .le-button {
+    padding: 1px 2px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+/* preset shapes, each button is a little drawing of its shape */
+.le-shapes {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 3px;
+    margin-bottom: 4px;
+}
+
+.le-button.le-shape {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2px 0;
+    color: #444;
+}
+
+/* a command's key, on the right of a row or a menu title */
+.le-key-cap {
+    font-size: 12px;
+}
+
+.le-panel summary .le-key-cap {
+    float: right;
+}
+
+.le-number {
+    width: 40px;
+    padding: 1px 4px;
+    font-family: monospace;
+    font-size: 12px;
+}
+
+.le-load {
+    margin-top: 4px;
+}
+
+.le-load .le-label {
+    margin: 4px 0 2px;
+}
+
+.le-load-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+}
+
+/* history menu, a list of every change, click one to rewind to it */
+.le-history {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    max-height: 240px;
+    overflow-y: auto;
+    scrollbar-width: thin;
+}
+
+/* long steps wrap, so the details at the end show */
+.le-step {
+    flex: none;
+    text-align: left;
+    font-family: monospace;
+    font-size: 12px;
+    overflow-wrap: anywhere;
+    border-color: #ccc;
+}
+
+.le-step.le-undone {
+    color: #aaa;
+    border-style: dashed;
+}
+
+.le-storage {
+    font-size: 11px;
+    color: #999;
+}
+
+.le-storage-full {
+    color: #c00;
+}
+
+.le-load-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+/* a local level and its delete button */
+.le-pair {
+    display: flex;
+    min-width: 0;
+}
+
+.le-pair .le-button:first-child {
+    flex: 1;
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    border-radius: 4px 0 0 4px;
+}
+
+.le-pair .le-button:last-child {
+    border-left: none;
+    border-radius: 0 4px 4px 0;
+    padding: 1px 4px;
+}
+
+/* inspector, written like code */
+.le-name {
+    font-weight: bold;
+}
+
+.le-id {
+    color: #999;
+}
+
+.le-code {
+    margin: 4px 0;
+}
+
+.le-prop {
+    padding-left: 2ch;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+.le-prop input.le-value {
+    max-width: calc(100% - 14ch);
+    padding: 0;
+    border: none;
+    border-bottom: 1px dashed #bbb;
+    border-radius: 0;
+    background: transparent;
+    font: inherit;
+    color: #000;
+}
+
+.le-prop input.le-value:focus {
+    border-bottom: 1px solid rgb(0, 170, 255);
+}
+
+.le-prop input.le-text,
+.le-quote {
+    color: hsl(140, 70%, 30%);
+}
+
+.le-prop input[type="checkbox"] {
+    margin: 0;
+}
+
+.le-prop select {
+    font: inherit;
+    border-radius: 4px;
+}
+
+.le-comment {
+    color: #999;
+}
+
+/* level properties, code style like the inspector */
+.le-level-props {
+    margin: 2px 0 0;
+    font-family: monospace;
+    font-size: 12px;
+}
+
+.le-level-props .le-prop {
+    padding-left: 0;
+}
+
+.le-swatch {
+    width: 16px;
+    height: 14px;
+    padding: 0;
+    border: 1px solid #999;
+    border-radius: 3px;
+    vertical-align: middle;
+    cursor: pointer;
+}
+
+.le-swatch::-webkit-color-swatch-wrapper {
+    padding: 0;
+}
+
+.le-swatch::-webkit-color-swatch {
+    border: none;
+}
+
+.le-spots {
+    margin: 4px 0 2px;
+}
+
+/* vertex editing */
+.le-count {
+    padding: 0 0.6ch;
+    border-top: 1px solid #333;
+    border-bottom: 1px solid #333;
+    line-height: 1.35;
+}
+
+.le-path {
+    box-sizing: border-box;
+    width: 100%;
+    margin-top: 2px;
+    padding: 2px 4px;
+    border: 1px dashed #bbb;
+    border-radius: 4px;
+    background: transparent;
+    font: inherit;
+    font-size: 12px;
+    color: #000;
+    white-space: pre-wrap;
+    resize: vertical;
+}
+
+.le-path:focus {
+    border: 1px solid rgb(0, 170, 255);
+}
+
+.le-error {
+    color: #c00;
+    white-space: normal;
+}
+
+/* the level as javascript, opened from the export menu */
+body.level-editor #level-editor-code:not(.le-open) {
+    display: none;
+}
+
+#level-editor-code {
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 3;
+    width: min(900px, calc(100vw - 32px));
+    font-family: monospace;
+}
+
+#level-editor-code textarea {
+    box-sizing: border-box;
+    width: 100%;
+    height: min(70vh, 700px);
+    margin-top: 6px;
+    padding: 6px;
+    border: 1px solid #bbb;
+    border-radius: 4px;
+    font: inherit;
+    font-size: 12px;
+    white-space: pre;
+    resize: none;
 }

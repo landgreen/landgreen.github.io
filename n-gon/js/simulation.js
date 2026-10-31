@@ -259,6 +259,7 @@ const simulation = {
         y: 0
     },
     g: 0.0024, // applies to player, bodies, and power ups  (not mobs)
+    gDefault: 0.0024, //clearMap sets g back to this, local levels can change gravity
     onTitlePage: true,
     isCheating: false,
     isTraining: false,
@@ -830,6 +831,7 @@ const simulation = {
     },
     firstRun: true,
     splashReturn() {
+        levelEditor.close()
         mouseMove.unlock()
         document.getElementById("previous-seed").innerHTML = `previous seed: <span style="font-size:80%;">${Math.initialSeed}</span><br>`
         document.getElementById("seed").value = Math.initialSeed = Math.seed //randomize initial seed
@@ -917,6 +919,7 @@ const simulation = {
         document.getElementById("choose-grid").style.opacity = "0"
         document.getElementById("experiment-grid").style.display = "none"
         document.getElementById("info").style.display = "none";
+        levelPoolMenu.close()
         document.getElementById("experiment-button").style.display = "none";
         document.getElementById("training-button").style.display = "none";
         document.getElementById("start-button").style.display = "none";
@@ -1304,6 +1307,7 @@ const simulation = {
         saveGame.pendingHeldBlock = null
         tech.deathSpawnsFromBoss = 0;
         simulation.fallHeight = 3000;
+        simulation.g = simulation.gDefault //a level can change gravity, see levelData.applySettings()
         document.body.style.backgroundColor = "#eee" //"#d8dadf";
         // color.map = "#444";
         // color.bullet = "#FFFFFF";

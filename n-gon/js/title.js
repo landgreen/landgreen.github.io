@@ -564,3 +564,7 @@ document.addEventListener("click", (event) => {
 })
 
 titlePage.queueStart(Math.max(0, 2250 - performance.now())) //timed from when the page started loading, like the CSS animations
+
+
+//remove this before uploading a new patch !!!!!!!!!!!!!!
+// levelEditor.open() //skip the title page, straight into the level editor

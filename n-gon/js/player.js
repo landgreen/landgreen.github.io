@@ -596,6 +596,7 @@ const m = {
         }
     },
     death() {
+        if (levelEditor.isActive) return levelEditor.respawn() //back to the spawn instead of ending the run
         if (tech.isEigenstate && m.eigen.deathCount === 0) {
             m.eigen.deathCount++
             m.eigen.isAlive[m.eigen.state] = false
