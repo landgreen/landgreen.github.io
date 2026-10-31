@@ -52,7 +52,8 @@ const levelAnalysis = {
         const ground = of("map").slice()
         if (spawn && spawn.bump) ground.push({ type: "map", x: spawn.x - 50, y: spawn.y + 40, width: 100, height: 20 }) //the bumps the doors stand on
         if (exit && exit.bump) ground.push({ type: "map", x: exit.x, y: exit.y + 20, width: 100, height: 20 })
-        return { data, of, spawn, exit, ground, norms: levelAnalysis.norms, live: options.isLive ? levelAnalysis.live(data) : null }
+        const code = data.elements.filter(el => levelElements.types[el.type]?.isCode).map(el => el.code).join("\n")
+        return { data, of, spawn, exit, ground, code, inCode: text => code.includes(text), norms: levelAnalysis.norms, live: options.isLive ? levelAnalysis.live(data) : null }
     },
     live(data) { //what each element made and what its custom and top layers cost a frame, from levelData's runtimes
         const elements = data.elements.map(el => {
@@ -198,7 +199,8 @@ levelAnalysis.check("bosses", c => {
     for (const [type, label] of [["boss", "boss"], ["secondaryBoss", "2nd boss"]]) {
         const list = c.of(type)
         if (!list.length) {
-            lines.push(line("fix", label, 0, type === "boss" ? "add one from the mobs menu" : "add one from the mobs menu, it spawns with the 2 bosses difficulty option"))
+            if (c.inCode(type === "boss" ? "randomLevelBoss" : "secondaryBossChance")) lines.push(line("ok", label, "in code"))
+            else lines.push(line("fix", label, 0, type === "boss" ? "add one from the mobs menu" : "add one from the mobs menu, it spawns with the 2 bosses difficulty option"))
             continue
         }
         firsts.push(list[0])
@@ -225,7 +227,9 @@ levelAnalysis.check("mobs", c => {
     const spots = c.of("mobSpot")
     const singles = c.of("mob").concat(c.of("smallMobs"))
     const places = spots.length + singles.length
-    if (!places) {
+    if (!places && (c.inCode("randomMobPositions") || c.inCode("randomMob("))) {
+        lines.push(line("ok", "mob places", "in code"))
+    } else if (!places) {
         lines.push(line("fix", "mob places", 0, "add spots from the mobs menu"))
     } else if (places < c.norms.mobPlaces) {
         lines.push(line("warn", "mob places", places, `up to ${c.norms.mobPlaces} mobs spawn late in a run, written levels have about 17 spots`))
@@ -251,7 +255,8 @@ levelAnalysis.check("power ups", c => {
     const { line, at, distance } = levelAnalysis
     const lines = []
     const starting = c.of("startingPowerUps")
-    if (!starting.length) lines.push(line("warn", "starting", 0, "add one, it gives a gun or tech early in a run"))
+    if (!starting.length && c.inCode("spawnStartingPowerUps")) lines.push(line("ok", "starting", "in code"))
+    else if (!starting.length) lines.push(line("warn", "starting", 0, "add one, it gives a gun or tech early in a run"))
     else if (starting.length > 1) lines.push(line("warn", "starting", starting.length, "written levels have 1"))
     else lines.push(line("ok", "starting", 1))
     if (starting.length && c.spawn && distance(starting[0], c.spawn) < c.norms.near.startingPowerUps) {
@@ -282,7 +287,8 @@ levelAnalysis.check("layout", c => {
     const { line, at, distance } = levelAnalysis
     const lines = []
     const maps = c.of("map")
-    if (!maps.length) return [line("fix", "map", 0, "draw some ground")]
+    if (c.code) lines.push(line("note", "code", c.of("code").length, "these checks can't see what it makes"))
+    if (!maps.length) return lines.concat(c.code ? [] : [line("fix", "map", 0, "draw some ground")])
     if (c.spawn) {
         if (levelAnalysis.inMap(c, c.spawn)) lines.push(line("fix", "spawn in the map", "", `at ${at(c.spawn.x, c.spawn.y)}`))
         else if (!levelAnalysis.isGroundBelow(c, c.spawn)) lines.push(line("warn", "spawn", "", "nothing below it"))
@@ -312,6 +318,11 @@ levelAnalysis.check("layout", c => {
         return false
     })
     if (stacked.length) lines.push(line("warn", "stacked copies", stacked.length, `${levelElements.summary(stacked[0])}, delete the extras`))
+    const isButton = id => c.of("button").some(el => el.id === id)
+    const shut = c.of("door").filter(el => !isButton(el.link))
+    if (shut.length) lines.push(line("note", "doors", shut.length, `${levelElements.summary(shut[0])} has no button, it stays shut`))
+    const loose = c.of("constraint").filter(el => !c.of("block").some(block => block.id === el.body))
+    if (loose.length) lines.push(line("warn", "constraints", loose.length, `${levelElements.summary(loose[0])} has no block`))
     return lines
 })
 

@@ -4,8 +4,8 @@
 //add a new type with levelElements.define(), see docs/level-editor.md
 const levelElements = {
     types: {},
-    groups: { core: [], shape: [], element: [], mob: [], powerUp: [] }, //type names in the order they were defined, element, mob, and powerUp are the editor's add menus
-    buildOrder: ["core", "shape", "element", "mob", "powerUp"], //mobs and power ups go in after the map they stand on, like in written levels
+    groups: { core: [], shape: [], element: [], constraint: [], mob: [], powerUp: [], code: [] }, //type names in the order they were defined, element, mob, and powerUp are the editor's add menus
+    buildOrder: ["core", "shape", "element", "constraint", "mob", "powerUp", "code"], //mobs and power ups go in after the map they stand on, like in written levels, constraints after what they hold, a level with code builds in its list order instead
 
     //*********************************************************************
     // properties, shown and edited in the editor's inspector
@@ -18,6 +18,15 @@ const levelElements = {
         text(key, settings = {}) { return { key, kind: "text", ...settings } },
         color(key, settings = {}) { return { key, kind: "color", ...settings } }, //text with a color picker
         select(key, options, settings = {}) { return { key, kind: "select", options, ...settings } },
+        ref(key, types, settings = {}) { return { key, kind: "ref", types, ...settings } }, //another element's id or null, types are the kinds it can be
+    },
+    refKeys(el) { //the props that hold other elements' ids, like a door's button
+        const type = levelElements.types[el.type]
+        return type ? type.props.filter(prop => prop.kind === "ref").map(prop => prop.key) : []
+    },
+    isRefTo(el, key, other) { //can el's ref prop key point at other
+        const prop = levelElements.types[el.type]?.props.find(p => p.key === key)
+        return !!prop && other.id !== el.id && prop.types.includes(other.type)
     },
     position() {
         return [levelElements.prop.number("x", { isGrid: true }), levelElements.prop.number("y", { isGrid: true })]
@@ -359,6 +368,15 @@ levelElements.define("spawn", {
     defaults: () => ({ x: 0, y: -50, bump: true }),
     props: [...levelElements.position(), levelElements.prop.bool("bump")],
     bounds: el => ({ x: el.x - 50, y: el.y - 150, width: 100, height: 200 }), //the entrance arch around the player
+    overlay(el) { //where the run's constraint text shows, see the level properties
+        const data = levelData.data
+        if (!data) return
+        ctx.font = "26px monospace"
+        ctx.textAlign = "center"
+        ctx.fillStyle = "rgba(255,83,177,0.6)"
+        ctx.fillText("constraint text", el.x + data.constraintTextX, el.y + data.constraintTextY)
+        ctx.textAlign = "left"
+    },
     build(el, options) {
         if (options.isLive) { //moving the spawn in the editor shouldn't teleport the player
             m.spawnPos.x = el.x
@@ -456,14 +474,16 @@ levelElements.define("block", {
         Composite.add(engine.world, who)
         who.classType = "body"
     },
-    code(el) { //spawn.bodyRect's properties default to { friction: 0.05, frictionAir: 0.001 }, spawn.bodyVertex has no defaults
+    code(el, name, context) { //spawn.bodyRect's properties default to { friction: 0.05, frictionAir: 0.001 }, spawn.bodyVertex has no defaults
+        const isHeld = !!(context && context.isReferenced(el.id)) //a constraint holds it, so it gets a name and always shows up
         const isDefault = el.friction === 0.05 && el.frictionAir === 0.001 && !el.restitution
         const properties = `{ friction: ${levelElements.args(el.friction)}, frictionAir: ${levelElements.args(el.frictionAir)}${el.restitution ? `, restitution: ${levelElements.args(el.restitution)}` : ""} }`
         const setup = [el.vertices ?
             `spawn.bodyVertex(${levelElements.args(el.x, el.y, levelElements.pathText(el))}, ${properties});` :
             `spawn.bodyRect(${levelElements.args(el.x, el.y, el.width, el.height)}${isDefault ? "" : `, 1, ${properties}`});`]
         if (el.density !== 0.001) setup.push(`Matter.Body.setDensity(body[body.length - 1], ${levelElements.args(el.density)});`)
-        if (el.chance >= 1) return { setup }
+        if (isHeld) setup.push(`const ${name} = body[body.length - 1];`)
+        if (el.chance >= 1 || isHeld) return { setup }
         if (setup.length === 1 && !el.vertices) { //spawn.bodyRect has a chance argument
             setup[0] = isDefault ? setup[0].replace(/\);$/, `, ${levelElements.args(el.chance)});`) : setup[0].replace(", 1, {", `, ${levelElements.args(el.chance)}, {`)
             return { setup }
@@ -708,9 +728,103 @@ levelElements.define("laser", {
     }),
 })
 
+//buttons turn linked elements on and off, a linked element's link is the button's id
+//doors open while it's on, other linkable elements only run while it's on, see levelData.linkState() and levelData.code()
+levelElements.define("button", {
+    tip: "pressed by the player or a block, linked doors open and linked elements run, on says when",
+    group: "element",
+    defaults: () => ({ x: 0, y: 0, on: "down" }),
+    props: [
+        ...levelElements.position(),
+        levelElements.prop.select("on", ["down", "up", "stays down"]), //when linked elements are on, stays down never comes back up
+    ],
+    bounds: el => ({ x: el.x - 35, y: el.y - 22, width: 200, height: 34 }), //the base, like level.button()
+    overlay(el) { //a dashed line to each linked element
+        const from = { x: el.x + 65, y: el.y - 10 }
+        ctx.setLineDash([10, 8])
+        ctx.lineWidth = 2
+        ctx.strokeStyle = "rgba(255,80,80,0.6)"
+        ctx.beginPath()
+        for (const other of levelData.data.elements) {
+            if (other.link !== el.id) continue
+            const b = levelElements.bounds(other)
+            ctx.moveTo(from.x, from.y)
+            ctx.lineTo(b.x + b.width / 2, b.y + b.height / 2)
+        }
+        ctx.stroke()
+        ctx.setLineDash([])
+    },
+    build(el) {
+        const button = level.button(el.x, el.y)
+        button.isUp = true //so stays down can be pressed the first time
+        return {
+            button,
+            custom() {
+                if (el.on !== "stays down" || button.isUp) button.query()
+                button.draw()
+            },
+        }
+    },
+    code: (el, name) => ({
+        setup: [`const ${name} = level.button(${levelElements.args(el.x, el.y)});`, ...(el.on === "stays down" ? [`${name}.isUp = true; //stays down once it's pressed`] : [])],
+        custom: [el.on === "stays down" ? `if (${name}.isUp) ${name}.query();` : `${name}.query();`, `${name}.draw();`],
+    }),
+})
+
+levelElements.define("door", {
+    tip: "slides up to open, link it to a button, without one it stays shut",
+    group: "element",
+    isLinkable: true,
+    handlesLink: true, //opens instead of only running while it's on
+    defaults: () => ({ x: 0, y: -400, width: 25, height: 400, distance: 355, speed: 1.5, link: null }),
+    props: [
+        ...levelElements.rect(),
+        levelElements.prop.number("distance", { isGrid: true, min: 0 }), //how far up it slides
+        levelElements.prop.number("speed", { step: 0.5, min: 0.1 }),
+        levelElements.prop.ref("link", ["button"]),
+    ],
+    overlay(el) { //where it slides to
+        ctx.setLineDash([10, 8])
+        ctx.lineWidth = 2
+        ctx.strokeStyle = "rgba(0,0,0,0.3)"
+        ctx.strokeRect(el.x, el.y - el.distance, el.width, el.height)
+        ctx.setLineDash([])
+    },
+    build(el) {
+        const door = level.door(el.x, el.y, el.width, el.height, el.distance, el.speed)
+        door.isClosing = true
+        return {
+            custom() {
+                door.isClosing = levelData.linkState(el) !== true
+                door.openClose()
+            },
+            top() { door.draw() },
+        }
+    },
+    code(el, name, context) {
+        const link = context && context.link(el)
+        return {
+            setup: [`const ${name} = level.door(${levelElements.args(el.x, el.y, el.width, el.height, el.distance, el.speed)});`],
+            custom: [`${name}.isClosing = ${link ? link.off : "true"};${link ? "" : " //no button opens it"}`, `${name}.openClose();`],
+            top: [`${name}.draw();`],
+        }
+    },
+})
+
+levelElements.linkable = name => { //a link prop, so a button can turn it on and off
+    const type = levelElements.types[name]
+    const defaults = type.defaults
+    type.isLinkable = true
+    type.defaults = () => ({ ...defaults(), link: null })
+    type.props.push(levelElements.prop.ref("link", ["button"]))
+}
+for (const name of ["boost", "mover", "transport", "laser", "wind", "slime"]) levelElements.linkable(name)
+
 levelElements.define("decor", { //colored rect drawn behind or in front of the player, like the fillRect shading in written levels
     tip: "colored rect drawn behind or in front of the player, for shading and backgrounds",
     group: "element",
+    label: "fill color",
+    isBackground: true, //lock background colors in editor settings makes the mouse go through it
     defaults: () => ({ x: 0, y: -400, width: 400, height: 400, color: "rgba(0,0,0,0.1)", layer: "back" }),
     names: ["exit color", "shadow"], //each gets a button in the add menu
     tips: {
@@ -741,6 +855,8 @@ levelElements.isNoColor = color => !color || color === "none" || color === "tran
 levelElements.define("path", { //lines and shapes of any outline, drawn behind or in front of the player, the add menu's path button draws one point at a time
     tip: "draw lines or filled shapes, click to add points, click the first point to close it, enter or right click to finish",
     group: "element",
+    label: "draw path",
+    isBackground: true, //lock background colors in editor settings makes the mouse go through it
     isVertexEditable: true,
     addCommand: "drawPath", //its add button draws instead of adding one
     defaults: () => ({ x: 0, y: -300, vertices: [[-200, 0], [200, 0]], closed: false, fill: "none", stroke: "rgba(0,0,0,0.25)", lineWidth: 10, layer: "back" }),
@@ -813,6 +929,96 @@ levelElements.define("path", { //lines and shapes of any outline, drawn behind o
         if (el.closed && !levelElements.isNoColor(el.fill)) lines.push(`ctx.fillStyle = ${levelElements.args(el.fill)};`, "ctx.fill();")
         if (!levelElements.isNoColor(el.stroke) && el.lineWidth > 0) lines.push(`ctx.strokeStyle = ${levelElements.args(el.stroke)};`, `ctx.lineWidth = ${levelElements.args(el.lineWidth)};`, "ctx.stroke();")
         return el.layer === "front" ? { top: lines } : { custom: lines }
+    },
+})
+
+//*********************************************************************
+// constraints, a Matter.js constraint from a point in the level to a block, made with the inspector's constraint button
+// x, y is the point in the level, bx, by is where it holds the block, from the block's center
+//*********************************************************************
+levelElements.constraintEnd = el => { //where it holds its body in the level, from the block's data, or its body while the level runs
+    const target = levelData.data && levelData.find(levelData.data, el.body)
+    const runtime = target && levelData.runtimes.get(target.id)
+    const who = runtime && runtime.bodies && runtime.bodies[0]
+    if (who) return { x: who.position.x + el.bx, y: who.position.y + el.by }
+    if (target) {
+        const c = levelElements.center(target)
+        return { x: c.x + el.bx, y: c.y + el.by }
+    }
+    return null
+}
+levelElements.define("constraint", {
+    tip: "a Matter.js constraint from a point in the level to a block",
+    group: "constraint",
+    rebuildWithRefs: true, //its block is a new body after the block is rebuilt
+    defaults: () => ({ x: 0, y: -300, body: null, bx: 0, by: 0, stiffness: 1, damping: 0, length: 200 }),
+    props: [
+        ...levelElements.position(), //pointA
+        levelElements.prop.ref("body", ["block"]), //bodyB
+        levelElements.prop.number("bx", { isGrid: true }), //pointB, from the block's center
+        levelElements.prop.number("by", { isGrid: true }),
+        levelElements.prop.number("stiffness", { step: 0.05, min: 0 }), //1 is a rod, small is a spring
+        levelElements.prop.number("damping", { step: 0.05, min: 0 }),
+        levelElements.prop.number("length", { isGrid: true, min: 0 }),
+    ],
+    bounds: el => ({ x: el.x - 12, y: el.y - 12, width: 24, height: 24 }),
+    contains(el, p) { //its point, or near the line to the block
+        if (Math.hypot(p.x - el.x, p.y - el.y) < 12) return true
+        const end = levelElements.constraintEnd(el)
+        if (!end) return false
+        const dx = end.x - el.x
+        const dy = end.y - el.y
+        const t = Math.max(0, Math.min(1, ((p.x - el.x) * dx + (p.y - el.y) * dy) / (dx * dx + dy * dy || 1)))
+        return Math.hypot(p.x - el.x - t * dx, p.y - el.y - t * dy) < 8
+    },
+    handles(el) {
+        const end = levelElements.constraintEnd(el)
+        return end ? [{ id: "end", x: end.x, y: end.y }] : []
+    },
+    dragHandle(el, id, point) { //moves where it holds the block
+        const end = levelElements.constraintEnd({ ...el, bx: 0, by: 0 })
+        if (!end) return
+        el.bx = Math.round((point.x - end.x) * 1000) / 1000
+        el.by = Math.round((point.y - end.y) * 1000) / 1000
+    },
+    summary: el => `constraint(${levelElements.args(el.x, el.y)})${el.body ? ` to #${el.body}` : ""}`,
+    overlay(el) {
+        const end = levelElements.constraintEnd(el)
+        ctx.setLineDash([])
+        ctx.lineWidth = 2
+        ctx.strokeStyle = end ? "rgba(0,0,0,0.6)" : "rgba(220,0,0,0.8)"
+        ctx.fillStyle = "#fff"
+        ctx.beginPath()
+        ctx.arc(el.x, el.y, 8, 0, 2 * Math.PI)
+        ctx.fill()
+        ctx.stroke()
+        if (!end) return
+        ctx.beginPath()
+        ctx.moveTo(el.x, el.y)
+        ctx.lineTo(end.x, end.y)
+        ctx.stroke()
+        ctx.beginPath()
+        ctx.arc(end.x, end.y, 4, 0, 2 * Math.PI)
+        ctx.fillStyle = "rgba(0,0,0,0.6)"
+        ctx.fill()
+    },
+    build(el) {
+        const runtime = levelData.runtimes.get(el.body)
+        const who = runtime && runtime.bodies && runtime.bodies[0]
+        if (!who) throw new Error("needs a body, pick a block")
+        cons[cons.length] = Constraint.create({ pointA: { x: el.x, y: el.y }, bodyB: who, pointB: { x: el.bx, y: el.by }, stiffness: el.stiffness, damping: el.damping, length: el.length })
+        Composite.add(engine.world, cons[cons.length - 1])
+    },
+    code(el, name, context) {
+        const body = context && context.nameOf(el.body)
+        if (!body) return { setup: [`//${levelElements.summary(el)} has no block`] }
+        const a = levelElements.args
+        return {
+            setup: [
+                `cons[cons.length] = Constraint.create({ pointA: { x: ${a(el.x)}, y: ${a(el.y)} }, bodyB: ${body}, pointB: { x: ${a(el.bx)}, y: ${a(el.by)} }, stiffness: ${a(el.stiffness)}, damping: ${a(el.damping)}, length: ${a(el.length)} });`,
+                "Composite.add(engine.world, cons[cons.length - 1]);",
+            ],
+        }
     },
 })
 
@@ -1031,6 +1237,35 @@ levelElements.level = {
         levelElements.prop.number("gravity", { step: 0.1, min: 0.1 }), //times normal gravity, for the player, blocks, and power ups, mobs have their own
         levelElements.prop.select("fall", ["spawn", "sky"]), //falling off the bottom sends the player back to the spawn, or keeps them falling from the sky above it
         levelElements.prop.bool("lineOfSight"), //walls block the view, like subway
+        levelElements.prop.number("constraintTextX", { isGrid: true }), //where the run's constraint shows, from the spawn, level.announceText()
+        levelElements.prop.number("constraintTextY", { isGrid: true }),
     ],
-    defaults: () => ({ zoom: 2000, background: "#dcdcde", mapColor: "#444", blockColor: "rgba(140,140,140,0.85)", gravity: 1, fall: "spawn", lineOfSight: false }), //what written levels use most, and the level properties default button
+    defaults: () => ({ zoom: 2000, background: "#dcdcde", mapColor: "#444", blockColor: "rgba(140,140,140,0.85)", gravity: 1, fall: "spawn", lineOfSight: false, constraintTextX: 0, constraintTextY: 75 }), //what written levels use most, and the level properties default button
+}
+
+//*********************************************************************
+// code, javascript that runs as part of the level, like a written level's special blocks and level.custom
+// a level with code runs everything in its list order inside one function, so code can use the variables of code before it, see levelData.runCode()
+//*********************************************************************
+levelElements.define("code", {
+    tip: "javascript that runs as part of the level, it can use the variables of code above it",
+    group: "code",
+    isCode: true, //not in the level to click, except the bodies it makes, and not copied
+    defaults: () => ({ code: "" }),
+    props: [],
+    bounds(el) { //around the bodies it made
+        const runtime = levelData.runtimes.get(el.id)
+        const bodies = runtime ? (runtime.maps || []).concat(runtime.bodies || []) : []
+        if (!bodies.length) return { x: 0, y: 0, width: 0, height: 0 }
+        return levelElements.boundsOf(bodies.flatMap(who => [who.bounds.min, who.bounds.max]))
+    },
+    contains: () => false, //clicking one of its bodies selects it, see levelData.runtimeContains()
+    move() { },
+    summary: el => `code(${levelElements.codeTitle(el)})`,
+    build() { }, //levelData.runCode() runs it
+    code: el => ({ setup: el.code.split("\n") }),
+})
+levelElements.codeTitle = el => { //its first line of code, short
+    const line = el.code.split("\n").map(row => row.trim()).find(row => row && !row.startsWith("//")) || "empty"
+    return line.length > 32 ? line.slice(0, 31) + "…" : line
 }

@@ -2517,8 +2517,9 @@ body.level-editor #right-HUD-constraint {
     background-color: #fff;
 }
 
+/* close to how the map looks */
 .le-button.le-on {
-    background-color: #333;
+    background-color: #666;
     color: #fff;
 }
 
@@ -2559,14 +2560,45 @@ body.level-editor #right-HUD-constraint {
     white-space: nowrap;
 }
 
+/* level elements, mobs, and power ups in the add menu, a line apart */
+.le-add-header {
+    display: block;
+    margin: 12px 0 3px;
+}
+
+.le-add-header:first-child {
+    margin-top: 0;
+}
+
+.le-export {
+    margin: 4px 0;
+}
+
+.le-load-group summary {
+    margin: 8px 0 2px;
+}
+
+/* an empty line between n-gon, community, training, and testing */
+.le-load-group .le-load-header {
+    margin-top: 16px;
+}
+
+.le-load-group .le-load-header:first-of-type {
+    margin-top: 4px;
+}
+
 .le-grid.le-two {
     grid-template-columns: repeat(2, minmax(0, 1fr));
 }
 
-.le-grid+.le-grid,
 .le-shapes+.le-grid,
 .le-grid+.le-history {
     margin-top: 4px;
+}
+
+/* the main row and the rest in add mobs and add power ups, one box */
+.le-grid+.le-grid {
+    border-top: none;
 }
 
 .le-orb {
@@ -2588,16 +2620,33 @@ body.level-editor #right-HUD-constraint {
     margin: 0 0.08em;
 }
 
+/* the power ups a button can be, written like an array */
+.le-options {
+    color: #999;
+}
+
+/* a power up's name, and its orb on the right */
+.le-split {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 2px 0 4px;
+}
+
+.le-split .le-orb {
+    margin: 0;
+}
+
+.le-row.le-gap {
+    margin-top: 20px;
+}
+
 .le-block-icon {
     display: inline-block;
     width: 0.7em;
     height: 0.6em;
     margin-bottom: -0.05em;
     background-color: rgba(140, 140, 140, 0.85);
-}
-
-.le-tight {
-    min-width: 0;
 }
 
 .le-number.le-short {
@@ -2617,6 +2666,43 @@ body.level-editor #right-HUD-constraint {
 
 .le-check input {
     margin: 0;
+}
+
+/* a code element, written out, click it to edit */
+.le-code-view {
+    max-height: 320px;
+    margin: 4px 0;
+    padding: 4px;
+    overflow: auto;
+    border: 1px solid #ccc;
+    background-color: #fff;
+    font-size: 11px;
+    line-height: 1.35;
+    white-space: pre;
+    cursor: text;
+}
+
+.le-code-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
+    border: 1px solid #ccc;
+    background-color: #ccc;
+}
+
+.le-button.le-code-item {
+    border: none;
+    text-align: left;
+    font-family: monospace;
+    font-size: 11px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.le-link-list {
+    max-width: 100%;
+    font: inherit;
 }
 
 .le-mob-list {
@@ -2719,12 +2805,21 @@ body.level-editor #right-HUD-constraint {
 }
 
 /* a local level and its delete button */
+.le-load-pairs {
+    --le-line: #333;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 4px 8px;
+}
+
 .le-pair {
     display: flex;
     min-width: 0;
+    border: 1px solid var(--le-line);
 }
 
 .le-pair .le-button {
+    border: none;
     box-shadow: none;
 }
 
