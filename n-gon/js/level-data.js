@@ -136,9 +136,11 @@ const levelData = {
         return data.elements.slice().sort((a, b) => rank(a) - rank(b)) //sort keeps the list order inside each group
     },
     layer(name) { //runs each element's custom or top, in the order the elements are listed
+        const isTimed = levelData.isEditor //the editor's analysis shows what each element costs a frame, runtime.customMs and runtime.topMs
         for (const el of levelData.data.elements) {
             const runtime = levelData.runtimes.get(el.id)
             if (!runtime || !runtime[name]) continue
+            const start = isTimed ? performance.now() : 0
             try {
                 runtime[name]()
             } catch (error) { //one broken element shouldn't stop the level
@@ -146,6 +148,7 @@ const levelData = {
                 runtime.error = error
                 console.error(`${el.type} #${el.id}:`, error)
             }
+            if (isTimed) runtime[name + "Ms"] = 0.97 * (runtime[name + "Ms"] || 0) + 0.03 * (performance.now() - start) //averaged, a single frame's time is too coarse
         }
     },
     build(el, isLive) { //isLive: the level has already started, so map bodies are added to the world here instead of in level.addToWorld()

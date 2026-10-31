@@ -2455,7 +2455,7 @@ body.level-editor #right-HUD-constraint {
 #level-editor-left {
     top: 44px;
     left: 10px;
-    width: 244px;
+    width: 252px;
 }
 
 #level-editor-right {
@@ -2500,7 +2500,7 @@ body.level-editor #right-HUD-constraint {
 .le-button {
     padding: 1px 6px;
     border: 1px solid #333;
-    border-radius: 4px;
+    border-radius: 0;
     background-color: #fff;
     color: #000;
     font: inherit;
@@ -2535,22 +2535,102 @@ body.level-editor #right-HUD-constraint {
     border-left: none;
 }
 
-.le-segment .le-button:first-child {
-    border-radius: 4px 0 0 4px;
-}
-
-.le-segment .le-button:last-child {
-    border-radius: 0 4px 4px 0;
-}
-
-.le-grid {
+/* buttons packed together like the level pool, each draws the line on its right and bottom into the 1px gaps */
+.le-grid,
+.le-shapes {
+    --le-line: #333;
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 3px;
+    gap: 1px;
+    border: 1px solid var(--le-line);
+}
+
+.le-grid .le-button,
+.le-shapes .le-button,
+.le-grid>.le-pair {
+    border: none;
+    box-shadow: 1px 0 0 var(--le-line), 0 1px 0 var(--le-line);
 }
 
 .le-grid .le-button {
+    padding: 2px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.le-grid.le-two {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.le-grid+.le-grid,
+.le-shapes+.le-grid,
+.le-grid+.le-history {
+    margin-top: 4px;
+}
+
+.le-orb {
+    display: inline-block;
+    margin-right: 0.3em;
+    font-size: 0.85em;
+}
+
+.le-orb .circle-grid {
+    margin-bottom: -0.3em;
+}
+
+.le-tall .le-button {
+    line-height: 1.2;
+    padding: 2px 1px 3px;
+}
+
+.le-tall .le-orb {
+    margin: 0 0.08em;
+}
+
+.le-block-icon {
+    display: inline-block;
+    width: 0.7em;
+    height: 0.6em;
+    margin-bottom: -0.05em;
+    background-color: rgba(140, 140, 140, 0.85);
+}
+
+.le-tight {
+    min-width: 0;
+}
+
+.le-number.le-short {
+    width: 20px;
     padding: 1px 2px;
+}
+
+.le-check {
+    min-width: 0;
+    font-size: 12px;
+    display: inline-flex;
+    align-items: center;
+    gap: 2px;
+    white-space: nowrap;
+    cursor: pointer;
+}
+
+.le-check input {
+    margin: 0;
+}
+
+.le-mob-list {
+    width: 100%;
+    margin-top: 4px;
+    border: 1px solid #333;
+    border-radius: 0;
+    background-color: #fff;
+    font: inherit;
+}
+
+/* the level's name at the top of the left panel */
+.le-info {
+    min-width: 0;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
@@ -2558,10 +2638,7 @@ body.level-editor #right-HUD-constraint {
 
 /* preset shapes, each button is a little drawing of its shape */
 .le-shapes {
-    display: grid;
     grid-template-columns: repeat(7, 1fr);
-    gap: 3px;
-    margin-bottom: 4px;
 }
 
 .le-button.le-shape {
@@ -2606,7 +2683,9 @@ body.level-editor #right-HUD-constraint {
 .le-history {
     display: flex;
     flex-direction: column;
-    gap: 2px;
+    gap: 1px;
+    border: 1px solid #ccc;
+    background-color: #ccc;
     max-height: 240px;
     overflow-y: auto;
     scrollbar-width: thin;
@@ -2619,12 +2698,11 @@ body.level-editor #right-HUD-constraint {
     font-family: monospace;
     font-size: 12px;
     overflow-wrap: anywhere;
-    border-color: #ccc;
+    border: none;
 }
 
 .le-step.le-undone {
     color: #aaa;
-    border-style: dashed;
 }
 
 .le-storage {
@@ -2646,17 +2724,19 @@ body.level-editor #right-HUD-constraint {
     min-width: 0;
 }
 
+.le-pair .le-button {
+    box-shadow: none;
+}
+
 .le-pair .le-button:first-child {
     flex: 1;
     min-width: 0;
     overflow: hidden;
     text-overflow: ellipsis;
-    border-radius: 4px 0 0 4px;
 }
 
 .le-pair .le-button:last-child {
-    border-left: none;
-    border-radius: 0 4px 4px 0;
+    border-left: 1px solid var(--le-line);
     padding: 1px 4px;
 }
 
@@ -2803,4 +2883,61 @@ body.level-editor #level-editor-code:not(.le-open) {
     font-size: 12px;
     white-space: pre;
     resize: none;
+}
+
+#level-editor-code [hidden] {
+    display: none;
+}
+
+.le-report {
+    box-sizing: border-box;
+    max-height: min(70vh, 700px);
+    margin-top: 6px;
+    padding: 6px;
+    overflow-y: auto;
+    border: 1px solid #bbb;
+    border-radius: 4px;
+    background: #fff;
+    font-size: 12px;
+    line-height: 1.5;
+}
+
+.le-report-head {
+    font-weight: bold;
+}
+
+.le-report-section {
+    margin-top: 8px;
+    color: #999;
+    font-style: italic;
+}
+
+.le-report-line {
+    display: grid;
+    grid-template-columns: 5ch 20ch 12ch 1fr;
+    column-gap: 1ch;
+}
+
+.le-report-line span:first-child {
+    font-weight: bold;
+}
+
+.le-report-line.le-fix span:first-child {
+    color: #d00;
+}
+
+.le-report-line.le-warn span:first-child {
+    color: #d70;
+}
+
+.le-report-line.le-note span:first-child {
+    color: #48a;
+}
+
+.le-report-line.le-ok span:first-child {
+    color: #3a5;
+}
+
+.le-report-line.le-ok {
+    color: #888;
 }

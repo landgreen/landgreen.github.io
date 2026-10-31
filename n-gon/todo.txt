@@ -1,4 +1,4 @@
-settings: level editor - draw map and blocks, add boosts, movers, lasers, mobs, power ups, and preset shapes, edit vertices, set gravity and line of sight, or start from any level, export levels as javascript, levels save locally for the level pool
+settings: level editor - draw map and blocks, add boosts, movers, lasers, mobs (or a mob by name), power ups, shadows, exit colors, drawn paths, and preset shapes, edit vertices, set gravity and line of sight, or start from any level, export levels as javascript, analysis checks bosses, mobs, power ups, and performance against the written levels, levels save locally for the level pool
 settings: level pool - drag or click levels into and out of the random level pool, it replaces the banned levels box and the community maps checkbox
 
 

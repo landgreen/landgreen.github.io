@@ -219,7 +219,17 @@ const levelElements = {
     center(el) { //what vertices are written around, the centroid for shapes, the middle for rects
         return el.vertices ? { x: el.x, y: el.y } : { x: el.x + el.width / 2, y: el.y + el.height / 2 }
     },
-    checkPoints(points) { //why a shape can't be made, or "" if it's fine
+    isVertexEditable(el) { //maps, blocks, and types with their own vertex rules, like a path
+        const type = levelElements.types[el.type]
+        return !!type && (type.group === "shape" || !!type.isVertexEditable)
+    },
+    isOpen(el) { //no edge from the last vertex back to the first
+        const type = levelElements.types[el.type]
+        return !!(type && type.isOpen && type.isOpen(el))
+    },
+    checkPoints(points, el) { //why a shape can't be made, or "" if it's fine, el's type can have its own rules
+        const type = el && levelElements.types[el.type]
+        if (type && type.checkPoints) return type.checkPoints(points, el)
         const n = points.length
         if (n < 3) return "needs at least 3 vertices"
         if (n > levelElements.vertexLimit) return `can't have more than ${levelElements.vertexLimit} vertices`
@@ -254,6 +264,8 @@ const levelElements = {
         return ""
     },
     setPoints(el, points) { //world points to a map or block, a rect if it is one
+        const type = levelElements.types[el.type]
+        if (type && type.setPoints) return type.setPoints(el, points)
         const isRect = points.length === 4 && points.every((p, i) => {
             const next = points[(i + 1) % 4]
             return p.x === next.x || p.y === next.y
@@ -293,7 +305,7 @@ const levelElements = {
         const c = levelElements.center(el)
         const points = []
         for (let i = 0; i < numbers.length; i += 2) points.push({ x: c.x + Number(numbers[i]), y: c.y + Number(numbers[i + 1]) })
-        return { points, error: levelElements.checkPoints(points) }
+        return { points, error: levelElements.checkPoints(points, el) }
     },
     summary(el) { //short and code-like, for the editor's history, like map(0, -100, 500, 25)
         const type = levelElements.types[el.type]
@@ -466,6 +478,7 @@ levelElements.define("block", {
 // overlay(el) draws extra guides in the editor only, like where a platform travels
 //*********************************************************************
 levelElements.define("boost", {
+    tip: "launches the player, launchHeight is about how high, angle 90 is straight up",
     group: "element",
     defaults: () => ({ x: 0, y: -10, launchHeight: 1000, angle: 90 }),
     props: [
@@ -485,6 +498,7 @@ levelElements.define("boost", {
 })
 
 levelElements.define("mover", { //conveyor belt
+    tip: "conveyor belt, pushes the player, blocks, and mobs along it, speed sets the direction",
     group: "element",
     defaults: () => ({ x: 0, y: -25, width: 500, height: 25, speed: -6 }),
     props: [...levelElements.rect(), levelElements.prop.number("speed", { step: 1 })],
@@ -503,6 +517,7 @@ levelElements.define("mover", { //conveyor belt
 })
 
 levelElements.define("transport", { //platform that slides back and forth
+    tip: "platform that slides back and forth, distance is how far",
     group: "element",
     defaults: () => ({ x: 0, y: -200, width: 300, height: 25, speed: 4, distance: 1000 }),
     props: [...levelElements.rect(), levelElements.prop.number("speed", { step: 1 }), levelElements.prop.number("distance", { isGrid: true })],
@@ -544,6 +559,7 @@ levelElements.define("transport", { //platform that slides back and forth
 })
 
 levelElements.define("elevator", {
+    tip: "platform that rises and falls, or only when the player stands on it with onTouch",
     group: "element",
     defaults: () => ({ x: 0, y: -25, width: 200, height: 25, travel: 500, force: 0.003, onTouch: false }),
     props: [
@@ -554,7 +570,7 @@ levelElements.define("elevator", {
     ],
     build(el) {
         const elevator = level.elevator(el.x, el.y, el.width, el.height, el.y - el.travel, el.force)
-        return { custom() { el.onTouch ? elevator.moveOnTouch() : elevator.move() } }
+        return { custom: el.onTouch ? () => elevator.moveOnTouch() : () => elevator.move() }
     },
     overlay(el) {
         ctx.strokeRect(el.x, el.y - el.travel, el.width, el.height + el.travel)
@@ -566,6 +582,7 @@ levelElements.define("elevator", {
 })
 
 levelElements.define("vanish", { //platform that shrinks away after the player touches it, then comes back
+    tip: "platform that shrinks away after the player touches it, then comes back",
     group: "element",
     defaults: () => ({ x: 0, y: -25, width: 200, height: 25, vertical: false }),
     props: [...levelElements.rect(), levelElements.prop.bool("vertical")],
@@ -580,6 +597,7 @@ levelElements.define("vanish", { //platform that shrinks away after the player t
 })
 
 levelElements.define("spinner", { //block pinned at its center
+    tip: "block pinned at its center, it turns when pushed, or on its own with motor",
     group: "element",
     defaults: () => ({ x: 0, y: -300, width: 400, height: 25, density: 0.001, spin: 0, motor: 0 }),
     props: [
@@ -599,6 +617,7 @@ levelElements.define("spinner", { //block pinned at its center
 })
 
 levelElements.define("wind", {
+    tip: "pushes the player, blocks, and power ups inside it, float cancels gravity",
     group: "element",
     defaults: () => ({ x: 0, y: -400, width: 400, height: 400, vx: 0, vy: -0.01, float: false }),
     props: [
@@ -622,6 +641,7 @@ levelElements.define("wind", {
 })
 
 levelElements.define("slime", { //level.hazard
+    tip: "hurts the player while they're inside it",
     group: "element",
     defaults: () => ({ x: 0, y: -100, width: 400, height: 100, damage: 0.0025 }),
     props: [...levelElements.rect(), levelElements.prop.number("damage", { step: 0.0005, min: 0 })],
@@ -636,6 +656,7 @@ levelElements.define("slime", { //level.hazard
 })
 
 levelElements.define("laser", {
+    tip: "beam between two points that hurts the player, drag either end",
     group: "element",
     defaults: () => ({ x: 0, y: -300, x2: 400, y2: -300, damage: 0.12 }),
     props: [
@@ -688,9 +709,21 @@ levelElements.define("laser", {
 })
 
 levelElements.define("decor", { //colored rect drawn behind or in front of the player, like the fillRect shading in written levels
+    tip: "colored rect drawn behind or in front of the player, for shading and backgrounds",
     group: "element",
     defaults: () => ({ x: 0, y: -400, width: 400, height: 400, color: "rgba(0,0,0,0.1)", layer: "back" }),
-    props: [...levelElements.rect(), levelElements.prop.text("color"), levelElements.prop.select("layer", ["back", "front"])],
+    names: ["exit color", "shadow"], //each gets a button in the add menu
+    tips: {
+        "exit color": "the light cyan room color behind the exit, placed around the exit door",
+        shadow: "see-through dark rect drawn in front of the player, like the shading in written levels",
+    },
+    preset(name, data) { //x and y place it, otherwise it goes in the middle of the view
+        if (name === "shadow") return { color: "rgba(0,0,0,0.1)", layer: "front" } //written levels mostly shade in customTopLayer
+        const exit = data && data.elements.find(el => el.type === "exit")
+        const room = { width: 400, height: 350, color: "#d4f4f4", layer: "back" } //the light cyan room behind the exit in written levels
+        return exit ? { ...room, x: exit.x - 150, y: exit.y + 20 - room.height } : room
+    },
+    props: [...levelElements.rect(), levelElements.prop.color("color"), levelElements.prop.select("layer", ["back", "front"])],
     build(el) {
         const draw = () => {
             ctx.fillStyle = el.color
@@ -704,11 +737,91 @@ levelElements.define("decor", { //colored rect drawn behind or in front of the p
     },
 })
 
+levelElements.isNoColor = color => !color || color === "none" || color === "transparent"
+levelElements.define("path", { //lines and shapes of any outline, drawn behind or in front of the player, the add menu's path button draws one point at a time
+    tip: "draw lines or filled shapes, click to add points, click the first point to close it, enter or right click to finish",
+    group: "element",
+    isVertexEditable: true,
+    addCommand: "drawPath", //its add button draws instead of adding one
+    defaults: () => ({ x: 0, y: -300, vertices: [[-200, 0], [200, 0]], closed: false, fill: "none", stroke: "rgba(0,0,0,0.25)", lineWidth: 10, layer: "back" }),
+    styles: { //what a newly drawn path looks like
+        closed: { fill: "rgba(0,0,0,0.1)", stroke: "none" },
+        open: { fill: "none", stroke: "rgba(0,0,0,0.25)" },
+    },
+    props: [
+        ...levelElements.position(),
+        levelElements.prop.bool("closed"),
+        levelElements.prop.color("fill"), //"none" for no fill
+        levelElements.prop.color("stroke"), //"none" for no line
+        levelElements.prop.number("lineWidth", { step: 1, min: 0 }),
+        levelElements.prop.select("layer", ["back", "front"]),
+    ],
+    isOpen: el => !el.closed,
+    contains(el, p) { //inside a filled path, or near its line
+        const points = levelElements.points(el)
+        if (el.closed && !levelElements.isNoColor(el.fill) && levelElements.isInside(points, p)) return true
+        const reach = Math.max(8, el.lineWidth / 2 + 4)
+        const count = el.closed ? points.length : points.length - 1
+        for (let i = 0; i < count; i++) {
+            const a = points[i]
+            const b = points[(i + 1) % points.length]
+            const dx = b.x - a.x
+            const dy = b.y - a.y
+            const t = Math.max(0, Math.min(1, ((p.x - a.x) * dx + (p.y - a.y) * dy) / (dx * dx + dy * dy || 1)))
+            if (Math.hypot(p.x - a.x - t * dx, p.y - a.y - t * dy) < reach) return true
+        }
+        return false
+    },
+    checkPoints(points, el) { //any outline works, it's only drawn
+        const min = el && el.closed ? 3 : 2
+        if (points.length < min) return `needs at least ${min} vertices`
+        if (points.length > 200) return "can't have more than 200 vertices"
+        if (!points.every(p => Number.isFinite(p.x) && Number.isFinite(p.y))) return "vertices need numbers"
+        return ""
+    },
+    setPoints(el, points) { //vertices around the middle of its bounds, never a rect
+        const round = n => Math.round(n * 1000) / 1000
+        const b = levelElements.boundsOf(points)
+        el.x = round(b.x + b.width / 2)
+        el.y = round(b.y + b.height / 2)
+        el.vertices = points.map(p => [round(p.x - el.x), round(p.y - el.y)])
+    },
+    summary: el => `path(${levelElements.args(el.x, el.y)}, ${el.vertices.length} points)`,
+    build(el) {
+        const draw = () => {
+            const points = levelElements.points(el)
+            ctx.beginPath()
+            ctx.moveTo(points[0].x, points[0].y)
+            for (let i = 1; i < points.length; i++) ctx.lineTo(points[i].x, points[i].y)
+            if (el.closed) ctx.closePath()
+            if (el.closed && !levelElements.isNoColor(el.fill)) {
+                ctx.fillStyle = el.fill
+                ctx.fill()
+            }
+            if (!levelElements.isNoColor(el.stroke) && el.lineWidth > 0) {
+                ctx.strokeStyle = el.stroke
+                ctx.lineWidth = el.lineWidth
+                ctx.stroke()
+            }
+        }
+        return el.layer === "front" ? { top: draw } : { custom: draw }
+    },
+    code(el) {
+        const points = levelElements.points(el)
+        const lines = ["ctx.beginPath();", `ctx.moveTo(${levelElements.args(points[0].x, points[0].y)});`, ...points.slice(1).map(p => `ctx.lineTo(${levelElements.args(p.x, p.y)});`)]
+        if (el.closed) lines.push("ctx.closePath();")
+        if (el.closed && !levelElements.isNoColor(el.fill)) lines.push(`ctx.fillStyle = ${levelElements.args(el.fill)};`, "ctx.fill();")
+        if (!levelElements.isNoColor(el.stroke) && el.lineWidth > 0) lines.push(`ctx.strokeStyle = ${levelElements.args(el.stroke)};`, `ctx.lineWidth = ${levelElements.args(el.lineWidth)};`, "ctx.stroke();")
+        return el.layer === "front" ? { top: lines } : { custom: lines }
+    },
+})
+
 //*********************************************************************
 // mobs, the editor's mobs menu, random mobs picked for the level like written levels
 // they only spawn when the level loads, in the editor only after a restart with spawn on, see levelEditor.isSpawning
 //*********************************************************************
 levelElements.define("mobSpot", { //a place a random mob might spawn, spawn.randomMobFromArray() picks how many by the level's difficulty, like newer written levels
+    tip: "a place a random mob might spawn, each level spawns mobs at some of its spots, more as the run goes on, small spots get a few small mobs",
     group: "mob",
     label: "spots",
     defaults: () => ({ x: 0, y: -300, small: false }),
@@ -745,9 +858,26 @@ levelElements.mobType = (spawnName, label, radius, fill, hasChance, text = label
         return { setup: [`spawn.${spawnName}(${levelElements.args(el.x, el.y)}${chance});`] }
     },
 })
-levelElements.define("mob", levelElements.mobType("randomMob", "mob", 40, "rgba(255,80,80,0.35)", true))
-levelElements.define("smallMobs", levelElements.mobType("randomSmallMob", "small mobs", 30, "rgba(255,120,80,0.35)", true, "small"))
-levelElements.define("mobGroup", levelElements.mobType("randomGroup", "group", 50, "rgba(255,80,160,0.35)", true))
+levelElements.define("mob", { ...levelElements.mobType("randomMob", "mob", 40, "rgba(255,80,80,0.35)", true), tip: "one random mob in this exact spot, chance is how likely, written levels use spots instead" })
+levelElements.define("smallMobs", { ...levelElements.mobType("randomSmallMob", "small mobs", 30, "rgba(255,120,80,0.35)", true, "small"), tip: "a few small random mobs, more on harder difficulties" })
+levelElements.define("mobGroup", { ...levelElements.mobType("randomGroup", "group", 50, "rgba(255,80,160,0.35)", true), tip: "a group of random mobs linked together, only after the first few levels" })
+levelElements.mobNames = () => typeof spawn === "undefined" ? ["starter"] : [...new Set([...spawn.tier.flat(), ...spawn.bossTier.flat()])] //every mob and boss by tier, spawn.js isn't loaded in the unit tests
+levelElements.define("namedMob", { //one mob picked by name, for levels that want a specific mob
+    ...levelElements.mobType("namedMob", "mob by name", 40, "rgba(255,40,40,0.35)", false),
+    tip: "one mob picked by name, it always spawns",
+    preset: name => ({ name }),
+    defaults: () => ({ x: 0, y: -300, name: "slasher" }),
+    props: [
+        ...levelElements.position(),
+        { key: "name", kind: "select", get options() { return levelElements.mobNames() } },
+    ],
+    overlay: el => levelElements.marker(el, 40, "rgba(255,40,40,0.35)", el.name),
+    summary: el => `${el.name}(${levelElements.args(el.x, el.y)})`,
+    build(el, options) {
+        if (options.isSpawning && typeof spawn[el.name] === "function") spawn[el.name](el.x, el.y)
+    },
+    code: el => ({ setup: [`spawn.${el.name}(${levelElements.args(el.x, el.y)});`] }),
+})
 levelElements.bossType = (spawnName, label, radius, fill) => ({ //a boss spawns at its spot or one of its other spots, picked at random each time the level loads
     ...levelElements.mobType(spawnName, label, radius, fill, false),
     defaults: () => ({ x: 0, y: -300, spots: [] }), //spots: [[x, y], ...] other places it could spawn, the editor shows them as handles to drag
@@ -806,8 +936,8 @@ levelElements.bossType = (spawnName, label, radius, fill) => ({ //a boss spawns 
         return { setup: [`const ${name} = ${pick}`, `spawn.${spawnName}(${name}.x, ${name}.y);`] }
     },
 })
-levelElements.define("boss", levelElements.bossType("randomLevelBoss", "boss", 80, "rgba(200,0,60,0.35)"))
-levelElements.define("secondaryBoss", levelElements.bossType("secondaryBossChance", "2nd boss", 70, "rgba(160,0,100,0.3)")) //only with the second boss difficulty option
+levelElements.define("boss", { ...levelElements.bossType("randomLevelBoss", "boss", 80, "rgba(200,0,60,0.35)"), tip: "the level's boss, picked by the run's tier, add spots in the inspector for other places it could spawn" })
+levelElements.define("secondaryBoss", { ...levelElements.bossType("secondaryBossChance", "2nd boss", 70, "rgba(160,0,100,0.3)"), tip: "a second boss, it only spawns with the 2 bosses difficulty option" })
 
 //*********************************************************************
 // power ups, the editor's power ups menu
@@ -816,6 +946,16 @@ levelElements.define("powerUp", {
     group: "powerUp",
     label: "power up",
     names: ["heal", "ammo", "research", "tech", "gun", "field", "coupling", "boost"], //each gets a button in the menu
+    tips: {
+        heal: "restores health",
+        ammo: "adds ammo to all the player's guns",
+        research: "rerolls gun, field, and tech choices, levels with mobs already get 1",
+        tech: "a choice of 3 tech, written levels give tech from the boss and the starting power up",
+        gun: "a choice of 2 guns",
+        field: "a choice of 2 fields",
+        coupling: "improves the player's field",
+        boost: "more damage for a while",
+    },
     preset: name => ({ name }),
     defaults: () => ({ x: 0, y: -100, name: "heal", count: 1 }),
     props: [
@@ -845,10 +985,11 @@ levelElements.powerUpCall = (call, label, fill) => ({ //a powerUps function that
     },
     code: el => ({ setup: [`powerUps.${call}(${levelElements.args(el.x, el.y)});`] }),
 })
-levelElements.define("randomPowerUp", levelElements.powerUpCall("chooseRandomPowerUp", "random", "rgba(0,200,180,0.3)")) //heal or ammo
-levelElements.define("startingPowerUps", levelElements.powerUpCall("spawnStartingPowerUps", "starting", "rgba(30,90,200,0.3)")) //a gun or tech early in a run
+levelElements.define("randomPowerUp", { ...levelElements.powerUpCall("chooseRandomPowerUp", "random", "rgba(0,200,180,0.3)"), tip: "a heal or ammo, picked when the level loads" })
+levelElements.define("startingPowerUps", { ...levelElements.powerUpCall("spawnStartingPowerUps", "starting", "rgba(30,90,200,0.3)"), tip: "every level has 1, early in a run it gives the first gun or tech, later it's a few random power ups" })
 
 levelElements.define("debris", { //random small blocks and power ups along a line, written levels use about 16
+    tip: "small random blocks along a line, about 15% are heal or ammo instead, written levels use about 16",
     group: "powerUp",
     defaults: () => ({ x: 0, y: -300, width: 1000, count: 16 }),
     props: [...levelElements.position(), levelElements.prop.number("width", { isGrid: true, min: 1 }), levelElements.prop.number("count", { step: 1, min: 1 })],
@@ -891,5 +1032,5 @@ levelElements.level = {
         levelElements.prop.select("fall", ["spawn", "sky"]), //falling off the bottom sends the player back to the spawn, or keeps them falling from the sky above it
         levelElements.prop.bool("lineOfSight"), //walls block the view, like subway
     ],
-    defaults: () => ({ zoom: 1400, background: "#ddd", mapColor: "#444", blockColor: "rgba(140,140,140,0.85)", gravity: 1, fall: "spawn", lineOfSight: false }),
+    defaults: () => ({ zoom: 2000, background: "#dcdcde", mapColor: "#444", blockColor: "rgba(140,140,140,0.85)", gravity: 1, fall: "spawn", lineOfSight: false }), //what written levels use most, and the level properties default button
 }
