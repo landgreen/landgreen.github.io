@@ -61,10 +61,9 @@ const level = {
                 b.guns[b.inventory[0]].ammo = 100000
                 // tech.addJunkTechToPool(0.5)
                 tech.giveTech("laminar flow")
-                tech.giveTech("electronvolt")
                 tech.giveTech("soliton")
                 tech.giveTech("electric potential")
-                tech.giveTech("cold plasma")
+                tech.giveTech("electronvolt")
                 // for (let i = 0; i < 3; i++) tech.giveTech("anti-shear topology")
                 // for (let i = 0; i < 3; i++) tech.giveTech("plasma jet")
                 // for (let i = 0; i < 1; i++) tech.giveTech("Maxwells demon")
