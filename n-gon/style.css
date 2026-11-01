@@ -2426,7 +2426,7 @@ the panels show while body has .level-editor, the HUD it replaces is hidden */
     position: absolute;
     z-index: 2;
     box-sizing: border-box;
-    max-height: calc(100vh - 54px);
+    max-height: calc(100vh - 80px); /* above the status bar */
     overflow-y: auto;
     scrollbar-width: thin;
     padding: 6px;
@@ -2444,6 +2444,269 @@ body.level-editor .le-panel {
     display: block;
 }
 
+/* the bar along the bottom, like VS Code's status bar, see renderStatus() */
+.le-status {
+    display: none;
+    position: absolute;
+    z-index: 2;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    box-sizing: border-box;
+    zoom: 1.2; /* bigger, easier to read, it's 31px tall */
+    height: 26px;
+    padding: 0 10px;
+    align-items: center;
+    justify-content: space-between; /* zones evenly apart, they slide together as the window narrows */
+    gap: 12px;
+    border-top: 1px solid #333;
+    background-color: #e2e9ec;
+    color: #000;
+    font-size: 12px;
+    cursor: auto;
+    user-select: none;
+}
+
+body.level-editor .le-status {
+    display: flex;
+}
+
+/* smaller screens shrink the status bar so it all fits */
+@media (max-width: 1500px) {
+    .le-status {
+        zoom: 1;
+        gap: 10px;
+    }
+}
+
+@media (max-width: 1150px) {
+    .le-status {
+        zoom: 0.9;
+        gap: 8px;
+        padding: 0 6px;
+    }
+}
+
+.le-status-item {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    min-width: 0;
+}
+
+/* the mouse and the selection, the zone that gives up room first */
+.le-status-where {
+    flex: 0 1 260px;
+    gap: 12px;
+}
+
+.le-status-item.le-segment {
+    gap: 0;
+}
+
+/* a short window cuts text off instead of wrapping it to a second line */
+.le-status,
+.le-status * {
+    white-space: nowrap;
+}
+
+.le-status {
+    overflow: hidden;
+}
+
+.le-status .le-button,
+.le-status-saved {
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: clip;
+}
+
+.le-status input,
+.le-status .le-label {
+    flex: none;
+}
+
+.le-status-item .le-label {
+    min-width: 0;
+}
+
+.le-status-mouse {
+    flex: 0 1 110px;
+    min-width: 0;
+    overflow: hidden;
+    font-family: monospace;
+}
+
+.le-status-saved {
+    color: #777;
+}
+
+.le-status-problems {
+    font-family: monospace;
+}
+
+.le-status-problems.le-status-fix {
+    color: #c00;
+}
+
+/* the in game console sits above the status bar */
+body.level-editor #text-log {
+    bottom: 42px;
+}
+
+/* the status bar's selection, see updateSelectionStatus() */
+.le-status-selection {
+    min-width: 0;
+    overflow: hidden;
+    color: #555;
+    font-family: monospace;
+}
+
+/* test and full test at the top of the simulation menu */
+.le-run {
+    margin-bottom: 6px;
+}
+
+/* the simulation menu's numbers, see readoutText() */
+.le-readout {
+    margin: 0;
+    padding: 4px;
+    background-color: #f0f3f5;
+    border: 1px solid #ccc;
+    font-family: monospace;
+    font-size: 10px;
+    line-height: 1.4;
+    white-space: pre;
+    overflow: hidden;
+}
+
+/* the inspector's js view, the lines this element writes in export JS */
+.le-js-view {
+    margin: 4px 0;
+    padding: 4px;
+    max-height: 300px;
+    overflow: auto;
+    background-color: #f0f3f5;
+    border: 1px solid #ccc;
+    font-family: monospace;
+    font-size: 11px;
+    white-space: pre;
+    user-select: text;
+}
+
+.le-physics {
+    font-size: 11px;
+}
+
+/* tab hides the panels, and full test, a hint says how to get them back */
+body.level-editor.le-panels-hidden .le-panel,
+body.level-editor.le-panels-hidden .le-status {
+    display: none;
+}
+
+.le-hint {
+    display: none;
+    position: absolute;
+    z-index: 2;
+    right: 10px;
+    bottom: 10px;
+    padding: 2px 8px;
+    border-radius: 4px;
+    background-color: rgba(255, 255, 255, 0.6);
+    color: #777;
+    font-size: 12px;
+    pointer-events: none;
+}
+
+body.level-editor.le-panels-hidden .le-hint {
+    display: block;
+}
+
+/* explorer, every element by type, see explorerHtml() */
+.le-explore-group>summary {
+    display: flex;
+    align-items: center;
+    gap: 2px;
+    list-style: none;
+    font-size: 13px;
+    margin: 0;
+    padding: 1px 0;
+}
+
+.le-explore-group>summary::-webkit-details-marker {
+    display: none;
+}
+
+.le-explore-group>summary::before {
+    content: "▸";
+    width: 12px;
+}
+
+.le-explore-group[open]>summary::before {
+    content: "▾";
+}
+
+.le-explore-type {
+    flex: 1;
+    min-width: 0;
+}
+
+.le-explore-row {
+    display: flex;
+    align-items: center;
+    gap: 2px;
+    padding-left: 12px;
+}
+
+.le-explore-row.le-selected {
+    background-color: #dbeefa;
+}
+
+.le-button.le-explore-name {
+    flex: 1;
+    padding: 1px 2px;
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    text-align: left;
+    border: none;
+    background: none;
+    font-family: monospace;
+    font-size: 11px;
+}
+
+.le-explore-group .le-button:not(.le-explore-name) {
+    padding: 0 3px;
+    font-size: 11px;
+    line-height: 1.3;
+}
+
+/* undo, redo, and history at the right end of the status bar, the history list pops up over them */
+.le-history-pop {
+    position: absolute;
+    z-index: 4;
+    right: 10px;
+    bottom: 38px;
+    width: 300px;
+    zoom: 1.1;
+    background-color: var(--card-color);
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+}
+
+.le-history-pop[hidden] {
+    display: none;
+}
+
+body:not(.level-editor) .le-history-pop,
+body.level-editor.le-panels-hidden .le-history-pop {
+    display: none;
+}
+
+.le-status .le-history-box {
+    flex: none;
+}
+
 body.level-editor #guns,
 body.level-editor #field,
 body.level-editor #right-HUD,
@@ -2451,11 +2714,15 @@ body.level-editor #right-HUD-constraint {
     display: none !important;
 }
 
-/* under the health bar */
+/* under the health bar, gray like the pause menu's open menus, the open menus inside are the lighter card color */
 #level-editor-left {
-    top: 44px;
-    left: 10px;
-    width: 252px;
+    zoom: 1.1; /* everything in it 10% bigger, easier to read, top, left, and sizes are before the zoom */
+    top: 40px;
+    left: 9px;
+    width: 260px; /* 8px wider for the padding, so the menus inside keep their width */
+    max-height: calc((100vh - 92px) / 1.1); /* above the status bar */
+    padding: 10px;
+    background-color: #e2e9ec;
 }
 
 #level-editor-right {
@@ -2465,16 +2732,38 @@ body.level-editor #right-HUD-constraint {
     font-family: monospace;
 }
 
+/* like the pause menu's left column, no lines between menus, an open one's inside is a box */
 .le-section+.le-section {
-    margin-top: 6px;
-    padding-top: 6px;
-    border-top: 1px solid #ddd;
+    margin-top: 4px;
 }
 
 .le-panel summary {
     cursor: pointer;
-    color: #555;
+    color: #000;
     margin-bottom: 3px;
+}
+
+.le-details {
+    background-color: var(--card-color); /* lighter than the gray panel around it */
+    border: 1px solid #333;
+    border-radius: 5px;
+    padding: 7px;
+    margin-bottom: 6px;
+}
+
+/* one wide button, like add code's + code */
+.le-grid.le-one {
+    grid-template-columns: minmax(0, 1fr);
+}
+
+/* difficulty has no orb, it's a black circle in the level */
+.le-difficulty-icon {
+    display: inline-block;
+    width: 0.8em;
+    height: 0.8em;
+    border-radius: 50%;
+    background-color: #000;
+    margin-bottom: -0.1em;
 }
 
 .le-row {
@@ -2570,8 +2859,9 @@ body.level-editor #right-HUD-constraint {
     margin-top: 0;
 }
 
-.le-export {
-    margin: 4px 0;
+/* export, the local levels, and import, apart from each other */
+.le-details .le-gap-above {
+    margin-top: 14px;
 }
 
 .le-load-group summary {
@@ -2591,8 +2881,7 @@ body.level-editor #right-HUD-constraint {
     grid-template-columns: repeat(2, minmax(0, 1fr));
 }
 
-.le-shapes+.le-grid,
-.le-grid+.le-history {
+.le-shapes+.le-grid {
     margin-top: 4px;
 }
 
@@ -2772,7 +3061,7 @@ body.level-editor #right-HUD-constraint {
     gap: 1px;
     border: 1px solid #ccc;
     background-color: #ccc;
-    max-height: 240px;
+    max-height: 98px; /* the last 7 steps, about 12.8px each with 1px gaps, scroll for more */
     overflow-y: auto;
     scrollbar-width: thin;
 }
@@ -2782,9 +3071,15 @@ body.level-editor #right-HUD-constraint {
     flex: none;
     text-align: left;
     font-family: monospace;
-    font-size: 12px;
+    font-size: 8px;
     overflow-wrap: anywhere;
     border: none;
+}
+
+/* the current step, the next one undo takes away, a faint pink so it's there if you look */
+.le-button.le-step.le-on {
+    background-color: #fbeef1;
+    color: #000;
 }
 
 .le-step.le-undone {
@@ -2885,17 +3180,6 @@ body.level-editor #right-HUD-constraint {
 
 .le-comment {
     color: #999;
-}
-
-/* level properties, code style like the inspector */
-.le-level-props {
-    margin: 2px 0 0;
-    font-family: monospace;
-    font-size: 12px;
-}
-
-.le-level-props .le-prop {
-    padding-left: 0;
 }
 
 .le-swatch {
@@ -3005,6 +3289,83 @@ body.level-editor #level-editor-code:not(.le-open) {
     margin-top: 8px;
     color: #999;
     font-style: italic;
+}
+
+/* the analysis in the inspector, see inspectAnalysis() */
+.le-analysis {
+    margin-top: 4px;
+    font-size: 11px;
+}
+
+.le-analysis-section {
+    margin: 8px 0 2px;
+    color: #999;
+}
+
+.le-analysis-line {
+    display: block;
+    width: 100%;
+    box-sizing: border-box;
+    padding: 2px 3px;
+    border: none;
+    border-radius: 0;
+    background: none;
+    text-align: left;
+    font-family: monospace;
+    font-size: 11px;
+    line-height: 1.35;
+}
+
+button.le-analysis-line {
+    cursor: pointer;
+}
+
+button.le-analysis-line:hover {
+    background-color: #e8f2fa;
+}
+
+.le-analysis-line.le-current {
+    background-color: #dbeefa;
+}
+
+.le-analysis-status {
+    font-weight: bold;
+}
+
+.le-analysis-value {
+    color: #555;
+}
+
+/* what clicking the line adds */
+.le-analysis-add {
+    float: right;
+    color: #08c;
+}
+
+.le-analysis-text {
+    display: block;
+    padding-left: 5ch;
+    color: #777;
+}
+
+.le-analysis-line.le-fix .le-analysis-status {
+    color: #d00;
+}
+
+.le-analysis-line.le-warn .le-analysis-status {
+    color: #d70;
+}
+
+.le-analysis-line.le-note .le-analysis-status {
+    color: #48a;
+}
+
+.le-analysis-line.le-ok .le-analysis-status {
+    color: #3a5;
+}
+
+.le-analysis-line.le-ok {
+    color: #888;
 }
 
 .le-report-line {

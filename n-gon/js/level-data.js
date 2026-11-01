@@ -22,6 +22,7 @@ const levelData = {
         })
     },
     normalize(data) { //fills in anything missing, so the rest of the code can trust the data
+        delete data.lineOfSight //retired editor setting; the game keeps its own line-of-sight setting
         data.format = levelData.format
         data.name = String(data.name || "untitled")
         const defaults = levelElements.level.defaults()
@@ -106,7 +107,6 @@ const levelData = {
         }
         const has = text => levelData.codeHas(data, text) //what the level's code already does itself
         if (levelData.isSpawning && data.elements.some(el => el.type === "mobSpot")) spawn.randomMobFromArray() //mob spots, level.start() empties the list
-        if (data.lineOfSight) simulation.draw.lineOfSightPrecalculation() //now that the map is built
         if (levelData.isSpawning && data.elements.some(el => levelElements.groups.mob.includes(el.type)) && !has("addResearchToLevel")) powerUps.addResearchToLevel() //like written levels, after the mobs spawn
         if (levelData.isSpawning && !has("announceText")) { //like written levels, the run's constraint below the entrance and the new mob types
             const text = levelData.constraintText(data)
@@ -139,6 +139,7 @@ const levelData = {
     codeDraws(data) { //door types the level's code draws itself, so their elements don't draw them again
         return { spawn: levelData.codeHas(data, "level.enter.draw"), exit: levelData.codeHas(data, "level.exit.drawAndCheck") }
     },
+    isSkipped: () => false, //the editor hides elements from its explorer by not building them while editing
     codeLayers: null, //{ custom, top } the level.custom and level.customTopLayer the level's code set
     drawnByCode: {}, //door types its code draws, see codeDraws()
     codeError: null,
@@ -229,30 +230,15 @@ const levelData = {
         color.block = data.blockColor
         simulation.g = simulation.gDefault * data.gravity
         level.fallMode = data.fall === "sky" ? "start" : ""
-        levelData.updateSight(data)
     },
     constraintText(data) { //where the run's constraint text shows, the level properties move it from the spawn
         const spawn = data.elements.find(el => el.type === "spawn") || { x: 0, y: 0 }
         return { x: spawn.x + data.constraintTextX, y: spawn.y + data.constraintTextY }
     },
-    linkState(el) { //true while the button el is linked to has it on, false while off, null without a button
-        const button = el.link ? levelData.find(levelData.data, el.link) : null
-        const runtime = button && button.type === "button" && levelData.runtimes.get(button.id)
-        if (!runtime || !runtime.button) return null
-        return button.on === "up" ? runtime.button.isUp : !runtime.button.isUp
-    },
-    drawSight() { //shaded line of sight like the setting, its own function so the setting doesn't turn it off at each level start
-        simulation.draw.drawMapSight(true)
-    },
-    updateSight(data) {
-        const sight = levelData.drawSight
-        if (data.lineOfSight) {
-            simulation.draw.drawMapPath = sight
-            if (map.length) simulation.draw.lineOfSightPrecalculation() //play() does it again after the map is built
-        } else if (simulation.draw.drawMapPath === sight) {
-            simulation.draw.drawMapPath = simulation.draw.drawMapPathDefault
-            simulation.draw.updateLineOfSightSetting() //back to the player's setting
-        }
+    linkState(el) { //true while the button or toggle el is linked to has it on, false while off, null without one
+        const from = el.link ? levelData.find(levelData.data, el.link) : null
+        const runtime = from && levelElements.isLinkSource(from) && levelData.runtimes.get(from.id)
+        return runtime ? levelElements.types[from.type].linkOn(from, runtime) : null
     },
     inBuildOrder(data) { //spawn first, other elements can use the player's position, mobs and power ups last, they land on the map
         if (levelData.hasCode(data)) return data.elements.slice() //code runs in order, see runCode()
@@ -284,11 +270,11 @@ const levelData = {
     },
     build(el, isLive) { //isLive: the level has already started, so map bodies are added to the world here instead of in level.addToWorld()
         const type = levelElements.types[el.type]
-        if (!type) return { error: new Error(`unknown element type: ${el.type}`) }
         const start = levelData.mark()
         let runtime
         try {
-            runtime = type.build(el, { isLive, isEditor: levelData.isEditor, isSpawning: levelData.isSpawning && !isLive }) || {}
+            if (!type) throw new Error(`unknown element type: ${el.type}`)
+            runtime = levelData.isSkipped(el) ? {} : type.build(el, { isLive, isEditor: levelData.isEditor, isSpawning: levelData.isSpawning && !isLive }) || {} //hidden in the editor's explorer
         } catch (error) {
             runtime = { error }
             console.error(`${el.type} #${el.id}:`, error)
@@ -330,6 +316,7 @@ const levelData = {
         for (const el of data.elements) {
             if (levelElements.types[el.type]?.rebuildWithRefs && levelElements.refKeys(el).some(key => changed.has(el[key]))) changed.add(el.id)
         }
+        const elements = new Map(data.elements.map(el => [el.id, el]))
         const order = new Map(levelData.inBuildOrder(data).map((el, i) => [el.id, i]))
         ids = [...changed].sort((a, b) => (order.has(a) ? order.get(a) : -1) - (order.has(b) ? order.get(b) : -1)) //removed ones first
         let isMapChanged = false
@@ -340,17 +327,14 @@ const levelData = {
                 levelData.unbuild(old)
                 levelData.runtimes.delete(id)
             }
-            const el = levelData.find(data, id)
+            const el = elements.get(id)
             if (!el) continue
             const runtime = levelData.build(el, true)
             if (runtime.maps.length) isMapChanged = true
             levelData.runtimes.set(id, runtime)
         }
         simulation.fallHeight = levelData.fallHeight(data)
-        if (isMapChanged) {
-            simulation.draw.setPaths()
-            if (simulation.draw.drawMapPath === levelData.drawSight) simulation.draw.lineOfSightPrecalculation() //setPaths only does it for the line of sight setting
-        }
+        if (isMapChanged) simulation.draw.setPaths()
     },
     unbuildAll() {
         for (const runtime of levelData.runtimes.values()) levelData.unbuild(runtime)
@@ -359,7 +343,7 @@ const levelData = {
     runtimeContains(id, point) { //the element's bodies, blocks can be pushed away from where they start
         const runtime = levelData.runtimes.get(id)
         if (!runtime) return false
-        return Matter.Query.point(runtime.maps.concat(runtime.bodies), point).length > 0
+        return Matter.Query.point(runtime.maps, point).length > 0 || Matter.Query.point(runtime.bodies, point).length > 0
     },
 
     //*********************************************************************
@@ -368,13 +352,9 @@ const levelData = {
     functionName(name) { //my-level to myLevel
         return name.replace(/[-_]+(\w)/g, (match, letter) => letter.toUpperCase()).replace(/\W/g, "")
     },
-    code(data) {
-        const groups = {}
+    codeNames(data) { //each element's variable name, like door1, and the context code(el, name, context) gets
         const counts = {}
-        const custom = []
-        const top = []
-        const together = new Map() //types with codeAll(elements) write all their elements at once, like mob spots in one list
-        const names = new Map() //element id: its variable name, like door1
+        const names = new Map() //element id: its variable name
         const codeText = levelData.codeText(data)
         for (const el of data.elements) {
             const type = levelElements.types[el.type]
@@ -390,13 +370,36 @@ const levelData = {
         const context = { //for code(el, name, context)
             nameOf: id => names.get(id),
             isReferenced: id => referenced.has(id),
-            link(el) { //javascript for when el's button has it on and off
-                const button = el.link ? levelData.find(data, el.link) : null
-                if (!button || button.type !== "button") return null
-                const isUp = `${names.get(button.id)}.isUp`
-                return button.on === "up" ? { on: isUp, off: `!${isUp}` } : { on: `!${isUp}`, off: isUp }
+            link(el) { //javascript for when el's button or toggle has it on and off
+                const from = el.link ? levelData.find(data, el.link) : null
+                if (!from || !levelElements.isLinkSource(from)) return null
+                return levelElements.types[from.type].linkCode(from, names.get(from.id))
             },
         }
+        return { names, context }
+    },
+    elementCode(data, el) { //the lines one element writes in export JS, for the inspector's js view
+        const type = levelElements.types[el.type]
+        if (!type) return "//unknown type"
+        if (type.isCode) return el.code
+        const { names, context } = levelData.codeNames(data)
+        const lines = type.codeAll ? { setup: type.codeAll(data.elements.filter(other => other.type === el.type)) } : type.code ? type.code(el, names.get(el.id), context) : {}
+        const link = type.isLinkable && !type.handlesLink && context.link(el)
+        const gate = list => link && list.length ? [`if (${link.on}) {`, ...list.map(line => "    " + line), "}"] : list
+        const custom = gate(lines.custom || [])
+        const top = gate(lines.top || [])
+        return [
+            ...(lines.setup || []),
+            ...(custom.length ? ["//level.custom", ...custom] : []),
+            ...(top.length ? ["//level.customTopLayer", ...top] : []),
+        ].join("\n")
+    },
+    code(data) {
+        const groups = {}
+        const custom = []
+        const top = []
+        const together = new Map() //types with codeAll(elements) write all their elements at once, like mob spots in one list
+        const { names, context } = levelData.codeNames(data)
         if (levelData.hasCode(data)) return levelData.codeInOrder(data, names, context)
         for (const el of data.elements) {
             const type = levelElements.types[el.type]
@@ -450,7 +453,6 @@ const levelData = {
                 ...(groups.mob || []),
                 ...(groups.powerUp || []),
                 ...(groups.mob ? ["powerUps.addResearchToLevel() //needs to run after mobs are spawned"] : []),
-                ...(data.lineOfSight ? ["simulation.draw.lineOfSightPrecalculation() //walls block the view, after the map is made", "simulation.draw.drawMapPath = () => simulation.draw.drawMapSight(true)"] : []),
                 `${levelData.dataMark}${JSON.stringify(data)}`, //import level reads this back
             ]),
             "},",

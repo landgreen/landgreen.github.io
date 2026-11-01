@@ -72,8 +72,8 @@ const levelAnalysis = {
     //*********************************************************************
     // helpers for checks
     //*********************************************************************
-    line(status, label, value = "", text = "") {
-        return { status, label, value: String(value), text }
+    line(status, label, value = "", text = "", elements = [], add = "") { //elements are the ones it's about, the editor outlines them in the level, add is a type whose add fixes it, the editor adds one when it's clicked
+        return { status, label, value: String(value), text, ids: elements.map(el => el.id).filter(id => id !== undefined), add }
     },
     at: (x, y) => `(${Math.round(x)}, ${Math.round(y)})`,
     distance: (a, b) => Math.hypot(a.x - b.x, a.y - b.y),
@@ -172,7 +172,7 @@ const levelAnalysis = {
     text(report) {
         const all = report.sections.flatMap(section => section.lines)
         const width = key => Math.max(0, ...all.map(line => line[key].length)) + 2 //columns line up like the html
-        const lines = [`//${report.name} analysis: ${levelAnalysis.headline(report)}`]
+        const lines = [`//${report.name} issues: ${levelAnalysis.headline(report)}`]
         for (const section of report.sections) {
             lines.push("", `//${section.title}`)
             for (const line of section.lines) lines.push(`${line.status.padEnd(5)}${line.label.padEnd(width("label"))}${line.value.padEnd(width("value"))}${line.text}`.trimEnd())
@@ -200,20 +200,21 @@ levelAnalysis.check("bosses", c => {
         const list = c.of(type)
         if (!list.length) {
             if (c.inCode(type === "boss" ? "randomLevelBoss" : "secondaryBossChance")) lines.push(line("ok", label, "in code"))
-            else lines.push(line("fix", label, 0, type === "boss" ? "add one from the mobs menu" : "add one from the mobs menu, it spawns with the 2 bosses difficulty option"))
+            else lines.push(line("fix", label, 0, type === "boss" ? "add a boss" : "add a 2nd boss", [], type))
             continue
         }
         firsts.push(list[0])
         const places = list.flatMap(el => levelElements.types[type].places(el).map(([x, y]) => ({ x, y })))
         lines.push(list.length > 1 ?
-            line("warn", label, list.length, "written levels have 1, give it more spots instead") :
+            line("warn", label, list.length, "written levels have 1, give it more spots instead", list) :
             line("ok", label, 1, places.length > 1 ? `${places.length} spots` : ""))
+        const placesOf = el => levelElements.types[type].places(el).map(([x, y]) => ({ x, y }))
         if (c.spawn) {
             const near = places.filter(p => distance(p, c.spawn) < c.norms.near[type])
-            if (near.length) lines.push(line("warn", `${label} near spawn`, `${Math.round(distance(near[0], c.spawn))} away`, `at ${at(near[0].x, near[0].y)}, written levels keep it ${c.norms.near[type]}+ from the spawn`))
+            if (near.length) lines.push(line("warn", `${label} near enter`, `${Math.round(distance(near[0], c.spawn))} away`, `at ${at(near[0].x, near[0].y)}, written levels keep it ${c.norms.near[type]}+ from the enter`, list.filter(el => placesOf(el).some(p => distance(p, c.spawn) < c.norms.near[type]))))
         }
         const stuck = places.filter(p => levelAnalysis.inMap(c, p))
-        if (stuck.length) lines.push(line("warn", `${label} in the map`, stuck.length, `at ${at(stuck[0].x, stuck[0].y)}`))
+        if (stuck.length) lines.push(line("warn", `${label} in the map`, stuck.length, `at ${at(stuck[0].x, stuck[0].y)}`, list.filter(el => placesOf(el).some(p => levelAnalysis.inMap(c, p)))))
     }
     if (firsts.length === 2 && distance(firsts[0], firsts[1]) < c.norms.bossApart) {
         lines.push(line("note", "bosses together", `${Math.round(distance(firsts[0], firsts[1]))} apart`, `written levels keep them ${c.norms.bossApart}+ apart`))
@@ -230,9 +231,9 @@ levelAnalysis.check("mobs", c => {
     if (!places && (c.inCode("randomMobPositions") || c.inCode("randomMob("))) {
         lines.push(line("ok", "mob places", "in code"))
     } else if (!places) {
-        lines.push(line("fix", "mob places", 0, "add spots from the mobs menu"))
+        lines.push(line("fix", "mob places", 0, "add spots from the mobs menu", [], "mobSpot"))
     } else if (places < c.norms.mobPlaces) {
-        lines.push(line("warn", "mob places", places, `up to ${c.norms.mobPlaces} mobs spawn late in a run, written levels have about 17 spots`))
+        lines.push(line("warn", "mob places", places, `up to ${c.norms.mobPlaces} mobs spawn late in a run, written levels have about 17 spots`, [], "mobSpot"))
     } else {
         lines.push(line("ok", "mob places", places))
     }
@@ -244,10 +245,10 @@ levelAnalysis.check("mobs", c => {
     if (c.spawn && all.length) {
         const nearest = all.reduce((a, b) => distance(a, c.spawn) < distance(b, c.spawn) ? a : b)
         const d = distance(nearest, c.spawn)
-        if (d < c.norms.near.mob) lines.push(line("warn", "mob near spawn", `${Math.round(d)} away`, `at ${at(nearest.x, nearest.y)}, written levels keep mobs ${c.norms.near.mob}+ from the spawn`))
+        if (d < c.norms.near.mob) lines.push(line("warn", "mob near enter", `${Math.round(d)} away`, `at ${at(nearest.x, nearest.y)}, written levels keep mobs ${c.norms.near.mob}+ from the enter`, [nearest]))
     }
     const stuck = all.filter(el => levelAnalysis.inMap(c, el))
-    if (stuck.length) lines.push(line("warn", "mobs in the map", stuck.length, `at ${at(stuck[0].x, stuck[0].y)}`))
+    if (stuck.length) lines.push(line("warn", "mobs in the map", stuck.length, `at ${at(stuck[0].x, stuck[0].y)}`, stuck))
     return lines
 })
 
@@ -256,30 +257,30 @@ levelAnalysis.check("power ups", c => {
     const lines = []
     const starting = c.of("startingPowerUps")
     if (!starting.length && c.inCode("spawnStartingPowerUps")) lines.push(line("ok", "starting", "in code"))
-    else if (!starting.length) lines.push(line("warn", "starting", 0, "add one, it gives a gun or tech early in a run"))
-    else if (starting.length > 1) lines.push(line("warn", "starting", starting.length, "written levels have 1"))
+    else if (!starting.length) lines.push(line("warn", "starting", 0, "add one, it gives a gun or tech early in a run", [], "startingPowerUps"))
+    else if (starting.length > 1) lines.push(line("warn", "starting", starting.length, "written levels have 1", starting))
     else lines.push(line("ok", "starting", 1))
     if (starting.length && c.spawn && distance(starting[0], c.spawn) < c.norms.near.startingPowerUps) {
-        lines.push(line("note", "starting at spawn", `${Math.round(distance(starting[0], c.spawn))} away`, "written levels put it out in the level"))
+        lines.push(line("note", "starting at enter", `${Math.round(distance(starting[0], c.spawn))} away`, "written levels put it out in the level"))
     }
     const placed = name => c.of("powerUp").filter(el => el.name === name).reduce((sum, el) => sum + el.count, 0)
     const debris = c.of("debris").reduce((sum, el) => sum + el.count, 0)
     const healAmmo = c.of("randomPowerUp").length + placed("heal") + placed("ammo") + levelAnalysis.debrisPowerUp * debris
     const [few, many] = c.norms.healAmmo
     const value = `~${Number(healAmmo.toFixed(1))}`
-    if (healAmmo < few) lines.push(line("warn", "heal and ammo", value, `written levels have ${few} to ${many}, add random power ups or debris`))
-    else if (healAmmo > many) lines.push(line("warn", "heal and ammo", value, `written levels have ${few} to ${many}`))
+    if (healAmmo < few) lines.push(line("warn", "heal and ammo", value, `levels should have ${few} to ${many}`, [], "randomPowerUp"))
+    else if (healAmmo > many) lines.push(line("warn", "heal and ammo", value, `levels should have ${few} to ${many}`))
     else lines.push(line("ok", "heal and ammo", value))
     const free = ["tech", "gun", "field"].filter(name => placed(name))
-    if (free.length) lines.push(line("warn", "free " + free.join(" "), free.reduce((sum, name) => sum + placed(name), 0), "written levels give these from the boss and the starting power up"))
+    if (free.length) lines.push(line("warn", "free " + free.join(" "), free.reduce((sum, name) => sum + placed(name), 0), "written levels give these from the boss and the starting power up", c.of("powerUp").filter(el => free.includes(el.name))))
     if (placed("research")) lines.push(line("note", "research", placed("research"), "levels with mobs already get 1 on a random mob"))
-    if (debris > c.norms.debris) lines.push(line("warn", "debris", debris, "written levels have about 16"))
-    else lines.push(line(debris ? "ok" : "note", "debris", debris, debris ? "" : "written levels scatter about 16"))
+    if (debris > c.norms.debris) lines.push(line("warn", "debris", debris, "many levels scatter about 16"))
+    else lines.push(line(debris ? "ok" : "note", "debris", debris, debris ? "" : "many levels scatter about 16", [], debris ? "" : "debris"))
     const drops = c.of("powerUp").concat(c.of("randomPowerUp"), starting, c.of("debris").map(el => ({ ...el, x: el.x + el.width / 2 })))
     const stuck = drops.filter(el => levelAnalysis.inMap(c, el))
-    if (stuck.length) lines.push(line("warn", "power ups in map", stuck.length, `at ${at(stuck[0].x, stuck[0].y)}`))
+    if (stuck.length) lines.push(line("warn", "power ups in map", stuck.length, `at ${at(stuck[0].x, stuck[0].y)}`, stuck))
     const falling = drops.filter(el => !levelAnalysis.isGroundBelow(c, el))
-    if (falling.length) lines.push(line("warn", "nothing below", falling.length, `power ups at ${at(falling[0].x, falling[0].y)} fall out of the level`))
+    if (falling.length) lines.push(line("warn", "nothing below", falling.length, `power ups at ${at(falling[0].x, falling[0].y)} fall out of the level`, falling))
     return lines
 })
 
@@ -288,16 +289,16 @@ levelAnalysis.check("layout", c => {
     const lines = []
     const maps = c.of("map")
     if (c.code) lines.push(line("note", "code", c.of("code").length, "these checks can't see what it makes"))
-    if (!maps.length) return lines.concat(c.code ? [] : [line("fix", "map", 0, "draw some ground")])
+    if (!maps.length) return lines.concat(c.code ? [] : [line("fix", "map", 0, "draw some ground", [], "map")])
     if (c.spawn) {
-        if (levelAnalysis.inMap(c, c.spawn)) lines.push(line("fix", "spawn in the map", "", `at ${at(c.spawn.x, c.spawn.y)}`))
-        else if (!levelAnalysis.isGroundBelow(c, c.spawn)) lines.push(line("warn", "spawn", "", "nothing below it"))
+        if (levelAnalysis.inMap(c, c.spawn)) lines.push(line("fix", "enter in the map", "", `at ${at(c.spawn.x, c.spawn.y)}`, [c.spawn]))
+        else if (!levelAnalysis.isGroundBelow(c, c.spawn)) lines.push(line("warn", "enter", "", "nothing below it", [c.spawn]))
     }
     if (c.exit) {
         const door = { x: c.exit.x + 50, y: c.exit.y - 50 }
-        if (levelAnalysis.inMap(c, door)) lines.push(line("fix", "exit in the map", "", `at ${at(c.exit.x, c.exit.y)}`))
-        else if (!levelAnalysis.isGroundBelow(c, door)) lines.push(line("warn", "exit", "", "nothing below it"))
-        if (c.spawn && distance(door, c.spawn) < c.norms.near.exit) lines.push(line("note", "exit near spawn", `${Math.round(distance(door, c.spawn))} away`))
+        if (levelAnalysis.inMap(c, door)) lines.push(line("fix", "exit in the map", "", `at ${at(c.exit.x, c.exit.y)}`, [c.exit]))
+        else if (!levelAnalysis.isGroundBelow(c, door)) lines.push(line("warn", "exit", "", "nothing below it", [c.exit]))
+        if (c.spawn && distance(door, c.spawn) < c.norms.near.exit) lines.push(line("note", "exit near enter", `${Math.round(distance(door, c.spawn))} away`))
     }
     const b = levelElements.boundsOf(maps.flatMap(el => levelElements.points(el)))
     const [wide, tall] = c.norms.size
@@ -306,9 +307,9 @@ levelAnalysis.check("layout", c => {
     else lines.push(line("ok", "size", size))
     const blocks = c.of("block")
     const inMap = levelAnalysis.overlapping(blocks, maps)
-    if (inMap.length) lines.push(line("warn", "blocks in the map", inMap.length, `${levelElements.summary(inMap[0])}, they get shoved out when the level loads`))
+    if (inMap.length) lines.push(line("warn", "blocks in the map", inMap.length, `${levelElements.summary(inMap[0])}, shoved out on level load`, inMap))
     const inBlocks = levelAnalysis.overlapping(blocks, blocks, true)
-    if (inBlocks.length) lines.push(line("note", "blocks overlap", inBlocks.length, levelElements.summary(inBlocks[0])))
+    if (inBlocks.length) lines.push(line("note", "blocks overlap", inBlocks.length, levelElements.summary(inBlocks[0]), inBlocks))
     const seen = new Set()
     const stacked = c.data.elements.filter(el => { //the same thing in the same place, usually a double paste
         const { id, ...rest } = el
@@ -317,12 +318,12 @@ levelAnalysis.check("layout", c => {
         seen.add(key)
         return false
     })
-    if (stacked.length) lines.push(line("warn", "stacked copies", stacked.length, `${levelElements.summary(stacked[0])}, delete the extras`))
-    const isButton = id => c.of("button").some(el => el.id === id)
-    const shut = c.of("door").filter(el => !isButton(el.link))
-    if (shut.length) lines.push(line("note", "doors", shut.length, `${levelElements.summary(shut[0])} has no button, it stays shut`))
+    if (stacked.length) lines.push(line("warn", "stacked copies", stacked.length, `${levelElements.summary(stacked[0])}, delete the extras`, stacked))
+    const isSource = id => c.data.elements.some(el => el.id === id && levelElements.isLinkSource(el))
+    const shut = c.of("door").filter(el => !isSource(el.link))
+    if (shut.length) lines.push(line("note", "doors", shut.length, `${levelElements.summary(shut[0])} has no button or toggle, it stays shut`, shut))
     const loose = c.of("constraint").filter(el => !c.of("block").some(block => block.id === el.body))
-    if (loose.length) lines.push(line("warn", "constraints", loose.length, `${levelElements.summary(loose[0])} has no block`))
+    if (loose.length) lines.push(line("warn", "constraints", loose.length, `${levelElements.summary(loose[0])} has no block`, loose))
     return lines
 })
 
