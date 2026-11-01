@@ -1983,12 +1983,21 @@ const simulation = {
             word: new Path2D(),
             xPos: 0,
             yPos: 0,
+            path(text, x, y, size = 40) { //the text as its own Path2D, size is how tall, word stays what it was so announceText still draws its own
+                const word = this.word
+                this.word = new Path2D()
+                this.drawString(text, 0, 0)
+                const path = new Path2D()
+                path.addPath(this.word, new DOMMatrix().translate(x, y).scale(size / 40))
+                this.word = word
+                return path
+            },
             drawString(text, x, y) {
                 this.xPos = x
                 this.yPos = y
                 const letters = text.toLowerCase().split('')
                 letters.forEach((letter, index) => {
-                    if (letter >= 'a' && letter <= 'z' && this[letter]) {
+                    if (letter !== ' ' && letter.length === 1 && typeof this[letter] === "function") { //letters, numbers, and the punctuation below z
                         this[letter]()
                         if (index < letters.length - 1) {
                             this.xPos += 29
@@ -2234,7 +2243,144 @@ const simulation = {
                 this.word.lineTo(this.xPos + 17, this.yPos + 0)
                 this.word.lineTo(this.xPos + 0, this.yPos + 40)
                 this.word.lineTo(this.xPos + 17, this.yPos + 40)
-            }
+            },
+            dot(x, y) { //a tiny circle, the stroke makes it a dot, for . ! ? and :
+                this.word.moveTo(this.xPos + x + 1.5, this.yPos + y)
+                this.word.arc(this.xPos + x, this.yPos + y, 1.5, 0, 2 * Math.PI)
+            },
+            "0"() { //narrower than o, with a slash
+                this.word.moveTo(this.xPos + 18, this.yPos + 20);
+                this.word.ellipse(this.xPos + 9, this.yPos + 20, 9, 20, 0, 0, 2 * Math.PI);
+                this.word.moveTo(this.xPos + 16, this.yPos + 8);
+                this.word.lineTo(this.xPos + 2, this.yPos + 32);
+            },
+            "1"() {
+                this.word.moveTo(this.xPos + 3, this.yPos + 8)
+                this.word.lineTo(this.xPos + 10, this.yPos + 0)
+                this.word.lineTo(this.xPos + 10, this.yPos + 40)
+                this.word.moveTo(this.xPos + 2, this.yPos + 40)
+                this.word.lineTo(this.xPos + 18, this.yPos + 40)
+            },
+            "2"() {
+                this.word.moveTo(this.xPos + 0, this.yPos + 8);
+                this.word.bezierCurveTo(this.xPos + 0, this.yPos + 3, this.xPos + 3, this.yPos + 0, this.xPos + 9, this.yPos + 0);
+                this.word.bezierCurveTo(this.xPos + 15, this.yPos + 0, this.xPos + 18, this.yPos + 3, this.xPos + 18, this.yPos + 10);
+                this.word.bezierCurveTo(this.xPos + 18, this.yPos + 18, this.xPos + 10, this.yPos + 24, this.xPos + 0, this.yPos + 40);
+                this.word.lineTo(this.xPos + 18, this.yPos + 40);
+            },
+            "3"() {
+                this.word.moveTo(this.xPos + 0, this.yPos + 6);
+                this.word.bezierCurveTo(this.xPos + 1, this.yPos + 2, this.xPos + 4, this.yPos + 0, this.xPos + 9, this.yPos + 0);
+                this.word.bezierCurveTo(this.xPos + 15, this.yPos + 0, this.xPos + 18, this.yPos + 3, this.xPos + 18, this.yPos + 10);
+                this.word.bezierCurveTo(this.xPos + 18, this.yPos + 16, this.xPos + 14, this.yPos + 19, this.xPos + 7, this.yPos + 19);
+                this.word.bezierCurveTo(this.xPos + 15, this.yPos + 19, this.xPos + 19, this.yPos + 23, this.xPos + 19, this.yPos + 30);
+                this.word.bezierCurveTo(this.xPos + 19, this.yPos + 37, this.xPos + 15, this.yPos + 40, this.xPos + 9, this.yPos + 40);
+                this.word.bezierCurveTo(this.xPos + 4, this.yPos + 40, this.xPos + 1, this.yPos + 38, this.xPos + 0, this.yPos + 34);
+            },
+            "4"() {
+                this.word.moveTo(this.xPos + 14, this.yPos + 40)
+                this.word.lineTo(this.xPos + 14, this.yPos + 0)
+                this.word.lineTo(this.xPos + 0, this.yPos + 27)
+                this.word.lineTo(this.xPos + 19, this.yPos + 27)
+            },
+            "5"() {
+                this.word.moveTo(this.xPos + 17, this.yPos + 0);
+                this.word.lineTo(this.xPos + 2, this.yPos + 0);
+                this.word.lineTo(this.xPos + 1, this.yPos + 18);
+                this.word.bezierCurveTo(this.xPos + 4, this.yPos + 16, this.xPos + 6, this.yPos + 15, this.xPos + 9, this.yPos + 15);
+                this.word.bezierCurveTo(this.xPos + 15, this.yPos + 15, this.xPos + 19, this.yPos + 20, this.xPos + 19, this.yPos + 27);
+                this.word.bezierCurveTo(this.xPos + 19, this.yPos + 35, this.xPos + 15, this.yPos + 40, this.xPos + 9, this.yPos + 40);
+                this.word.bezierCurveTo(this.xPos + 4, this.yPos + 40, this.xPos + 1, this.yPos + 38, this.xPos + 0, this.yPos + 34);
+            },
+            "6"() {
+                this.word.moveTo(this.xPos + 16, this.yPos + 3);
+                this.word.bezierCurveTo(this.xPos + 14, this.yPos + 1, this.xPos + 12, this.yPos + 0, this.xPos + 9, this.yPos + 0);
+                this.word.bezierCurveTo(this.xPos + 3, this.yPos + 0, this.xPos + 0, this.yPos + 8, this.xPos + 0, this.yPos + 30);
+                this.word.moveTo(this.xPos + 18, this.yPos + 30);
+                this.word.ellipse(this.xPos + 9, this.yPos + 30, 9, 10, 0, 0, 2 * Math.PI);
+            },
+            "7"() {
+                this.word.moveTo(this.xPos + 0, this.yPos + 0)
+                this.word.lineTo(this.xPos + 18, this.yPos + 0)
+                this.word.lineTo(this.xPos + 6, this.yPos + 40)
+            },
+            "8"() {
+                this.word.moveTo(this.xPos + 17, this.yPos + 10);
+                this.word.ellipse(this.xPos + 9, this.yPos + 10, 8, 10, 0, 0, 2 * Math.PI);
+                this.word.moveTo(this.xPos + 18, this.yPos + 30);
+                this.word.ellipse(this.xPos + 9, this.yPos + 30, 9, 10, 0, 0, 2 * Math.PI);
+            },
+            "9"() { //6 turned around
+                this.word.moveTo(this.xPos + 18, this.yPos + 10);
+                this.word.ellipse(this.xPos + 9, this.yPos + 10, 9, 10, 0, 0, 2 * Math.PI);
+                this.word.moveTo(this.xPos + 18, this.yPos + 10);
+                this.word.bezierCurveTo(this.xPos + 18, this.yPos + 32, this.xPos + 15, this.yPos + 40, this.xPos + 9, this.yPos + 40);
+                this.word.bezierCurveTo(this.xPos + 6, this.yPos + 40, this.xPos + 4, this.yPos + 39, this.xPos + 2, this.yPos + 37);
+            },
+            "."() {
+                this.dot(9, 38)
+            },
+            ","() {
+                this.word.moveTo(this.xPos + 10, this.yPos + 35)
+                this.word.lineTo(this.xPos + 7, this.yPos + 44)
+            },
+            "!"() {
+                this.word.moveTo(this.xPos + 9, this.yPos + 0)
+                this.word.lineTo(this.xPos + 9, this.yPos + 28)
+                this.dot(9, 38)
+            },
+            "?"() {
+                this.word.moveTo(this.xPos + 1, this.yPos + 8);
+                this.word.bezierCurveTo(this.xPos + 1, this.yPos + 3, this.xPos + 4, this.yPos + 0, this.xPos + 9, this.yPos + 0);
+                this.word.bezierCurveTo(this.xPos + 15, this.yPos + 0, this.xPos + 18, this.yPos + 3, this.xPos + 18, this.yPos + 9);
+                this.word.bezierCurveTo(this.xPos + 18, this.yPos + 15, this.xPos + 9, this.yPos + 17, this.xPos + 9, this.yPos + 24);
+                this.word.lineTo(this.xPos + 9, this.yPos + 28);
+                this.dot(9, 38)
+            },
+            ":"() {
+                this.dot(9, 12)
+                this.dot(9, 34)
+            },
+            "'"() {
+                this.word.moveTo(this.xPos + 9, this.yPos + 0)
+                this.word.lineTo(this.xPos + 9, this.yPos + 10)
+            },
+            "-"() {
+                this.word.moveTo(this.xPos + 3, this.yPos + 20)
+                this.word.lineTo(this.xPos + 15, this.yPos + 20)
+            },
+            "+"() {
+                this.word.moveTo(this.xPos + 2, this.yPos + 20)
+                this.word.lineTo(this.xPos + 16, this.yPos + 20)
+                this.word.moveTo(this.xPos + 9, this.yPos + 13)
+                this.word.lineTo(this.xPos + 9, this.yPos + 27)
+            },
+            "="() {
+                this.word.moveTo(this.xPos + 2, this.yPos + 14)
+                this.word.lineTo(this.xPos + 16, this.yPos + 14)
+                this.word.moveTo(this.xPos + 2, this.yPos + 26)
+                this.word.lineTo(this.xPos + 16, this.yPos + 26)
+            },
+            "/"() {
+                this.word.moveTo(this.xPos + 17, this.yPos + 0)
+                this.word.lineTo(this.xPos + 1, this.yPos + 40)
+            },
+            "("() {
+                this.word.moveTo(this.xPos + 14, this.yPos + 0);
+                this.word.bezierCurveTo(this.xPos + 4, this.yPos + 8, this.xPos + 4, this.yPos + 32, this.xPos + 14, this.yPos + 40);
+            },
+            ")"() {
+                this.word.moveTo(this.xPos + 4, this.yPos + 0);
+                this.word.bezierCurveTo(this.xPos + 14, this.yPos + 8, this.xPos + 14, this.yPos + 32, this.xPos + 4, this.yPos + 40);
+            },
+            "%"() {
+                this.word.moveTo(this.xPos + 18, this.yPos + 0)
+                this.word.lineTo(this.xPos + 0, this.yPos + 40)
+                this.word.moveTo(this.xPos + 8, this.yPos + 6)
+                this.word.arc(this.xPos + 4, this.yPos + 6, 4, 0, 2 * Math.PI)
+                this.word.moveTo(this.xPos + 18, this.yPos + 34)
+                this.word.arc(this.xPos + 14, this.yPos + 34, 4, 0, 2 * Math.PI)
+            },
             //letters are 50 tall and 40 wide
             // a() {
             //     this.word.moveTo(this.xPos + 0, this.yPos + 50)

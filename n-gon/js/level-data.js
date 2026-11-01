@@ -235,10 +235,25 @@ const levelData = {
         const spawn = data.elements.find(el => el.type === "spawn") || { x: 0, y: 0 }
         return { x: spawn.x + data.constraintTextX, y: spawn.y + data.constraintTextY }
     },
-    linkState(el) { //true while the button or toggle el is linked to has it on, false while off, null without one
-        const from = el.link ? levelData.find(levelData.data, el.link) : null
-        const runtime = from && levelElements.isLinkSource(from) && levelData.runtimes.get(from.id)
-        return runtime ? levelElements.types[from.type].linkOn(from, runtime) : null
+    linkState(el, depth = 0) { //true while the button, toggle, zone, or timer el is linked to is on, false while off, null without one
+        const sourceState = id => {
+            const from = levelData.find(levelData.data, id)
+            const runtime = from && levelElements.isLinkSource(from) && levelData.runtimes.get(from.id)
+            if (!runtime) return null
+            const own = levelElements.types[from.type].linkOn(from, runtime)
+            const above = depth < 8 ? levelData.linkState(from, depth + 1) : null //a link source linked to another is only on while both are, like a timer that only runs while a button is down
+            return above === false ? false : own
+        }
+        const a = el.link ? sourceState(el.link) : null
+        const b = el.orLink ? sourceState(el.orLink) : null //linked to two, it's on while either is
+        if (a === null) return b
+        if (b === null) return a
+        return a || b
+    },
+    linkOn(el) { //linkState() for el, flipped if it runs while its link is off, null without one
+        const state = levelData.linkState(el)
+        if (state === null) return null
+        return el.runs === "while off" ? !state : state
     },
     inBuildOrder(data) { //spawn first, other elements can use the player's position, mobs and power ups last, they land on the map
         if (levelData.hasCode(data)) return data.elements.slice() //code runs in order, see runCode()
@@ -256,7 +271,7 @@ const levelData = {
             if (!runtime || !runtime[name]) continue
             const type = levelElements.types[el.type]
             if (levelData.drawnByCode[el.type]) continue //the level's code draws it
-            if (el.link && type.isLinkable && !type.handlesLink && levelData.linkState(el) === false) continue //its button has it off
+            if (el.link && type.isLinkable && !type.handlesLink && levelData.linkOn(el) === false) continue //its button has it off
             const start = isTimed ? performance.now() : 0
             try {
                 runtime[name]()
@@ -367,13 +382,29 @@ const levelData = {
             names.set(el.id, name)
         }
         const referenced = new Set(data.elements.flatMap(el => levelElements.refKeys(el).map(key => el[key])).filter(id => names.has(id)))
+        const sourceCode = (el, depth) => { //{ on, off } for what el is linked to, a link source's own link has to be on too, and its orLink is either one
+            const codeOf = id => {
+                const from = levelData.find(data, id)
+                if (!from || !levelElements.isLinkSource(from)) return null
+                const own = levelElements.types[from.type].linkCode(from, names.get(from.id))
+                const above = depth < 8 ? sourceCode(from, depth + 1) : null
+                if (!above) return own
+                const on = `${own.on} && ${above.on.includes("||") ? `(${above.on})` : above.on}`
+                return { on, off: `!(${on})` }
+            }
+            const a = el.link ? codeOf(el.link) : null
+            const b = el.orLink ? codeOf(el.orLink) : null
+            if (!a || !b) return a || b
+            const on = `${a.on} || ${b.on}`
+            return { on, off: `!(${on})` }
+        }
         const context = { //for code(el, name, context)
             nameOf: id => names.get(id),
             isReferenced: id => referenced.has(id),
-            link(el) { //javascript for when el's button or toggle has it on and off
-                const from = el.link ? levelData.find(data, el.link) : null
-                if (!from || !levelElements.isLinkSource(from)) return null
-                return levelElements.types[from.type].linkCode(from, names.get(from.id))
+            link(el) { //javascript for when el is on and off, from its button, toggle, zone, or timer, and what that's linked to
+                const code = sourceCode(el, 0)
+                if (!code) return null
+                return el.runs === "while off" ? { on: code.off, off: code.on } : code
             },
         }
         return { names, context }

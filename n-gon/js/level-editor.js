@@ -16,7 +16,6 @@ const levelEditor = {
     lookMode: "static", //simulation menu, the camera: "static" stays on the player, "smooth" leans toward the mouse like a run, "instant" leans with no smoothing like motion sickness
     isTimeScaled: false,
     debugDraw: new Set(), //simulation menu's draw toggles, like "wireframe" and "velocity"
-    readoutCycle: 0,
     grid: 25, //snap size, hold alt to place freely
     isGridShown: true,
     isFree: false, //alt is held
@@ -55,6 +54,7 @@ const levelEditor = {
     gameCamera: null, //simulation.camera while the editor replaces it
     saveTimer: null,
     inspected: "", //what the inspector is showing, so it only redraws when that changes
+    mobIcons: null, //mob name: a little svg of it for mob by name, made once by spawning each mob, see sampleMobs()
 
     //*********************************************************************
     // opening and closing
@@ -111,6 +111,7 @@ const levelEditor = {
             simulation.camera = levelEditor.camera
             m.look = levelEditor.look
         }
+        levelEditor.sampleMobs() //once, for mob by name's pictures
         level.disableExit = true //the exit charges, but doesn't leave
         simulation.removeEphemera("levelEditor", true)
         simulation.ephemera.push({ name: "levelEditor", do() { levelEditor.frame() } })
@@ -612,6 +613,14 @@ const levelEditor = {
         if (!el || !owner) return false
         return picking.isLink ? levelElements.isRefTo(el, "link", owner) : levelElements.isRefTo(owner, picking.key, el)
     },
+    linkTo(el, source) { //link el to a button, toggle, zone, or timer, already linked to another one it's linked to both and on while either is (orLink)
+        if (levelElements.isLinkedTo(el, source)) return
+        const isOr = el.link && !el.orLink && levelElements.types[el.type]?.props.some(prop => prop.key === "orLink")
+        levelEditor.edit(`${isOr ? "or link" : "link"} ${levelEditor.describe([el])} to ${levelEditor.describe([source])}`, () => {
+            el[isOr ? "orLink" : "link"] = source.id
+            return [el.id]
+        })
+    },
     pick(el) {
         const picking = levelEditor.picking
         const isPickable = levelEditor.canPick(el)
@@ -619,10 +628,7 @@ const levelEditor = {
         const owner = levelData.find(levelEditor.data, picking.id)
         if (isPickable) {
             if (picking.isLink) {
-                levelEditor.edit(`link ${levelEditor.describe([el])} to ${levelEditor.describe([owner])}`, () => {
-                    el.link = owner.id
-                    return [el.id]
-                })
+                levelEditor.linkTo(el, owner)
             } else {
                 levelEditor.edit(`${levelEditor.describe([owner])}.${picking.key} = ${el.id}`, () => {
                     owner[picking.key] = el.id
@@ -860,6 +866,7 @@ const levelEditor = {
                     data.elements = data.elements.filter(el => !ids.includes(el.id))
                     for (const el of data.elements) { //links to a deleted button go away
                         for (const key of levelElements.refKeys(el)) if (ids.includes(el[key])) el[key] = null
+                        levelElements.tidyLinks(el)
                     }
                     return ids
                 })
@@ -905,7 +912,7 @@ const levelEditor = {
             },
         },
         pickLink: { //click an element to link it to the selected button or toggle
-            label: "link something by clicking it, esc stops", run() {
+            label: "link something by clicking it, esc stops, linking something already linked to another makes it on while either is, linking another button, toggle, zone, or timer makes it only on while both are", run() {
                 const el = levelEditor.selected()[0]
                 levelEditor.picking = levelEditor.picking ? null : el ? { id: el.id, isLink: true } : null
                 levelEditor.renderRight()
@@ -959,12 +966,15 @@ const levelEditor = {
             },
         },
         selectId: { label: "select", run: id => levelEditor.select([Number(id)]) },
-        unlink: {
+        unlink: { //from the selected button, toggle, zone, or timer
             label: "unlink", run(id) {
                 const el = levelData.find(levelEditor.data, Number(id))
+                const source = levelEditor.selected()[0]
                 if (!el) return
                 levelEditor.edit(`unlink ${levelEditor.describe([el])}`, () => {
-                    el.link = null
+                    if (source && el.orLink === source.id) el.orLink = null
+                    else el.link = null
+                    levelElements.tidyLinks(el)
                     return [el.id]
                 })
             },
@@ -1297,7 +1307,6 @@ const levelEditor = {
         levelEditor.applyTimeScale()
         if (!levelEditor.isActive || levelEditor.isFullTest) return //JS test looks like a run
         if (levelEditor.debugDraw.size) levelEditor.drawDebug()
-        if (++levelEditor.readoutCycle % 10 === 0) levelEditor.updateReadout()
         const point = levelEditor.mouse()
         const drag = levelEditor.drag
         const hover = drag || levelEditor.pathDraw || !levelEditor.isMouseOnCanvas ? null : levelEditor.elementAt(point)
@@ -1448,29 +1457,6 @@ const levelEditor = {
             ctx.fillStyle = "rgba(255,0,0,0.9)"
             ctx.fill()
         }
-    },
-    readoutText() { //numbers about the running simulation, the simulation menu shows them
-        if (!levelEditor.isActive || typeof engine === "undefined") return ""
-        const f = (n, digits = 2) => Number.isFinite(n) ? n.toFixed(digits) : "-"
-        let customMs = 0
-        let topMs = 0
-        for (const runtime of levelData.runtimes.values()) {
-            customMs += runtime.customMs || 0
-            topMs += runtime.topMs || 0
-        }
-        return [
-            `bodies ${Composite.allBodies(engine.world).length}  cons ${Composite.allConstraints(engine.world).length}  pairs ${engine.pairs.list.filter(pair => pair.isActive).length}`,
-            `map ${map.length}  body ${body.length}  mob ${mob.length}`,
-            `powerUp ${powerUp.length}  bullet ${bullet.length}`,
-            `custom ${f(customMs, 3)}ms  top ${f(topMs, 3)}ms`,
-            `g ${simulation.g.toFixed(5)}  cycle ${simulation.cycle}  fps ${simulation.fpsCap > 1000 ? "max" : Math.round(simulation.fpsCap)}`,
-            `pos (${f(player.position.x, 0)}, ${f(player.position.y, 0)})  vel (${f(player.velocity.x)}, ${f(player.velocity.y)})`,
-            `mass ${f(player.mass)}  onGround ${m.onGround}`,
-        ].join("\n")
-    },
-    updateReadout() {
-        const pre = document.querySelector("#level-editor-left [data-readout]")
-        if (pre && pre.closest("details").open) pre.textContent = levelEditor.readoutText()
     },
     jumpReach() { //how high and far the player jumps, measured in headless Chrome on flat ground: 390 high standing, 570 long running at full speed
         const force = (m.jumpForce / 0.42) * (5 / player.mass) //tech and field changes, the jump's starting speed goes with it
@@ -1737,11 +1723,8 @@ const levelEditor = {
                 <input class="le-number le-short" data-setting="testLevel" value="${levelEditor.testLevel}" spellcheck="false" title="levels cleared while editing, for mob types and difficulty">
             </div>
             <div class="le-row"><span class="le-label">time</span><span class="le-segment">${[0.1, 0.25, 0.5, 1].map(scale => levelEditor.button("timeScale", `${scale}×`, scale, levelEditor.timeScale === scale, "game speed, it lowers the frame cap")).join("")}</span></div>
-            <div class="le-row"><span class="le-label">mouse</span><select data-setting="lookMode" title="how the camera follows the mouse, mouse look is the motion sickness tech">${[["static", "static"], ["smooth", "smooth mouse look"], ["instant", "mouse look"]].map(([mode, text]) => `<option value="${mode}"${levelEditor.lookMode === mode ? " selected" : ""}>${text}</option>`).join("")}</select></div>
-            <div class="le-label le-add-header">draw</div>
-            <div class="le-grid">${levelEditor.debugLayers.map(([name, tip]) => levelEditor.button("debugDraw", name, name, levelEditor.debugDraw.has(name), tip)).join("")}</div>
-            <div class="le-label le-add-header">readout</div>
-            <pre class="le-readout" data-readout>${levelEditor.readoutText()}</pre>`,
+            <div class="le-row"><select data-setting="lookMode" title="how the camera follows the mouse, mouse look is the motion sickness tech">${[["static", "static mouse"], ["smooth", "smooth mouse look"], ["instant", "mouse look"]].map(([mode, text]) => `<option value="${mode}"${levelEditor.lookMode === mode ? " selected" : ""}>${text}</option>`).join("")}</select></div>
+            <div class="le-grid le-gap-above">${levelEditor.debugLayers.map(([name, tip]) => levelEditor.button("debugDraw", name, name, levelEditor.debugDraw.has(name), tip)).join("")}</div>`,
         },
         {
             id: "explorer",
@@ -1754,18 +1737,21 @@ const levelEditor = {
             title: "add",
             render: () => { //spots, a boss, and a 2nd boss are all a level needs for mobs, and starting, random, and debris for power ups, they show the power ups they can be
                 const main = { startingPowerUps: ["gun", "tech", "ammo", "heal"], randomPowerUp: ["heal", "ammo"], debris: ["block", "heal", "ammo"] }
-                return `<div class="le-label le-add-header">add level elements</div>
-                    <div class="le-shapes">${levelElements.presets.map(preset => `<button class="le-button le-shape" data-command="preset" data-arg="${preset.name}" title="${preset.title || `${preset.name}, as map, or block with the block tool`}">${levelElements.presetIcon(preset)}</button>`).join("")}</div>
-                    <div class="le-grid">${levelEditor.addButtons("element")}</div>
-                    <div class="le-label le-add-header">add mobs</div>
-                    <div class="le-grid">${["mobSpot", "boss", "secondaryBoss"].map(name => levelEditor.addButton(name)).join("")}</div>
-                    <div class="le-grid">${levelEditor.addButtons("mob", ["mobSpot", "boss", "secondaryBoss", "namedMob"])}</div>
-                    <div class="le-row">${levelEditor.mobList()}</div>
-                    <div class="le-label le-add-header">add power ups</div>
-                    <div class="le-grid le-tall">${Object.entries(main).map(([name, orbs]) => levelEditor.addButton(name, `${levelElements.types[name].label}<br><span class="le-options">[${orbs.map(levelEditor.orb).join("")}]</span>`)).join("")}</div>
-                    <div class="le-grid">${levelEditor.presetButtons("powerUp", name => `<span class="le-split"><span>${name}</span>${levelEditor.orb(name)}</span>`)}${levelEditor.addButtons("powerUp", ["powerUp", ...Object.keys(main)])}</div>
-                    <div class="le-label le-add-header">add code</div>
-                    <div class="le-grid le-one">${levelEditor.button("addCode", "+ code")}</div>`
+                return `<div class="le-add-part">
+                        <div class="le-shapes">${levelElements.presets.map(preset => `<button class="le-button le-shape" data-command="preset" data-arg="${preset.name}" title="${preset.name}, as map, or block with the block tool">${levelElements.presetIcon(preset)}</button>`).join("")}</div>
+                        <div class="le-row">${levelEditor.elementList()}</div>
+                    </div>
+                    <div class="le-add-part">
+                        <div class="le-grid">${["mobSpot", "boss", "secondaryBoss"].map(name => levelEditor.addButton(name)).join("")}</div>
+                        <div class="le-row">${levelEditor.mobList()}</div>
+                    </div>
+                    <div class="le-add-part">
+                        <div class="le-grid le-tall">${Object.entries(main).map(([name, orbs]) => levelEditor.addButton(name, `${levelElements.types[name].label}<br><span class="le-options">[${orbs.map(levelEditor.orb).join("")}]</span>`)).join("")}</div>
+                        <div class="le-row">${levelEditor.powerUpList()}</div>
+                    </div>
+                    <div class="le-add-part">
+                        <div class="le-grid le-one">${levelEditor.button("addCode", "+ code")}</div>
+                    </div>`
             },
         },
         {
@@ -1808,6 +1794,28 @@ const levelEditor = {
     isInPool() {
         return !!localSettings.levelPool && localSettings.levelPool.added.includes(levelEditor.data.name)
     },
+    elementGroups() { //the add menu's level elements by kind, each a titled part of the list, types not listed go in the last
+        const groups = [
+            { title: "movement", names: ["boost", "mover", "transport", "elevator", "vanish", "spinner", "wind", "portal"] },
+            { title: "hazards", names: ["slime", "laser", "fizzler"] },
+            { title: "controls", names: ["button", "toggle", "zone", "timer", "keyhole", "key", "door"] }, //and what they open
+            { title: "drawing", names: ["decor", "circle", "ellipse", "path", "bezier", "text", "drip"] },
+        ]
+        const listed = new Set(groups.flatMap(group => group.names))
+        groups[groups.length - 1].names.push(...levelElements.groups.element.filter(name => !listed.has(name)))
+        return groups.map(group => ({ ...group, names: group.names.filter(name => levelElements.types[name]) }))
+    },
+    elementList() { //every level element by kind, and each named preset like exit fill, picking one adds it, an option's data-command and data-arg are what it runs
+        const option = (command, arg, text, tip) => `<option value="${levelEditor.escape(arg)}" data-command="${command}" data-arg="${levelEditor.escape(arg)}" title="${levelEditor.escape(tip)}">${levelEditor.escape(text)}</option>`
+        return `<select class="le-mob-list le-element-list" title="add a level element in the middle of the view">
+            <option value="">level element</option>
+            ${levelEditor.elementGroups().map(group => `<optgroup label="${group.title}">${group.names.map(name => {
+            const type = levelElements.types[name]
+            return option(type.addCommand || "add", name, type.label, type.tip || `add ${type.label}`) +
+                (type.names || []).map(preset => option("add", `${name}:${preset}`, preset, (type.tips && type.tips[preset]) || `add ${preset}`)).join("")
+        }).join("")}</optgroup>`).join("")}
+        </select>`
+    },
     addButtons(group, skip = []) { //a button for each type in a group, and one for each of its named presets
         return levelElements.groups[group].filter(name => !skip.includes(name)).map(name => levelEditor.addButton(name) + levelEditor.presetButtons(name)).join("")
     },
@@ -1826,12 +1834,107 @@ const levelEditor = {
         if (name === "difficulty") return `<span class="le-orb"><span class="le-difficulty-icon"></span></span>`
         return powerUps.orb[name] ? `<span class="le-orb">${powerUps.orb[name]().replace(/ data-help="[^"]*"/g, "")}</span>` : ""
     },
-    mobList() { //every mob and boss by tier, picking one adds it
-        const tiers = spawn.tier.map((names, i) => [`tier ${i}`, names]).concat(spawn.bossTier.map((names, i) => [`tier ${i} bosses`, names])).filter(([, names]) => names.length)
-        return `<select class="le-mob-list" data-add="namedMob" title="${levelEditor.escape(levelElements.types.namedMob.tip)}">
-            <option value="">mob by name</option>
-            ${tiers.map(([label, names]) => `<optgroup label="${label}">${names.map(name => `<option>${name}</option>`).join("")}</optgroup>`).join("")}
+    powerUpList() { //every power up with its orb, picking one adds it, browsers with customizable selects show the orbs (appearance: base-select), others just the names
+        const type = levelElements.types.powerUp
+        return `<select class="le-mob-list le-rich-list" data-add="powerUp" title="a power up by name">
+            <option value="">power up by name</option>
+            ${type.names.map(name => `<option value="${name}" title="${levelEditor.escape(type.tips[name] || "")}">${levelEditor.orb(name)}<span>${name}</span></option>`).join("")}
         </select>`
+    },
+    mobList() { //a random group, then every mob and boss by tier with its picture, picking one adds it, an option's data-arg is its whole add command
+        const tiers = spawn.tier.map((names, i) => [`tier ${i}`, names]).concat(spawn.bossTier.map((names, i) => [`tier ${i} bosses`, names])).filter(([, names]) => names.length)
+        const icons = levelEditor.mobIcons || {}
+        return `<select class="le-mob-list le-rich-list" data-add="namedMob" title="${levelEditor.escape(levelElements.types.namedMob.tip)}">
+            <option value="">mob by name</option>
+            <optgroup label="random"><option value="group" data-arg="mobGroup" title="${levelEditor.escape(levelElements.types.mobGroup.tip)}">${levelEditor.mobIcon("group", [{ fill: "rgb(255,80,160)", x: -14, y: 4, r: 9, sides: 5 }, { fill: "rgb(255,80,80)", x: 8, y: -6, r: 10, sides: 4 }, { fill: "rgb(255,120,80)", x: 10, y: 10, r: 7, sides: 3 }])}<span>group</span></option></optgroup>
+            ${tiers.map(([label, names]) => `<optgroup label="${label}">${names.map(name => `<option value="${name}">${icons[name] || ""}<span>${name}</span></option>`).join("")}</optgroup>`).join("")}
+        </select>`
+    },
+    sampleMobs() { //spawns every mob and boss once, far away, to draw it from what it made, then takes it all away again
+        if (levelEditor.mobIcons || typeof spawn === "undefined") return
+        const icons = {}
+        const allowShields = spawn.allowShields
+        spawn.allowShields = false //random shields would hide the mob
+        for (const name of levelElements.mobNames()) {
+            const start = levelData.mark()
+            const spawned = { mob: mob.length, powerUp: powerUp.length }
+            const ephemera = new Set(simulation.ephemera)
+            try {
+                spawn[name](0, -100000)
+                const made = levelData.made(start)
+                const shapes = mob.slice(spawned.mob).filter(who => !who.shield).map(who => ({
+                    points: who.vertices.map(v => ({ x: v.x, y: v.y + 100000 })),
+                    fill: who.fill,
+                    stroke: who.stroke,
+                }))
+                const end = (body, point) => body ? { x: body.position.x + point.x, y: body.position.y + point.y + 100000 } : { x: point.x, y: point.y + 100000 }
+                const links = made.cons.concat(made.consBB, made.constraints).filter(c => c.bodyA && c.bodyB).map(c => [end(c.bodyA, c.pointA), end(c.bodyB, c.pointB)]) //tails, legs, and chains, not ends pinned to the level, a spider's are at 0, 0 until it moves
+                const orbs = powerUp.slice(spawned.powerUp).map(who => ({ x: who.position.x, y: who.position.y + 100000, r: who.size, fill: who.color }))
+                if (shapes.length) icons[name] = levelEditor.mobExtras[name]?.icon || levelEditor.mobIcon(name, shapes, links, orbs)
+            } catch (error) { } //it's only a picture
+            levelData.unbuild(levelData.made(start))
+            levelData.removeSpawned(spawned)
+            simulation.ephemera = simulation.ephemera.filter(effect => ephemera.has(effect))
+        }
+        spawn.allowShields = allowShields
+        levelEditor.mobIcons = icons
+    },
+    mobExtras: { //what a mob does that its shape doesn't show, drawn on its picture: lasers (how many), a laser sword, a sniper's sight, a sucker's dark middle
+        laser: { lasers: 1 }, laserLayer: { lasers: 1 }, beamer: { lasers: 1 }, focuser: { lasers: 1 }, quadLaser: { lasers: 4 }, pentaLaserBoss: { lasers: 5 },
+        laserTargetingBoss: { lasers: 1 }, laserBombingBoss: { lasers: 1 }, laserLayerBoss: { lasers: 1 },
+        slasher: { sword: true }, slasher2: { sword: true }, slasher3: { sword: true }, slasher4: { sword: true }, slasher5: { sword: true }, slicer: { sword: true }, slicer5: { sword: true }, slashBoss: { sword: true },
+        sniper: { sight: true }, sucker: { hole: true }, bigSucker: { hole: true },
+        powerUpBoss: { nodeOrbs: true }, powerUpBossBaby: { nodeOrbs: true }, //it carries a power up at each corner
+        mayflyBoss: { //its swarm of cells doesn't fit, so a cartoon mayfly: wings, a pink head, a white body that thins out, and long tail threads
+            icon: `<svg class="le-mob-icon" width="26" height="16" viewBox="0 0 26 16" aria-hidden="true">
+                <ellipse cx="8.5" cy="4" rx="3" ry="5.5" transform="rotate(-30 8.5 4)" fill="rgba(200,225,240,0.7)" stroke="#222" stroke-width="0.6"/>
+                <ellipse cx="11.5" cy="4.5" rx="2.5" ry="4.5" transform="rotate(20 11.5 4.5)" fill="rgba(200,225,240,0.7)" stroke="#222" stroke-width="0.6"/>
+                <path d="M15.5 10.5 Q20 11 25 6.5 M15.5 11 Q20 13 25.5 10.5 M15.5 11.5 Q19.5 15 25 14.5" stroke="#777" stroke-width="0.6" fill="none"/>
+                ${[[14.5, 10.5, 1.3], [12.5, 10, 1.7], [10, 9.5, 2.1], [7, 9.5, 2.4]].map(([x, y, r]) => `<circle cx="${x}" cy="${y}" r="${r}" fill="#fff" stroke="#222" stroke-width="0.6"/>`).join("")}
+                <circle cx="3.2" cy="9.5" r="2.3" fill="rgb(182,99,124)" stroke="#222" stroke-width="0.6"/>
+            </svg>`,
+        },
+    },
+    mobIcon(name, shapes, links = [], orbs = []) { //shapes are { points, fill, stroke } in world space, or { x, y, r, sides, fill } made up, it's fit into a 26 × 16 picture around the biggest
+        shapes = shapes.map(shape => shape.points ? shape : { ...shape, points: Array.from({ length: shape.sides }, (_, i) => ({ x: shape.x + shape.r * Math.cos(2 * Math.PI * i / shape.sides), y: shape.y + shape.r * Math.sin(2 * Math.PI * i / shape.sides) })) })
+        const boxes = shapes.map(shape => levelElements.boundsOf(shape.points))
+        const mainIndex = boxes.reduce((best, b, i) => b.width * b.height > 1.5 * boxes[best].width * boxes[best].height ? i : best, 0) //the first, or a much bigger body, a spider spawns its legs first
+        const main = boxes[mainIndex]
+        const center = { x: main.x + main.width / 2, y: main.y + main.height / 2 }
+        const size = Math.max(main.width, main.height) / 2
+        const extra = levelEditor.mobExtras[name] || {}
+        if (extra.nodeOrbs) { //a dot at each corner, in the colors of the power ups it spawned
+            const colors = orbs.length ? orbs.map(o => o.fill) : ["rgba(255,0,255,0.6)"]
+            const r = Math.max(main.width, main.height) / 9
+            orbs = shapes[mainIndex].points.map((p, i) => ({ x: p.x, y: p.y, r, fill: colors[i % colors.length] }))
+        }
+        const lines = [] //[from, to, color, dash]
+        for (let i = 0; i < (extra.lasers || 0); i++) {
+            const a = 2 * Math.PI * i / extra.lasers
+            lines.push([center, { x: center.x + 2.4 * size * Math.cos(a), y: center.y + 2.4 * size * Math.sin(a) }, "#f00", ""])
+        }
+        if (extra.sword) lines.push([center, { x: center.x + 2.6 * size, y: center.y - 0.6 * size }, "rgb(110,130,170)", ""])
+        if (extra.sight) lines.push([center, { x: center.x + 3 * size, y: center.y }, "rgba(255,0,0,0.7)", "2 2"])
+        const points = shapes.flatMap(shape => shape.points).concat(links.flat(), lines.flatMap(line => [line[0], line[1]]), orbs.flatMap(o => [{ x: o.x - o.r, y: o.y - o.r }, { x: o.x + o.r, y: o.y + o.r }]))
+        let box = levelElements.boundsOf(points)
+        const reach = 7 * size //a mob that spreads out far, like a culture, is drawn around its first part
+        if (box.width > 2 * reach || box.height > 2 * reach) box = { x: center.x - reach, y: center.y - reach, width: 2 * reach, height: 2 * reach }
+        const w = 26
+        const h = 16
+        const k = Math.min((w - 2) / (box.width || 1), (h - 2) / (box.height || 1))
+        const ox = (w - box.width * k) / 2 - box.x * k
+        const oy = (h - box.height * k) / 2 - box.y * k
+        const xy = p => `${(ox + p.x * k).toFixed(1)},${(oy + p.y * k).toFixed(1)}`
+        const isNone = color => !color || color === "transparent" || /^(rgba|hsla)\([^,]+,[^,]+,[^,]+,\s*0(\.0*)?\s*\)$/.test(color) //no color, or see-through
+        const linkPath = links.length ? `<path d="${links.map(([a, b]) => `M${xy(a)}L${xy(b)}`).join("")}" stroke="#999" stroke-width="0.7" fill="none"/>` : ""
+        const polygons = shapes.map(shape => {
+            const isInvisible = isNone(shape.fill) && isNone(shape.stroke)
+            return `<polygon points="${shape.points.map(xy).join(" ")}" fill="${isNone(shape.fill) ? "none" : levelEditor.escape(shape.fill)}" stroke="${isInvisible ? "#777" : "#222"}" stroke-width="${shapes.length > 8 ? 0.5 : 0.8}"${isInvisible ? ` stroke-dasharray="2 1.5"` : ""}/>`
+        }).join("")
+        const hole = extra.hole ? `<circle cx="${(ox + center.x * k).toFixed(1)}" cy="${(oy + center.y * k).toFixed(1)}" r="${(0.6 * size * k).toFixed(1)}" fill="#000"/>` : ""
+        const lineMarks = lines.map(([a, b, color, dash]) => `<path d="M${xy(a)}L${xy(b)}" stroke="${color}" stroke-width="1.2"${dash ? ` stroke-dasharray="${dash}"` : ""}/>`).join("")
+        const orbMarks = orbs.map(o => `<circle cx="${(ox + o.x * k).toFixed(1)}" cy="${(oy + o.y * k).toFixed(1)}" r="${Math.max(1, o.r * k).toFixed(1)}" fill="${levelEditor.escape(o.fill || "#888")}"/>`).join("")
+        return `<svg class="le-mob-icon" width="${w}" height="${h}" viewBox="0 0 ${w} ${h}" aria-hidden="true">${linkPath}${lineMarks}${polygons}${hole}${orbMarks}</svg>`
     },
     openSections() { //which sections are folded, remembered for next time
         try {
@@ -1898,7 +2001,7 @@ const levelEditor = {
             const x = levelEditor.snap(center.x - w / 2)
             const y = levelEditor.snap(center.y - h / 2)
             const elements = preset.rects ?
-                preset.rects(w, h).map(([rx, ry, rw, rh, type]) => levelElements.create(type || typeName, { x: x + rx, y: y + ry, width: rw, height: rh })) :
+                preset.rects(w, h).map(([rx, ry, rw, rh]) => levelElements.create(typeName, { x: x + rx, y: y + ry, width: rw, height: rh })) :
                 [levelElements.create(typeName)]
             if (!preset.rects) levelElements.setPoints(elements[0], preset.points(w, h).map(([px, py]) => ({ x: x + px, y: y + py })))
             return { elements, label: `add ${arg} ` }
@@ -2224,7 +2327,7 @@ const levelEditor = {
         const isVertexMode = levelEditor.vertexElement() === el
         return `<div class="le-row"><span class="le-name">${levelElements.nameOf(el.type)}</span><span class="le-id">#${el.id}</span><span class="le-fill"></span>${shapes}</div>
             <div class="le-code"><span class="color-symbol">{</span>
-                ${props.map(prop => levelEditor.field(el, prop)).join("")}
+                ${props.filter(prop => !prop.isShown || prop.isShown(el)).map(prop => levelEditor.field(el, prop)).join("")}
                 ${isVertexMode ? levelEditor.inspectVertices(el) : el.vertices ? `<div class="le-prop"><span class="color-var">vertices</span><span class="color-symbol">:</span> <span class="le-comment">[${el.vertices.length}]</span><span class="color-symbol">,</span></div>` : ""}
             <span class="color-symbol">}</span></div>
             ${Array.isArray(el.spots) ? levelEditor.inspectSpots(el) : ""}
@@ -2238,7 +2341,7 @@ const levelEditor = {
             <pre class="le-js-view">${levelEditor.escape(levelData.elementCode(levelEditor.data, el))}</pre>`
     },
     inspectLinks(el) { //what this button or toggle turns on and off, written like a list
-        const linked = levelEditor.data.elements.filter(other => other.link === el.id)
+        const linked = levelEditor.data.elements.filter(other => levelElements.isLinkedTo(other, el))
         const free = levelEditor.data.elements.filter(other => !linked.includes(other) && other.type !== "map" && levelElements.isRefTo(other, "link", el)) //maps link with the link button or from their own inspector, a level has too many to list
         return `<div class="le-row le-spots"><span class="color-var">links</span><span class="color-symbol">:</span>
                 <span class="le-fill"></span>${levelEditor.button("pickLink", "link", "", levelEditor.picking && levelEditor.picking.isLink)}</div>
@@ -2259,7 +2362,7 @@ const levelEditor = {
     },
     sharedProps(elements) { //props every selected element has, to change them all at once
         const first = levelElements.types[elements[0].type]?.props || []
-        return first.filter(prop => prop.kind !== "ref" && elements.every(el => levelEditor.findProp(prop.key, el)?.kind === prop.kind))
+        return first.filter(prop => prop.kind !== "ref" && elements.every(el => levelEditor.findProp(prop.key, el)?.kind === prop.kind && (!prop.isShown || prop.isShown(el))))
     },
     manyValue(elements, prop) { //their value if they all match, or undefined
         const values = elements.map(el => levelEditor.propValue(el, levelEditor.findProp(prop.key, el)))
@@ -2525,8 +2628,9 @@ const levelEditor = {
     }, true) //before the panels stop it
     const onSettingChange = event => { //the left panel and the status bar, which has grid and zoom
         if (event.target.dataset.key) levelEditor.setProp(event.target)
-        if (event.target.dataset.add && event.target.value) { //a list that adds what's picked, like mob by name
-            levelEditor.run("add", `${event.target.dataset.add}:${event.target.value}`)
+        const picked = event.target.selectedOptions?.[0]
+        if ((event.target.dataset.add || picked?.dataset.command) && event.target.value) { //a list that adds what's picked, like mob by name or a level element
+            levelEditor.run(picked.dataset.command || "add", picked.dataset.arg || `${event.target.dataset.add}:${event.target.value}`)
             event.target.value = ""
             event.target.blur()
         }
@@ -2577,10 +2681,7 @@ const levelEditor = {
         if (input.dataset.linkTo && input.value) { //the button's link list
             const button = levelData.find(levelEditor.data, Number(input.dataset.linkTo))
             const el = levelData.find(levelEditor.data, Number(input.value))
-            if (button && el) levelEditor.edit(`link ${levelEditor.describe([el])} to ${levelEditor.describe([button])}`, () => {
-                el.link = button.id
-                return [el.id]
-            })
+            if (button && el) levelEditor.linkTo(el, button)
             return levelEditor.renderRight()
         }
         if (input.dataset.key) levelEditor.setProp(input)

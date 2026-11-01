@@ -2594,19 +2594,6 @@ body.level-editor #text-log {
     margin-bottom: 6px;
 }
 
-/* the simulation menu's numbers, see readoutText() */
-.le-readout {
-    margin: 0;
-    padding: 4px;
-    background-color: #f0f3f5;
-    border: 1px solid #ccc;
-    font-family: monospace;
-    font-size: 10px;
-    line-height: 1.4;
-    white-space: pre;
-    overflow: hidden;
-}
-
 /* the inspector's js view, the lines this element writes in export JS */
 .le-js-view {
     margin: 4px 0;
@@ -2920,14 +2907,9 @@ body.level-editor #right-HUD-constraint {
     white-space: nowrap;
 }
 
-/* level elements, mobs, and power ups in the add menu, a line apart */
-.le-add-header {
-    display: block;
-    margin: 12px 0 3px;
-}
-
-.le-add-header:first-child {
-    margin-top: 0;
+/* the add menu's level elements, mobs, power ups, and code, untitled, a clear gap apart */
+.le-add-part+.le-add-part {
+    margin-top: 16px;
 }
 
 /* export, the local levels, and import, apart from each other */
@@ -3095,6 +3077,44 @@ body.level-editor #right-HUD-constraint {
     border-radius: 0;
     background-color: #fff;
     font: inherit;
+}
+
+/* power up by name and mob by name, the options show orbs and mob pictures where the browser lets a select hold more than text */
+.le-rich-list,
+.le-rich-list::picker(select) {
+    appearance: base-select;
+}
+
+.le-rich-list::picker(select) {
+    border: 1px solid #333;
+    border-radius: 0;
+    background-color: #fff;
+}
+
+.le-rich-list option {
+    display: flex;
+    align-items: center;
+    gap: 2px;
+    padding: 1px 6px;
+}
+
+.le-rich-list option:hover,
+.le-rich-list option:focus-visible {
+    background-color: var(--hover-card-color);
+}
+
+.le-rich-list option::checkmark {
+    display: none;
+}
+
+.le-rich-list::picker(select) {
+    max-height: 60vh;
+}
+
+.le-mob-icon {
+    flex: none;
+    display: block;
+    margin-right: 4px;
 }
 
 /* the level's name at the top of the left panel */

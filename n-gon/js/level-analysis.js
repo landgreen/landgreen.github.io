@@ -231,7 +231,7 @@ levelAnalysis.check("mobs", c => {
     if (!places && (c.inCode("randomMobPositions") || c.inCode("randomMob("))) {
         lines.push(line("ok", "mob places", "in code"))
     } else if (!places) {
-        lines.push(line("fix", "mob places", 0, "add spots from the mobs menu", [], "mobSpot"))
+        lines.push(line("fix", "mob places", 0, "add some with mob in add mobs", [], "mobSpot"))
     } else if (places < c.norms.mobPlaces) {
         lines.push(line("warn", "mob places", places, `up to ${c.norms.mobPlaces} mobs spawn late in a run, written levels have about 17 spots`, [], "mobSpot"))
     } else {
