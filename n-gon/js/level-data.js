@@ -16,7 +16,7 @@ const levelData = {
             name,
             elements: [
                 levelElements.create("spawn", { x: 0, y: -50 }),
-                levelElements.create("exit", { x: 950, y: -30 }),
+                levelElements.create("exit", { x: 950, y: -20 }),
                 levelElements.create("map", { x: -250, y: 0, width: 1500, height: 100 }),
             ],
         })
@@ -908,6 +908,12 @@ const levelData = {
             if (isRecent) levelData.store.recent = data.name
             if (isNew || isRecent) levelData.store.saveIndex()
             if (isNew) levelData.store.sync()
+        },
+        hasWork() { //a local level that's more than the blank one opening the editor saves, the title page shows its editor button
+            return levelData.store.names().some(name => {
+                const types = levelData.store.levels[name].elements.map(el => el.type).sort().join()
+                return !/^untitled\d*$/.test(name) || types !== "exit,map,spawn"
+            })
         },
         remove(name) {
             levelData.store.load()

@@ -229,6 +229,27 @@ body.has-autosave #start-button {
     bottom: 160px;
 }
 
+/* local levels add the level editor right below start, and move start up one slot */
+#level-editor-splash-button {
+    display: none;
+    position: absolute;
+    bottom: 108px;
+    right: 4px;
+    z-index: 12;
+}
+
+body.has-autosave #level-editor-splash-button {
+    bottom: 160px;
+}
+
+body.has-level-editor #start-button {
+    bottom: 160px;
+}
+
+body.has-autosave.has-level-editor #start-button {
+    bottom: 212px;
+}
+
 
 
 
@@ -2457,8 +2478,7 @@ body.level-editor .le-panel {
     height: 26px;
     padding: 0 10px;
     align-items: center;
-    justify-content: space-between; /* zones evenly apart, they slide together as the window narrows */
-    gap: 12px;
+    gap: 28px; /* the mouse, grid, zoom, and tools on the left, issues, history, and tab hide on the right */
     border-top: 1px solid #333;
     background-color: #e2e9ec;
     color: #000;
@@ -2471,19 +2491,26 @@ body.level-editor .le-status {
     display: flex;
 }
 
-/* smaller screens shrink the status bar so it all fits */
-@media (max-width: 1500px) {
+/* smaller screens shrink the status bar, only once the blank middle is used up */
+@media (max-width: 1060px) {
     .le-status {
         zoom: 1;
-        gap: 10px;
+        gap: 20px;
     }
 }
 
-@media (max-width: 1150px) {
+@media (max-width: 840px) {
     .le-status {
         zoom: 0.9;
-        gap: 8px;
+        gap: 12px;
         padding: 0 6px;
+    }
+}
+
+@media (max-width: 700px) {
+    .le-status {
+        zoom: 0.8;
+        gap: 8px;
     }
 }
 
@@ -2494,10 +2521,12 @@ body.level-editor .le-status {
     min-width: 0;
 }
 
-/* the mouse and the selection, the zone that gives up room first */
-.le-status-where {
-    flex: 0 1 260px;
-    gap: 12px;
+.le-status-icon {
+    flex: none;
+}
+
+.le-status-right {
+    margin-left: auto;
 }
 
 .le-status-item.le-segment {
@@ -2514,8 +2543,7 @@ body.level-editor .le-status {
     overflow: hidden;
 }
 
-.le-status .le-button,
-.le-status-saved {
+.le-status .le-button {
     min-width: 0;
     overflow: hidden;
     text-overflow: clip;
@@ -2531,14 +2559,21 @@ body.level-editor .le-status {
 }
 
 .le-status-mouse {
-    flex: 0 1 110px;
+    flex: 0 0 110px; /* fixed, so the bar doesn't move as the mouse does */
     min-width: 0;
     overflow: hidden;
     font-family: monospace;
 }
 
-.le-status-saved {
-    color: #777;
+/* tab hide, on the far right, clicking it hides the panels too */
+.le-status-tab {
+    flex: none;
+    padding: 0;
+    border: none;
+    background: none;
+    color: #555;
+    font: inherit;
+    cursor: pointer;
 }
 
 .le-status-problems {
@@ -2554,15 +2589,7 @@ body.level-editor #text-log {
     bottom: 42px;
 }
 
-/* the status bar's selection, see updateSelectionStatus() */
-.le-status-selection {
-    min-width: 0;
-    overflow: hidden;
-    color: #555;
-    font-family: monospace;
-}
-
-/* test and full test at the top of the simulation menu */
+/* test and JS test at the top of the simulation menu */
 .le-run {
     margin-bottom: 6px;
 }
@@ -2590,15 +2617,12 @@ body.level-editor #text-log {
     border: 1px solid #ccc;
     font-family: monospace;
     font-size: 11px;
-    white-space: pre;
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
     user-select: text;
 }
 
-.le-physics {
-    font-size: 11px;
-}
-
-/* tab hides the panels, and full test, a hint says how to get them back */
+/* tab hides the panels, a hint says how to get them back */
 body.level-editor.le-panels-hidden .le-panel,
 body.level-editor.le-panels-hidden .le-status {
     display: none;
@@ -2653,8 +2677,6 @@ body.level-editor.le-panels-hidden .le-hint {
 
 .le-explore-row {
     display: flex;
-    align-items: center;
-    gap: 2px;
     padding-left: 12px;
 }
 
@@ -2677,9 +2699,36 @@ body.level-editor.le-panels-hidden .le-hint {
 }
 
 .le-explore-group .le-button:not(.le-explore-name) {
+    width: 34px;
     padding: 0 3px;
     font-size: 11px;
     line-height: 1.3;
+}
+
+/* hide and lock touch, only the stroke between them, and each element's pair touches the one above, like a table */
+.le-explore-group>summary {
+    gap: 0;
+}
+
+.le-explore-group .le-button:not(.le-explore-name)+.le-button {
+    border-left: none;
+}
+
+.le-explore-row {
+    gap: 0;
+    align-items: stretch;
+}
+
+.le-explore-group>summary+.le-explore-row {
+    margin-top: 3px;
+}
+
+.le-explore-row+.le-explore-row .le-button:not(.le-explore-name) {
+    border-top: none;
+}
+
+.le-explore-group[open] {
+    margin-bottom: 3px;
 }
 
 /* undo, redo, and history at the right end of the status bar, the history list pops up over them */
@@ -2812,6 +2861,28 @@ body.level-editor #right-HUD-constraint {
     color: #fff;
 }
 
+/* the status bar's draw tools are tiny drawings, the one in use gets a light background so the dark map still shows */
+.le-tool-icons .le-button {
+    display: flex;
+    align-items: center;
+    padding: 2px 5px;
+}
+
+.le-history-box [data-command="undo"],
+.le-history-box [data-command="redo"] {
+    display: flex;
+    align-items: center;
+    padding: 2px 5px;
+}
+
+.le-tool-icons .le-button.le-on {
+    background-color: #b4c2c9;
+}
+
+.le-tool-icon {
+    display: block;
+}
+
 /* joined buttons, one is on */
 .le-segment {
     display: inline-flex;
@@ -2879,6 +2950,29 @@ body.level-editor #right-HUD-constraint {
 
 .le-grid.le-two {
     grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+/* the inspector's bottom buttons, each line split evenly however many there are */
+.le-grid.le-even {
+    grid-template-columns: none;
+    grid-auto-flow: column;
+    grid-auto-columns: minmax(0, 1fr);
+}
+
+.le-actions {
+    margin-top: 6px;
+}
+
+/* type an angle, a cell in the turns line */
+.le-angle {
+    min-width: 0;
+    padding: 2px 4px;
+    border: none;
+    border-radius: 0;
+    box-shadow: 1px 0 0 var(--le-line), 0 1px 0 var(--le-line);
+    font-family: monospace;
+    font-size: 12px;
+    text-align: center;
 }
 
 .le-shapes+.le-grid {

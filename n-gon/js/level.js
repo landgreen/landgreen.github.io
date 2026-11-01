@@ -28,8 +28,8 @@ const level = {
         if (levelEditor.isActive) { //every level start while the level editor is open is its level, see js/level-editor.js
             levelEditor.startLevel()
         } else if (level.levelsCleared === 0) { //this code only runs on the first level
-            // if (false) {
-            if (true) {
+            if (false) {
+                // if (true) {
                 level.load(simulation.isTraining ? "walk" : "initial") //normal starting level **************************************************
             } else { //testing setup
                 simulation.enableConstructMode()  //used to build maps in testing mode

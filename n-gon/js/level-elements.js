@@ -439,7 +439,7 @@ levelElements.define("spawn", { //still "spawn" in the data, the editor calls it
 levelElements.define("exit", {
     group: "core",
     isSingleton: true,
-    defaults: () => ({ x: 950, y: -30, bump: true }),
+    defaults: () => ({ x: 950, y: -20, bump: false }), //newer exits stand on the floor with no bump
     props: [...levelElements.position(), levelElements.prop.bool("bump")],
     bounds: el => ({ x: el.x, y: el.y - 170, width: 100, height: 210 }),
     build(el) {

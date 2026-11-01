@@ -1080,6 +1080,7 @@ async function openExperimentMenu() {
     document.getElementById("experiment-button").style.display = "none";
     document.getElementById("training-button").style.display = "none";
     document.getElementById("start-button").style.display = "none";
+    document.getElementById("level-editor-splash-button").style.display = "none";
     const el = document.getElementById("experiment-grid")
     el.style.display = "grid"
     document.body.style.overflowY = "scroll";
@@ -2504,3 +2505,4 @@ function cycle() {
 }
 
 saveGame.updateContinueButton() //show continue on the title page when there is an autosave
+levelEditor.updateSplashButton() //and the level editor when there are local levels

@@ -859,6 +859,8 @@ const simulation = {
         document.getElementById("start-button").style.opacity = "0";
         saveGame.updateContinueButton()
         document.getElementById("continue-button").style.opacity = "0";
+        levelEditor.updateSplashButton()
+        document.getElementById("level-editor-splash-button").style.opacity = "0";
         document.getElementById("experiment-grid").style.display = "none"
         document.getElementById("pause-grid-left").style.display = "none"
         document.getElementById("pause-grid-right").style.display = "none"
@@ -873,6 +875,7 @@ const simulation = {
             document.getElementById("training-button").style.opacity = "1";
             document.getElementById("start-button").style.opacity = "1";
             document.getElementById("continue-button").style.opacity = "1";
+            document.getElementById("level-editor-splash-button").style.opacity = "1";
             document.getElementById("info").style.opacity = "1";
             document.getElementById("splash").style.opacity = "1";
         }, 200);
@@ -924,6 +927,7 @@ const simulation = {
         document.getElementById("training-button").style.display = "none";
         document.getElementById("start-button").style.display = "none";
         document.getElementById("continue-button").style.display = "none";
+        document.getElementById("level-editor-splash-button").style.display = "none";
         // document.getElementById("experiment-button").style.opacity = "0";
         document.getElementById("splash").onclick = null; //removes the onclick effect so the function only runs once
         document.getElementById("splash").style.display = "none"; //hides the element that spawned the function
