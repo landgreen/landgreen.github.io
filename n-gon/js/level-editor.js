@@ -55,6 +55,7 @@ const levelEditor = {
     saveTimer: null,
     inspected: "", //what the inspector is showing, so it only redraws when that changes
     mobIcons: null, //mob name: a little svg of it for mob by name, made once by spawning each mob, see sampleMobs()
+    mobShapes: {}, //mob name: { shapes, links, orbs } it was drawn from, to draw it again at other sizes, like the mob and boss buttons' examples
 
     //*********************************************************************
     // opening and closing
@@ -136,18 +137,6 @@ const levelEditor = {
         levelEditor.gameCamera = null
         m.look = m.lookDefault
         simulation.removeEphemera("levelEditor", true)
-    },
-    exit() { //back to the title page, like the end of a run
-        levelEditor.close()
-        m.alive = false
-        simulation.paused = true
-        simulation.ephemera = []
-        for (const id of ["text-log", "health", "health-bg", "defense-bar", "guns", "field", "right-HUD", "right-HUD-constraint"]) document.getElementById(id).style.display = "none"
-        ctx.setTransform(1, 0, 0, 1, 0, 0)
-        ctx.clearRect(0, 0, canvas.width, canvas.height)
-        Composite.clear(engine.world)
-        Engine.clear(engine)
-        simulation.splashReturn()
     },
     restart(isKeepView = true) { //clears and rebuilds the whole level, and puts the player at the spawn
         levelEditor.flush()
@@ -1209,7 +1198,6 @@ const levelEditor = {
                 }
             },
         },
-        exit: { label: "exit editor", run: () => levelEditor.exit() },
     },
     run(name, arg) {
         levelEditor.commands[name].run(arg)
@@ -1711,20 +1699,19 @@ const levelEditor = {
             id: "top",
             render: () => `<div class="le-row">
                 <span class="le-info" data-level-info>${levelEditor.infoText()}</span>
-                <span class="le-fill"></span>${levelEditor.button("exit", "exit")}
             </div>`,
         },
         {
             id: "simulation",
             title: "simulation",
-            render: () => `<div class="le-grid le-two le-run">${levelEditor.button("test", levelEditor.isTesting ? "■ stop test" : "▶ test", "", levelEditor.isTesting)}${levelEditor.button("fullTest", levelEditor.isFullTest ? "■ stop JS test" : "▶ JS test", "", levelEditor.isFullTest)}</div>
+            render: () => `<div class="le-grid le-two le-run le-flush-x le-flush-top">${levelEditor.button("test", levelEditor.isTesting ? "■ stop test" : "▶ test", "", levelEditor.isTesting)}${levelEditor.button("fullTest", levelEditor.isFullTest ? "■ stop JS test" : "▶ JS test", "", levelEditor.isFullTest)}</div>
             <div class="le-row">
                 <label class="le-label le-check" title="mobs and power ups spawn while testing"><input type="checkbox" data-setting="testSpawning"${levelEditor.isTestSpawning ? " checked" : ""}>mobs, power ups, from level</label>
                 <input class="le-number le-short" data-setting="testLevel" value="${levelEditor.testLevel}" spellcheck="false" title="levels cleared while editing, for mob types and difficulty">
             </div>
             <div class="le-row"><span class="le-label">time</span><span class="le-segment">${[0.1, 0.25, 0.5, 1].map(scale => levelEditor.button("timeScale", `${scale}×`, scale, levelEditor.timeScale === scale, "game speed, it lowers the frame cap")).join("")}</span></div>
             <div class="le-row"><select data-setting="lookMode" title="how the camera follows the mouse, mouse look is the motion sickness tech">${[["static", "static mouse"], ["smooth", "smooth mouse look"], ["instant", "mouse look"]].map(([mode, text]) => `<option value="${mode}"${levelEditor.lookMode === mode ? " selected" : ""}>${text}</option>`).join("")}</select></div>
-            <div class="le-grid le-gap-above">${levelEditor.debugLayers.map(([name, tip]) => levelEditor.button("debugDraw", name, name, levelEditor.debugDraw.has(name), tip)).join("")}</div>`,
+            <div class="le-grid le-gap-above le-flush-x le-flush-bottom">${levelEditor.debugLayers.map(([name, tip]) => levelEditor.button("debugDraw", name, name, levelEditor.debugDraw.has(name), tip)).join("")}</div>`,
         },
         {
             id: "explorer",
@@ -1738,19 +1725,19 @@ const levelEditor = {
             render: () => { //spots, a boss, and a 2nd boss are all a level needs for mobs, and starting, random, and debris for power ups, they show the power ups they can be
                 const main = { startingPowerUps: ["gun", "tech", "ammo", "heal"], randomPowerUp: ["heal", "ammo"], debris: ["block", "heal", "ammo"] }
                 return `<div class="le-add-part">
-                        <div class="le-shapes">${levelElements.presets.map(preset => `<button class="le-button le-shape" data-command="preset" data-arg="${preset.name}" title="${preset.name}, as map, or block with the block tool">${levelElements.presetIcon(preset)}</button>`).join("")}</div>
-                        <div class="le-row">${levelEditor.elementList()}</div>
+                        <div class="le-shapes le-flush-x">${levelElements.presets.map(preset => `<button class="le-button le-shape" data-command="preset" data-arg="${preset.name}" title="${preset.name}, as map, or block with the block tool">${levelElements.presetIcon(preset)}</button>`).join("")}</div>
+                        ${levelEditor.elementList()}
                     </div>
                     <div class="le-add-part">
-                        <div class="le-grid">${["mobSpot", "boss", "secondaryBoss"].map(name => levelEditor.addButton(name)).join("")}</div>
-                        <div class="le-row">${levelEditor.mobList()}</div>
+                        <div class="le-grid le-tall le-flush-x">${["mobSpot", "boss", "secondaryBoss"].map(name => levelEditor.addButton(name, `${levelElements.types[name].label}<br>${levelEditor.mobExamplesHtml(name)}`)).join("")}</div>
+                        ${levelEditor.mobList()}
                     </div>
                     <div class="le-add-part">
-                        <div class="le-grid le-tall">${Object.entries(main).map(([name, orbs]) => levelEditor.addButton(name, `${levelElements.types[name].label}<br><span class="le-options">[${orbs.map(levelEditor.orb).join("")}]</span>`)).join("")}</div>
-                        <div class="le-row">${levelEditor.powerUpList()}</div>
+                        <div class="le-grid le-tall le-flush-x">${Object.entries(main).map(([name, orbs]) => levelEditor.addButton(name, `${levelElements.types[name].label}<br><span class="le-options">[${orbs.map(levelEditor.orb).join("")}]</span>`)).join("")}</div>
+                        ${levelEditor.powerUpList()}
                     </div>
                     <div class="le-add-part">
-                        <div class="le-grid le-one">${levelEditor.button("addCode", "+ code")}</div>
+                        <div class="le-grid le-one le-flush-x">${levelEditor.button("addCode", "+ code")}</div>
                     </div>`
             },
         },
@@ -1758,7 +1745,7 @@ const levelEditor = {
             id: "load",
             title: "export/import",
             render: () => `<div class="le-load" data-load-local></div>
-                <div class="le-grid le-two le-gap-above">${levelEditor.button("newLevel", "new")}${levelEditor.button("importLevel", "import")}${levelEditor.button("pool", levelEditor.isInPool() ? "in level pool" : "add to level pool", "", levelEditor.isInPool())}${levelEditor.button("code", "export")}</div>
+                <div class="le-grid le-two le-gap-above le-flush-x">${levelEditor.button("newLevel", "new")}${levelEditor.button("importLevel", "import")}${levelEditor.button("pool", levelEditor.isInPool() ? "in level pool" : "add to level pool", "", levelEditor.isInPool())}${levelEditor.button("code", "export")}</div>
                 <div class="le-load" data-load-written></div>`, //the local levels, then new, import, the pool, and export, then the written levels, filled in when it opens, see renderLoadList()
         },
     ],
@@ -1807,7 +1794,7 @@ const levelEditor = {
     },
     elementList() { //every level element by kind, and each named preset like exit fill, picking one adds it, an option's data-command and data-arg are what it runs
         const option = (command, arg, text, tip) => `<option value="${levelEditor.escape(arg)}" data-command="${command}" data-arg="${levelEditor.escape(arg)}" title="${levelEditor.escape(tip)}">${levelEditor.escape(text)}</option>`
-        return `<select class="le-mob-list le-element-list" title="add a level element in the middle of the view">
+        return `<select class="le-mob-list le-element-list le-flush-x" title="add a level element in the middle of the view">
             <option value="">level element</option>
             ${levelEditor.elementGroups().map(group => `<optgroup label="${group.title}">${group.names.map(name => {
             const type = levelElements.types[name]
@@ -1836,7 +1823,7 @@ const levelEditor = {
     },
     powerUpList() { //every power up with its orb, picking one adds it, browsers with customizable selects show the orbs (appearance: base-select), others just the names
         const type = levelElements.types.powerUp
-        return `<select class="le-mob-list le-rich-list" data-add="powerUp" title="a power up by name">
+        return `<select class="le-mob-list le-rich-list le-flush-x" data-add="powerUp" title="a power up by name">
             <option value="">power up by name</option>
             ${type.names.map(name => `<option value="${name}" title="${levelEditor.escape(type.tips[name] || "")}">${levelEditor.orb(name)}<span>${name}</span></option>`).join("")}
         </select>`
@@ -1844,11 +1831,23 @@ const levelEditor = {
     mobList() { //a random group, then every mob and boss by tier with its picture, picking one adds it, an option's data-arg is its whole add command
         const tiers = spawn.tier.map((names, i) => [`tier ${i}`, names]).concat(spawn.bossTier.map((names, i) => [`tier ${i} bosses`, names])).filter(([, names]) => names.length)
         const icons = levelEditor.mobIcons || {}
-        return `<select class="le-mob-list le-rich-list" data-add="namedMob" title="${levelEditor.escape(levelElements.types.namedMob.tip)}">
+        return `<select class="le-mob-list le-rich-list le-flush-x" data-add="namedMob" title="${levelEditor.escape(levelElements.types.namedMob.tip)}">
             <option value="">mob by name</option>
             <optgroup label="random"><option value="group" data-arg="mobGroup" title="${levelEditor.escape(levelElements.types.mobGroup.tip)}">${levelEditor.mobIcon("group", [{ fill: "rgb(255,80,160)", x: -14, y: 4, r: 9, sides: 5 }, { fill: "rgb(255,80,80)", x: 8, y: -6, r: 10, sides: 4 }, { fill: "rgb(255,120,80)", x: 10, y: 10, r: 7, sides: 3 }])}<span>group</span></option></optgroup>
             ${tiers.map(([label, names]) => `<optgroup label="${label}">${names.map(name => `<option value="${name}">${icons[name] || ""}<span>${name}</span></option>`).join("")}</optgroup>`).join("")}
         </select>`
+    },
+    mobExamples: { //a few of what the add menu's mob, boss, and 2nd boss buttons can spawn, drawn under them like the power up buttons' orbs
+        mobSpot: ["starter", "shooter", "hopper", "spinner"],
+        boss: ["hydraBoss", "powerUpBossBaby", "sneakBoss"],
+        secondaryBoss: ["mantisBoss", "pentaLaserBoss", "spiderBoss"],
+    },
+    mobExamplesHtml(typeName) { //[ pictures ], 13 × 13 each
+        const pictures = (levelEditor.mobExamples[typeName] || []).filter(name => levelEditor.mobShapes[name]).map(name => {
+            const { shapes, links, orbs } = levelEditor.mobShapes[name]
+            return levelEditor.mobIcon(name, shapes, links, orbs, 13, 13)
+        })
+        return `<span class="le-options le-mob-examples">[${pictures.join("")}]</span>`
     },
     sampleMobs() { //spawns every mob and boss once, far away, to draw it from what it made, then takes it all away again
         if (levelEditor.mobIcons || typeof spawn === "undefined") return
@@ -1870,7 +1869,10 @@ const levelEditor = {
                 const end = (body, point) => body ? { x: body.position.x + point.x, y: body.position.y + point.y + 100000 } : { x: point.x, y: point.y + 100000 }
                 const links = made.cons.concat(made.consBB, made.constraints).filter(c => c.bodyA && c.bodyB).map(c => [end(c.bodyA, c.pointA), end(c.bodyB, c.pointB)]) //tails, legs, and chains, not ends pinned to the level, a spider's are at 0, 0 until it moves
                 const orbs = powerUp.slice(spawned.powerUp).map(who => ({ x: who.position.x, y: who.position.y + 100000, r: who.size, fill: who.color }))
-                if (shapes.length) icons[name] = levelEditor.mobExtras[name]?.icon || levelEditor.mobIcon(name, shapes, links, orbs)
+                if (shapes.length) {
+                    icons[name] = levelEditor.mobExtras[name]?.icon || levelEditor.mobIcon(name, shapes, links, orbs)
+                    levelEditor.mobShapes[name] = { shapes, links, orbs }
+                }
             } catch (error) { } //it's only a picture
             levelData.unbuild(levelData.made(start))
             levelData.removeSpawned(spawned)
@@ -1895,7 +1897,7 @@ const levelEditor = {
             </svg>`,
         },
     },
-    mobIcon(name, shapes, links = [], orbs = []) { //shapes are { points, fill, stroke } in world space, or { x, y, r, sides, fill } made up, it's fit into a 26 × 16 picture around the biggest
+    mobIcon(name, shapes, links = [], orbs = [], w = 26, h = 16) { //shapes are { points, fill, stroke } in world space, or { x, y, r, sides, fill } made up, it's fit into a w × h picture around the biggest
         shapes = shapes.map(shape => shape.points ? shape : { ...shape, points: Array.from({ length: shape.sides }, (_, i) => ({ x: shape.x + shape.r * Math.cos(2 * Math.PI * i / shape.sides), y: shape.y + shape.r * Math.sin(2 * Math.PI * i / shape.sides) })) })
         const boxes = shapes.map(shape => levelElements.boundsOf(shape.points))
         const mainIndex = boxes.reduce((best, b, i) => b.width * b.height > 1.5 * boxes[best].width * boxes[best].height ? i : best, 0) //the first, or a much bigger body, a spider spawns its legs first
@@ -1919,8 +1921,6 @@ const levelEditor = {
         let box = levelElements.boundsOf(points)
         const reach = 7 * size //a mob that spreads out far, like a culture, is drawn around its first part
         if (box.width > 2 * reach || box.height > 2 * reach) box = { x: center.x - reach, y: center.y - reach, width: 2 * reach, height: 2 * reach }
-        const w = 26
-        const h = 16
         const k = Math.min((w - 2) / (box.width || 1), (h - 2) / (box.height || 1))
         const ox = (w - box.width * k) / 2 - box.x * k
         const oy = (h - box.height * k) / 2 - box.y * k
@@ -2159,7 +2159,7 @@ const levelEditor = {
         const current = levelEditor.data.name
         const open = levelEditor.openSections()
         const group = (title, items, note = "") => items.length ? `<div class="le-label le-load-header">${title}${note}</div><div class="le-load-pairs">${items.join("")}</div>` : "" //local levels, each with its delete button, apart so the × is clearly its own
-        const titled = (title, items) => items.length ? `<div class="le-label le-load-header">${title}</div><div class="le-grid le-load-grid">${items.join("")}</div>` : ""
+        const titled = (title, items) => items.length ? `<div class="le-label le-load-header">${title}</div><div class="le-grid le-load-grid le-flush-x">${items.join("")}</div>` : ""
         levelEditor.flush() //so the level being edited counts
         const written = (source, names) => names.map(name => levelEditor.button("load", name, `${source}:${name}`))
         const hidden = ["template", "testing", "null"]
@@ -2314,7 +2314,7 @@ const levelEditor = {
         return `<div class="le-row"><span class="le-name">code</span><span class="le-id">#${el.id}</span></div>
             <pre class="le-code-view" data-command="editCode" title="edit the code">${levelEditor.escape(el.code) || " "}</pre>
             ${runtime && runtime.error ? `<div class="le-error">//${levelEditor.escape(runtime.error.message)}</div>` : ""}
-            <div class="le-grid le-even le-actions">${levelEditor.button("editCode", "edit code")}${levelEditor.button("delete", "delete")}</div>`
+            <div class="le-actions le-flush-x"><div class="le-grid le-even">${levelEditor.button("editCode", "edit code")}${levelEditor.button("delete", "delete")}</div></div>`
     },
     inspectElement(el) {
         const type = levelElements.types[el.type]
@@ -2390,7 +2390,7 @@ const levelEditor = {
     },
     actionRows(isRotatable, lines) { //the inspector's bottom buttons, touching, each line split evenly, the turns on their own line on top
         const rows = lines.filter(Boolean).map(buttons => `<div class="le-grid le-even">${buttons}</div>`).join("")
-        return isRotatable || rows ? `<div class="le-actions">${isRotatable ? levelEditor.rotateRow() : ""}${rows}</div>` : ""
+        return isRotatable || rows ? `<div class="le-actions le-flush-x">${isRotatable ? levelEditor.rotateRow() : ""}${rows}</div>` : ""
     },
     rotateRow() { //type any angle and press enter, or a turn button, shift turns the other way, or drag the round handle above it
         const turn = degrees => levelEditor.button("rotate", `↻ ${degrees}°`, degrees, false, `rotate ${degrees}° clockwise, shift for counterclockwise`)

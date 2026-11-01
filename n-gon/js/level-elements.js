@@ -219,17 +219,17 @@ const levelElements = {
         { name: "rounded rect", size: [400, 200], points: (w, h, c = Math.min(50, w / 4, h / 4)) => [[c, 0], [w - c, 0], [w, c], [w, h - c], [w - c, h], [c, h], [0, h - c], [0, c]] }, //like spawn.bodyRectCorner
         { name: "rounded bottom", size: [150, 400], points: (w, h, c = Math.min(40, w / 4, h / 4)) => [[0, 0], [w, 0], [w, h - c], [w - c, h], [c, h], [0, h - c]] },
         { name: "trapezoid", size: [400, 100], points: (w, h) => [[w / 4, 0], [w * 3 / 4, 0], [w, h], [0, h]] },
-        { name: "upside down trapezoid", size: [400, 100], points: (w, h) => [[0, 0], [w, 0], [w * 3 / 4, h], [w / 4, h]] },
+        { name: "dome", size: [400, 200], points: (w, h, n = 12) => Array.from({ length: n + 1 }, (_, i) => [w / 2 - w / 2 * Math.cos(Math.PI * i / n), h - h * Math.sin(Math.PI * i / n)]) }, //like the half circles in written levels, turn it for a bowl
         { name: "ramp up right", size: [400, 200], points: (w, h) => [[w, 0], [w, h], [0, h]] },
         { name: "ramp up left", size: [400, 200], points: (w, h) => [[0, 0], [w, h], [0, h]] },
         { name: "pointed ends", size: [600, 150], points: (w, h, c = Math.min(h * 0.75, w / 4)) => [[c, 0], [w - c, 0], [w, h / 2], [w - c, h], [c, h], [0, h / 2]] },
-        { name: "pointed pillar", size: [150, 600], points: (w, h, c = Math.min(w * 0.4, h / 4)) => [[w / 2, 0], [w, c], [w, h - c], [w / 2, h], [0, h - c], [0, c]] },
-        { name: "point down", size: [300, 500], points: (w, h) => [[0, 0], [w, 0], [w, h * 0.85], [w / 2, h], [0, h * 0.85]] },
+        { name: "circle", size: [300, 300], points: (w, h, n = 16) => Array.from({ length: n }, (_, i) => [w / 2 + w / 2 * Math.cos(2 * Math.PI * i / n), h / 2 + h / 2 * Math.sin(2 * Math.PI * i / n)]) },
         { name: "point up", size: [300, 500], points: (w, h) => [[w / 2, 0], [w, h * 0.15], [w, h], [0, h], [0, h * 0.15]] },
         { name: "diamond", size: [300, 400], points: (w, h) => [[w / 2, 0], [w, h / 2], [w / 2, h], [0, h / 2]] },
         { name: "spike", size: [200, 200], points: (w, h) => [[w / 2, 0], [w, h], [0, h]] },
         { name: "stairs up right", size: [600, 300], rects: (w, h, steps = 4) => Array.from({ length: steps }, (_, i) => [w * i / steps, h * (steps - 1 - i) / steps, w / steps, h * (i + 1) / steps]) }, //like spawn.spawnStairs
         { name: "stairs up left", size: [600, 300], rects: (w, h, steps = 4) => Array.from({ length: steps }, (_, i) => [w * i / steps, h * i / steps, w / steps, h * (steps - i) / steps]) },
+        { name: "arch", size: [400, 300], rects: (w, h, t = Math.min(w, h) / 5) => [[0, 0, w, t], [0, t, t, h - t], [w - t, t, t, h - t]] }, //a beam on two pillars, three rects
     ],
     presetIcon(preset, size = 18) { //a tiny drawing of the preset for its button
         const [w, h] = preset.size

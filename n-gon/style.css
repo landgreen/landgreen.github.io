@@ -2907,9 +2907,26 @@ body.level-editor #right-HUD-constraint {
     white-space: nowrap;
 }
 
-/* the add menu's level elements, mobs, power ups, and code, untitled, a clear gap apart */
+/* the add menu's level elements, mobs, power ups, and code, untitled, stacked flush in one box with a line between */
+.le-details:has(> .le-add-part) {
+    padding: 0;
+    overflow: hidden;
+}
+
+.le-add-part {
+    --le-pad: 0px;
+}
+
 .le-add-part+.le-add-part {
-    margin-top: 16px;
+    border-top: 1px solid #333;
+}
+
+.le-add-part> :first-child {
+    border-top-width: 0;
+}
+
+.le-add-part> :last-child {
+    border-bottom-width: 0;
 }
 
 /* export, the local levels, and import, apart from each other */
@@ -2966,6 +2983,60 @@ body.level-editor #right-HUD-constraint {
     border-top: none;
 }
 
+/* buttons and lists out to the outline of the menu or inspector they're in, after .le-grid so their borders win, its border is their side lines
+   -x reaches the sides, -top and -bottom also the top or bottom, rounded like its inside corners */
+.le-details {
+    --le-pad: 7px;
+    --le-inner-radius: 4px;
+}
+
+#level-editor-right {
+    --le-pad: 6px;
+    --le-inner-radius: 6px;
+}
+
+.le-flush-x {
+    margin-left: calc(-1 * var(--le-pad));
+    margin-right: calc(-1 * var(--le-pad));
+}
+
+.le-flush-x.le-grid,
+.le-flush-x.le-shapes,
+.le-flush-x.le-mob-list,
+.le-flush-x .le-grid {
+    border-left-width: 0;
+    border-right-width: 0;
+}
+
+.le-flush-x.le-mob-list {
+    width: calc(100% + 2 * var(--le-pad));
+}
+
+.le-mob-list:not(.le-rich-list) {
+    padding: 3px 6px; /* like the customizable lists next to it */
+}
+
+.le-flush-top {
+    margin-top: calc(-1 * var(--le-pad));
+    border-top-width: 0;
+    border-radius: var(--le-inner-radius) var(--le-inner-radius) 0 0;
+    overflow: hidden;
+}
+
+.le-flush-bottom {
+    margin-bottom: calc(-1 * var(--le-pad));
+    border-bottom-width: 0;
+    border-radius: 0 0 var(--le-inner-radius) var(--le-inner-radius);
+    overflow: hidden;
+}
+
+/* a list right under its buttons joins them, like the add menu's level element, mob by name, and power up by name */
+.le-grid+.le-mob-list,
+.le-shapes+.le-mob-list {
+    margin-top: 0;
+    border-top: none;
+}
+
 .le-orb {
     display: inline-block;
     margin-right: 0.3em;
@@ -2988,6 +3059,17 @@ body.level-editor #right-HUD-constraint {
 /* the power ups a button can be, written like an array */
 .le-options {
     color: #999;
+}
+
+/* the mob, boss, and 2nd boss buttons' example pictures, in a line like the power up buttons' orbs */
+.le-mob-examples {
+    display: inline-flex;
+    align-items: center;
+    gap: 1px;
+}
+
+.le-mob-examples .le-mob-icon {
+    margin: 0;
 }
 
 /* a power up's name, and its orb on the right */
