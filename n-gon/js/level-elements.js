@@ -10,7 +10,7 @@ const levelElements = {
     //*********************************************************************
     // properties, shown and edited in the editor's inspector
     //*********************************************************************
-    //{ key, kind: "number" | "bool" | "text" | "select", step, min, max, options, read(el), write(el, value) }
+    //{ key, kind: "number" | "bool" | "text" | "select" | "mask", step, min, max, options, read(el), write(el, value) }
     //read and write are for values worked out from other values, like a block's mass from its density
     prop: {
         number(key, settings = {}) { return { key, kind: "number", ...settings } },
@@ -19,7 +19,50 @@ const levelElements = {
         color(key, settings = {}) { return { key, kind: "color", ...settings } }, //text with a color picker
         select(key, options, settings = {}) { return { key, kind: "select", options, ...settings } },
         ref(key, types, settings = {}) { return { key, kind: "ref", types, ...settings } }, //another element's id or null, types are the kinds it can be
+        mask(key, settings = {}) { return { key, kind: "mask", ...settings } }, //collision categories as names, like "player map body", see levelElements.collision
     },
+
+    //*********************************************************************
+    // collision, a map's or block's collisionFilter.mask, saved as category names like "player map body"
+    // two bodies collide only if each one's mask has the other's category, so a mask can only take away collisions the other side allows
+    //*********************************************************************
+    collision: {
+        names: ["player", "map", "body", "bullet", "powerUp", "mob", "mobBullet", "mobShield"], //cat.phased is past 32 bits, Matter's masks can't hold it
+        category: { map: "map", block: "body" },
+        defaults: { //the mask each type gets in level.addToWorld() and spawn.bodyRect()
+            map: "player map body bullet powerUp mob mobBullet",
+            block: "player map body bullet mob mobBullet",
+        },
+        others: { //the masks the game usually gives each category, so the editor only lists what collides back, guns and mobs vary
+            player: "map body mob mobBullet mobShield",
+            map: "player map body bullet powerUp mob mobBullet",
+            body: "player map body bullet mob mobBullet",
+            bullet: "map body mob mobBullet mobShield",
+            powerUp: "map powerUp",
+            mob: "player map body bullet mob",
+            mobBullet: "player map body bullet",
+            mobShield: "bullet",
+        },
+        has(text, name) { return String(text).split(" ").includes(name) },
+        toggle(text, name, isOn) { //canonical order, so the same mask is always the same text
+            const on = new Set(String(text).split(" ").filter(Boolean))
+            if (isOn) on.add(name)
+            else on.delete(name)
+            return levelElements.collision.names.filter(n => on.has(n)).join(" ")
+        },
+        isBack(type, name) { //does name's usual mask have this type's category, static maps never hit each other
+            const category = levelElements.collision.category[type]
+            if (type === "map" && name === "map") return false
+            return levelElements.collision.has(levelElements.collision.others[name], category)
+        },
+        choices(type) { //the names worth checking for a type, the others never collide with it whatever its mask
+            return levelElements.collision.names.filter(name => levelElements.collision.isBack(type, name))
+        },
+        mask(text) { return String(text).split(" ").filter(Boolean).reduce((mask, name) => mask | cat[name], 0) },
+        code(text) { return String(text).split(" ").filter(Boolean).map(name => `cat.${name}`).join(" | ") || "0" },
+        isDefault(el) { return el.collides === levelElements.collision.defaults[el.type] },
+    },
+    linkSources: ["button", "toggle", "keyhole", "zone", "timer"], //turn linked elements on and off, each has linkOn(el, runtime) and linkCode(el, name), see button
     refKeys(el) { //the props that hold other elements' ids, like a door's button
         const type = levelElements.types[el.type]
         return type ? type.props.filter(prop => prop.kind === "ref").map(prop => prop.key) : []
@@ -179,6 +222,10 @@ const levelElements = {
         { name: "spike", size: [200, 200], points: (w, h) => [[w / 2, 0], [w, h], [0, h]] },
         { name: "stairs up right", size: [600, 300], rects: (w, h, steps = 4) => Array.from({ length: steps }, (_, i) => [w * i / steps, h * (steps - 1 - i) / steps, w / steps, h * (i + 1) / steps]) }, //like spawn.spawnStairs
         { name: "stairs up left", size: [600, 300], rects: (w, h, steps = 4) => Array.from({ length: steps }, (_, i) => [w * i / steps, h * i / steps, w / steps, h * (steps - i) / steps]) },
+        { //a rect's 5th value is its type, whatever the draw tool is
+            name: "block door", size: [40, 340], title: "block door, map lips with a stack of blocks between them to knock out, like spawn.blockDoor",
+            rects: () => [[0, 0, 40, 60, "map"], ...[0, 1, 2, 3].map(i => [5, 30 + i * 63, 30, 60, "block"]), [0, 290, 40, 50, "map"]],
+        },
     ],
     presetIcon(preset, size = 18) { //a tiny drawing of the preset for its button
         const [w, h] = preset.size
@@ -392,6 +439,13 @@ const levelElements = {
         ctx.textBaseline = "alphabetic"
         ctx.textAlign = "left"
     },
+    outlineShape(el) { //a map's or block's outline in the guide style, for when its body isn't there
+        const points = levelElements.points(el)
+        ctx.beginPath()
+        points.forEach((p, i) => i ? ctx.lineTo(p.x, p.y) : ctx.moveTo(p.x, p.y))
+        ctx.closePath()
+        ctx.stroke()
+    },
     area(el) {
         return el.vertices ? Matter.Vertices.area(levelElements.points(el)) : el.width * el.height
     },
@@ -460,27 +514,49 @@ levelElements.define("exit", {
 levelElements.define("map", {
     group: "shape",
     color: "#444",
-    defaults: () => ({ x: 0, y: 0, width: 100, height: 100, friction: 0.1, restitution: 0 }),
+    isLinkable: true,
+    handlesLink: true, //appears or disappears instead of only running while it's on
+    defaults: () => ({ x: 0, y: 0, width: 100, height: 100, friction: 0.1, restitution: 0, collides: levelElements.collision.defaults.map, link: null, on: "appears" }),
     props: [
         ...levelElements.rect(),
         levelElements.prop.number("friction", { step: 0.05, min: 0 }),
         levelElements.prop.number("restitution", { step: 0.1, min: 0 }),
+        levelElements.prop.mask("collides"),
+        levelElements.prop.ref("link", levelElements.linkSources),
+        levelElements.prop.select("on", ["appears", "disappears"]), //what it does while its link is on
     ],
-    build(el) {
-        map[map.length] = levelElements.matterBody(el, { friction: el.friction, restitution: el.restitution })
+    overlay(el) { //a linked map piece can be gone, so its outline always shows
+        if (!el.link) return
+        levelElements.outlineShape(el)
     },
-    code(el) { //spawn.mapRect or spawn.mapVertex, with properties only when they aren't the defaults
+    build(el) {
+        const who = map[map.length] = levelElements.matterBody(el, { friction: el.friction, restitution: el.restitution })
+        if (!levelElements.collision.isDefault(el)) who.collisionMask = levelElements.collision.mask(el.collides) //level.addToWorld() uses it in place of the usual mask
+        if (!el.link) return
+        return {
+            custom() {
+                const state = levelData.linkState(el)
+                level.setMapPart(who, state === null || state === (el.on === "appears")) //without its button or toggle it stays
+            },
+        }
+    },
+    code(el, name, context) { //spawn.mapRect or spawn.mapVertex, with properties only when they aren't the defaults
         const changed = [el.friction !== 0.1 ? `friction: ${levelElements.args(el.friction)}` : "", el.restitution ? `restitution: ${levelElements.args(el.restitution)}` : ""].filter(Boolean)
         const properties = changed.length ? `, { ${changed.join(", ")} }` : ""
         const shape = el.vertices ? `spawn.mapVertex(${levelElements.args(el.x, el.y, levelElements.pathText(el))}` : `spawn.mapRect(${levelElements.args(el.x, el.y, el.width, el.height)}`
-        return { setup: [`${shape}${properties});`] }
+        const setup = [`${shape}${properties});`]
+        if (!levelElements.collision.isDefault(el)) setup.push(`map[map.length - 1].collisionMask = ${levelElements.collision.code(el.collides)}; //level.addToWorld() uses it in place of the usual mask`)
+        const link = context && context.link(el)
+        if (!link) return { setup }
+        setup.push(`const ${name} = map[map.length - 1];`)
+        return { setup, custom: [`level.setMapPart(${name}, ${el.on === "appears" ? link.on : link.off}); //${el.on} while it's on`] }
     },
 })
 
 levelElements.define("block", {
     group: "shape",
     color: "rgba(140,140,140,0.85)",
-    defaults: () => ({ x: 0, y: 0, width: 50, height: 50, density: 0.001, friction: 0.05, frictionAir: 0.001, restitution: 0, chance: 1 }),
+    defaults: () => ({ x: 0, y: 0, width: 50, height: 50, density: 0.001, friction: 0.05, frictionStatic: 0.5, frictionAir: 0.001, restitution: 0, velocityX: 0, velocityY: 0, holdable: true, noSpin: false, immutable: false, collides: levelElements.collision.defaults.block, chance: 1 }),
     props: [
         ...levelElements.rect(),
         levelElements.prop.number("density", { step: 0.0005, min: 0.00001 }),
@@ -491,8 +567,15 @@ levelElements.define("block", {
             write(el, value) { el.density = value / levelElements.area(el) },
         }),
         levelElements.prop.number("friction", { step: 0.05, min: 0 }),
+        levelElements.prop.number("frictionStatic", { step: 0.1, min: 0 }), //how hard it is to start sliding, Matter's default is 0.5
         levelElements.prop.number("frictionAir", { step: 0.001, min: 0 }),
         levelElements.prop.number("restitution", { step: 0.1, min: 0 }),
+        levelElements.prop.number("velocityX", { step: 1 }), //how fast it's moving when the level starts
+        levelElements.prop.number("velocityY", { step: 1 }),
+        levelElements.prop.bool("holdable"), //false is isNotHoldable, the field can't pick it up
+        levelElements.prop.bool("noSpin"), //inertia Infinity, it slides but never turns
+        levelElements.prop.bool("immutable"), //isImmutable, like a key, tech can't destroy, split, grow, or freeze it, and falling out of the level brings it back instead of removing it
+        levelElements.prop.mask("collides"),
         levelElements.prop.number("chance", { step: 0.1, min: 0 }), //of showing up each time the level loads, like spawn.bodyRect's chance, always shows in the editor
     ],
     overlay(el) { //blocks that don't always show up are labeled with their chance
@@ -508,21 +591,30 @@ levelElements.define("block", {
     },
     build(el, options) { //like spawn.bodyRect
         if (!options.isEditor && el.chance < 1 && Math.random() >= el.chance) return
-        const who = body[body.length] = levelElements.matterBody(el, { friction: el.friction, frictionAir: el.frictionAir, restitution: el.restitution })
+        const who = body[body.length] = levelElements.matterBody(el, { friction: el.friction, frictionStatic: el.frictionStatic, frictionAir: el.frictionAir, restitution: el.restitution })
         Matter.Body.setDensity(who, el.density)
+        if (el.noSpin) Matter.Body.setInertia(who, Infinity) //after the density, setting it sets the inertia too
+        if (el.velocityX || el.velocityY) Matter.Body.setVelocity(who, { x: el.velocityX, y: el.velocityY })
+        if (!el.holdable) who.isNotHoldable = true
+        if (el.immutable) who.isImmutable = true
         who.collisionFilter.category = cat.body
-        who.collisionFilter.mask = cat.player | cat.map | cat.body | cat.bullet | cat.mob | cat.mobBullet
+        who.collisionFilter.mask = levelElements.collision.mask(el.collides)
         Composite.add(engine.world, who)
         who.classType = "body"
     },
     code(el, name, context) { //spawn.bodyRect's properties default to { friction: 0.05, frictionAir: 0.001 }, spawn.bodyVertex has no defaults
         const isHeld = !!(context && context.isReferenced(el.id)) //a constraint holds it, so it gets a name and always shows up
-        const isDefault = el.friction === 0.05 && el.frictionAir === 0.001 && !el.restitution
-        const properties = `{ friction: ${levelElements.args(el.friction)}, frictionAir: ${levelElements.args(el.frictionAir)}${el.restitution ? `, restitution: ${levelElements.args(el.restitution)}` : ""} }`
+        const isDefault = el.friction === 0.05 && el.frictionAir === 0.001 && !el.restitution && el.frictionStatic === 0.5
+        const properties = `{ friction: ${levelElements.args(el.friction)}${el.frictionStatic !== 0.5 ? `, frictionStatic: ${levelElements.args(el.frictionStatic)}` : ""}, frictionAir: ${levelElements.args(el.frictionAir)}${el.restitution ? `, restitution: ${levelElements.args(el.restitution)}` : ""} }`
         const setup = [el.vertices ?
             `spawn.bodyVertex(${levelElements.args(el.x, el.y, levelElements.pathText(el))}, ${properties});` :
             `spawn.bodyRect(${levelElements.args(el.x, el.y, el.width, el.height)}${isDefault ? "" : `, 1, ${properties}`});`]
         if (el.density !== 0.001) setup.push(`Matter.Body.setDensity(body[body.length - 1], ${levelElements.args(el.density)});`)
+        if (el.noSpin) setup.push(`Matter.Body.setInertia(body[body.length - 1], Infinity); //slides but never turns`)
+        if (el.velocityX || el.velocityY) setup.push(`Matter.Body.setVelocity(body[body.length - 1], { x: ${levelElements.args(el.velocityX)}, y: ${levelElements.args(el.velocityY)} });`)
+        if (!el.holdable) setup.push(`body[body.length - 1].isNotHoldable = true;`)
+        if (el.immutable) setup.push(`body[body.length - 1].isImmutable = true;`)
+        if (!levelElements.collision.isDefault(el)) setup.push(`body[body.length - 1].collisionFilter.mask = ${levelElements.collision.code(el.collides)};`)
         if (isHeld) setup.push(`const ${name} = body[body.length - 1];`)
         if (el.chance >= 1 || isHeld) return { setup }
         if (setup.length === 1 && !el.vertices) { //spawn.bodyRect has a chance argument
@@ -732,30 +824,42 @@ levelElements.define("wind", {
 })
 
 levelElements.define("slime", { //level.hazard
-    tip: "hurts the player while they're inside it",
+    tip: "hurts the player while they're inside it, with rise it starts empty and fills up, linked it fills while on and drains while off",
     group: "element",
-    defaults: () => ({ x: 0, y: -100, width: 400, height: 100, damage: 0.0025 }),
-    props: [...levelElements.rect(), levelElements.prop.number("damage", { step: 0.0005, min: 0 })],
+    handlesLink: true, //with rise it drains while off instead of stopping
+    defaults: () => ({ x: 0, y: -100, width: 400, height: 100, damage: 0.0025, rise: 0 }),
+    props: [
+        ...levelElements.rect(),
+        levelElements.prop.number("damage", { step: 0.0005, min: 0 }),
+        levelElements.prop.number("rise", { step: 0.5, min: 0 }), //how fast it fills a cycle, 0 is always full, see hazard.level()
+    ],
+    overlay(el) { //how high it fills
+        if (el.rise) ctx.strokeRect(el.x, el.y, el.width, el.height)
+    },
     build(el) {
         const slime = level.hazard(el.x, el.y, el.width, el.height, el.damage)
-        return { custom() { slime.query() } }
+        if (el.rise) { //starts empty
+            slime.height = 0
+            slime.min.y = slime.max.y
+        }
+        return {
+            custom() {
+                const state = levelData.linkState(el)
+                if (el.rise) slime.level(state !== false, el.rise)
+                if (el.rise || state !== false) slime.query()
+            },
+        }
     },
-    code: (el, name) => ({
-        setup: [`const ${name} = level.hazard(${levelElements.args(el.x, el.y, el.width, el.height, el.damage)});`],
-        custom: [`${name}.query();`],
-    }),
+    code(el, name, context) {
+        const link = context && context.link(el)
+        const setup = [`const ${name} = level.hazard(${levelElements.args(el.x, el.y, el.width, el.height, el.damage)});`]
+        if (!el.rise) return { setup, custom: [link ? `if (${link.on}) ${name}.query();` : `${name}.query();`] }
+        setup.push(`${name}.height = 0; //starts empty and rises`, `${name}.min.y = ${name}.max.y;`)
+        return { setup, custom: [link ? `${name}.level(${link.on}, ${levelElements.args(el.rise)}); //fills while on, drains while off` : `${name}.levelRise(${levelElements.args(el.rise)});`, `${name}.query();`] }
+    },
 })
 
-levelElements.define("laser", {
-    tip: "beam between two points that hurts the player, drag either end",
-    group: "element",
-    defaults: () => ({ x: 0, y: -300, x2: 400, y2: -300, damage: 0.12 }),
-    props: [
-        ...levelElements.position(),
-        levelElements.prop.number("x2", { isGrid: true }),
-        levelElements.prop.number("y2", { isGrid: true }),
-        levelElements.prop.number("damage", { step: 0.02, min: 0 }),
-    ],
+levelElements.segment = { //geometry for a line between two points, x, y and x2, y2, drag either end, like laser and fizzler
     bounds(el) {
         const b = levelElements.boundsOf([{ x: el.x, y: el.y }, { x: el.x2, y: el.y2 }])
         return { x: b.x - 10, y: b.y - 10, width: b.width + 20, height: b.height + 20 }
@@ -779,7 +883,6 @@ levelElements.define("laser", {
         const end = levelElements.rotatePoint({ x: el.x2, y: el.y2 }, center, degrees)
         Object.assign(el, { x: start.x, y: start.y, x2: end.x, y2: end.y })
     },
-    summary: el => `laser(${[el.x, el.y, el.x2, el.y2].map(n => Number(n.toFixed(2))).join(", ")})`,
     dragHandle(el, id, point) {
         if (id === "start") {
             el.x = point.x
@@ -789,15 +892,29 @@ levelElements.define("laser", {
             el.y2 = point.y
         }
     },
-    build(el) {
-        const laser = level.laser({ x: el.x, y: el.y }, { x: el.x2, y: el.y2 }, el.damage)
-        return { custom() { laser.query() } }
-    },
     overlay(el) {
         ctx.beginPath()
         ctx.moveTo(el.x, el.y)
         ctx.lineTo(el.x2, el.y2)
         ctx.stroke()
+    },
+}
+
+levelElements.define("laser", {
+    tip: "beam between two points that hurts the player, drag either end",
+    group: "element",
+    defaults: () => ({ x: 0, y: -300, x2: 400, y2: -300, damage: 0.12 }),
+    props: [
+        ...levelElements.position(),
+        levelElements.prop.number("x2", { isGrid: true }),
+        levelElements.prop.number("y2", { isGrid: true }),
+        levelElements.prop.number("damage", { step: 0.02, min: 0 }),
+    ],
+    ...levelElements.segment,
+    summary: el => `laser(${[el.x, el.y, el.x2, el.y2].map(n => Number(n.toFixed(2))).join(", ")})`,
+    build(el) {
+        const laser = level.laser({ x: el.x, y: el.y }, { x: el.x2, y: el.y2 }, el.damage)
+        return { custom() { laser.query() } }
     },
     code: (el, name) => ({
         setup: [`const ${name} = level.laser({ x: ${levelElements.args(el.x)}, y: ${levelElements.args(el.y)} }, { x: ${levelElements.args(el.x2)}, y: ${levelElements.args(el.y2)} }, ${levelElements.args(el.damage)});`],
@@ -805,11 +922,33 @@ levelElements.define("laser", {
     }),
 })
 
+levelElements.define("fizzler", { //level.fizzler
+    tip: "line that deletes blocks that cross it, not immutable or unholdable ones, drag either end",
+    group: "element",
+    defaults: () => ({ x: 0, y: -300, x2: 0, y2: 0 }),
+    props: [
+        ...levelElements.position(),
+        levelElements.prop.number("x2", { isGrid: true }),
+        levelElements.prop.number("y2", { isGrid: true }),
+    ],
+    ...levelElements.segment,
+    summary: el => `fizzler(${[el.x, el.y, el.x2, el.y2].map(n => Number(n.toFixed(2))).join(", ")})`,
+    build(el) {
+        const fizzler = level.fizzler({ x: el.x, y: el.y }, { x: el.x2, y: el.y2 })
+        return { custom() { fizzler.query() } }
+    },
+    code: (el, name) => ({
+        setup: [`const ${name} = level.fizzler({ x: ${levelElements.args(el.x)}, y: ${levelElements.args(el.y)} }, { x: ${levelElements.args(el.x2)}, y: ${levelElements.args(el.y2)} });`],
+        custom: [`${name}.query();`],
+    }),
+})
+
 //buttons and toggles turn linked elements on and off, a linked element's link is the button's or toggle's id
 //doors open while it's on, other linkable elements only run while it's on, see levelData.linkState() and levelData.code()
 //a link source has linkOn(el, runtime), true while on, and linkCode(el, name), the javascript for on and off
-levelElements.linkSources = ["button", "toggle"]
 levelElements.isLinkSource = el => !!levelElements.types[el.type]?.linkOn
+levelElements.keyColors = ["yellow", "pink", "teal"] //level.keyColors by name
+levelElements.keyColor = name => level.keyColors[Math.max(0, levelElements.keyColors.indexOf(name))]
 levelElements.drawLinks = (el, from) => { //a dashed line from a button or toggle to each element linked to it
     ctx.setLineDash([10, 8])
     ctx.lineWidth = 2
@@ -879,6 +1018,137 @@ levelElements.define("toggle", { //level.toggle, a lever the player flips
     }),
 })
 
+levelElements.define("keyhole", { //level.keyButton, a link source the matching key turns on
+    tip: "cradle a key of the same color fits in, linked doors open and linked elements run while the key is in, stays on once it's been in",
+    group: "element",
+    defaults: () => ({ x: 0, y: 0, color: "yellow", on: "key in" }),
+    props: [
+        ...levelElements.position(),
+        levelElements.prop.select("color", levelElements.keyColors),
+        levelElements.prop.select("on", ["key in", "stays on"]), //stays on once a key has been in, like the key level's doors
+    ],
+    bounds: el => ({ x: el.x - 35, y: el.y - 105, width: 152, height: 120 }), //the cradle and the glow over it
+    overlay: el => levelElements.drawLinks(el, { x: el.x + 42, y: el.y - 30 }),
+    linkOn: (el, runtime) => runtime.keyhole ? (el.on === "stays on" ? !!runtime.keyhole.isUsed : !runtime.keyhole.isUp) : null,
+    linkCode: (el, name) => el.on === "stays on" ? { on: `${name}.isUsed`, off: `!${name}.isUsed` } : { on: `!${name}.isUp`, off: `${name}.isUp` },
+    build(el) {
+        const keyhole = level.keyButton(el.x, el.y, levelElements.keyColor(el.color))
+        return {
+            keyhole,
+            custom() {
+                keyhole.query()
+                if (!keyhole.isUp) keyhole.isUsed = true
+                keyhole.buttonStatus()
+                keyhole.draw()
+            },
+        }
+    },
+    code: (el, name) => ({
+        setup: [`const ${name} = level.keyButton(${levelElements.args(el.x, el.y)}, level.keyColors[${levelElements.keyColors.indexOf(el.color)}]);`],
+        custom: [`${name}.query();`, ...(el.on === "stays on" ? [`if (!${name}.isUp) ${name}.isUsed = true; //stays on once the key has been in`] : []), `${name}.buttonStatus();`, `${name}.draw();`],
+    }),
+})
+
+levelElements.define("key", { //level.key, an immutable block that turns on the keyhole of its color
+    tip: "glowing block that fits the keyhole of its color, it can't be destroyed",
+    group: "element",
+    defaults: () => ({ x: 0, y: -100, color: "yellow" }),
+    props: [...levelElements.position(), levelElements.prop.select("color", levelElements.keyColors)],
+    bounds: el => ({ x: el.x - 38, y: el.y - 22, width: 76, height: 44 }),
+    build(el) {
+        const key = level.key(el.x, el.y, levelElements.keyColor(el.color))
+        return {
+            custom() { key.draw() },
+            top() { key.drawTop() },
+        }
+    },
+    code: (el, name) => ({
+        setup: [`const ${name} = level.key(${levelElements.args(el.x, el.y)}, level.keyColors[${levelElements.keyColors.indexOf(el.color)}]);`],
+        custom: [`${name}.draw();`],
+        top: [`${name}.drawTop();`],
+    }),
+})
+
+levelElements.zoneWho = { //what a zone notices, and the same as javascript
+    player: { list: () => [player], code: "[player]" },
+    block: { list: () => body, code: "body" },
+    mob: { list: () => mob, code: "mob" },
+    any: { list: () => [player].concat(body, mob), code: "[player].concat(body, mob)" },
+}
+levelElements.define("zone", { //a trigger, a link source that's on while the player is inside, only the editor draws it
+    tip: "invisible box, linked doors open and linked elements run while the player (or a block or mob) is inside, stays on once something has been in",
+    group: "element",
+    isBackground: true, //it's often big, lock it so the mouse goes through
+    defaults: () => ({ x: 0, y: -400, width: 400, height: 400, who: "player", on: "inside" }),
+    props: [
+        ...levelElements.rect(),
+        levelElements.prop.select("who", Object.keys(levelElements.zoneWho)),
+        levelElements.prop.select("on", ["inside", "stays on"]), //stays on once it's been entered
+    ],
+    overlay(el) {
+        ctx.fillStyle = "rgba(255,80,80,0.06)"
+        ctx.fillRect(el.x, el.y, el.width, el.height)
+        ctx.strokeRect(el.x, el.y, el.width, el.height)
+        levelElements.drawLinks(el, { x: el.x + el.width / 2, y: el.y + el.height / 2 })
+    },
+    linkOn: (el, runtime) => runtime.zone ? runtime.zone.isOn : null,
+    linkCode: (el, name) => ({ on: `${name}.isOn`, off: `!${name}.isOn` }),
+    build(el) {
+        const zone = { isOn: false, min: { x: el.x, y: el.y }, max: { x: el.x + el.width, y: el.y + el.height } }
+        const who = levelElements.zoneWho[el.who] || levelElements.zoneWho.player
+        return {
+            zone,
+            custom() { if (el.on !== "stays on" || !zone.isOn) zone.isOn = Matter.Query.region(who.list(), zone).length > 0 },
+        }
+    },
+    code(el, name) {
+        const who = levelElements.zoneWho[el.who] || levelElements.zoneWho.player
+        const check = `${name}.isOn = Matter.Query.region(${who.code}, ${name}).length > 0;`
+        return {
+            setup: [`const ${name} = { isOn: false, min: { x: ${levelElements.args(el.x)}, y: ${levelElements.args(el.y)} }, max: { x: ${levelElements.args(el.x + el.width)}, y: ${levelElements.args(el.y + el.height)} } }; //trigger zone`],
+            custom: [el.on === "stays on" ? `if (!${name}.isOn) ${check} //stays on once it's been entered` : check],
+        }
+    },
+})
+
+levelElements.timerCode = el => `(simulation.cycle${el.offset ? ` + ${levelElements.args(el.offset)}` : ""}) % ${levelElements.args(el.onTime + el.offTime)} < ${levelElements.args(el.onTime)}`
+levelElements.define("timer", { //a link source that's on for onTime cycles, then off for offTime, over and over
+    tip: "linked doors open and linked elements run for onTime cycles, then stop for offTime, over and over, 60 cycles is a second, offset shifts when",
+    group: "element",
+    defaults: () => ({ x: 0, y: -200, onTime: 60, offTime: 60, offset: 0 }),
+    props: [
+        ...levelElements.position(),
+        levelElements.prop.number("onTime", { step: 10, min: 1 }),
+        levelElements.prop.number("offTime", { step: 10, min: 0 }),
+        levelElements.prop.number("offset", { step: 10, min: 0 }),
+    ],
+    overlay(el) { //a clock, the hand goes around once a period, green while on
+        const period = el.onTime + el.offTime
+        const phase = ((simulation.cycle + el.offset) % period) / period
+        ctx.setLineDash([])
+        ctx.beginPath()
+        ctx.moveTo(el.x, el.y)
+        ctx.arc(el.x, el.y, 22, -Math.PI / 2, -Math.PI / 2 + 2 * Math.PI * el.onTime / period)
+        ctx.closePath()
+        ctx.fillStyle = "rgba(80,200,120,0.35)"
+        ctx.fill()
+        ctx.beginPath()
+        ctx.arc(el.x, el.y, 22, 0, 2 * Math.PI)
+        ctx.fillStyle = levelElements.types.timer.linkOn(el) ? "rgba(80,200,120,0.3)" : "rgba(255,255,255,0.4)"
+        ctx.fill()
+        ctx.moveTo(el.x, el.y)
+        ctx.lineTo(el.x + 20 * Math.sin(2 * Math.PI * phase), el.y - 20 * Math.cos(2 * Math.PI * phase))
+        ctx.lineWidth = 2
+        ctx.strokeStyle = "rgba(0,0,0,0.6)"
+        ctx.stroke()
+        levelElements.drawLinks(el, el)
+    },
+    linkOn: el => (simulation.cycle + el.offset) % (el.onTime + el.offTime) < el.onTime,
+    linkCode: el => ({ on: levelElements.timerCode(el), off: `!(${levelElements.timerCode(el)})` }),
+    build: () => ({}),
+    code: (el, name) => ({ setup: [`//${name}: on ${el.onTime} cycles, off ${el.offTime}, what's linked to it checks ${levelElements.timerCode(el)}`] }),
+})
+
 levelElements.define("door", {
     tip: "slides up to open, link it to a button or toggle, without one it stays shut",
     group: "element",
@@ -926,7 +1196,7 @@ levelElements.linkable = name => { //a link prop, so a button or toggle can turn
     type.defaults = () => ({ ...defaults(), link: null })
     type.props.push(levelElements.prop.ref("link", levelElements.linkSources))
 }
-for (const name of ["boost", "mover", "transport", "laser", "wind", "slime"]) levelElements.linkable(name)
+for (const name of ["boost", "mover", "transport", "laser", "wind", "slime", "fizzler"]) levelElements.linkable(name)
 
 //a pair of portals, one element so the two ends stay together, end A is x, y, angle and end B is x2, y2, angle2
 //angles are degrees like boost, 0 faces right and 90 up, each end's block fills the hole behind it, see level.portal()
@@ -1142,6 +1412,108 @@ levelElements.define("path", { //lines and shapes of any outline, drawn behind o
 })
 
 //*********************************************************************
+levelElements.define("drip", { //level.drip, a drop that falls over and over
+    tip: "a drop that falls from x, y, over and over, drag the bottom to change how far",
+    group: "element",
+    defaults: () => ({ x: 0, y: -600, length: 600, period: 100, color: "hsla(160, 100%, 35%, 0.5)" }),
+    props: [
+        ...levelElements.position(),
+        levelElements.prop.number("length", { isGrid: true, min: 10 }), //how far it falls
+        levelElements.prop.number("period", { step: 10, min: 1 }), //cycles between drops, plus up to 40 at random
+        levelElements.prop.color("color"),
+    ],
+    bounds: el => ({ x: el.x - 10, y: el.y - 10, width: 20, height: el.length + 20 }),
+    handles: el => [{ id: "end", x: el.x, y: el.y + el.length }],
+    dragHandle(el, id, point) { el.length = Math.max(10, point.y - el.y) },
+    overlay(el) {
+        ctx.beginPath()
+        ctx.moveTo(el.x, el.y)
+        ctx.lineTo(el.x, el.y + el.length)
+        ctx.stroke()
+    },
+    build(el) {
+        const drip = level.drip(el.x, el.y, el.y + el.length, el.period, el.color)
+        return { custom() { drip.draw() } }
+    },
+    code: (el, name) => ({
+        setup: [`const ${name} = level.drip(${levelElements.args(el.x, el.y, el.y + el.length, el.period, el.color)});`],
+        custom: [`${name}.draw();`],
+    }),
+})
+
+levelElements.define("text", { //words drawn in the level, like the signs in community levels
+    tip: "words drawn behind or in front of the player, x, y is where the line sits",
+    group: "element",
+    defaults: () => ({ x: 0, y: -300, text: "text", size: 30, color: "rgba(0,0,0,0.5)", align: "left", layer: "back" }),
+    props: [
+        ...levelElements.position(),
+        levelElements.prop.text("text"),
+        levelElements.prop.number("size", { step: 2, min: 4 }),
+        levelElements.prop.color("color"),
+        levelElements.prop.select("align", ["left", "center", "right"]),
+        levelElements.prop.select("layer", ["back", "front"]),
+    ],
+    bounds(el) { //monospace is about 0.6 of the size wide
+        const width = Math.max(1, String(el.text).length) * el.size * 0.6
+        const left = el.align === "center" ? el.x - width / 2 : el.align === "right" ? el.x - width : el.x
+        return { x: left, y: el.y - el.size * 0.8, width, height: el.size }
+    },
+    summary: el => `text(${levelElements.args(el.x, el.y)}, ${JSON.stringify(String(el.text).slice(0, 20))})`,
+    build(el) {
+        const draw = () => {
+            ctx.font = `${el.size}px monospace`
+            ctx.fillStyle = el.color
+            ctx.textAlign = el.align
+            ctx.fillText(el.text, el.x, el.y)
+            ctx.textAlign = "left"
+        }
+        return el.layer === "front" ? { top: draw } : { custom: draw }
+    },
+    code(el) {
+        const isAligned = el.align !== "left"
+        const lines = [
+            `ctx.font = "${el.size}px monospace";`,
+            `ctx.fillStyle = ${levelElements.args(el.color)};`,
+            ...(isAligned ? [`ctx.textAlign = "${el.align}";`] : []),
+            `ctx.fillText(${levelElements.args(String(el.text), el.x, el.y)});`,
+            ...(isAligned ? [`ctx.textAlign = "left";`] : []),
+        ]
+        return el.layer === "front" ? { top: lines } : { custom: lines }
+    },
+})
+
+levelElements.define("circle", { //a filled circle drawn behind or in front of the player, the shape written levels draw most
+    tip: "colored circle drawn behind or in front of the player, drag the handle to change its radius",
+    group: "element",
+    label: "circle fill",
+    isBackground: true, //lock background colors in editor settings makes the mouse go through it
+    defaults: () => ({ x: 0, y: -200, radius: 100, color: "rgba(0,0,0,0.1)", layer: "back" }),
+    props: [
+        ...levelElements.position(),
+        levelElements.prop.number("radius", { isGrid: true, min: 1 }),
+        levelElements.prop.color("color"),
+        levelElements.prop.select("layer", ["back", "front"]),
+    ],
+    bounds: el => ({ x: el.x - el.radius, y: el.y - el.radius, width: 2 * el.radius, height: 2 * el.radius }),
+    contains: (el, p) => Math.hypot(p.x - el.x, p.y - el.y) <= el.radius,
+    handles: el => [{ id: "radius", x: el.x + el.radius, y: el.y }],
+    dragHandle(el, id, point) { el.radius = Math.max(1, Math.round(Math.hypot(point.x - el.x, point.y - el.y))) },
+    summary: el => `circle(${levelElements.args(el.x, el.y, el.radius)})`,
+    build(el) {
+        const draw = () => {
+            ctx.beginPath()
+            ctx.arc(el.x, el.y, el.radius, 0, 2 * Math.PI)
+            ctx.fillStyle = el.color
+            ctx.fill()
+        }
+        return el.layer === "front" ? { top: draw } : { custom: draw }
+    },
+    code(el) {
+        const lines = ["ctx.beginPath();", `ctx.arc(${levelElements.args(el.x, el.y, el.radius)}, 0, 2 * Math.PI);`, `ctx.fillStyle = ${levelElements.args(el.color)};`, "ctx.fill();"]
+        return el.layer === "front" ? { top: lines } : { custom: lines }
+    },
+})
+
 // constraints, a Matter.js constraint from a point in the level to a block, made with the inspector's constraint button
 // x, y is the point in the level, bx, by is where it holds the block, from the block's center
 //*********************************************************************

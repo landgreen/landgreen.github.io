@@ -3298,6 +3298,37 @@ body.level-editor #right-HUD-constraint {
     margin: 4px 0 2px;
 }
 
+/* collides: [player map body], names in the mask are code colored, the rest are crossed out, click toggles */
+.le-prop.le-mask {
+    white-space: normal;
+}
+
+.le-chip {
+    margin: 0 0.5ch 0 0;
+    padding: 0 2px;
+    border: 1px solid transparent;
+    background: transparent;
+    font: inherit;
+    color: #aaa;
+    text-decoration: line-through;
+    cursor: pointer;
+}
+
+.le-chip:hover {
+    border-color: #999;
+}
+
+.le-chip.le-on {
+    color: hsl(210, 80%, 40%);
+    text-decoration: none;
+}
+
+.le-chip.le-mixed {
+    color: hsl(30, 80%, 40%);
+    text-decoration: none;
+    font-style: italic;
+}
+
 /* vertex editing */
 .le-count {
     padding: 0 0.6ch;

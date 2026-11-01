@@ -28,8 +28,8 @@ const level = {
         if (levelEditor.isActive) { //every level start while the level editor is open is its level, see js/level-editor.js
             levelEditor.startLevel()
         } else if (level.levelsCleared === 0) { //this code only runs on the first level
-            if (false) {
-                // if (true) {
+            // if (false) {
+            if (true) {
                 level.load(simulation.isTraining ? "walk" : "initial") //normal starting level **************************************************
             } else { //testing setup
                 simulation.enableConstructMode()  //used to build maps in testing mode
@@ -2397,10 +2397,23 @@ const level = {
     addToWorld() { //needs to be run to put bodies into the world
         for (let i = 0; i < map.length; i++) {
             map[i].collisionFilter.category = cat.map;
-            map[i].collisionFilter.mask = cat.player | cat.map | cat.body | cat.bullet | cat.powerUp | cat.mob | cat.mobBullet;
+            map[i].collisionFilter.mask = map[i].collisionMask ?? (cat.player | cat.map | cat.body | cat.bullet | cat.powerUp | cat.mob | cat.mobBullet); //collisionMask is a map piece's own mask, like one only the player hits
             Matter.Body.setStatic(map[i], true); //make static
             Composite.add(engine.world, map[i]); //add to world
         }
+    },
+    setMapPart(who, isThere) { //adds or takes away a map piece while the level runs, like a platform a button makes appear
+        if (!who.isOutOfMap === isThere) return
+        who.isOutOfMap = !isThere
+        if (isThere) {
+            map.push(who)
+            Composite.add(engine.world, who)
+        } else {
+            const index = map.indexOf(who)
+            if (index !== -1) map.splice(index, 1)
+            Composite.remove(engine.world, who)
+        }
+        simulation.draw.setPaths() //update map graphics
     },
     spinner(x, y, width, height, density = 0.001, angle = 0, frictionAir = 0.001, angularVelocity = 0) {
         x += width / 2

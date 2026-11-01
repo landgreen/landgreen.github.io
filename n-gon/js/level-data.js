@@ -283,7 +283,7 @@ const levelData = {
         if (isLive) {
             for (const who of runtime.maps) { //like level.addToWorld()
                 who.collisionFilter.category = cat.map
-                who.collisionFilter.mask = cat.player | cat.map | cat.body | cat.bullet | cat.powerUp | cat.mob | cat.mobBullet
+                who.collisionFilter.mask = who.collisionMask ?? (cat.player | cat.map | cat.body | cat.bullet | cat.powerUp | cat.mob | cat.mobBullet)
                 Matter.Body.setStatic(who, true)
                 Composite.add(engine.world, who)
             }

@@ -64,6 +64,10 @@ const levelEditor = {
         const data = levelData.store.getRecent() || levelData.blank(levelData.freeName("untitled"))
         levelData.store.save(data)
         levelEditor.reset(data)
+        try { //the simulation menu's mouse, remembered for next time
+            const lookMode = localStorage.getItem("levelEditorLookMode")
+            if (["static", "smooth", "instant"].includes(lookMode)) levelEditor.lookMode = lookMode
+        } catch (error) { }
         levelEditor.isActive = true
         await simulation.startGame() //the first level start calls levelEditor.startLevel() instead of loading initial
         if (simulation.onTitlePage) levelEditor.isActive = false //startGame failed
@@ -1043,6 +1047,18 @@ const levelEditor = {
                 })
             },
         },
+        collide: { //the inspector's collides checks, toggles one category for every selected map and block, mixed turns it on for all
+            label: "collides with it, the other side has to collide back too", run(name) {
+                const elements = levelEditor.selected().filter(el => levelElements.types[el.type]?.props.some(prop => prop.kind === "mask"))
+                if (!elements.length) return
+                const isOn = !elements.every(el => levelElements.collision.has(el.collides, name))
+                levelEditor.edit(`${levelEditor.describe(elements)}.collides ${isOn ? "+" : "-"} ${name}`, () => {
+                    for (const el of elements) el.collides = levelElements.collision.toggle(el.collides, name, isOn)
+                    return elements.map(el => el.id)
+                })
+                levelEditor.renderRight()
+            },
+        },
         shape: { //switch selected map and blocks to the other one
             label: "map or block", run(typeName) {
                 const shapes = levelEditor.selected().filter(el => levelElements.groups.shape.includes(el.type) && el.type !== typeName)
@@ -1739,7 +1755,7 @@ const levelEditor = {
             render: () => { //spots, a boss, and a 2nd boss are all a level needs for mobs, and starting, random, and debris for power ups, they show the power ups they can be
                 const main = { startingPowerUps: ["gun", "tech", "ammo", "heal"], randomPowerUp: ["heal", "ammo"], debris: ["block", "heal", "ammo"] }
                 return `<div class="le-label le-add-header">add level elements</div>
-                    <div class="le-shapes">${levelElements.presets.map(preset => `<button class="le-button le-shape" data-command="preset" data-arg="${preset.name}" title="${preset.name}, as map, or block with the block tool">${levelElements.presetIcon(preset)}</button>`).join("")}</div>
+                    <div class="le-shapes">${levelElements.presets.map(preset => `<button class="le-button le-shape" data-command="preset" data-arg="${preset.name}" title="${preset.title || `${preset.name}, as map, or block with the block tool`}">${levelElements.presetIcon(preset)}</button>`).join("")}</div>
                     <div class="le-grid">${levelEditor.addButtons("element")}</div>
                     <div class="le-label le-add-header">add mobs</div>
                     <div class="le-grid">${["mobSpot", "boss", "secondaryBoss"].map(name => levelEditor.addButton(name)).join("")}</div>
@@ -1842,12 +1858,12 @@ const levelEditor = {
     renderStatus() { //the bar along the bottom, like VS Code's: grid, zoom, tools, and the mouse, then on the right the analysis, history, and tab hide
         document.getElementById("level-editor-status").innerHTML = `<span class="le-status-item" title="snap size, hold alt to place freely"><input class="le-number" data-setting="grid" value="${levelEditor.grid}" spellcheck="false">${levelEditor.button("grid", "grid", "", levelEditor.isGridShown)}</span>
             <span class="le-status-item" title="the editor's zoom, the wheel zooms too">${levelEditor.statusIcon("zoom")}<input class="le-number" data-setting="zoom" value="${Math.round(levelEditor.zoomScale)}" spellcheck="false"></span>
-            <span class="le-status-item"><span class="le-segment le-tool-icons">${levelEditor.tools.map(tool => levelEditor.button("tool", levelEditor.toolIcon(tool), tool, levelEditor.tool === tool, `${tool}  ${levelEditor.keyText("c")} cycles`)).join("")}</span>${levelEditor.keyCap("tool")}</span>
+            <span class="le-status-item"><span class="le-segment le-tool-icons">${levelEditor.tools.map(tool => levelEditor.button("tool", levelEditor.toolIcon(tool), tool, levelEditor.tool === tool, tool)).join("")}</span>${levelEditor.keyCap("tool")}</span>
             <span class="le-status-mouse" data-status-mouse title="where the mouse is, snapped to the grid"></span>
             <span class="le-status-item le-status-right">
                 <button class="le-button le-status-problems${levelEditor.problemIsFix ? " le-status-fix" : ""}" data-command="analyze" data-status-problems title="${levelEditor.escape(levelEditor.tip("analyze"))}">${levelEditor.problemText}</button>
             </span>
-            <span class="le-status-item le-segment le-history-box">${levelEditor.button("undo", levelEditor.arrowIcon("undo"))}${levelEditor.button("redo", levelEditor.arrowIcon("redo"))}${levelEditor.button("history", "history ▴", "", levelEditor.isHistoryOpen)}</span>
+            <span class="le-status-item">${levelEditor.keyCap("undo")}<span class="le-segment le-history-box">${levelEditor.button("undo", levelEditor.arrowIcon("undo"))}${levelEditor.button("redo", levelEditor.arrowIcon("redo"))}${levelEditor.button("history", "history ▴", "", levelEditor.isHistoryOpen)}</span></span>
             <button class="le-status-item le-status-tab" data-command="panels" title="${levelEditor.escape(levelEditor.tip("panels"))}">${levelEditor.keyCap("panels")} hide</button>`
         levelEditor.statusMouse = ""
         levelEditor.updateHistoryButtons()
@@ -1882,7 +1898,7 @@ const levelEditor = {
             const x = levelEditor.snap(center.x - w / 2)
             const y = levelEditor.snap(center.y - h / 2)
             const elements = preset.rects ?
-                preset.rects(w, h).map(([rx, ry, rw, rh]) => levelElements.create(typeName, { x: x + rx, y: y + ry, width: rw, height: rh })) :
+                preset.rects(w, h).map(([rx, ry, rw, rh, type]) => levelElements.create(type || typeName, { x: x + rx, y: y + ry, width: rw, height: rh })) :
                 [levelElements.create(typeName)]
             if (!preset.rects) levelElements.setPoints(elements[0], preset.points(w, h).map(([px, py]) => ({ x: x + px, y: y + py })))
             return { elements, label: `add ${arg} ` }
@@ -2165,6 +2181,8 @@ const levelEditor = {
             input = `<input type="checkbox" ${data}${value ? " checked" : ""}>`
         } else if (prop.kind === "select") {
             input = `<select ${data}>${prop.options.map(option => `<option${option === value ? " selected" : ""}>${option}</option>`).join("")}</select>`
+        } else if (prop.kind === "mask") {
+            return levelEditor.maskField([owner], prop)
         } else if (prop.kind === "ref") { //another element by id, from a list or picked by clicking it
             const options = levelEditor.data.elements.filter(other => levelElements.isRefTo(owner, prop.key, other))
             input = `<select ${data}><option value="">null</option>${options.map(other => `<option value="${other.id}"${other.id === value ? " selected" : ""} title="${levelEditor.escape(levelElements.summary(other))}">${other.type} #${other.id}</option>`).join("")}</select>${levelEditor.button("pick", "pick", prop.key, levelEditor.picking && levelEditor.picking.key === prop.key)}`
@@ -2175,6 +2193,15 @@ const levelEditor = {
             if (prop.kind === "color") input = `<input type="color" class="le-swatch" data-swatch value="${levelEditor.hexColor(value)}" title="pick a color">${input}`
         }
         return `<div class="le-prop">${key} ${input}<span class="color-symbol">,</span></div>`
+    },
+    maskField(elements, prop) { //collides: [player map body], each name toggles, only the names that can collide back with all of them
+        const choices = levelElements.collision.names.filter(name => elements.every(el => levelElements.collision.isBack(el.type, name)))
+        const chips = choices.map(name => {
+            const count = elements.filter(el => levelElements.collision.has(el[prop.key], name)).length
+            const state = count === elements.length ? " le-on" : count ? " le-mixed" : ""
+            return `<button class="le-chip${state}" data-command="collide" data-arg="${name}" title="cat.${name}${count && count < elements.length ? ", mixed, click to turn it on for all" : ""}">${name}</button>`
+        }).join("")
+        return `<div class="le-prop le-mask"><span class="color-var">${prop.key}</span><span class="color-symbol">: [</span>${chips}<span class="color-symbol">],</span></div>`
     },
     fieldWidth(text) { //as wide as its text, it's monospace
         return `${Math.min(26, Math.max(2, String(text).length + 0.5))}ch`
@@ -2212,7 +2239,7 @@ const levelEditor = {
     },
     inspectLinks(el) { //what this button or toggle turns on and off, written like a list
         const linked = levelEditor.data.elements.filter(other => other.link === el.id)
-        const free = levelEditor.data.elements.filter(other => !linked.includes(other) && levelElements.isRefTo(other, "link", el))
+        const free = levelEditor.data.elements.filter(other => !linked.includes(other) && other.type !== "map" && levelElements.isRefTo(other, "link", el)) //maps link with the link button or from their own inspector, a level has too many to list
         return `<div class="le-row le-spots"><span class="color-var">links</span><span class="color-symbol">:</span>
                 <span class="le-fill"></span>${levelEditor.button("pickLink", "link", "", levelEditor.picking && levelEditor.picking.isLink)}</div>
             ${linked.map(other => `<div class="le-prop">${levelEditor.escape(levelElements.summary(other))} <span class="le-id">#${other.id}</span> ${levelEditor.button("unlink", "×", other.id)}</div>`).join("")}
@@ -2248,6 +2275,8 @@ const levelEditor = {
             input = `<input type="checkbox" ${data}${value ? " checked" : ""}>`
         } else if (prop.kind === "select") {
             input = `<select ${data}>${isMixed ? `<option value="" selected></option>` : ""}${prop.options.map(option => `<option${option === value ? " selected" : ""}>${option}</option>`).join("")}</select>`
+        } else if (prop.kind === "mask") {
+            return levelEditor.maskField(elements, prop)
         } else {
             const isText = prop.kind === "text" || prop.kind === "color"
             const text = isMixed ? "" : levelEditor.formatValue(value)
@@ -2513,6 +2542,9 @@ const levelEditor = {
         }
         if (event.target.dataset.setting === "lookMode") {
             levelEditor.lookMode = event.target.value
+            try {
+                localStorage.setItem("levelEditorLookMode", levelEditor.lookMode)
+            } catch (error) { }
             event.target.blur() //WASD goes back to the player
         }
         if (event.target.dataset.setting === "testSpawning") {
