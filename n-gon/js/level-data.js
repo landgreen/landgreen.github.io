@@ -30,11 +30,16 @@ const levelData = {
             if (data[key] === undefined || data[key] === null || data[key] === "") data[key] = defaults[key]
         }
         data.zoom = Number(data.zoom) || defaults.zoom
+        if (!Array.isArray(data.mobVeto)) data.mobVeto = []
         data.elements = Array.isArray(data.elements) ? data.elements.filter(el => el && typeof el === "object") : []
         data.nextId = Math.max(Number(data.nextId) || 1, ...data.elements.map(el => (el.id || 0) + 1))
         for (const el of data.elements) {
+            if (el.type === "decor") el.type = "fill" //its old name
             if (!el.id) el.id = data.nextId++
             levelElements.fillDefaults(el)
+            if ("veto" in el && !Array.isArray(el.veto)) el.veto = []
+            if ("handles" in el && !Array.isArray(el.handles)) el.handles = []
+            if (el.layer === "back" || el.layer === "front") el.layer = el.layer === "back" ? "under player" : "over player" //their old names
         }
         for (const type of levelElements.groups.core) { //every level needs a spawn and an exit, unless its code sets them, like a written level that picks a layout
             if (!data.elements.some(el => el.type === type) && !levelData.hasCode(data)) levelData.add(data, levelElements.create(type))
@@ -113,7 +118,7 @@ const levelData = {
             for (const el of levelData.inBuildOrder(data)) levelData.runtimes.set(el.id, levelData.build(el, false))
         }
         const has = text => levelData.codeHas(data, text) //what the level's code already does itself
-        if (levelData.isSpawning && data.elements.some(el => el.type === "mobSpot")) spawn.randomMobFromArray() //mob spots, level.start() empties the list
+        if (levelData.isSpawning && data.elements.some(el => el.type === "mobSpot")) spawn.randomMobFromArray(data.mobVeto) //mob spots, level.start() empties the list
         if (levelData.isSpawning && data.elements.some(el => levelElements.groups.mob.includes(el.type)) && !has("addResearchToLevel")) powerUps.addResearchToLevel() //like written levels, after the mobs spawn
         if (levelData.isSpawning && !has("announceText")) { //like written levels, the run's constraint below the entrance and the new mob types
             const text = levelData.constraintText(data)
@@ -426,7 +431,7 @@ const levelData = {
         if (!type) return "//unknown type"
         if (type.isCode) return el.code
         const { names, context } = levelData.codeNames(data)
-        const lines = type.codeAll ? { setup: type.codeAll(data.elements.filter(other => other.type === el.type)) } : type.code ? type.code(el, names.get(el.id), context) : {}
+        const lines = type.codeAll ? { setup: type.codeAll(data.elements.filter(other => other.type === el.type), data) } : type.code ? type.code(el, names.get(el.id), context) : {}
         const link = type.isLinkable && !type.handlesLink && context.link(el)
         const gate = list => link && list.length ? [`if (${link.on}) {`, ...list.map(line => "    " + line), "}"] : list
         const custom = gate(lines.custom || [])
@@ -462,7 +467,7 @@ const levelData = {
         }
         for (const [type, elements] of together) {
             if (!groups[type.group]) groups[type.group] = []
-            groups[type.group].unshift(...type.codeAll(elements))
+            groups[type.group].unshift(...type.codeAll(elements, data))
         }
         const indent = lines => lines.map(line => "    " + line)
         const fallHeight = levelData.fallHeight(data)
@@ -516,7 +521,7 @@ const levelData = {
                 continue
             }
             if (type.codeAll) { //all of them where the first one is
-                if (!together.has(type)) lines.push(...type.codeAll(data.elements.filter(other => other.type === el.type)))
+                if (!together.has(type)) lines.push(...type.codeAll(data.elements.filter(other => other.type === el.type), data))
                 together.add(type)
                 continue
             }
@@ -1017,3 +1022,44 @@ const levelData = {
     },
 }
 levelData.store.load()
+
+//*********************************************************************
+// the level editor before it opens, runs read isActive and the title page shows its button
+// its files load the first time it opens, like level2.js, so a normal run never loads them
+// js/level-editor.js adds the rest to this object, replacing open() and close()
+//*********************************************************************
+const levelEditor = {
+    isActive: false, //level.start(), m.death(), m.takeDamage(), the autosave, and the mouse lock check it every run
+    files: ["js/level-analysis.js", "js/level-editor.js", "js/level-editor-icons.js", "js/level-editor-help.js"], //js/level-editor-mob-pictures.js loads later, see loadMobPictures()
+    filesPromise: null,
+    loadFiles() { //all at once, they run in this order
+        if (levelEditor.filesPromise) return levelEditor.filesPromise
+        levelEditor.filesPromise = Promise.all(levelEditor.files.map(src => new Promise((resolve, reject) => {
+            const script = document.createElement("script")
+            script.src = src
+            script.async = false //in order, each adds to the one before
+            script.onload = resolve
+            script.onerror = () => reject(new Error(`failed to load ${src}`))
+            document.head.appendChild(script)
+        }))).catch(error => {
+            levelEditor.filesPromise = null
+            throw error
+        })
+        return levelEditor.filesPromise
+    },
+    async open() {
+        const stub = levelEditor.open
+        try {
+            await levelEditor.loadFiles()
+        } catch (error) {
+            return console.error(error)
+        }
+        if (levelEditor.open !== stub) levelEditor.open() //js/level-editor.js's
+    },
+    close() { }, //nothing is open before it loads
+    updateSplashButton() { //the title page's editor button, once there are local levels
+        const isShown = levelData.store.hasWork()
+        document.body.classList.toggle("has-level-editor", isShown)
+        document.getElementById("level-editor-splash-button").style.display = isShown && simulation.onTitlePage !== false ? "inline" : "none"
+    },
+}

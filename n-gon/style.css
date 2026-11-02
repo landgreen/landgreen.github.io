@@ -2711,6 +2711,14 @@ body.level-editor.le-panels-hidden .le-hint {
     display: block;
 }
 
+/* the pause menu covers the left and right panels, so they hide while it's open, see build.pauseGrid() */
+body.level-editor.pause-open .le-panel,
+body.level-editor.pause-open .le-status,
+body.level-editor.pause-open .le-hint,
+body.level-editor.pause-open .le-history-pop {
+    display: none;
+}
+
 /* explorer, every element by type, see explorerHtml() */
 .le-explore-group>summary {
     display: flex;
@@ -2957,7 +2965,8 @@ body.level-editor #right-HUD-constraint {
     border-radius: 0;
 }
 
-.le-segment .le-button+.le-button {
+/* the line between two buttons is the left one's, a hidden one before it doesn't count, like the code panel's apply after the hidden import */
+.le-segment .le-button:not([hidden])~.le-button {
     border-left: none;
 }
 
@@ -3005,6 +3014,15 @@ body.level-editor #right-HUD-constraint {
 
 .le-add-part> :last-child {
     border-bottom-width: 0;
+}
+
+/* level element, mob by name, and power up by name stack in one part above + code */
+.le-add-part>.le-list {
+    margin-top: 0;
+}
+
+.le-list+.le-list {
+    border-top: none;
 }
 
 /* export, the local levels, and import, apart from each other */
@@ -3153,7 +3171,7 @@ body.level-editor #right-HUD-constraint {
     overflow: hidden;
 }
 
-/* a list right under its buttons joins them, like the add menu's level element, mob by name, and power up by name */
+/* a list right under its buttons joins them */
 .le-grid+.le-list,
 .le-shapes+.le-list {
     margin-top: 0;
@@ -3303,6 +3321,15 @@ body.level-editor #right-HUD-constraint {
 /* preset shapes, each button is a little drawing of its shape */
 .le-shapes {
     grid-template-columns: repeat(7, 1fr);
+}
+
+/* the drawing row under them: fill, exit fill, circle, draw path, text */
+.le-shapes.le-draws {
+    grid-template-columns: repeat(5, 1fr);
+}
+
+.le-shapes+.le-shapes {
+    border-top: none;
 }
 
 .le-button.le-shape {
@@ -3503,7 +3530,8 @@ body.level-editor #right-HUD-constraint {
 }
 
 /* collides: [player map body], names in the mask are code colored, the rest are crossed out, click toggles */
-.le-prop.le-mask {
+.le-prop.le-mask,
+.le-prop.le-wrap {
     white-space: normal;
 }
 
@@ -3531,6 +3559,27 @@ body.level-editor #right-HUD-constraint {
     color: hsl(30, 80%, 40%);
     text-decoration: none;
     font-style: italic;
+}
+
+/* veto: [hydraBoss], vetoed mobs and bosses are crossed out like collides' names, in the list under it too */
+.le-chip .le-mob-icon {
+    display: inline-block;
+    vertical-align: middle;
+    margin-right: 2px;
+    opacity: 0.5;
+}
+
+.le-veto-list {
+    margin-top: 2px;
+}
+
+.le-rich-list option.le-vetoed {
+    color: #aaa;
+    text-decoration: line-through;
+}
+
+.le-rich-list option.le-vetoed .le-mob-icon {
+    opacity: 0.4;
 }
 
 /* vertex editing */

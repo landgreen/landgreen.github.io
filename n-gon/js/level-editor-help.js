@@ -24,8 +24,8 @@ Object.assign(levelEditor, {
                 <li>The angle box and ↻ buttons rotate your selection. Hold shift when clicking a ↻ button to turn the other way.</li>
                 <li>⌘Z undoes a change, ⌘⇧Z redoes it. <b>History</b> lets you return to an earlier step.</li>
                 <li>⌘X cuts, ⌘C copies, and ⌘V pastes at the mouse. Use ctrl instead of ⌘ on Windows or Linux. Delete removes the selection. The keys under the info box do the same when clicked.</li>
-                <li>Scroll to zoom. Drag with the middle mouse button (or the pan tool) to move the view, click it to center on the player, or double-click it to teleport the player to the mouse. <b>fit</b> in the bottom bar shows the whole level, or just the selection.</li>
-                <li>With objects selected, <b>flip</b> mirrors them, <b>front</b> and <b>back</b> change which drawing is on top, and with several selected you can line up their edges or <b>group</b> them so clicking one selects them all.</li>
+                <li>Scroll to zoom. Drag with the middle mouse button (or the pan tool) to move the view, middle click to center on the player, or double-click either one to teleport the player to the mouse. Mouse 4 and 5 (the back and forward buttons) teleport with one click. <b>fit</b> in the bottom bar shows the whole level, or just the selection.</li>
+                <li>With objects selected, <b>flip</b> mirrors them, <b>to top</b> and <b>to bottom</b> change which drawing is on top, and a drawing's <b>layer</b> puts it under or over the player, and with several selected you can line up their edges or <b>group</b> them so clicking one selects them all.</li>
                 <li>Tab hides or shows the panels.</li>
             </ul>`],
         ["the info box", `
@@ -43,7 +43,7 @@ Object.assign(levelEditor, {
                 <li>Aim for 2 to 12 heal and ammo power ups in total. <b>Random</b> places a heal or ammo, and <b>debris</b> scatters small blocks and power ups.</li>
                 <li>Keep it light: aim for fewer than about 100 map pieces and 50 blocks. Fewer, larger pieces usually run better than many small ones.</li>
                 <li>The level's <b>zoom</b> controls how much the camera shows during a run. Higher numbers show more; existing levels use 1300 to 2600.</li>
-                <li>Use fill colors and shadow fill to make rooms easier to read. A light exit fill helps mark the end.</li>
+                <li>Use fill and shadow fill to make rooms easier to read. A light exit fill helps mark the end.</li>
                 <li>Click the issues count in the bottom bar for suggestions. <b>Fix</b> marks missing essentials, <b>warn</b> marks likely problems, and <b>note</b> marks something unusual that may be fine.</li>
             </ul>`],
         ["testing", `

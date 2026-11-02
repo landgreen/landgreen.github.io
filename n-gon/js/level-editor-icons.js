@@ -29,7 +29,10 @@ Object.assign(levelEditor, {
         script.onload = () => {
             levelEditor.isLoadingMobPictures = false
             levelEditor.useMobPictures(levelEditor.mobPictureData || {})
-            if (levelEditor.isActive) levelEditor.renderLeft() //mob by name and the boss buttons show them
+            if (levelEditor.isActive) { //mob by name, the boss buttons, and veto lists show them
+                levelEditor.renderLeft()
+                levelEditor.refreshRight()
+            }
         }
         script.onerror = () => { //no pictures, only names
             levelEditor.isLoadingMobPictures = false
@@ -139,6 +142,73 @@ Object.assign(levelEditor, {
             zoom: `<circle cx="6.5" cy="6" r="4.5" fill="#fff" stroke="#333" stroke-width="1.6"/><path d="M10 9.5 L15 13" stroke="#333" stroke-width="2.4" stroke-linecap="round"/>`,
         }
         return `<svg class="le-tool-icon le-status-icon" viewBox="0 0 17 14" width="17" height="14" aria-label="${name}">${icons[name]}</svg>`
+    },
+    shapeIcons: { //the preset shapes' pictures, 30 × 22, filled with the button's text color, a new preset in levelElements.presets needs one
+        "square": `<rect x="5" y="1" width="20" height="20"/>`,
+        "rounded rect": `<polygon points="4.5,4 25.5,4 29,7.5 29,14.5 25.5,18 4.5,18 1,14.5 1,7.5"/>`,
+        "rounded bottom": `<polygon points="11.3,1 18.8,1 18.8,19.1 16.9,21 13.1,21 11.3,19.1"/>`,
+        "trapezoid": `<polygon points="8,5 22,5 29,16.9 1,16.9"/>`,
+        "dome": `<polygon points="1,18 1.5,14.4 2.9,11 5.1,8.1 8,5.9 11.4,4.5 15,4 18.6,4.5 22,5.9 24.9,8.1 27.1,11 28.5,14.4 29,18"/>`,
+        "ramp": `<polygon points="29,4 29,18 1,18"/>`,
+        "hexagon": `<polygon points="9.2,1 20.8,1 26.5,11 20.8,21 9.2,21 3.5,11"/>`,
+        "pointed ends": `<polygon points="8,4.9 22,4.9 29,11 22,17.1 8,17.1 1,11"/>`,
+        "circle": `<polygon points="25,11 24.2,14.8 22.1,18.1 18.8,20.2 15,21 11.2,20.2 7.9,18.1 5.8,14.8 5,11 5.8,7.2 7.9,3.9 11.2,1.8 15,1 18.8,1.8 22.1,3.9 24.2,7.2"/>`,
+        "point up": `<polygon points="15,1 21,4 21,21 9,21 9,4"/>`,
+        "diamond": `<polygon points="15,1 22.5,11 15,21 7.5,11"/>`,
+        "spike": `<polygon points="15,1 25,21 5,21"/>`,
+        "stairs": `<rect x="1" y="14.5" width="7" height="3.5"/><rect x="8" y="11" width="7" height="7"/><rect x="15" y="7.5" width="7" height="10.5"/><rect x="22" y="4" width="7" height="14"/>`,
+        "arch": `<rect x="1.7" y="1" width="26.7" height="4"/><rect x="1.7" y="5" width="4" height="16"/><rect x="24.3" y="5" width="4" height="16"/>`,
+    },
+    elementIcons: { //the level element list's pictures, 26 × 16 like the mob pictures, in the colors each looks like in the game, "type:preset" for a named preset
+        boost: `<rect x="5" y="13" width="16" height="2" fill="#444"/><path d="M13 1L18 7H15V12H11V7H8Z" fill="rgb(200,0,255)"/>`,
+        mover: `<rect x="2" y="10" width="22" height="4" fill="#586370"/><path d="M6 6H19M16 3.5L19.5 6L16 8.5" fill="none" stroke="#444" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>`,
+        transport: `<rect x="2" y="9" width="10" height="3" fill="#586370"/><path d="M13 10.5H21" stroke="#444" stroke-width="1.2" stroke-dasharray="2 1.5"/><path d="M19.5 8L22.5 10.5L19.5 13" fill="none" stroke="#444" stroke-width="1.2" stroke-linejoin="round"/>`,
+        elevator: `<rect x="6" y="12" width="14" height="3" fill="#586370"/><path d="M13 11V3M10 5.5L13 2L16 5.5" fill="none" stroke="#444" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>`,
+        vanish: `<rect x="3" y="7" width="20" height="4" fill="rgba(88,99,112,0.3)" stroke="#586370" stroke-dasharray="2 1.5"/>`,
+        spinner: `<rect x="5" y="7" width="17" height="3" fill="#999" stroke="#444" stroke-width="0.8" transform="rotate(-22 13.5 8.5)"/><circle cx="13.5" cy="8.5" r="1.5" fill="#444"/><path d="M4.5 8A8 7 0 0 1 12 1.5" fill="none" stroke="#444" stroke-width="1.1"/><path d="M12 1.5L9.4 0.5M12 1.5L9.9 3.3" stroke="#444" stroke-width="1.1" stroke-linecap="round"/>`,
+        wind: `<path d="M2 4H15A2.5 2.5 0 1 0 12.5 1.5M2 8H21A2.5 2.5 0 1 1 18.5 10.5M4 12H13" fill="none" stroke="#69c" stroke-width="1.5" stroke-linecap="round"/>`,
+        portal: `<ellipse cx="5" cy="8" rx="2" ry="6" fill="none" stroke="hsl(197,100%,50%)" stroke-width="2"/><ellipse cx="21" cy="8" rx="2" ry="6" fill="none" stroke="hsl(29,100%,50%)" stroke-width="2"/><path d="M8 8H18" stroke="#999" stroke-width="1" stroke-dasharray="1.5 1.5"/>`,
+        slime: `<path d="M2 7Q6 5 10 7T18 7T24 7V15H2Z" fill="hsla(160,100%,35%,0.65)"/>`,
+        laser: `<rect x="2" y="5.5" width="4" height="5" fill="#444"/><path d="M6 8H24" stroke="rgba(255,0,0,0.25)" stroke-width="4"/><path d="M6 8H24" stroke="#f00" stroke-width="1.2"/>`,
+        fizzler: `<rect x="8" y="1" width="10" height="2" fill="#444"/><rect x="8" y="13" width="10" height="2" fill="#444"/><path d="M10 3V13M13 3V13M16 3V13" stroke="rgba(0,170,255,0.75)" stroke-width="1" stroke-dasharray="1.5 1"/>`,
+        button: `<g transform="translate(5.2 9.35) scale(0.12 0.3)"><polygon points="165,12 -35,12 -5,-8 135,-8" fill="#444"/><rect x="2" y="-21" width="126" height="20" fill="hsl(0,100%,70%)"/></g>`, //level.button in its own units, stretched taller so it reads: the map base and the red pad up on it
+        toggle: `<g transform="translate(1.95 11.46) scale(0.17)"><polygon points="27.9,-52.7 17.3,-42.1 68.2,8.8 78.8,-1.8" fill="rgba(140,140,140,0.85)" stroke="#222" stroke-width="4"/><polygon points="135,12 -5,12 25,-8 105,-8" fill="#444"/></g>`, //level.toggle off: the block lever leaning left from its pin, into the map platform
+        zone: `<rect x="3" y="2" width="20" height="12" fill="rgba(70,150,200,0.15)" stroke="#49c" stroke-dasharray="2 1.5"/><circle cx="13" cy="8" r="2.5" fill="none" stroke="#444" stroke-width="1"/>`,
+        timer: `<circle cx="13" cy="8" r="6.5" fill="#fff" stroke="#444" stroke-width="1.3"/><path d="M13 8V4M13 8L16 9.5" stroke="#444" stroke-width="1.2" stroke-linecap="round"/>`,
+        keyhole: `<g transform="translate(12.75 10.6) scale(0.125 0.18)"><polygon points="-70,12 70,12 70,-8 -70,-8" fill="#444"/><polygon points="-93,9 -93,-11 -73,-41 -47,-41 -18,9" fill="#444"/><polygon points="97,9 97,-11 77,-41 51,-41 22,9" fill="#444"/><rect x="-38" y="-26" width="80" height="25" fill="rgba(254,248,164,0.73)"/></g>`, //level.keyButton: the map base, its two cradle walls, and the key color between them
+        key: `<g transform="translate(13 8) scale(0.22)"><polygon points="37.5,0 25,21.65 -25,21.65 -37.5,0 -25,-21.65 25,-21.65" fill="#FEF8A4" stroke="rgba(254,248,164,0.35)" stroke-width="22"/><polygon points="37.5,0 25,21.65 -25,21.65 -37.5,0 -25,-21.65 25,-21.65" fill="#FEF8A4" stroke="rgba(0,0,0,0.25)" stroke-width="3"/></g>`, //level.key: the glowing yellow hexagon, a faint edge so it shows on white
+        door: `<rect x="9" y="1" width="5" height="14" fill="#666"/><path d="M19 12V3M16.5 5.5L19 2.5L21.5 5.5" fill="none" stroke="#444" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>`,
+        fill: `<rect x="3" y="2" width="13" height="9" fill="rgba(0,0,0,0.25)"/><rect x="10" y="5" width="13" height="9" fill="rgba(0,0,0,0.25)"/>`,
+        "fill:exit fill": `<rect x="3" y="1" width="20" height="13" fill="#d4f4f4" stroke="#9cc" stroke-width="0.8"/><path d="M10 14V8a3 3 0 0 1 6 0V14Z" fill="#c8eef0" stroke="#466" stroke-width="0.8"/><rect x="1" y="14" width="24" height="2" fill="#444"/>`,
+        "fill:shadow fill": `<rect x="1" y="14" width="24" height="2" fill="#444"/><circle cx="9" cy="6" r="2.5" fill="none" stroke="#444" stroke-width="1.1"/><path d="M9 8.5V10.5M9 10.5L7 14M9 10.5L11 14" fill="none" stroke="#444" stroke-width="1.1"/><rect x="11" y="1" width="13" height="13" fill="rgba(0,0,0,0.35)"/>`,
+        circle: `<circle cx="13" cy="8" r="6.5" fill="none" stroke="#444" stroke-width="1.3"/>`,
+        ellipse: `<ellipse cx="13" cy="8" rx="10" ry="4.5" fill="none" stroke="#444" stroke-width="1.3" transform="rotate(-15 13 8)"/>`,
+        path: `<polyline points="2,13 6,7 11,10 14,3 19,6 24,2" fill="none" stroke="#444" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round"/>`,
+        bezier: `<path d="M3 14L7 2M23 14L19 2" stroke="#9ab" stroke-width="0.7"/><rect x="5.8" y="0.8" width="2.4" height="2.4" fill="#fff" stroke="#9ab" stroke-width="0.6"/><rect x="17.8" y="0.8" width="2.4" height="2.4" fill="#fff" stroke="#9ab" stroke-width="0.6"/><path d="M3 14C7 2 19 2 23 14" fill="none" stroke="#444" stroke-width="1.6" stroke-linecap="round"/>`,
+        text: `<path transform="translate(1.85 3) scale(0.28)" d="M-1 0H21M10 0V40M29 0L48 40M48 0L29 40M57 0H79M68 0V40" fill="none" stroke="#444" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>`, //"txt" in the game's stroke font
+        drip: `<path d="M5 1.5H21" stroke="#444" stroke-width="1.5"/><path d="M13 4C15.5 8 17 10 17 11.5A4 4 0 0 1 9 11.5C9 10 10.5 8 13 4Z" fill="hsla(160,100%,35%,0.6)"/>`,
+    },
+    elementIcon(arg) { //"type" or "type:preset", or nothing for a type without a picture
+        const picture = levelEditor.elementIcons[arg]
+        return picture ? `<svg class="le-mob-icon" width="26" height="16" viewBox="0 0 26 16" aria-hidden="true">${picture}</svg>` : ""
+    },
+    drawButtons: [ //the add menu's drawing row under the shapes: [command, arg, picture], 30 × 22 like the shapes, in the colors each one starts with
+        ["add", "fill", `<rect x="3" y="2" width="16" height="12" fill="rgba(0,0,0,0.25)"/><rect x="11" y="8" width="16" height="12" fill="rgba(0,0,0,0.25)"/>`], //two see-through fills overlapping
+        ["add", "fill:exit fill", `<rect x="3" y="2" width="24" height="18" fill="#d4f4f4" stroke="#9cc"/><path d="M11 20V10a4 4 0 0 1 8 0V20Z" fill="#c8eef0" stroke="#466"/><rect x="1" y="20" width="28" height="2" fill="#444"/>`], //the cyan room around the exit door
+        ["add", "circle", `<circle cx="15" cy="11" r="9" fill="none" stroke="#444" stroke-width="1.5"/>`],
+        ["drawPath", "path", `<polyline points="3,18 7,10 13,13 16,5 22,9 27,4" fill="none" stroke="#444" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>`], //uneven, so it doesn't read as a letter
+        ["add", "text", `<path transform="translate(2.1 4.4) scale(0.33)" d="M-1 0H21M10 0V40M29 0L48 40M48 0L29 40M57 0H79M68 0V40" fill="none" stroke="#444" stroke-width="5.5" stroke-linecap="round" stroke-linejoin="round"/>`], //"txt" in the game's stroke font, simulation.draw.font's t() and x()
+    ],
+    svgIcon(picture, fill = "none") { //one of the saved pictures above as a 30 × 22 svg
+        return `<svg width="30" height="22" viewBox="0 0 30 22" fill="${fill}" stroke="none" aria-hidden="true">${picture}</svg>`
+    },
+    drawButtonsHtml() {
+        return levelEditor.drawButtons.map(([command, arg, picture]) => {
+            const [name, preset] = arg.split(":")
+            const type = levelElements.types[name]
+            const tip = preset ? type.tips[preset] : type.tip
+            return levelEditor.button(command, levelEditor.svgIcon(picture), arg, command === "drawPath" && !!levelEditor.pathDraw, `${preset || type.label}, ${tip}`, { className: "le-shape" })
+        }).join("")
     },
     toolIcon(tool) { //tiny drawings for the status bar's draw tools, simple enough to read from far away
         const icons = {

@@ -10,7 +10,7 @@ const levelElements = {
     //*********************************************************************
     // properties, shown and edited in the editor's inspector
     //*********************************************************************
-    //{ key, kind: "number" | "bool" | "text" | "select" | "mask", step, min, max, options, read(el), write(el, value) }
+    //{ key, kind: "number" | "bool" | "text" | "select" | "mask" | "veto", step, min, max, options, read(el), write(el, value) }
     //read and write are for values worked out from other values, like a block's mass from its density
     prop: {
         number(key, settings = {}) { return { key, kind: "number", ...settings } },
@@ -20,6 +20,7 @@ const levelElements = {
         select(key, options, settings = {}) { return { key, kind: "select", options, ...settings } },
         ref(key, types, settings = {}) { return { key, kind: "ref", types, ...settings } }, //another element's id or null, types are the kinds it can be
         mask(key, settings = {}) { return { key, kind: "mask", ...settings } }, //collision categories as names, like "player map body", see levelElements.collision
+        veto(key, tiers, noun, settings = {}) { return { key, kind: "veto", tiers, noun, ...settings } }, //mob or boss names it won't spawn, tiers() is [[label, names], ...], each tier keeps at least one, noun is "mob" or "boss"
     },
 
     //*********************************************************************
@@ -243,20 +244,21 @@ const levelElements = {
             x: round(box.x + (p.x - from.x) * box.width / (from.width || 1)),
             y: round(box.y + (p.y - from.y) * box.height / (from.height || 1)),
         })))
+        if (el.handles) el.handles = el.handles.map(h => h && [round(h[0] * box.width / (from.width || 1)), round(h[1] * box.height / (from.height || 1))]) //a path's curves stretch too
     },
     //*********************************************************************
     // presets, common shapes from written levels for the editor's add menu, made as map, or block when the block tool is on
-    // points(w, h) is the outline in a w × h box with its top left at 0, 0, rects(w, h) makes several rects instead, like stairs, iconSize is only for the button picture
+    // points(w, h) is the outline in a w × h box with its top left at 0, 0, rects(w, h) makes several rects instead, like stairs, their button pictures are saved in levelEditor.shapeIcons
     //*********************************************************************
     presets: [ //no two are the same shape turned or mirrored, flip and rotate make the rest
         { name: "square", size: [200, 200], rects: (w, h) => [[0, 0, w, h]] }, //a plain rect
         { name: "rounded rect", size: [400, 200], points: (w, h, c = Math.min(50, w / 4, h / 4)) => [[c, 0], [w - c, 0], [w, c], [w, h - c], [w - c, h], [c, h], [0, h - c], [0, c]] }, //like spawn.bodyRectCorner
         { name: "rounded bottom", size: [150, 400], points: (w, h, c = Math.min(40, w / 4, h / 4)) => [[0, 0], [w, 0], [w, h - c], [w - c, h], [c, h], [0, h - c]] },
-        { name: "trapezoid", size: [400, 100], iconSize: [400, 170], points: (w, h) => [[w / 4, 0], [w * 3 / 4, 0], [w, h], [0, h]] },
+        { name: "trapezoid", size: [400, 100], points: (w, h) => [[w / 4, 0], [w * 3 / 4, 0], [w, h], [0, h]] },
         { name: "dome", size: [400, 200], points: (w, h, n = 12) => Array.from({ length: n + 1 }, (_, i) => [w / 2 - w / 2 * Math.cos(Math.PI * i / n), h - h * Math.sin(Math.PI * i / n)]) }, //like the half circles in written levels, turn it for a bowl
         { name: "ramp", size: [400, 200], points: (w, h) => [[w, 0], [w, h], [0, h]] }, //up to the right, flip it for the other way
         { name: "hexagon", size: [300, 260], points: (w, h) => [[w / 4, 0], [w * 3 / 4, 0], [w, h / 2], [w * 3 / 4, h], [w / 4, h], [0, h / 2]] }, //the game's namesake, flat on top
-        { name: "pointed ends", size: [600, 150], iconSize: [600, 260], points: (w, h, c = Math.min(h * 0.75, w / 4)) => [[c, 0], [w - c, 0], [w, h / 2], [w - c, h], [c, h], [0, h / 2]] },
+        { name: "pointed ends", size: [600, 150], points: (w, h, c = Math.min(h * 0.75, w / 4)) => [[c, 0], [w - c, 0], [w, h / 2], [w - c, h], [c, h], [0, h / 2]] },
         { name: "circle", size: [300, 300], points: (w, h, n = 16) => Array.from({ length: n }, (_, i) => [w / 2 + w / 2 * Math.cos(2 * Math.PI * i / n), h / 2 + h / 2 * Math.sin(2 * Math.PI * i / n)]) },
         { name: "point up", size: [300, 500], points: (w, h) => [[w / 2, 0], [w, h * 0.15], [w, h], [0, h], [0, h * 0.15]] },
         { name: "diamond", size: [300, 400], points: (w, h) => [[w / 2, 0], [w, h / 2], [w / 2, h], [0, h / 2]] },
@@ -264,17 +266,6 @@ const levelElements = {
         { name: "stairs", size: [600, 300], rects: (w, h, steps = 4) => Array.from({ length: steps }, (_, i) => [w * i / steps, h * (steps - 1 - i) / steps, w / steps, h * (i + 1) / steps]) }, //like spawn.spawnStairs, up to the right, flip it for the other way
         { name: "arch", size: [400, 300], rects: (w, h, t = Math.min(w, h) / 5) => [[0, 0, w, t], [0, t, t, h - t], [w - t, t, t, h - t]] }, //a beam on two pillars, three rects
     ],
-    presetIcon(preset, width = 30, height = 22) { //a tiny drawing of the preset for its button, wide shapes use the button's width, tall ones its height, iconSize draws a very flat one taller so it reads
-        const [w, h] = preset.iconSize || preset.size
-        const k = Math.min((width - 2) / w, (height - 2) / h)
-        const ox = (width - w * k) / 2
-        const oy = (height - h * k) / 2
-        const xy = (x, y) => `${(ox + x * k).toFixed(1)},${(oy + y * k).toFixed(1)}`
-        const shapes = preset.rects ?
-            preset.rects(w, h).map(([x, y, rw, rh]) => `<rect x="${(ox + x * k).toFixed(1)}" y="${(oy + y * k).toFixed(1)}" width="${(rw * k).toFixed(1)}" height="${(rh * k).toFixed(1)}"/>`).join("") :
-            `<polygon points="${preset.points(w, h).map(([x, y]) => xy(x, y)).join(" ")}"/>`
-        return `<svg width="${width}" height="${height}" viewBox="0 0 ${width} ${height}" fill="currentColor" stroke="none" aria-hidden="true">${shapes}</svg>`
-    },
 
     //*********************************************************************
     // making elements
@@ -1370,48 +1361,96 @@ levelElements.define("portal", {
     },
 })
 
-levelElements.define("decor", { //colored rect drawn behind or in front of the player, like the fillRect shading in written levels
-    isDrawing: true, //only drawn, front and back change what's on top
+levelElements.layers = ["under player", "over player"] //a drawing's layer: level.custom under the player, blocks, and mobs, or level.customTopLayer over them, older saves say back and front, see levelData.normalize()
+levelElements.isOver = el => el.layer === "over player"
+levelElements.define("fill", { //colored rect drawn behind or in front of the player, like the fillRect shading in written levels, older saves call it decor, see levelData.normalize()
+    isDrawing: true, //only drawn, to top and to bottom change what's on top
     tip: "colored rect drawn behind or in front of the player, for shading and backgrounds",
     group: "element",
-    label: "fill color",
+    label: "fill",
     isBackground: true, //lock background colors in editor settings makes the mouse go through it
-    defaults: () => ({ x: 0, y: -400, width: 400, height: 400, color: "rgba(0,0,0,0.1)", layer: "back" }),
+    defaults: () => ({ x: 0, y: -400, width: 400, height: 400, color: "rgba(0,0,0,0.1)", layer: "under player" }),
     names: ["exit fill", "shadow fill"], //each gets a button in the add menu
     tips: {
         "exit fill": "the light cyan room color behind the exit, placed around the exit door",
-        "shadow fill": "see-through dark rect drawn in front of the player, like the shading in written levels",
+        "shadow fill": "see-through dark rect drawn in front of the player, like the shading in standard levels",
     },
     preset(name, data) { //x and y place it, otherwise it goes in the middle of the view
-        if (name === "shadow fill") return { color: "rgba(0,0,0,0.1)", layer: "front" } //written levels mostly shade in customTopLayer
+        if (name === "shadow fill") return { color: "rgba(0,0,0,0.1)", layer: "over player" } //written levels mostly shade in customTopLayer
         const exit = data && data.elements.find(el => el.type === "exit")
-        const room = { width: 400, height: 350, color: "#d4f4f4", layer: "back" } //the light cyan room behind the exit in written levels
+        const room = { width: 400, height: 350, color: "#d4f4f4", layer: "under player" } //the light cyan room behind the exit in written levels
         return exit ? { ...room, x: exit.x - 150, y: exit.y + 20 - room.height } : room
     },
-    props: [...levelElements.rect(), levelElements.prop.color("color"), levelElements.prop.select("layer", ["back", "front"])],
+    props: [...levelElements.rect(), levelElements.prop.color("color"), levelElements.prop.select("layer", levelElements.layers)],
     build(el) {
         const draw = () => {
             ctx.fillStyle = el.color
             ctx.fillRect(el.x, el.y, el.width, el.height)
         }
-        return el.layer === "front" ? { top: draw } : { custom: draw }
+        return levelElements.isOver(el) ? { top: draw } : { custom: draw }
     },
     code(el) {
         const lines = [`ctx.fillStyle = ${levelElements.args(el.color)};`, `ctx.fillRect(${levelElements.args(el.x, el.y, el.width, el.height)});`]
-        return el.layer === "front" ? { top: lines } : { custom: lines }
+        return levelElements.isOver(el) ? { top: lines } : { custom: lines }
     },
 })
 
 levelElements.isNoColor = color => !color || color === "none" || color === "transparent"
+//a path's curves: handles[i] is null for a corner, or [dx, dy] for a curved vertex, its handle out toward the next vertex, mirrored toward the one before
+//the line between two vertices is a bezier from each end's handle, or straight when neither has one
+levelElements.pathSegments = el => { //[{ a, c1, c2, b, isCurve }] in world space, works for any outline, maps have no handles so they're all straight
+    const points = levelElements.points(el)
+    const handles = el.handles || []
+    const count = levelElements.isOpen(el) ? points.length - 1 : points.length
+    const segments = []
+    for (let i = 0; i < count; i++) {
+        const j = (i + 1) % points.length
+        const a = points[i]
+        const b = points[j]
+        const ha = handles[i]
+        const hb = handles[j]
+        segments.push({ a, b, c1: ha ? { x: a.x + ha[0], y: a.y + ha[1] } : a, c2: hb ? { x: b.x - hb[0], y: b.y - hb[1] } : b, isCurve: !!(ha || hb) })
+    }
+    return segments
+}
+levelElements.cubicAt = (s, t) => { //a point on a segment
+    const u = 1 - t
+    return {
+        x: u * u * u * s.a.x + 3 * u * u * t * s.c1.x + 3 * u * t * t * s.c2.x + t * t * t * s.b.x,
+        y: u * u * u * s.a.y + 3 * u * u * t * s.c1.y + 3 * u * t * t * s.c2.y + t * t * t * s.b.y,
+    }
+}
+levelElements.pathOutline = el => { //world points along the path, each curve as 16 short lines, for clicking, bounds, and outlines
+    const segments = levelElements.pathSegments(el)
+    if (!segments.length) return levelElements.points(el)
+    const points = [segments[0].a]
+    for (const s of segments) {
+        if (s.isCurve) for (let k = 1; k <= 16; k++) points.push(levelElements.cubicAt(s, k / 16))
+        else points.push(s.b)
+    }
+    if (!levelElements.isOpen(el)) points.pop() //back at the start
+    return points
+}
+levelElements.autoHandle = (el, index) => { //a smooth curve through the vertex, its handle along the line from the vertex before to the one after
+    const points = levelElements.points(el)
+    const isOpen = levelElements.isOpen(el)
+    const p = points[index]
+    const prev = points[index - 1] || (isOpen ? p : points[points.length - 1])
+    const next = points[index + 1] || (isOpen ? p : points[0])
+    const scale = prev === p || next === p ? 1 / 3 : 1 / 6 //an open path's ends point at their one neighbor
+    const round = n => Math.round(n * 1000) / 1000
+    return [round((next.x - prev.x) * scale), round((next.y - prev.y) * scale)]
+}
 levelElements.define("path", { //lines and shapes of any outline, drawn behind or in front of the player, the add menu's path button draws one point at a time
-    isDrawing: true, //only drawn, front and back change what's on top
-    tip: "draw lines or filled shapes, click to add points, click the first point to close it, enter or right click to finish",
+    isDrawing: true, //only drawn, to top and to bottom change what's on top
+    tip: "draw lines or filled shapes, click to add points, drag while clicking to curve, click the first point to close it, enter or right click to finish, later double click a vertex to curve it or make it a corner",
     group: "element",
     label: "draw path",
     isBackground: true, //lock background colors in editor settings makes the mouse go through it
     isVertexEditable: true,
+    hasCurves: true, //vertex editing shows handles, double click a vertex to curve it or make it a corner
     addCommand: "drawPath", //its add button draws instead of adding one
-    defaults: () => ({ x: 0, y: -300, vertices: [[-200, 0], [200, 0]], closed: false, fill: "none", stroke: "rgba(0,0,0,0.25)", lineWidth: 10, layer: "back" }),
+    defaults: () => ({ x: 0, y: -300, vertices: [[-200, 0], [200, 0]], handles: [], closed: false, fill: "none", stroke: "rgba(0,0,0,0.25)", lineWidth: 10, layer: "under player" }), //handles: see levelElements.pathSegments()
     styles: { //what a newly drawn path looks like
         closed: { fill: "rgba(0,0,0,0.1)", stroke: "none" },
         open: { fill: "none", stroke: "rgba(0,0,0,0.25)" },
@@ -1422,11 +1461,11 @@ levelElements.define("path", { //lines and shapes of any outline, drawn behind o
         levelElements.prop.color("fill"), //"none" for no fill
         levelElements.prop.color("stroke"), //"none" for no line
         levelElements.prop.number("lineWidth", { step: 1, min: 0 }),
-        levelElements.prop.select("layer", ["back", "front"]),
+        levelElements.prop.select("layer", levelElements.layers),
     ],
     isOpen: el => !el.closed,
     contains(el, p) { //inside a filled path, or near its line
-        const points = levelElements.points(el)
+        const points = levelElements.pathOutline(el)
         if (el.closed && !levelElements.isNoColor(el.fill) && levelElements.isInside(points, p)) return true
         const reach = Math.max(8, el.lineWidth / 2 + 4)
         const count = el.closed ? points.length : points.length - 1
@@ -1454,13 +1493,31 @@ levelElements.define("path", { //lines and shapes of any outline, drawn behind o
         el.y = round(b.y + b.height / 2)
         el.vertices = points.map(p => [round(p.x - el.x), round(p.y - el.y)])
     },
-    summary: el => `path(${levelElements.args(el.x, el.y)}, ${el.vertices.length} points)`,
+    bounds: el => levelElements.boundsOf(levelElements.pathOutline(el)), //around the curves
+    outlinePoints: el => levelElements.pathOutline(el), //what the editor outlines when it's selected
+    rotate(el, degrees, center) { //the outline and its handles turn
+        levelElements.setPoints(el, levelElements.points(el).map(p => levelElements.rotatePoint(p, center, degrees)))
+        el.handles = el.handles.map(h => {
+            if (!h) return h
+            const p = levelElements.rotatePoint({ x: h[0], y: h[1] }, { x: 0, y: 0 }, degrees)
+            return [p.x, p.y]
+        })
+    },
+    flip(el, axis, center) { //the outline and its handles mirror
+        levelElements.setPoints(el, levelElements.points(el).map(p => levelElements.flipPoint(p, axis, center)))
+        el.handles = el.handles.map(h => h && (axis === "x" ? [-h[0], h[1]] : [h[0], -h[1]]))
+    },
+    summary: el => `path(${levelElements.args(el.x, el.y)}, ${el.vertices.length} points${el.handles.some(Boolean) ? `, ${el.handles.filter(Boolean).length} curved` : ""})`,
     build(el) {
         const draw = () => {
-            const points = levelElements.points(el)
+            const segments = levelElements.pathSegments(el)
+            const start = levelElements.points(el)[0]
             ctx.beginPath()
-            ctx.moveTo(points[0].x, points[0].y)
-            for (let i = 1; i < points.length; i++) ctx.lineTo(points[i].x, points[i].y)
+            ctx.moveTo(start.x, start.y)
+            for (const s of segments) {
+                if (s.isCurve) ctx.bezierCurveTo(s.c1.x, s.c1.y, s.c2.x, s.c2.y, s.b.x, s.b.y)
+                else ctx.lineTo(s.b.x, s.b.y)
+            }
             if (el.closed) ctx.closePath()
             if (el.closed && !levelElements.isNoColor(el.fill)) {
                 ctx.fillStyle = el.fill
@@ -1472,21 +1529,24 @@ levelElements.define("path", { //lines and shapes of any outline, drawn behind o
                 ctx.stroke()
             }
         }
-        return el.layer === "front" ? { top: draw } : { custom: draw }
+        return levelElements.isOver(el) ? { top: draw } : { custom: draw }
     },
     code(el) {
-        const points = levelElements.points(el)
-        const lines = ["ctx.beginPath();", `ctx.moveTo(${levelElements.args(points[0].x, points[0].y)});`, ...points.slice(1).map(p => `ctx.lineTo(${levelElements.args(p.x, p.y)});`)]
+        const a = levelElements.args
+        const start = levelElements.points(el)[0]
+        const segments = levelElements.pathSegments(el)
+        if (el.closed && !segments[segments.length - 1].isCurve) segments.pop() //closePath draws the last straight line
+        const lines = ["ctx.beginPath();", `ctx.moveTo(${a(start.x, start.y)});`, ...segments.map(s => s.isCurve ? `ctx.bezierCurveTo(${a(s.c1.x, s.c1.y, s.c2.x, s.c2.y, s.b.x, s.b.y)});` : `ctx.lineTo(${a(s.b.x, s.b.y)});`)]
         if (el.closed) lines.push("ctx.closePath();")
         if (el.closed && !levelElements.isNoColor(el.fill)) lines.push(`ctx.fillStyle = ${levelElements.args(el.fill)};`, "ctx.fill();")
         if (!levelElements.isNoColor(el.stroke) && el.lineWidth > 0) lines.push(`ctx.strokeStyle = ${levelElements.args(el.stroke)};`, `ctx.lineWidth = ${levelElements.args(el.lineWidth)};`, "ctx.stroke();")
-        return el.layer === "front" ? { top: lines } : { custom: lines }
+        return levelElements.isOver(el) ? { top: lines } : { custom: lines }
     },
 })
 
 //*********************************************************************
 levelElements.define("drip", { //level.drip, a drop that falls over and over
-    isDrawing: true, //only drawn, front and back change what's on top
+    isDrawing: true, //only drawn, to top and to bottom change what's on top
     tip: "a drop that falls from x, y, over and over, drag the bottom to change how far",
     group: "element",
     defaults: () => ({ x: 0, y: -600, length: 600, period: 100, color: "hsla(160, 100%, 35%, 0.5)" }),
@@ -1516,10 +1576,10 @@ levelElements.define("drip", { //level.drip, a drop that falls over and over
 })
 
 levelElements.define("text", { //words in the game's stroke font, like the constraint and level name at the start of a level, it doesn't jitter when the camera moves slowly like fillText does
-    isDrawing: true, //only drawn, front and back change what's on top
+    isDrawing: true, //only drawn, to top and to bottom change what's on top
     tip: "words drawn in the game's line font, like the level name at the start, letters, numbers, and . , ! ? : ' - + = / ( ) %, x, y is the top left, or the top middle when centered",
     group: "element",
-    defaults: () => ({ x: 0, y: -300, text: "text", size: 40, color: "rgba(0,0,0,0.5)", lineWidth: 3, align: "left", layer: "back" }),
+    defaults: () => ({ x: 0, y: -300, text: "text", size: 40, color: "rgba(0,0,0,0.5)", lineWidth: 3, align: "left", layer: "under player" }),
     props: [
         ...levelElements.position(),
         levelElements.prop.text("text"),
@@ -1527,7 +1587,7 @@ levelElements.define("text", { //words in the game's stroke font, like the const
         levelElements.prop.color("color"),
         levelElements.prop.number("lineWidth", { step: 1, min: 0.5 }),
         levelElements.prop.select("align", ["left", "center", "right"]),
-        levelElements.prop.select("layer", ["back", "front"]),
+        levelElements.prop.select("layer", levelElements.layers),
     ],
     textBox(el) { //where the letters go, each letter and space is 29 wide at size 40
         const width = Math.max(1, String(el.text).toLowerCase().replace(/[^a-z0-9.,!?:'\-+=/()% ]/g, "").length) * 29 * el.size / 40 //the characters simulation.draw.font has, it skips others
@@ -1544,30 +1604,30 @@ levelElements.define("text", { //words in the game's stroke font, like the const
             ctx.lineWidth = el.lineWidth
             ctx.stroke(word)
         }
-        return el.layer === "front" ? { top: draw } : { custom: draw }
+        return levelElements.isOver(el) ? { top: draw } : { custom: draw }
     },
     code(el, name) {
         const box = levelElements.types.text.textBox(el)
         const lines = [`ctx.strokeStyle = ${levelElements.args(el.color)};`, `ctx.lineWidth = ${levelElements.args(el.lineWidth)};`, `ctx.stroke(${name});`]
         return {
             setup: [`const ${name} = simulation.draw.font.path(${levelElements.args(String(el.text), box.x, box.y)}${el.size !== 40 ? `, ${levelElements.args(el.size)}` : ""});${el.align === "left" ? "" : ` //${el.align === "center" ? "centered on" : "right side at"} x = ${levelElements.args(el.x)}`}`],
-            [el.layer === "front" ? "top" : "custom"]: lines,
+            [levelElements.isOver(el) ? "top" : "custom"]: lines,
         }
     },
 })
 
 levelElements.define("circle", { //a filled circle drawn behind or in front of the player, the shape written levels draw most
-    isDrawing: true, //only drawn, front and back change what's on top
+    isDrawing: true, //only drawn, to top and to bottom change what's on top
     tip: "colored circle drawn behind or in front of the player, drag the handle to change its radius",
     group: "element",
     label: "circle fill",
     isBackground: true, //lock background colors in editor settings makes the mouse go through it
-    defaults: () => ({ x: 0, y: -200, radius: 100, color: "rgba(0,0,0,0.1)", layer: "back" }),
+    defaults: () => ({ x: 0, y: -200, radius: 100, color: "rgba(0,0,0,0.1)", layer: "under player" }),
     props: [
         ...levelElements.position(),
         levelElements.prop.number("radius", { isGrid: true, min: 1 }),
         levelElements.prop.color("color"),
-        levelElements.prop.select("layer", ["back", "front"]),
+        levelElements.prop.select("layer", levelElements.layers),
     ],
     bounds: el => ({ x: el.x - el.radius, y: el.y - el.radius, width: 2 * el.radius, height: 2 * el.radius }),
     contains: (el, p) => Math.hypot(p.x - el.x, p.y - el.y) <= el.radius,
@@ -1581,28 +1641,28 @@ levelElements.define("circle", { //a filled circle drawn behind or in front of t
             ctx.fillStyle = el.color
             ctx.fill()
         }
-        return el.layer === "front" ? { top: draw } : { custom: draw }
+        return levelElements.isOver(el) ? { top: draw } : { custom: draw }
     },
     code(el) {
         const lines = ["ctx.beginPath();", `ctx.arc(${levelElements.args(el.x, el.y, el.radius)}, 0, 2 * Math.PI);`, `ctx.fillStyle = ${levelElements.args(el.color)};`, "ctx.fill();"]
-        return el.layer === "front" ? { top: lines } : { custom: lines }
+        return levelElements.isOver(el) ? { top: lines } : { custom: lines }
     },
 })
 
 levelElements.define("ellipse", { //a filled ellipse, angle turns it, degrees counterclockwise like boost
-    isDrawing: true, //only drawn, front and back change what's on top
+    isDrawing: true, //only drawn, to top and to bottom change what's on top
     tip: "colored ellipse drawn behind or in front of the player, drag its handles to change each radius, rotate turns it",
     group: "element",
     label: "ellipse fill",
     isBackground: true, //lock background colors in editor settings makes the mouse go through it
-    defaults: () => ({ x: 0, y: -200, radiusX: 150, radiusY: 75, angle: 0, color: "rgba(0,0,0,0.1)", layer: "back" }),
+    defaults: () => ({ x: 0, y: -200, radiusX: 150, radiusY: 75, angle: 0, color: "rgba(0,0,0,0.1)", layer: "under player" }),
     props: [
         ...levelElements.position(),
         levelElements.prop.number("radiusX", { isGrid: true, min: 1 }),
         levelElements.prop.number("radiusY", { isGrid: true, min: 1 }),
         levelElements.prop.number("angle", { step: 15 }),
         levelElements.prop.color("color"),
-        levelElements.prop.select("layer", ["back", "front"]),
+        levelElements.prop.select("layer", levelElements.layers),
     ],
     axes(el) { //unit vectors along radiusX and radiusY in world space
         const a = levelElements.radians(el.angle)
@@ -1648,11 +1708,11 @@ levelElements.define("ellipse", { //a filled ellipse, angle turns it, degrees co
             ctx.fillStyle = el.color
             ctx.fill()
         }
-        return el.layer === "front" ? { top: draw } : { custom: draw }
+        return levelElements.isOver(el) ? { top: draw } : { custom: draw }
     },
     code(el) {
         const lines = ["ctx.beginPath();", `ctx.ellipse(${levelElements.args(el.x, el.y, el.radiusX, el.radiusY)}, ${el.angle ? levelElements.angleCode(el.angle) : "0"}, 0, 2 * Math.PI);`, `ctx.fillStyle = ${levelElements.args(el.color)};`, "ctx.fill();"]
-        return el.layer === "front" ? { top: lines } : { custom: lines }
+        return levelElements.isOver(el) ? { top: lines } : { custom: lines }
     },
 })
 
@@ -1666,18 +1726,18 @@ levelElements.bezierAt = (el, t) => { //a point on the curve
     }
 }
 levelElements.define("bezier", { //a curved line, ctx.bezierCurveTo, drag either end or either control point
-    isDrawing: true, //only drawn, front and back change what's on top
+    isDrawing: true, //only drawn, to top and to bottom change what's on top
     tip: "curved line from x, y to x2, y2, drag the ends and the two control points that bend it",
     group: "element",
     label: "bezier",
     isBackground: true, //lock background colors in editor settings makes the mouse go through it
-    defaults: () => ({ x: -200, y: -200, cx1: -100, cy1: -450, cx2: 100, cy2: -450, x2: 200, y2: -200, stroke: "rgba(0,0,0,0.25)", lineWidth: 10, layer: "back" }),
+    defaults: () => ({ x: -200, y: -200, cx1: -100, cy1: -450, cx2: 100, cy2: -450, x2: 200, y2: -200, stroke: "rgba(0,0,0,0.25)", lineWidth: 10, layer: "under player" }),
     props: [
         ...levelElements.position(),
         ...["cx1", "cy1", "cx2", "cy2", "x2", "y2"].map(key => levelElements.prop.number(key, { isGrid: true })),
         levelElements.prop.color("stroke"),
         levelElements.prop.number("lineWidth", { step: 1, min: 0 }),
-        levelElements.prop.select("layer", ["back", "front"]),
+        levelElements.prop.select("layer", levelElements.layers),
     ],
     samples: el => Array.from({ length: 33 }, (_, i) => levelElements.bezierAt(el, i / 32)),
     bounds(el) { //the curve, not its control points
@@ -1737,12 +1797,12 @@ levelElements.define("bezier", { //a curved line, ctx.bezierCurveTo, drag either
             ctx.lineWidth = el.lineWidth
             ctx.stroke()
         }
-        return el.layer === "front" ? { top: draw } : { custom: draw }
+        return levelElements.isOver(el) ? { top: draw } : { custom: draw }
     },
     code(el) {
         if (levelElements.isNoColor(el.stroke) || el.lineWidth <= 0) return {} //drawn nothing in the editor too
         const lines = ["ctx.beginPath();", `ctx.moveTo(${levelElements.args(el.x, el.y)});`, `ctx.bezierCurveTo(${levelElements.args(el.cx1, el.cy1, el.cx2, el.cy2, el.x2, el.y2)});`, `ctx.strokeStyle = ${levelElements.args(el.stroke)};`, `ctx.lineWidth = ${levelElements.args(el.lineWidth)};`, "ctx.stroke();"]
-        return el.layer === "front" ? { top: lines } : { custom: lines }
+        return levelElements.isOver(el) ? { top: lines } : { custom: lines }
     },
 })
 
@@ -1876,6 +1936,7 @@ levelElements.define("mobSpot", { //a place a random mob might spawn, spawn.rand
     tip: "a place a random mob might spawn, each level spawns mobs at some of its spots, more as the run goes on, small spots get a few small mobs",
     group: "mob",
     label: "mob", //its add button, the data and export still call it a spot
+    levelProps: ["mobVeto"], //the level's mob veto shows in its inspector too, it's for every spot
     defaults: () => ({ x: 0, y: -300, small: false }),
     props: [...levelElements.position(), levelElements.prop.bool("small")], //small spots get a few small mobs instead of one
     bounds: el => ({ x: el.x - 20, y: el.y - 20, width: 40, height: 40 }),
@@ -1884,13 +1945,22 @@ levelElements.define("mobSpot", { //a place a random mob might spawn, spawn.rand
     build(el, options) {
         if (options.isSpawning) spawn.randomMobPositions.push({ x: el.x, y: el.y, isSmall: el.small }) //levelData.play() calls spawn.randomMobFromArray() after
     },
-    codeAll: elements => [ //every spot goes in one list
+    codeAll: (elements, data) => [ //every spot goes in one list, the level's mobVeto goes with them
         "spawn.randomMobPositions = [",
         ...elements.map(el => `    [${levelElements.args(el.x, el.y)}${el.small ? ", true" : ""}],`),
         "].map(([x, y, isSmall = false]) => ({ x, y, isSmall }));",
-        "spawn.randomMobFromArray()",
+        `spawn.randomMobFromArray(${data.mobVeto.length ? levelElements.namesCode(data.mobVeto) : ""})`,
     ],
 })
+levelElements.namesCode = names => `[${names.map(name => JSON.stringify(name)).join(", ")}]`
+levelElements.vetoTiers = { //what veto lists show, by tier, spawn.js isn't loaded in the unit tests
+    mob: () => typeof spawn === "undefined" ? [] : spawn.tier.slice(1, 5).map((names, i) => [`tier ${i + 1}`, names.slice().sort()]), //tier 0 is only starter, tier 5 only spawns as next TIER mobs
+    boss: () => typeof spawn === "undefined" ? [] : spawn.bossTier.map((names, i) => [`tier ${i}`, names.slice().sort()]).filter(([, names]) => names.length),
+}
+levelElements.vetoBlocks = (prop, veto, name) => { //why name can't be vetoed: it's the last one its tier has left, or ""
+    const tier = prop.tiers().find(([, names]) => names.includes(name))
+    return tier && !veto.includes(name) && tier[1].every(other => other === name || veto.includes(other)) ? `every other ${tier[0]} ${prop.noun} is vetoed, a tier needs one` : ""
+}
 
 levelElements.mobType = (spawnName, label, radius, fill, hasChance, text = label) => ({ //text is what the editor writes on its marker
     group: "mob",
@@ -1910,7 +1980,7 @@ levelElements.mobType = (spawnName, label, radius, fill, hasChance, text = label
         return { setup: [`spawn.${spawnName}(${levelElements.args(el.x, el.y)}${chance});`] }
     },
 })
-levelElements.define("mob", { ...levelElements.mobType("randomMob", "mob", 40, "rgba(255,80,80,0.35)", true), tip: "one random mob in this exact spot, chance is how likely, written levels use spots instead" })
+levelElements.define("mob", { ...levelElements.mobType("randomMob", "mob", 40, "rgba(255,80,80,0.35)", true), tip: "one random mob in this exact spot, chance is how likely, standard levels use spots instead" })
 levelElements.define("smallMobs", { ...levelElements.mobType("randomSmallMob", "small mobs", 30, "rgba(255,120,80,0.35)", true, "small"), tip: "a few small random mobs, more on harder difficulties" })
 levelElements.define("mobGroup", { ...levelElements.mobType("randomGroup", "group", 50, "rgba(255,80,160,0.35)", true), tip: "a group of random mobs linked together, only after the first few levels" })
 levelElements.mobNames = () => typeof spawn === "undefined" ? ["starter"] : [...new Set([...spawn.tier.flat(), ...spawn.bossTier.flat()])] //every mob and boss by tier, spawn.js isn't loaded in the unit tests
@@ -1932,7 +2002,8 @@ levelElements.define("namedMob", { //one mob picked by name, for levels that wan
 })
 levelElements.bossType = (spawnName, label, radius, fill) => ({ //a boss spawns at its spot or one of its other spots, picked at random each time the level loads
     ...levelElements.mobType(spawnName, label, radius, fill, false),
-    defaults: () => ({ x: 0, y: -300, spots: [] }), //spots: [[x, y], ...] other places it could spawn, the editor shows them as handles to drag
+    defaults: () => ({ x: 0, y: -300, spots: [], veto: [] }), //spots: [[x, y], ...] other places it could spawn, the editor shows them as handles to drag, veto: boss names it won't be
+    props: [...levelElements.position(), levelElements.prop.veto("veto", levelElements.vetoTiers.boss, "boss")],
     places: el => [[el.x, el.y], ...el.spots],
     contains: (el, p) => levelElements.types[el.type].places(el).some(([x, y]) => Math.hypot(p.x - x, p.y - y) < radius),
     move(el, dx, dy, isWhole) { //dragging the boss leaves its other spots where they are, copies take them along
@@ -1978,14 +2049,15 @@ levelElements.bossType = (spawnName, label, radius, fill) => ({ //a boss spawns 
         if (!options.isSpawning) return
         const places = levelElements.types[el.type].places(el)
         const [x, y] = places[Math.floor(Math.random() * places.length)]
-        spawn[spawnName](x, y)
+        spawn[spawnName](x, y, [], el.veto)
     },
     code(el, name) {
         const spot = ([x, y]) => `{ x: ${levelElements.args(x)}, y: ${levelElements.args(y)} }`
-        if (!el.spots.length) return { setup: [`spawn.${spawnName}(${levelElements.args(el.x, el.y)});`] }
+        const veto = el.veto.length ? `, [], ${levelElements.namesCode(el.veto)}` : "" //spawn.randomLevelBoss(x, y, options, veto)
+        if (!el.spots.length) return { setup: [`spawn.${spawnName}(${levelElements.args(el.x, el.y)}${veto});`] }
         const places = levelElements.types[el.type].places(el)
         const pick = places.length === 2 ? `Math.random() < 0.5 ? ${spot(places[0])} : ${spot(places[1])}` : `[${places.map(spot).join(", ")}][Math.floor(Math.random() * ${places.length})]` //like written levels pick a boss spot
-        return { setup: [`const ${name} = ${pick}`, `spawn.${spawnName}(${name}.x, ${name}.y);`] }
+        return { setup: [`const ${name} = ${pick}`, `spawn.${spawnName}(${name}.x, ${name}.y${veto});`] }
     },
 })
 levelElements.define("boss", { ...levelElements.bossType("randomLevelBoss", "boss", 80, "rgba(200,0,60,0.35)"), tip: "the level's boss, picked by the run's tier, add spots in the inspector for other places it could spawn" })
@@ -2002,7 +2074,7 @@ levelElements.define("powerUp", {
         heal: "restores health",
         ammo: "adds ammo to all the player's guns",
         research: "rerolls gun, field, and tech choices, levels with mobs already get 1",
-        tech: "a choice of 3 tech, written levels give tech from the boss and the starting power up",
+        tech: "a choice of 3 tech, standard levels give tech from the boss and the starting power up",
         gun: "a choice of 2 guns",
         field: "a choice of 2 fields",
         coupling: "improves the player's field",
@@ -2044,7 +2116,7 @@ levelElements.define("randomPowerUp", { ...levelElements.powerUpCall("chooseRand
 levelElements.define("startingPowerUps", { ...levelElements.powerUpCall("spawnStartingPowerUps", "starting", "rgba(30,90,200,0.3)"), tip: "every level has 1, early in a run it gives the first gun or tech, later it's a few random power ups, put it far from the entrance so the player explores to find it" })
 
 levelElements.define("debris", { //random small blocks and power ups along a line, written levels use about 16
-    tip: "small random blocks along a line, about 15% are heal or ammo instead, written levels use about 16",
+    tip: "small random blocks along a line, about 15% are heal or ammo instead, standard levels use about 16",
     group: "powerUp",
     defaults: () => ({ x: 0, y: -300, width: 1000, count: 16 }),
     props: [...levelElements.position(), levelElements.prop.number("width", { isGrid: true, min: 1 }), levelElements.prop.number("count", { step: 1, min: 1 })],
@@ -2107,7 +2179,7 @@ levelElements.tips = {
     distance: "how far it moves, game units",
     damage: "how much it hurts each hit, before difficulty scaling",
     color: "any css color, like #444, rgba(0,0,0,0.1), or hsl(200, 50%, 50%)",
-    layer: "back is behind the player and blocks, front is in front of them",
+    layer: "under or over the player, blocks, and mobs, to top and to bottom order it among the other drawings in its layer",
     stroke: "line color, any css color, or none",
     fill: "fill color, any css color, or none",
     lineWidth: "line thickness, game units",
@@ -2117,6 +2189,8 @@ levelElements.tips = {
     who: "what turns it on by being inside: the player, a block, a mob, or any of them",
     on: "",
     small: "a few small mobs instead of one",
+    veto: "bosses it won't be, pick one to cross it out or bring it back, a vetoed boss's turn goes to the next one in its tier",
+    mobVeto: "mobs the level's mob spots won't spawn, pick one to cross it out or bring it back, the level's other mob types spawn instead",
     x2: "the other end's x, game units",
     y2: "the other end's y, game units",
 }
@@ -2158,7 +2232,7 @@ levelElements.typeTips = {
     namedMob: { name: "which mob" },
     level: {
         name: "letters, numbers, - and _, no spaces, it's the save name and the level pool name",
-        zoom: "how far the camera sees, game levels use 1300 to 2600",
+        zoom: "how far the camera sees, standard levels use 1300 to 2600",
         background: "the color behind everything",
         mapColor: "the color of the map",
         blockColor: "the color of blocks",
@@ -2181,8 +2255,9 @@ levelElements.level = {
         levelElements.prop.select("fall", ["spawn", "sky"]), //falling off the bottom sends the player back to the spawn, or keeps them falling from the sky above it
         levelElements.prop.number("constraintTextX", { isGrid: true }), //where the run's constraint shows, from the spawn, level.announceText()
         levelElements.prop.number("constraintTextY", { isGrid: true }),
+        levelElements.prop.veto("mobVeto", levelElements.vetoTiers.mob, "mob", { isShown: data => data.elements.some(el => el.type === "mobSpot") }), //each mob spot shows it too
     ],
-    defaults: () => ({ zoom: 2000, background: "#dcdcde", mapColor: "#444", blockColor: "rgba(140,140,140,0.85)", gravity: 1, fall: "spawn", constraintTextX: 0, constraintTextY: 75 }), //what written levels use most, and the level properties default button
+    defaults: () => ({ zoom: 2000, background: "#dcdcde", mapColor: "#444", blockColor: "rgba(140,140,140,0.85)", gravity: 1, fall: "spawn", constraintTextX: 0, constraintTextY: 75, mobVeto: [] }), //what written levels use most, and the level properties default button
 }
 
 //*********************************************************************

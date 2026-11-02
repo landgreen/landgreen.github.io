@@ -1,10 +1,12 @@
+bug fixes
+  level editor: constraints no longer happen while editing, like spawn wimps sending wimps after you
+  level editor: pausing hides the editor's menus, they used to stick out from under the pause menu
 
 
 
 
 *********************************************************** TODO *****************************************************
 
-!review the game code map
 
 
 

@@ -368,6 +368,7 @@ const build = {
         document.getElementById("health").style.display = "none"
         document.getElementById("health-bg").style.display = "none"
         document.getElementById("defense-bar").style.display = "none"
+        document.body.classList.add("pause-open") //the level editor hides its panels under the pause menu
         //show in game console
         simulation.lastLogTime = m.cycle
     },
@@ -737,6 +738,7 @@ ${b.guns[b.inventory[i]].descriptionFunction()}</div> </div>`
         document.getElementById("pause-grid-right").style.display = "none"
         document.getElementById("pause-grid-right").style.opacity = "1"
         document.getElementById("pause-grid-left").style.opacity = "1"
+        document.body.classList.remove("pause-open")
         window.scrollTo(0, 0);
     },
     isExperimentSelection: false,

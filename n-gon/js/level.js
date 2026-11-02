@@ -644,7 +644,7 @@ const level = {
         for (let i = 0; i < level.constraint.length; i++) {
             level.constraint[i].remove()
         }
-        if (level.levels[level.onLevel] !== "final" && level.levels[level.onLevel] !== "null" && level.levels[level.onLevel] !== "initial" && !simulation.isTraining && m.alive && level.levelsCleared) {
+        if (level.levels[level.onLevel] !== "final" && level.levels[level.onLevel] !== "null" && level.levels[level.onLevel] !== "initial" && !simulation.isTraining && !levelEditor.isActive && m.alive && level.levelsCleared) { //the level editor isn't a run, it sets levelsCleared to test mobs
             if (simulation.difficultyOptions.isConstraint && level.constraint.length) {
                 //Advance through the shuffled constraints once per level.
                 level.constraint[level.constraintIndex].effect()

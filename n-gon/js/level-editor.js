@@ -4,8 +4,9 @@
 //  levelElements: what can be placed, levelData: building, capturing, and saving levels
 //  hooks into the game: level.start() calls levelEditor.startLevel(), m.death() calls levelEditor.respawn(),
 //  simulation.splashReturn() calls levelEditor.close(), mouseMove.wantsLock() is false while it's open
+//it loads the first time the editor opens, levelEditor starts as the small object at the bottom of js/level-data.js, this adds the rest
 //see docs/level-editor.md
-const levelEditor = {
+Object.assign(levelEditor, {
     isActive: false,
     data: null, //the level being edited, the same object as levelData.data
     selection: [], //element ids
@@ -29,7 +30,7 @@ const levelEditor = {
     isTestSpawning: true, //the mobs, power ups checkbox, mobs and power ups spawn while testing, never while editing so it isn't a fight
     testLevel: 5, //level.levelsCleared while editing, for mob types, difficulty, and damage, at 0 random mobs don't spawn
     vertex: null, //{ id, active, error } while editing a map or block's vertices, active is the clicked vertex, error is why typed vertices didn't work
-    pathDraw: null, //{ points } while drawing a path, see the drawPath command
+    pathDraw: null, //{ points, handles } while drawing a path, see the drawPath command
     hiddenTypes: new Set(), //the explorer's hide, hidden elements aren't built while editing, tests show them
     hiddenIds: new Set(),
     lockedTypes: new Set(), //the explorer's lock, the mouse goes through locked elements, the explorer still selects them
@@ -79,11 +80,6 @@ const levelEditor = {
         levelEditor.isActive = true
         await simulation.startGame() //the first level start calls levelEditor.startLevel() instead of loading initial
         if (simulation.onTitlePage) levelEditor.isActive = false //startGame failed
-    },
-    updateSplashButton() { //the title page's editor button, once there are local levels
-        const isShown = levelData.store.hasWork()
-        document.body.classList.toggle("has-level-editor", isShown)
-        document.getElementById("level-editor-splash-button").style.display = isShown && simulation.onTitlePage !== false ? "inline" : "none"
     },
     reset(data) {
         levelEditor.data = data
@@ -206,7 +202,7 @@ const levelEditor = {
     },
     middleClickTimer: null,
     middleClickPoint: null,
-    middleClick(point) { //a middle click centers on the player, a middle double click teleports the player, so the first click waits to see if there's a second
+    middleClick(point, isTool = false) { //a middle click centers on the player, a middle double click teleports the player, so the first click waits to see if there's a second, the pan tool's click only teleports on a double click
         if (levelEditor.middleClickTimer) {
             clearTimeout(levelEditor.middleClickTimer)
             levelEditor.middleClickTimer = null
@@ -216,10 +212,10 @@ const levelEditor = {
         levelEditor.middleClickPoint = point
         levelEditor.middleClickTimer = setTimeout(() => {
             levelEditor.middleClickTimer = null
-            levelEditor.pan = { x: 0, y: 0 }
+            if (!isTool) levelEditor.pan = { x: 0, y: 0 }
         }, 300)
     },
-    teleport(point) { //middle double click, the player goes there
+    teleport(point) { //middle double click, pan tool double click, or mouse 4 or 5, the player goes there
         Matter.Body.setPosition(player, point)
         Matter.Body.setVelocity(player, { x: 0, y: 0 })
         m.resetHistory()
@@ -483,14 +479,25 @@ const levelEditor = {
             levelEditor.drag = { kind: "pan", button: 1, moved: 0, point: levelEditor.mouse() }
             return
         }
+        if (event.button === 3 || event.button === 4) { //mouse 4 and 5, the back and forward buttons, teleport the player to the mouse
+            event.preventDefault()
+            levelEditor.teleport(levelEditor.mouse())
+            return
+        }
         if (event.button !== 0 && event.button !== 2) return
         event.stopPropagation() //don't fire or use the field
+        if (event.detail > 1) event.preventDefault() //a double click doesn't select the panels' text
         if (document.activeElement && document.activeElement !== document.body) document.activeElement.blur() //finishes typing in the inspector
         const point = levelEditor.mouse()
         if (levelEditor.pathDraw) return levelEditor.pathClick(point, event.button)
         if (levelEditor.picking) return levelEditor.pick(levelEditor.elementAt(point))
         const drag = { button: event.button, start: point, screen: { x: simulation.mouse.x, y: simulation.mouse.y }, before: JSON.stringify(levelEditor.data) }
         const vertexHit = levelEditor.vertexAt(point)
+        if (vertexHit && vertexHit.side) { //a curved vertex's handle, dragging either end bends both sides
+            levelEditor.drag = { ...drag, kind: "curveHandle", id: levelEditor.vertexElement().id, index: vertexHit.index, side: vertexHit.side }
+            return
+        }
+        if (vertexHit && !vertexHit.isNew && event.detail === 2 && levelElements.types[levelEditor.vertexElement().type]?.hasCurves) return levelEditor.toggleCurve(vertexHit.index) //double click a path's vertex
         if (vertexHit) { //either button drags a vertex, or a dot in the middle of an edge to add one there
             const el = levelEditor.vertexElement()
             const points = levelElements.points(el)
@@ -556,11 +563,12 @@ const levelEditor = {
         }
     },
     mouseUp(event) {
+        if ((event.button === 3 || event.button === 4) && levelEditor.isActive) event.preventDefault() //mouse 4 and 5 teleport, they don't go back or forward a page
         const drag = levelEditor.drag
         if (!drag || event.button !== drag.button) return
         levelEditor.drag = null
         if (drag.kind === "pan") {
-            if (drag.moved < 4 && !drag.isTool) levelEditor.middleClick(drag.point)
+            if (drag.moved < 4) levelEditor.middleClick(drag.point, drag.isTool)
             return
         }
         if (drag.kind === "measure") return //the ruler stays until the next one or esc
@@ -575,9 +583,23 @@ const levelEditor = {
             const el = levelData.find(levelEditor.data, drag.id)
             levelEditor.edit(`${drag.isNew ? "add" : "move"} vertex ${drag.index} ${levelEditor.describe([el])}`, () => {
                 levelElements.setPoints(el, points)
+                if (drag.isNew && el.handles) el.handles.splice(drag.index, 0, null) //a new vertex is a corner
                 return [el.id]
             })
             levelEditor.vertex.active = drag.index
+            return
+        }
+        if (drag.kind === "curveHandle") {
+            if (isClick) return
+            const el = levelData.find(levelEditor.data, drag.id)
+            levelEditor.edit(`bend vertex ${drag.index} ${levelEditor.describe([el])}`, () => {
+                el.handles[drag.index] = levelEditor.curveHandle(drag)
+                return [el.id]
+            })
+            return
+        }
+        if (drag.kind === "pathHandle") { //letting go after a click while drawing a path, dragged far enough the point is curved
+            if (!isClick) levelEditor.pathDraw.handles[drag.index] = levelEditor.pathHandle(drag)
             return
         }
         if (drag.kind === "draw") {
@@ -650,6 +672,34 @@ const levelEditor = {
         points[drag.index] = levelEditor.snapPoint(levelEditor.mouse())
         return { points, error: levelElements.checkPoints(points, levelData.find(levelEditor.data, drag.id)) }
     },
+    vertexDragCopy(drag) { //a copy of the shape as it would be after a vertex or curve handle drag, to outline with its curves
+        const el = levelData.copy(levelData.find(levelEditor.data, drag.id))
+        if (drag.kind === "curveHandle") {
+            el.handles[drag.index] = levelEditor.curveHandle(drag)
+        } else {
+            levelElements.setPoints(el, levelEditor.vertexPreview(drag).points)
+            if (drag.isNew && el.handles) el.handles.splice(drag.index, 0, null)
+        }
+        return el
+    },
+    curveHandle(drag) { //the handle the mouse is on, it points from the vertex to the mouse, the other end mirrors
+        const el = levelData.find(levelEditor.data, drag.id)
+        const p = levelElements.points(el)[drag.index]
+        const mouse = levelEditor.mouse()
+        const round = n => Math.round(n * 1000) / 1000
+        return [round((mouse.x - p.x) * drag.side), round((mouse.y - p.y) * drag.side)]
+    },
+    toggleCurve(index) { //a corner becomes a smooth curve through the vertex, a curve becomes a corner
+        const el = levelEditor.vertexElement()
+        const isCurved = !!(el.handles || [])[index]
+        levelEditor.edit(`${isCurved ? "corner" : "curve"} vertex ${index} ${levelEditor.describe([el])}`, () => {
+            el.handles = el.handles || []
+            el.handles[index] = isCurved ? null : levelElements.autoHandle(el, index)
+            for (let i = 0; i < el.vertices.length; i++) el.handles[i] = el.handles[i] || null //no holes in the saved list
+            return [el.id]
+        })
+        levelEditor.vertex.active = index
+    },
 
     //*********************************************************************
     // picking, click an element for a ref prop like a constraint's block, or to link it to a button
@@ -698,29 +748,43 @@ const levelEditor = {
         if (points.length > 2 && isNear(points[0])) return levelEditor.finishPath(true)
         if (points.length > 1 && isNear(points[points.length - 1])) return levelEditor.finishPath(false)
         points.push(snapped)
+        levelEditor.pathDraw.handles.push(null)
+        levelEditor.drag = { kind: "pathHandle", button, index: points.length - 1, screen: { x: simulation.mouse.x, y: simulation.mouse.y } } //dragging before letting go curves it
+    },
+    pathHandle(drag) { //while drawing, the point's handle points from it to the mouse, unsnapped
+        const p = levelEditor.pathDraw.points[drag.index]
+        const mouse = levelEditor.mouse()
+        const round = n => Math.round(n * 1000) / 1000
+        return [round(mouse.x - p.x), round(mouse.y - p.y)]
+    },
+    drawingPath() { //the path being drawn so far as a path, with the line to the mouse, and the handle being dragged
+        const draw = levelEditor.pathDraw
+        const drag = levelEditor.drag
+        const isDragging = drag && drag.kind === "pathHandle" && Math.hypot(simulation.mouse.x - drag.screen.x, simulation.mouse.y - drag.screen.y) >= 4
+        const points = isDragging ? draw.points : draw.points.concat(levelEditor.snapPoint(levelEditor.mouse()))
+        const handles = draw.handles.map((h, i) => isDragging && i === drag.index ? levelEditor.pathHandle(drag) : h)
+        return { type: "path", x: 0, y: 0, vertices: points.map(p => [p.x, p.y]), handles, closed: false }
     },
     finishPath(isClosed) {
         const points = levelEditor.pathDraw ? levelEditor.pathDraw.points : []
+        const handles = levelEditor.pathDraw ? levelEditor.pathDraw.handles : []
         levelEditor.pathDraw = null
         levelEditor.renderLeft()
         if (points.length < (isClosed ? 3 : 2)) return
         const type = levelElements.types.path
-        const el = levelElements.create("path", { closed: isClosed, ...type.styles[isClosed ? "closed" : "open"] })
+        const el = levelElements.create("path", { closed: isClosed, handles: handles.some(Boolean) ? handles : [], ...type.styles[isClosed ? "closed" : "open"] })
         levelElements.setPoints(el, points)
         levelEditor.edit(`draw ${levelEditor.describe([el])}`, data => [levelData.add(data, el).id])
         levelEditor.select([el.id])
     },
-    drawPathPreview() { //the points so far and a line to the mouse, the first point is bigger, clicking it closes the path
-        const points = levelEditor.pathDraw.points.concat(levelEditor.snapPoint(levelEditor.mouse()))
-        ctx.beginPath()
-        ctx.moveTo(points[0].x, points[0].y)
-        for (let i = 1; i < points.length; i++) ctx.lineTo(points[i].x, points[i].y)
+    drawPathPreview() { //the points so far and a line to the mouse, the first point is bigger, clicking it closes the path, curved points show their handle
+        const path = levelEditor.drawingPath()
+        const points = levelEditor.pathDraw.points
+        levelEditor.outline(path, levelEditor.colors.select, 2, [6, 4])
         ctx.lineWidth = levelEditor.px(2)
         ctx.strokeStyle = levelEditor.colors.select
-        ctx.setLineDash([levelEditor.px(6), levelEditor.px(4)])
-        ctx.stroke()
-        ctx.setLineDash([])
-        points.slice(0, -1).forEach((p, i) => {
+        path.handles.forEach((h, i) => { if (h) levelEditor.drawCurveHandle(points[i], h) })
+        points.forEach((p, i) => {
             ctx.beginPath()
             ctx.arc(p.x, p.y, levelEditor.px(i === 0 ? 7 : 4), 0, 2 * Math.PI)
             ctx.fillStyle = i === 0 ? "rgba(0,170,255,0.3)" : "#fff"
@@ -746,10 +810,13 @@ const levelEditor = {
         const near = p => Math.abs(p.x - point.x) < reach && Math.abs(p.y - point.y) < reach
         const index = points.findIndex(near)
         if (index !== -1) return { index, isNew: false }
-        const edges = levelElements.isOpen(el) ? points.length - 1 : points.length
-        for (let i = 0; i < edges; i++) {
-            const next = points[(i + 1) % points.length]
-            const middle = { x: (points[i].x + next.x) / 2, y: (points[i].y + next.y) / 2 }
+        for (const [i, h] of (el.handles || []).entries()) { //a curved vertex's handle ends
+            if (!h) continue
+            for (const side of [1, -1]) if (near({ x: points[i].x + side * h[0], y: points[i].y + side * h[1] })) return { index: i, side }
+        }
+        const segments = levelElements.pathSegments(el)
+        for (let i = 0; i < segments.length; i++) {
+            const middle = levelElements.cubicAt(segments[i], 0.5) //on the curve, the middle of a straight edge
             if (near(middle)) return { index: i + 1, isNew: true, point: middle }
         }
         return null
@@ -762,21 +829,32 @@ const levelEditor = {
         levelEditor.vertex.text = levelElements.pathText(el)
         if (error) return levelEditor.renderRight()
         if (!levelEditor.edit(label(levelEditor.describe([el])), () => {
+            if (el.handles && points.length !== levelElements.points(el).length) el.handles = [] //typed a different number of vertices, they're corners again
             levelElements.setPoints(el, points)
             return [el.id]
         })) levelEditor.renderRight()
+    },
+    drawCurveHandle(p, h) { //a line through a curved vertex with a small square at each end
+        const size = levelEditor.px(3.5)
+        ctx.beginPath()
+        ctx.moveTo(p.x - h[0], p.y - h[1])
+        ctx.lineTo(p.x + h[0], p.y + h[1])
+        ctx.stroke()
+        ctx.beginPath()
+        for (const side of [1, -1]) ctx.rect(p.x + side * h[0] - size, p.y + side * h[1] - size, 2 * size, 2 * size)
+        ctx.fillStyle = "#fff"
+        ctx.fill()
+        ctx.stroke()
     },
     drawVertices(el) {
         const points = levelElements.points(el)
         const size = levelEditor.px(5)
         ctx.lineWidth = levelEditor.px(1.5)
         ctx.strokeStyle = levelEditor.colors.select
+        for (const [i, h] of (el.handles || []).entries()) if (h && points[i]) levelEditor.drawCurveHandle(points[i], h)
         ctx.beginPath()
-        const edges = levelElements.isOpen(el) ? points.length - 1 : points.length
-        for (let i = 0; i < edges; i++) { //edge dots
-            const next = points[(i + 1) % points.length]
-            const x = (points[i].x + next.x) / 2
-            const y = (points[i].y + next.y) / 2
+        for (const s of levelElements.pathSegments(el)) { //edge dots, on the curve for curved ones
+            const { x, y } = levelElements.cubicAt(s, 0.5)
             ctx.moveTo(x + size * 0.6, y)
             ctx.arc(x, y, size * 0.6, 0, 2 * Math.PI)
         }
@@ -906,7 +984,7 @@ const levelEditor = {
         selectAll: { label: "select all", keys: ["mod+a"], run: () => levelEditor.select(levelEditor.data.elements.map(el => el.id)) },
         delete: {
             label: "delete", keys: ["delete", "backspace"], run(isCut = false) {
-                if (levelEditor.pathDraw) return levelEditor.pathDraw.points.pop() //the last point of the path being drawn
+                if (levelEditor.pathDraw) return levelEditor.pathDraw.points.pop() && levelEditor.pathDraw.handles.pop() //the last point of the path being drawn
                 const vertexEl = levelEditor.vertexElement()
                 if (vertexEl && levelEditor.vertex.active !== -1) { //while editing vertices, delete removes the clicked vertex
                     const index = levelEditor.vertex.active
@@ -916,6 +994,7 @@ const levelEditor = {
                     if (error) return simulation.inGameConsole(`<em>//shape ${error}</em>`)
                     levelEditor.edit(`remove vertex ${index} ${levelEditor.describe([vertexEl])}`, () => {
                         levelElements.setPoints(vertexEl, points)
+                        if (vertexEl.handles) vertexEl.handles.splice(index, 1)
                         return [vertexEl.id]
                     })
                     levelEditor.vertex.active = -1
@@ -1005,14 +1084,14 @@ const levelEditor = {
                 })
             },
         },
-        arrange: { //"front" draws them over the others, "back" under, it's their order in the list
+        arrange: { //"top" draws them over the other drawings in their layer, "bottom" under, it's their order in the list
             label: "draw order", run(where) {
                 const ids = levelEditor.selectedParts().map(el => el.id) //code runs in list order, moving it would change what it does
                 if (!ids.length) return
                 levelEditor.edit(`${levelEditor.describe(levelEditor.selected())} to the ${where}`, data => {
                     const moving = data.elements.filter(el => ids.includes(el.id))
                     const rest = data.elements.filter(el => !ids.includes(el.id))
-                    data.elements = where === "front" ? rest.concat(moving) : moving.concat(rest)
+                    data.elements = where === "top" ? rest.concat(moving) : moving.concat(rest)
                     return [] //drawing follows the list order each frame, nothing needs rebuilding, so blocks and controls stay where they are
                 })
             },
@@ -1089,6 +1168,22 @@ const levelEditor = {
                 levelEditor.renderRight()
             },
         },
+        veto: { //a veto list's pick or a crossed out name, "mobVeto:slasher" is the level's mob veto, "veto:hydraBoss" the selected boss's
+            label: "crosses it out, or brings it back", run(arg) {
+                const [key, name] = arg.split(":")
+                const isLevel = levelElements.level.props.some(prop => prop.key === key)
+                const owner = isLevel ? levelEditor.data : levelEditor.selected().length === 1 ? levelEditor.selected()[0] : null
+                const prop = levelEditor.findProp(key, owner)
+                if (!prop || prop.kind !== "veto") return
+                const isVetoing = !owner[key].includes(name)
+                if (isVetoing && levelElements.vetoBlocks(prop, owner[key], name)) return levelEditor.renderRight()
+                levelEditor.edit(`${isLevel ? "level" : levelEditor.describe([owner])}.${key} ${isVetoing ? "+" : "-"} ${name}`, () => {
+                    owner[key] = isVetoing ? [...owner[key], name] : owner[key].filter(other => other !== name)
+                    return isLevel ? [] : [owner.id]
+                })
+                levelEditor.renderRight()
+            },
+        },
         //adding
         add: { //an element from an add menu, in the middle of the view, "powerUp:heal" uses the type's preset("heal"), or drag it onto the level
             label: "add", run: arg => levelEditor.place(levelEditor.creation("add", arg)),
@@ -1096,7 +1191,7 @@ const levelEditor = {
         drawPath: { //click to add points, click the first point to close it, click the last point, enter, or right click to finish
             label: "draw a path, click to add points, click the first point to close it, enter or right click to finish", run() {
                 if (levelEditor.pathDraw) return levelEditor.finishPath(false)
-                levelEditor.pathDraw = { points: [] }
+                levelEditor.pathDraw = { points: [], handles: [] } //handles like a path's, a point dragged while clicking is curved
                 levelEditor.select([])
                 levelEditor.renderLeft()
             },
@@ -1231,7 +1326,7 @@ const levelEditor = {
         },
         //analysis
         analyze: { //the analysis in the inspector, click a line to go to what it's about
-            label: "issues, the level checked against the written levels", run() {
+            label: "issues, the level checked against the standard levels", run() {
                 levelEditor.analysisReport = levelAnalysis.run(levelEditor.data, { isLive: true })
                 levelEditor.isAnalysisShown = true
                 levelEditor.renderRight()
@@ -1366,7 +1461,7 @@ const levelEditor = {
             label: "typical level properties", run() {
                 const defaults = levelElements.level.defaults()
                 levelEditor.edit("level properties to default", data => {
-                    Object.assign(data, defaults)
+                    Object.assign(data, defaults, { mobVeto: data.mobVeto }) //which mobs it vetoes isn't a look
                     return []
                 })
                 levelEditor.applyLevelProps()
@@ -1488,11 +1583,15 @@ const levelEditor = {
             levelEditor.outline(hover, levelEditor.colors.hover, 1.5)
             if (hover.group) for (const el of levelEditor.data.elements) if (el.group === hover.group && el !== hover) levelEditor.outline(el, levelEditor.colors.hover, 1.5, [6, 4]) //the rest of its group, dashed, they select together
         }
-        const isDragging = drag && (drag.kind === "move" || drag.kind === "handle" || drag.kind === "vertex")
+        const isDragging = drag && (drag.kind === "move" || drag.kind === "handle" || drag.kind === "vertex" || drag.kind === "curveHandle")
         for (const el of levelEditor.selected()) levelEditor.outline(el, levelEditor.colors.select, 3, isDragging ? [9, 5] : []) //thick, so it shows on the dark map
-        if (drag && drag.kind === "vertex") {
-            const { points, error } = levelEditor.vertexPreview(drag)
-            levelEditor.outlinePoints(points, error ? "#e00" : levelEditor.colors.select, 2, error ? "rgba(255,0,0,0.15)" : "rgba(0,170,255,0.15)", levelElements.isOpen(levelData.find(levelEditor.data, drag.id)))
+        if (drag && drag.kind === "curveHandle") {
+            const el = levelEditor.vertexDragCopy(drag)
+            levelEditor.outline(el, levelEditor.colors.select, 2, [], "rgba(0,170,255,0.15)")
+            levelEditor.drawVertices(el)
+        } else if (drag && drag.kind === "vertex") {
+            const { error } = levelEditor.vertexPreview(drag)
+            levelEditor.outline(levelEditor.vertexDragCopy(drag), error ? "#e00" : levelEditor.colors.select, 2, [], error ? "rgba(255,0,0,0.15)" : "rgba(0,170,255,0.15)")
             if (error) { //on a light box so it shows over the map
                 const x = point.x + levelEditor.px(14)
                 const y = point.y + levelEditor.px(22)
@@ -1782,24 +1881,13 @@ const levelEditor = {
         }
         ctx.setLineDash([])
     },
-    outlinePoints(points, strokeStyle, width, fillStyle, isOpen = false) {
-        ctx.beginPath()
-        ctx.moveTo(points[0].x, points[0].y)
-        for (let i = 1; i < points.length; i++) ctx.lineTo(points[i].x, points[i].y)
-        if (!isOpen) ctx.closePath()
-        ctx.fillStyle = fillStyle
-        ctx.fill()
-        ctx.lineWidth = levelEditor.px(width)
-        ctx.strokeStyle = strokeStyle
-        ctx.stroke()
-    },
     outline(el, strokeStyle, width, dash = [], fillStyle = "") {
         ctx.beginPath()
         if (el.type === "laser") {
             ctx.moveTo(el.x, el.y)
             ctx.lineTo(el.x2, el.y2)
         } else {
-            const points = levelElements.points(el)
+            const points = levelElements.types[el.type]?.outlinePoints?.(el) || levelElements.points(el) //a path's curves
             ctx.moveTo(points[0].x, points[0].y)
             for (let i = 1; i < points.length; i++) ctx.lineTo(points[i].x, points[i].y)
             if (!levelElements.isOpen(el)) ctx.closePath()
@@ -1914,15 +2002,18 @@ const levelEditor = {
             render: () => { //spots, a boss, and a 2nd boss are all a level needs for mobs, and starting, random, and debris for power ups, they show the power ups they can be
                 const main = { startingPowerUps: ["gun", "tech", "ammo", "heal"], randomPowerUp: ["heal", "ammo"], debris: ["block", "heal", "ammo"] }
                 return `<div class="le-add-part">
-                        <div class="le-shapes le-flush-x">${levelElements.presets.map(preset => levelEditor.button("preset", levelElements.presetIcon(preset), preset.name, false, `${preset.name}, as map, or block with the block tool`, { className: "le-shape" })).join("")}</div>
-                        ${levelEditor.elementList()}
+                        <div class="le-shapes le-flush-x">${levelElements.presets.map(preset => levelEditor.button("preset", levelEditor.svgIcon(levelEditor.shapeIcons[preset.name] || "", "currentColor"), preset.name, false, `${preset.name}, as map, or block with the block tool`, { className: "le-shape" })).join("")}</div>
+                        <div class="le-shapes le-draws le-flush-x">${levelEditor.drawButtonsHtml()}</div>
                     </div>
                     <div class="le-add-part">
                         <div class="le-grid le-tall le-flush-x">${["mobSpot", "boss", "secondaryBoss"].map(name => levelEditor.addButton(name, `${levelElements.types[name].label}<br>${levelEditor.mobExamplesHtml(name)}`)).join("")}</div>
-                        ${levelEditor.mobList()}
                     </div>
                     <div class="le-add-part">
                         <div class="le-grid le-tall le-flush-x">${Object.entries(main).map(([name, orbs]) => levelEditor.addButton(name, `${levelElements.types[name].label}<br><span class="le-options">[${orbs.map(levelEditor.orb).join("")}]</span>`)).join("")}</div>
+                    </div>
+                    <div class="le-add-part">
+                        ${levelEditor.elementList()}
+                        ${levelEditor.mobList()}
                         ${levelEditor.powerUpList()}
                     </div>
                     <div class="le-add-part">
@@ -1983,15 +2074,15 @@ const levelEditor = {
             { title: "movement", names: ["boost", "mover", "transport", "elevator", "vanish", "spinner", "wind", "portal"] },
             { title: "hazards", names: ["slime", "laser", "fizzler"] },
             { title: "controls", names: ["button", "toggle", "zone", "timer", "keyhole", "key", "door"] }, //and what they open
-            { title: "drawing", names: ["decor", "circle", "ellipse", "path", "bezier", "text", "drip"] },
+            { title: "drawing", names: ["fill", "circle", "ellipse", "path", "bezier", "text", "drip"] },
         ]
         const listed = new Set(groups.flatMap(group => group.names))
         groups[groups.length - 1].names.push(...levelElements.groups.element.filter(name => !listed.has(name)))
         return groups.map(group => ({ ...group, names: group.names.filter(name => levelElements.types[name]) }))
     },
     elementList() { //every level element by kind, and each named preset like exit fill, picking one adds it, an option's data-command and data-arg are what it runs
-        const option = (command, arg, text, tip) => `<option value="${levelEditor.escape(arg)}" data-command="${command}" data-arg="${levelEditor.escape(arg)}" title="${levelEditor.escape(tip)}">${levelEditor.escape(text)}</option>`
-        return `<select class="le-list le-element-list le-flush-x" title="add a level element in the middle of the view">
+        const option = (command, arg, text, tip) => `<option value="${levelEditor.escape(arg)}" data-command="${command}" data-arg="${levelEditor.escape(arg)}" title="${levelEditor.escape(tip)}">${levelEditor.elementIcon(arg)}<span>${levelEditor.escape(text)}</span></option>`
+        return `<select class="le-list le-rich-list le-flush-x" title="add a level element in the middle of the view">
             <option value="">level element</option>
             ${levelEditor.elementGroups().map(group => `<optgroup label="${group.title}">${group.names.map(name => {
             const type = levelElements.types[name]
@@ -2387,6 +2478,8 @@ const levelEditor = {
             input = `<select ${data}>${isMixed ? `<option value="" selected></option>` : ""}${prop.options.map(option => `<option${option === value ? " selected" : ""}>${option}</option>`).join("")}</select>`
         } else if (prop.kind === "mask") {
             return levelEditor.maskField(owners, prop)
+        } else if (prop.kind === "veto") { //only for one, sharedProps() leaves vetoes out
+            return levelEditor.vetoField(owner, prop)
         } else if (prop.kind === "ref") { //another element by id, from a list or picked by clicking it, only for one, sharedProps() leaves refs out
             const options = levelEditor.data.elements.filter(other => levelElements.isRefTo(owner, prop.key, other))
             input = `<select ${data}><option value="">null</option>${options.map(other => `<option value="${other.id}"${other.id === value ? " selected" : ""} title="${levelEditor.escape(levelElements.summary(other))}">${other.type} #${other.id}</option>`).join("")}</select>${levelEditor.button("pick", "pick", prop.key, levelEditor.picking && levelEditor.picking.key === prop.key)}`
@@ -2406,6 +2499,17 @@ const levelEditor = {
             return `<button class="le-chip${state}" data-command="collide" data-arg="${name}" title="cat.${name}${count && count < elements.length ? ", mixed, click to turn it on for all" : ""}">${name}</button>`
         }).join("")
         return `<div class="le-prop le-mask"><span class="color-var" title="${levelEditor.escape(levelElements.tipOf(elements[0].type, prop))}">${prop.key}</span><span class="color-symbol">: [</span>${chips}<span class="color-symbol">],</span></div>`
+    },
+    vetoField(owner, prop) { //veto: [hydraBoss], crossed out like collides' names, click one to bring it back, the list under it crosses out or brings back what's picked, a tier's last one can't be vetoed
+        const veto = owner[prop.key]
+        const icons = levelEditor.mobIcons || {}
+        const chips = veto.map(name => `<button class="le-chip" data-command="veto" data-arg="${prop.key}:${name}" title="vetoed, click to bring it back">${icons[name] || ""}${name}</button>`).join("")
+        const options = prop.tiers().map(([label, names]) => `<optgroup label="${label}">${names.map(name => {
+            const blocked = levelElements.vetoBlocks(prop, veto, name)
+            return `<option value="${name}"${veto.includes(name) ? ` class="le-vetoed" title="vetoed, pick it to bring it back"` : ""}${blocked ? ` disabled title="${levelEditor.escape(blocked)}"` : ""}>${icons[name] || ""}<span>${name}</span></option>`
+        }).join("")}</optgroup>`).join("")
+        return `<div class="le-prop le-mask">${levelEditor.propKey(owner, prop)}<span class="color-symbol"> [</span>${chips}<span class="color-symbol">],</span></div>
+            <div class="le-prop"><select class="le-list le-rich-list le-veto-list" data-veto="${prop.key}" title="${levelEditor.escape(levelElements.tipOf(owner === levelEditor.data ? "level" : owner.type, prop))}"><option value="">${prop.noun} pool</option>${options}</select></div>`
     },
     fieldWidth(text) { //as wide as its text, it's monospace
         return `${Math.min(26, Math.max(2, String(text).length + 0.5))}ch`
@@ -2429,6 +2533,7 @@ const levelEditor = {
         return `<div class="le-row"><span class="le-name">${levelElements.nameOf(el.type)}</span><span class="le-id">#${el.id}</span><span class="le-fill"></span>${shapes}</div>
             <div class="le-code"><span class="color-symbol">{</span>
                 ${levelEditor.propsCode([el], props.filter(prop => !prop.isShown || prop.isShown(el)), false)}
+                ${(type?.levelProps || []).map(key => levelEditor.fieldFor([levelEditor.data], levelEditor.findProp(key, levelEditor.data))).join("")}
                 ${isVertexMode ? levelEditor.inspectVertices(el) : el.vertices ? `<div class="le-prop"><span class="color-var">vertices</span><span class="color-symbol">:</span> <span class="le-comment">[${el.vertices.length}]</span><span class="color-symbol">,</span></div>` : ""}
             <span class="color-symbol">}</span></div>
             ${Array.isArray(el.spots) ? levelEditor.inspectSpots(el) : ""}
@@ -2459,12 +2564,13 @@ const levelEditor = {
         const sides = levelElements.groups.shape.includes(el.type) ?
             `<span class="le-segment">${levelEditor.button("sides", "−", "-1")}<span class="le-count">${count}</span>${levelEditor.button("sides", "+", "1")}</span>` :
             `<span class="le-comment">[${count}]</span>`
-        return `<div class="le-prop"><span class="color-var">vertices</span><span class="color-symbol">:</span> ${sides}</div>
+        const curveHint = levelElements.types[el.type]?.hasCurves ? `<div class="le-prop le-comment le-wrap">//double click a vertex to curve it or make it a corner, drag its handle's squares to bend it</div>` : ""
+        return `<div class="le-prop"><span class="color-var">vertices</span><span class="color-symbol">:</span> ${sides}</div>${curveHint}
             <div class="le-prop"><textarea class="le-path" data-vertices rows="3" spellcheck="false" title="x y pairs around the center, like spawn.mapVertex">${levelEditor.vertex.error ? levelEditor.escape(levelEditor.vertex.text) : levelElements.pathText(el)}</textarea></div>`
     },
     sharedProps(elements) { //props every selected element has, to change them all at once
         const first = levelElements.types[elements[0].type]?.props || []
-        return first.filter(prop => prop.kind !== "ref" && elements.every(el => levelEditor.findProp(prop.key, el)?.kind === prop.kind && (!prop.isShown || prop.isShown(el))))
+        return first.filter(prop => prop.kind !== "ref" && prop.kind !== "veto" && elements.every(el => levelEditor.findProp(prop.key, el)?.kind === prop.kind && (!prop.isShown || prop.isShown(el))))
     },
     manyValue(elements, prop) { //their value if they all match, or undefined
         const values = elements.map(el => levelEditor.propValue(el, levelEditor.findProp(prop.key, el)))
@@ -2474,7 +2580,7 @@ const levelEditor = {
         const rows = lines.filter(line => line && (line.quarters ?? line)).map(line => line.quarters ? `<div class="le-grid le-quarters">${line.quarters}</div>` : `<div class="le-grid le-even">${line}</div>`).join("")
         return isRotatable || rows ? `<div class="le-actions le-flush-x">${isRotatable ? levelEditor.rotateRow() : ""}${rows}</div>` : ""
     },
-    isDrawing(elements) { //all drawing elements (isDrawing types), only they show front and back
+    isDrawing(elements) { //all drawing elements (isDrawing types), only they show to top and to bottom
         return elements.every(el => levelElements.types[el.type]?.isDrawing)
     },
     hotkeys(isCopyable, isDeletable) { //cut, copy, and paste's keys on the left, delete's on the right, drawn like the other key caps, clicking one does it too
@@ -2482,14 +2588,14 @@ const levelEditor = {
         const keys = (isCopyable ? [cap("cut", levelEditor.keyText("mod+x")), cap("copy", levelEditor.keyText("mod+c")), cap("paste", levelEditor.keyText("mod+v"), "view")] : []).join("")
         return isCopyable || isDeletable ? `<div class="le-hotkeys"><span class="le-hotkey-group">${keys}</span>${isDeletable ? cap("delete", "DEL") : ""}</div>` : ""
     },
-    arrangeButtons(elements, isOrderWide = false, isFlipWide = false) { //flip, and draw order for drawing elements, where what's on top shows, code has neither, a quarter each in a quarters grid, isOrderWide makes front and back a half each, isFlipWide the flips when nothing shares their row
+    arrangeButtons(elements, isOrderWide = false, isFlipWide = false) { //flip, and draw order for drawing elements, where what's on top shows, code has neither, a quarter each in a quarters grid, isOrderWide makes to top and to bottom a half each, isFlipWide the flips when nothing shares their row
         if (elements.every(el => levelElements.isCode(el))) return ""
         const isDrawing = levelEditor.isDrawing(elements)
         const isFlippable = elements.length > 1 || levelElements.canFlip(elements[0]) //many flip around their middle, one only if it has something to mirror
         const flipClass = isFlippable && isFlipWide && !isDrawing ? "le-half" : "" //a half each when nothing shares their row
         const orderClass = isOrderWide || !isFlippable ? "le-half" : ""
         const flips = isFlippable ? levelEditor.button("flip", "flip ↔", "x", false, "mirror left and right", { className: flipClass }) + levelEditor.button("flip", "flip ↕", "y", false, "mirror up and down", { className: flipClass }) : ""
-        const order = isDrawing ? levelEditor.button("arrange", "front", "front", false, "draw in front of the others in its layer, it moves to the end of the list", { className: orderClass }) + levelEditor.button("arrange", "back", "back", false, "draw behind the others in its layer, it moves to the start of the list", { className: orderClass }) : ""
+        const order = isDrawing ? levelEditor.button("arrange", "to top", "top", false, "above the other drawings in its layer, it moves to the end of the list, layer says under or over the player", { className: orderClass }) + levelEditor.button("arrange", "to bottom", "bottom", false, "below the other drawings in its layer, it moves to the start of the list, layer says under or over the player", { className: orderClass }) : ""
         return flips + order
     },
     alignButtons() { //each lines the selection up with its outermost edge or its middle, see alignIcon()
@@ -2507,7 +2613,7 @@ const levelEditor = {
             ${levelEditor.actionRows(elements.some(levelElements.isRotatable), [
                 isShapes ? levelElements.groups.shape.map(name => levelEditor.button("shape", name, name)).join("") : "",
                 levelEditor.alignButtons(),
-                { //the flips and group share a row, drawing elements' front and back fill the flips' row, so group gets the next
+                { //the flips and group share a row, drawing elements' to top and to bottom fill the flips' row, so group gets the next
                     quarters: levelEditor.arrangeButtons(elements) + levelEditor.button("group", elements.some(el => el.group) ? "ungroup" : "group", "", elements.some(el => el.group), undefined, { className: levelEditor.isDrawing(elements) ? "le-wide" : "le-half" }),
                 },
             ])}${levelEditor.hotkeys(elements.some(levelEditor.isCopyable), elements.some(el => !levelEditor.isSingleton(el)))}`
@@ -2533,7 +2639,7 @@ const levelEditor = {
     },
     inspectLevel() { //nothing selected, the level's properties, + code is in the add menu and code elements are in the explorer
         return `<div class="le-row"><span class="le-name">level</span><span class="le-fill"></span>${levelEditor.button("levelDefaults", "default")}</div>
-            ${levelEditor.propsCode([levelEditor.data], levelElements.level.props)}
+            ${levelEditor.propsCode([levelEditor.data], levelElements.level.props.filter(prop => !prop.isShown || prop.isShown(levelEditor.data)))}
             ${levelEditor.nameError ? `<div class="le-error">//name not changed: ${levelEditor.escape(levelEditor.nameError)}</div>` : ""}
             ${levelData.codeError ? `<div class="le-error">//${levelEditor.escape(levelData.codeError.message)}</div>` : ""}`
     },
@@ -2638,7 +2744,7 @@ const levelEditor = {
         input.value = levelEditor.formatValue(Number(((Number.isFinite(value) ? value : 0) + step).toFixed(6)))
         levelEditor.setProp(input)
     },
-}
+})
 
 //*********************************************************************
 // events
@@ -2660,7 +2766,7 @@ const levelEditor = {
     })
     document.documentElement.addEventListener("mouseleave", () => { levelEditor.isMouseOnCanvas = false })
     window.addEventListener("mouseup", levelEditor.mouseUp)
-    window.addEventListener("keydown", levelEditor.keyDown) //added before index.js, so it runs before the game's keys
+    window.addEventListener("keydown", levelEditor.keyDown, true) //capture, so it runs before the game's keys, which were added first
     window.addEventListener("keyup", event => { levelEditor.isFree = event.altKey })
     window.addEventListener("beforeunload", () => levelEditor.flush())
 
@@ -2799,6 +2905,10 @@ const levelEditor = {
             const el = levelData.find(levelEditor.data, Number(input.value))
             if (button && el) levelEditor.linkTo(el, button)
             return levelEditor.renderRight()
+        }
+        if (input.dataset.veto) { //a veto list, what's picked is crossed out or brought back
+            if (input.value) levelEditor.run("veto", `${input.dataset.veto}:${input.value}`)
+            return
         }
         if (input.dataset.key) levelEditor.setProp(input)
         if (input.matches("[data-vertices]")) {

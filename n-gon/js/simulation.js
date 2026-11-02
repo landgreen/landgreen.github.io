@@ -864,6 +864,7 @@ const simulation = {
         document.getElementById("experiment-grid").style.display = "none"
         document.getElementById("pause-grid-left").style.display = "none"
         document.getElementById("pause-grid-right").style.display = "none"
+        document.body.classList.remove("pause-open")
         document.getElementById("splash").style.display = "inline";
         document.getElementById("splash").style.opacity = "0";
         document.getElementById("dmg").style.display = "none";
@@ -949,6 +950,7 @@ const simulation = {
         document.getElementById("pause-grid-right").style.display = "none"
         document.getElementById("pause-grid-right").style.opacity = "1"
         document.getElementById("pause-grid-left").style.opacity = "1"
+        document.body.classList.remove("pause-open")
         ctx.globalCompositeOperation = "source-over"
         ctx.shadowBlur = 0;
 
