@@ -52,7 +52,7 @@ const levelAnalysis = {
         const ground = of("map").slice()
         if (spawn && spawn.bump) ground.push({ type: "map", x: spawn.x - 50, y: spawn.y + 40, width: 100, height: 20 }) //the bumps the doors stand on
         if (exit && exit.bump) ground.push({ type: "map", x: exit.x, y: exit.y + 20, width: 100, height: 20 })
-        const code = data.elements.filter(el => levelElements.types[el.type]?.isCode).map(el => el.code).join("\n")
+        const code = data.elements.filter(el => levelElements.isCode(el)).map(el => el.code).join("\n")
         return { data, of, spawn, exit, ground, code, inCode: text => code.includes(text), norms: levelAnalysis.norms, live: options.isLive ? levelAnalysis.live(data) : null }
     },
     live(data) { //what each element made and what its custom and top layers cost a frame, from levelData's runtimes
@@ -61,12 +61,13 @@ const levelAnalysis = {
             if (!runtime) return { el, ms: 0, bodies: 0, constraints: 0 }
             return {
                 el,
+                error: runtime.error || null, //building it, or its custom or top layer, threw
                 ms: (runtime.customMs || 0) + (runtime.topMs || 0),
                 bodies: (runtime.maps || []).length + (runtime.bodies || []).length + (runtime.composite || []).length,
                 constraints: (runtime.cons || []).length + (runtime.consBB || []).length + (runtime.constraints || []).length,
             }
         })
-        return { elements, ms: elements.reduce((sum, e) => sum + e.ms, 0), bodies: elements.reduce((sum, e) => sum + e.bodies, 0) }
+        return { elements, ms: elements.reduce((sum, e) => sum + e.ms, 0), bodies: elements.reduce((sum, e) => sum + e.bodies, 0), codeError: levelData.codeError || null }
     },
 
     //*********************************************************************
@@ -192,6 +193,15 @@ const levelAnalysis = {
 //*********************************************************************
 // checks, in the order they're shown
 //*********************************************************************
+levelAnalysis.check("errors", c => { //javascript that throws while the level runs, only known in the editor, the level isn't ready until it's fixed
+    if (!c.live) return []
+    const lines = c.live.elements.filter(e => e.error && !levelElements.isCode(e.el)).map(e => levelAnalysis.line("fix", levelElements.nameOf(e.el.type), "error", String(e.error.message || e.error), [e.el]))
+    const codeElements = c.live.elements.filter(e => e.error && levelElements.isCode(e.el))
+    const codeError = c.live.codeError || codeElements[0]?.error
+    if (codeError) lines.push(levelAnalysis.line("fix", "code", "error", String(codeError.message || codeError), codeElements.map(e => e.el)))
+    return lines
+})
+
 levelAnalysis.check("bosses", c => {
     const { line, at, distance } = levelAnalysis
     const lines = []

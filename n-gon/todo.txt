@@ -1,12 +1,10 @@
-settings: level editor
-settings: level pool
-
 
 
 
 
 *********************************************************** TODO *****************************************************
 
+!review the game code map
 
 
 

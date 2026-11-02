@@ -10,7 +10,7 @@ const levelEditor = {
     data: null, //the level being edited, the same object as levelData.data
     selection: [], //element ids
     tool: "select",
-    tools: ["select", "map", "block", "measure"], //the draw tool, map and block draw new rects, select only selects and moves, measure draws a ruler with jump reach, the right mouse button always selects
+    tools: ["select", "pan", "map", "block", "measure"], //the draw tool, map and block draw new rects, select only selects and moves, measure draws a ruler with jump reach, pan moves the view without a middle mouse button, the right mouse button always selects
     measure: null, //{ start, end } the measure tool's ruler, it stays until the next one
     timeScale: 1, //simulation menu, slows the game by lowering the frame cap
     lookMode: "static", //simulation menu, the camera: "static" stays on the player, "smooth" leans toward the mouse like a run, "instant" leans with no smoothing like motion sickness
@@ -22,6 +22,9 @@ const levelEditor = {
     drag: null, //{ kind: "move" | "handle" | "draw" | "box" | "pan", ... } while the left or middle mouse button is held
     hoverId: null,
     isTesting: false, //start test restarts the level like a run, stop test restarts it for editing
+    testSeed: "", //simulation menu, Math.seed for each level start, so tests spawn the same, empty keeps it random
+    spawnLists: null, //the mob and boss lists in their first order, a seeded test reshuffles them from it
+    isInvincible: true, //simulation menu, the player takes no damage while editing and testing, see m.takeDamage(), remembered in localStorage
     isFullTest: false, //JS test plays the level's export JS like a run, with the panels still open, editing anything goes back to editing
     isTestSpawning: true, //the mobs, power ups checkbox, mobs and power ups spawn while testing, never while editing so it isn't a fight
     testLevel: 5, //level.levelsCleared while editing, for mob types, difficulty, and damage, at 0 random mobs don't spawn
@@ -54,7 +57,12 @@ const levelEditor = {
     gameCamera: null, //simulation.camera while the editor replaces it
     saveTimer: null,
     inspected: "", //what the inspector is showing, so it only redraws when that changes
-    mobIcons: null, //mob name: a little svg of it for mob by name, made once by spawning each mob, see sampleMobs()
+    nameError: "", //why the last name typed wasn't used, shown under the level's properties
+    exploreSearch: "", //the explorer's search box
+    exploreLimits: {}, //type: how many the explorer lists, 100 to start, show more adds 100
+    mobIcons: null, //mob name: a little svg of it for mob by name, drawn from the saved pictures, see loadMobPictures()
+    mobPictureData: null, //js/level-editor-mob-pictures.js sets it, each mob's saved outlines, colors, and lines
+    isLoadingMobPictures: false,
     mobShapes: {}, //mob name: { shapes, links, orbs } it was drawn from, to draw it again at other sizes, like the mob and boss buttons' examples
 
     //*********************************************************************
@@ -65,10 +73,9 @@ const levelEditor = {
         const data = levelData.store.getRecent() || levelData.blank(levelData.freeName("untitled"))
         levelData.store.save(data)
         levelEditor.reset(data)
-        try { //the simulation menu's mouse, remembered for next time
-            const lookMode = localStorage.getItem("levelEditorLookMode")
-            if (["static", "smooth", "instant"].includes(lookMode)) levelEditor.lookMode = lookMode
-        } catch (error) { }
+        const lookMode = levelEditor.recall("levelEditorLookMode", "static") //the simulation menu's settings, remembered for next time
+        if (["static", "smooth", "instant"].includes(lookMode)) levelEditor.lookMode = lookMode
+        levelEditor.isInvincible = levelEditor.recall("levelEditorInvincible", true) !== false //on unless it was turned off
         levelEditor.isActive = true
         await simulation.startGame() //the first level start calls levelEditor.startLevel() instead of loading initial
         if (simulation.onTitlePage) levelEditor.isActive = false //startGame failed
@@ -89,6 +96,8 @@ const levelEditor = {
         levelEditor.pathDraw = null
         levelEditor.preview = null
         levelEditor.picking = null
+        levelEditor.codeEditing = null //a code draft belongs to the level it was opened in, switching levels closes it
+        document.getElementById("level-editor-code").classList.remove("le-open")
         levelEditor.hiddenIds.clear() //ids are only the same within a level
         levelEditor.lockedIds.clear()
         levelEditor.problems = new Map()
@@ -101,18 +110,41 @@ const levelEditor = {
         simulation.isAutoZoom = false
         level.levelsCleared = levelEditor.testLevel //saveGame.autosave() skips the editor, so this doesn't make a checkpoint
         level.updateDifficulty()
-        spawn.setSpawnList() //new mob types each restart, like a new level
-        if (!levelEditor.gameCamera) levelEditor.gameCamera = simulation.camera
-        if (levelEditor.isFullTest) {
-            levelEditor.startFullTest(data)
-        } else {
-            levelData.isSkipped = el => !levelEditor.isTesting && levelEditor.isHidden(el) //the explorer's hide, tests show everything
-            levelData.play(data, { isEditor: true, isSpawning: levelEditor.isTesting && levelEditor.isTestSpawning })
-            simulation.setZoom(levelEditor.zoomScale)
-            simulation.camera = levelEditor.camera
-            m.look = levelEditor.look
+        const random = Math.random
+        const isSeeded = levelEditor.testSeed !== ""
+        if (isSeeded) { //the seed makes the level's start the same each test: mob types, which spots get mobs, bosses, power ups, and debris, what mobs do after is still random
+            Math.seed = Math.abs(Math.hash(levelEditor.testSeed))
+            let seed = Math.seed
+            Math.random = () => { //Math.seededRandom's numbers, only while the level is built
+                seed = (seed * 9301 + 49297) % 233280
+                return seed / 233280
+            }
         }
-        levelEditor.sampleMobs() //once, for mob by name's pictures
+        try {
+            if (isSeeded) { //like a run from this seed reaching this level: the mob and boss lists from their first order, shuffled by the seed, then a new mob type each level
+                if (!levelEditor.spawnLists) levelEditor.spawnLists = { tier: spawn.tier.map(list => list.slice()), bossTier: spawn.bossTier.map(list => list.slice()) } //seededShuffle shuffles them in place, each test starts from the same order
+                levelEditor.spawnLists.tier.forEach((list, i) => spawn.tier[i].splice(0, Infinity, ...list))
+                levelEditor.spawnLists.bossTier.forEach((list, i) => spawn.bossTier[i].splice(0, Infinity, ...list))
+                spawn.bossTierIndex = spawn.bossTierIndex.map(() => 0)
+                spawn.setMobTypeSpawnOrder()
+                for (let i = 0; i <= level.levelsCleared; i++) spawn.setSpawnList()
+            } else {
+                spawn.setSpawnList() //new mob types each restart, like a new level
+            }
+            if (!levelEditor.gameCamera) levelEditor.gameCamera = simulation.camera
+            if (levelEditor.isFullTest) {
+                levelEditor.startFullTest(data)
+            } else {
+                levelData.isSkipped = el => !levelEditor.isTesting && levelEditor.isHidden(el) //the explorer's hide, tests show everything
+                levelData.play(data, { isEditor: true, isSpawning: levelEditor.isTesting && levelEditor.isTestSpawning })
+                simulation.setZoom(levelEditor.zoomScale)
+                simulation.camera = levelEditor.camera
+                m.look = levelEditor.look
+            }
+        } finally {
+            Math.random = random
+        }
+        levelEditor.loadMobPictures() //once, for mob by name's pictures
         level.disableExit = true //the exit charges, but doesn't leave
         simulation.removeEphemera("levelEditor", true)
         simulation.ephemera.push({ name: "levelEditor", do() { levelEditor.frame() } })
@@ -295,11 +327,22 @@ const levelEditor = {
     //*********************************************************************
     // selection
     //*********************************************************************
+    withGroups(ids) { //ids and everything grouped with them
+        const groups = new Set(levelEditor.data.elements.filter(el => ids.includes(el.id) && el.group).map(el => el.group))
+        return groups.size ? [...new Set(ids.concat(levelEditor.data.elements.filter(el => groups.has(el.group)).map(el => el.id)))] : ids
+    },
+    newGroupId(data) {
+        return Math.max(0, ...data.elements.map(el => el.group || 0)) + 1
+    },
     select(ids) {
+        levelEditor.nameError = ""
         if (!levelEditor.isAnalysisJump) levelEditor.isAnalysisShown = false //selecting something goes back to its props, clicking an analysis line keeps the analysis
         levelEditor.selection = ids
         if (levelEditor.vertex && !(ids.length === 1 && ids[0] === levelEditor.vertex.id)) levelEditor.vertex = null //selecting something else ends vertex editing
         levelEditor.renderRight()
+    },
+    selectedParts() { //what's selected that's in the level, not code, flip, align, and draw order skip code
+        return levelEditor.selected().filter(el => !levelElements.isCode(el))
     },
     selected() {
         return levelEditor.selection.map(id => levelData.find(levelEditor.data, id)).filter(Boolean)
@@ -308,7 +351,7 @@ const levelEditor = {
         return !!levelElements.types[el.type]?.isSingleton
     },
     isCopyable(el) { //code can't be copied, its variables would be declared twice
-        return !levelEditor.isSingleton(el) && !levelElements.types[el.type]?.isCode
+        return !levelEditor.isSingleton(el) && !levelElements.isCode(el)
     },
     isLocked(el) { //the explorer's lock, the mouse goes through it
         return levelEditor.lockedTypes.has(el.type) || levelEditor.lockedIds.has(el.id)
@@ -408,6 +451,16 @@ const levelEditor = {
         levelEditor.look()
         levelEditor.updateZoomField()
     },
+    openArea() { //the part of the screen the panels and status bar don't cover, in screen pixels
+        const rect = id => document.getElementById(id)?.getBoundingClientRect?.()
+        const isShown = !levelEditor.isPanelsHidden
+        const left = isShown ? rect("level-editor-left")?.right || 0 : 0
+        const right = isShown ? rect("level-editor-right")?.left || canvas.width : canvas.width
+        const bottom = isShown ? rect("level-editor-status")?.top || canvas.height : canvas.height
+        const gap = 10
+        const x = left + gap
+        return { x, y: gap, width: Math.max(100, right - gap - x), height: Math.max(100, bottom - 2 * gap) }
+    },
     zoomTo(scale) { //keeps the middle of the view still, for the zoom field
         levelEditor.zoomScale = Math.min(30000, Math.max(200, scale))
         simulation.setZoom(levelEditor.zoomScale)
@@ -467,6 +520,10 @@ const levelEditor = {
         }
         const tool = event.button === 2 ? "select" : levelEditor.tool
         const isAdding = event.shiftKey || event.metaKey || event.ctrlKey //shift, ⌘, or ctrl click adds to the selection or takes away
+        if (tool === "pan") { //like a middle drag, for a trackpad or a mouse without a middle button
+            levelEditor.drag = { kind: "pan", button: event.button, moved: 0, point, isTool: true }
+            return
+        }
         if (tool === "measure") { //a ruler from here to where it's let go, with how far the player can jump from here
             const start = levelEditor.snapPoint(point)
             levelEditor.measure = { start, end: start }
@@ -476,11 +533,12 @@ const levelEditor = {
         if (tool !== "select" && !isOnSelection) { //drawing, a click without dragging selects instead
             levelEditor.drag = { ...drag, kind: "draw", hitId: hit ? hit.id : null }
         } else if (hit) {
+            const group = levelEditor.withGroups([hit.id]) //grouped pieces select together
             if (isAdding) {
-                levelEditor.select(isOnSelection ? levelEditor.selection.filter(id => id !== hit.id) : levelEditor.selection.concat(hit.id))
+                levelEditor.select(isOnSelection ? levelEditor.selection.filter(id => !group.includes(id)) : [...new Set(levelEditor.selection.concat(group))])
                 if (isOnSelection) return
             } else if (!isOnSelection) {
-                levelEditor.select([hit.id])
+                levelEditor.select(group)
             }
             levelEditor.drag = { ...drag, kind: "move", originals: levelEditor.selected().map(el => levelData.copy(el)) }
         } else {
@@ -502,7 +560,7 @@ const levelEditor = {
         if (!drag || event.button !== drag.button) return
         levelEditor.drag = null
         if (drag.kind === "pan") {
-            if (drag.moved < 4) levelEditor.middleClick(drag.point)
+            if (drag.moved < 4 && !drag.isTool) levelEditor.middleClick(drag.point)
             return
         }
         if (drag.kind === "measure") return //the ruler stays until the next one or esc
@@ -524,7 +582,7 @@ const levelEditor = {
         }
         if (drag.kind === "draw") {
             if (isClick) {
-                levelEditor.select(drag.hitId ? [drag.hitId] : [])
+                levelEditor.select(drag.hitId ? levelEditor.withGroups([drag.hitId]) : []) //grouped pieces select together, like the select tool
                 return
             }
             const el = levelElements.create(levelEditor.tool, levelEditor.dragRect(drag))
@@ -538,11 +596,11 @@ const levelEditor = {
         }
         if (drag.kind === "box") {
             const box = levelEditor.dragRect(drag, false)
-            const inside = levelEditor.data.elements.filter(el => !levelEditor.isLocked(el) && !levelEditor.isHidden(el) && !levelElements.types[el.type]?.isCode).filter(el => {
+            const inside = levelEditor.data.elements.filter(el => !levelEditor.isLocked(el) && !levelEditor.isHidden(el) && !levelElements.isCode(el)).filter(el => {
                 const b = levelElements.bounds(el)
                 return b.x >= box.x && b.y >= box.y && b.x + b.width <= box.x + box.width && b.y + b.height <= box.y + box.height
             }).map(el => el.id)
-            levelEditor.select(drag.isAdding ? [...new Set(levelEditor.selection.concat(inside))] : inside)
+            levelEditor.select(levelEditor.withGroups(drag.isAdding ? [...new Set(levelEditor.selection.concat(inside))] : inside))
         } else { //move or handle, the data didn't change during the drag, only the preview did
             const changed = levelEditor.dragPreview(drag)
             for (const el of changed) Object.assign(levelData.find(levelEditor.data, el.id), el)
@@ -739,9 +797,20 @@ const levelEditor = {
     // keys are written like "mod+shift+z", mod is ctrl or ⌘
     //*********************************************************************
     commands: {
-        undo: { label: "undo", keys: ["z", "mod+z"], run: () => levelEditor.undo() },
-        redo: { label: "redo", keys: ["shift+z", "mod+shift+z", "mod+y"], run: () => levelEditor.redo() },
+        //history
+        undo: { label: "undo", keys: ["mod+z"], run: () => levelEditor.undo() },
+        redo: { label: "redo", keys: ["mod+shift+z", "mod+y"], run: () => levelEditor.redo() },
         rewind: { label: "rewind to here", run: index => levelEditor.rewind(Number(index)) },
+        history: { //the list of every change under undo and redo, click one to go back to it
+            label: "history, click a step to go back to it", run(isOpen) {
+                levelEditor.isHistoryOpen = isOpen === undefined || isOpen === "" ? !levelEditor.isHistoryOpen : !!isOpen
+                const pop = document.getElementById("level-editor-history")
+                pop.hidden = !levelEditor.isHistoryOpen
+                if (levelEditor.isHistoryOpen) levelEditor.updateHistoryButtons()
+                document.querySelector('#level-editor-status [data-command="history"]')?.classList.toggle("le-on", levelEditor.isHistoryOpen)
+            },
+        },
+        //view, tools, and testing
         tool: {
             label: "draw tool", keys: ["c"], run(tool) { //no tool cycles to the next one
                 const tools = levelEditor.tools
@@ -755,15 +824,59 @@ const levelEditor = {
                 levelEditor.renderStatus()
             },
         },
-        history: { //the list of every change under undo and redo, click one to go back to it
-            label: "history, click a step to go back to it", run(isOpen) {
-                levelEditor.isHistoryOpen = isOpen === undefined || isOpen === "" ? !levelEditor.isHistoryOpen : !!isOpen
-                const pop = document.getElementById("level-editor-history")
-                pop.hidden = !levelEditor.isHistoryOpen
-                if (levelEditor.isHistoryOpen) levelEditor.updateHistoryButtons()
-                document.querySelector('#level-editor-status [data-command="history"]')?.classList.toggle("le-on", levelEditor.isHistoryOpen)
+        panels: { //hide the panels to see the level like a player does
+            label: "hide or show the editor panels", keys: ["tab"], run() {
+                levelEditor.isPanelsHidden = !levelEditor.isPanelsHidden
+                levelEditor.updatePanels()
             },
         },
+        fit: { //the selection, or with nothing selected the whole level, fills the view
+            label: "fit the selection in the view, or the whole level with nothing selected", run() {
+                const elements = levelEditor.selected().length ? levelEditor.selected() : levelEditor.data.elements.filter(el => !levelElements.isCode(el))
+                if (!elements.length) return
+                const b = levelElements.unionBounds(elements)
+                const view = levelEditor.openArea()
+                levelEditor.zoomTo(1.15 * Math.max(b.height * canvas.height / view.height, b.width * canvas.height / view.width, 400)) //fits the part of the screen the panels don't cover
+                const toWorld = (view.x + view.width / 2 - canvas.width / 2) / simulation.zoom //from the middle of the screen to the middle of the open area
+                const toWorldY = (view.y + view.height / 2 - canvas.height / 2) / simulation.zoom
+                levelEditor.pan = { x: b.x + b.width / 2 - toWorld - m.pos.x, y: b.y + b.height / 2 - toWorldY - m.pos.y }
+            },
+        },
+        timeScale: { //the simulation menu's game speed
+            label: "game speed", run(scale) {
+                levelEditor.timeScale = Number(scale) || 1
+                levelEditor.renderLeft()
+            },
+        },
+        debugDraw: { //the simulation menu's draw toggles, see drawDebug()
+            label: "draw", run(name) {
+                if (levelEditor.debugDraw.has(name)) levelEditor.debugDraw.delete(name)
+                else levelEditor.debugDraw.add(name)
+                levelEditor.renderLeft()
+            },
+        },
+        test: { //start restarts the level at the spawn with blocks back in place, and mobs and power ups if the box is checked, stop restarts it without them
+            label: "quick test: back to the enter with blocks where they started, mobs and power ups if checked, again to stop", run() {
+                levelEditor.isTesting = !levelEditor.isTesting || levelEditor.isFullTest
+                levelEditor.isFullTest = false
+                levelEditor.renderLeft()
+                levelEditor.restart()
+            },
+        },
+        fullTest: { //the export JS, everything a run would do
+            label: "test export: plays the javascript export writes, exactly what the game would load, mobs and power ups always spawn, editing anything stops it", run() {
+                levelEditor.isFullTest = !levelEditor.isFullTest
+                levelEditor.updatePanels() //the panels stay as they are, tab hides them to see the level like a player
+                levelEditor.isTesting = false
+                levelEditor.drag = null
+                levelEditor.picking = null
+                levelEditor.pathDraw = null
+                levelEditor.vertex = null
+                levelEditor.renderLeft()
+                levelEditor.restart()
+            },
+        },
+        //selecting and changing what's selected
         deselect: {
             label: "deselect", keys: ["escape"], run() {
                 levelEditor.drag = null
@@ -788,43 +901,6 @@ const levelEditor = {
                     return levelEditor.renderRight()
                 }
                 levelEditor.select([])
-            },
-        },
-        vertices: {
-            label: "edit vertices", keys: ["v"], run() {
-                const selected = levelEditor.selected()
-                if (levelEditor.vertex) {
-                    levelEditor.vertex = null
-                } else if (selected.length === 1 && levelElements.isVertexEditable(selected[0])) {
-                    levelEditor.vertex = { id: selected[0].id, active: -1, error: "", text: "" }
-                }
-                levelEditor.renderRight()
-            },
-        },
-        sides: { //a regular shape with one more or one less side, filling the shape's bounds
-            label: "sides", run(change) {
-                const el = levelEditor.vertexElement()
-                if (!el) return
-                const sides = Math.min(levelElements.vertexLimit, Math.max(3, levelElements.points(el).length + Number(change)))
-                levelEditor.setVertices(levelElements.regularPoints(levelElements.bounds(el), sides), summary => `${summary} to ${sides} sides`)
-            },
-        },
-        rotate: { //the selection turns around its middle, one element around its own pivot, see levelElements.rotate()
-            label: "rotate clockwise, shift for counterclockwise", run(degrees) {
-                const elements = levelEditor.selected().filter(el => !levelElements.types[el.type]?.isCode)
-                if (!elements.length || !elements.some(levelElements.isRotatable)) return
-                const turn = Number(degrees) || 90
-                let center
-                if (elements.length === 1) {
-                    center = levelElements.pivot(elements[0])
-                } else {
-                    const b = levelElements.boundsOf(elements.flatMap(el => levelElements.points(levelElements.bounds(el))))
-                    center = levelEditor.snapPoint({ x: b.x + b.width / 2, y: b.y + b.height / 2 })
-                }
-                levelEditor.edit(`rotate ${levelEditor.describe(elements)} ${turn}°`, () => {
-                    for (const el of elements) levelElements.rotate(el, turn, center)
-                    return elements.map(el => el.id)
-                })
             },
         },
         selectAll: { label: "select all", keys: ["mod+a"], run: () => levelEditor.select(levelEditor.data.elements.map(el => el.id)) },
@@ -869,19 +945,151 @@ const levelEditor = {
             },
         },
         paste: { //the copied elements' top left corner goes to the mouse
-            label: "paste", keys: ["mod+v"], run() {
+            label: "paste", keys: ["mod+v"], run(where) { //"view" from the inspector's ⌘V, the copies' middle goes to the middle of the view
                 if (!levelEditor.clipboard.length) return
                 const box = levelElements.boundsOf(levelEditor.clipboard.flatMap(el => levelElements.points(el)))
+                if (where === "view") {
+                    const to = levelEditor.snapPoint(levelEditor.viewCenter())
+                    return levelEditor.paste("paste", levelEditor.clipboard, to.x - levelEditor.snap(box.x + box.width / 2), to.y - levelEditor.snap(box.y + box.height / 2))
+                }
                 const to = levelEditor.snapPoint(levelEditor.mouse())
                 levelEditor.paste("paste", levelEditor.clipboard, to.x - levelEditor.snap(box.x), to.y - levelEditor.snap(box.y))
             },
         },
-        duplicate: {
-            label: "duplicate", keys: ["mod+d"], run() {
-                const offset = Math.max(25, levelEditor.grid)
-                levelEditor.paste("duplicate", levelEditor.selected().filter(levelEditor.isCopyable), offset, offset)
+        vertices: {
+            label: "edit vertices", keys: ["v"], run() {
+                const selected = levelEditor.selected()
+                if (levelEditor.vertex) {
+                    levelEditor.vertex = null
+                } else if (selected.length === 1 && levelElements.isVertexEditable(selected[0])) {
+                    levelEditor.vertex = { id: selected[0].id, active: -1, error: "", text: "" }
+                }
+                levelEditor.renderRight()
             },
         },
+        sides: { //a regular shape with one more or one less side, filling the shape's bounds
+            label: "sides", run(change) {
+                const el = levelEditor.vertexElement()
+                if (!el) return
+                const sides = Math.min(levelElements.vertexLimit, Math.max(3, levelElements.points(el).length + Number(change)))
+                levelEditor.setVertices(levelElements.regularPoints(levelElements.bounds(el), sides), summary => `${summary} to ${sides} sides`)
+            },
+        },
+        rotate: { //the selection turns around its middle, one element around its own pivot, see levelElements.rotate()
+            label: "rotate clockwise, shift for counterclockwise", run(degrees) {
+                const elements = levelEditor.selectedParts()
+                if (!elements.length || !elements.some(levelElements.isRotatable)) return
+                const turn = Number(degrees) || 90
+                let center
+                if (elements.length === 1) {
+                    center = levelElements.pivot(elements[0])
+                } else {
+                    const b = levelElements.boundsOf(elements.flatMap(el => levelElements.points(levelElements.bounds(el))))
+                    center = levelEditor.snapPoint({ x: b.x + b.width / 2, y: b.y + b.height / 2 })
+                }
+                levelEditor.edit(`rotate ${levelEditor.describe(elements)} ${turn}°`, () => {
+                    for (const el of elements) levelElements.rotate(el, turn, center)
+                    return elements.map(el => el.id)
+                })
+            },
+        },
+        flip: { //"x" mirrors left and right, "y" up and down, a selection of many flips as a whole
+            label: "flip", run(axis) {
+                const elements = levelEditor.selectedParts()
+                if (!elements.length) return
+                const b = levelElements.boundsOf(elements.flatMap(el => levelElements.points(el)))
+                const center = elements.length === 1 ? levelElements.pivot(elements[0]) : { x: b.x + b.width / 2, y: b.y + b.height / 2 }
+                levelEditor.edit(`flip ${axis === "x" ? "↔" : "↕"} ${levelEditor.describe(elements)}`, () => {
+                    for (const el of elements) levelElements.flip(el, axis, center)
+                    return elements.map(el => el.id)
+                })
+            },
+        },
+        arrange: { //"front" draws them over the others, "back" under, it's their order in the list
+            label: "draw order", run(where) {
+                const ids = levelEditor.selectedParts().map(el => el.id) //code runs in list order, moving it would change what it does
+                if (!ids.length) return
+                levelEditor.edit(`${levelEditor.describe(levelEditor.selected())} to the ${where}`, data => {
+                    const moving = data.elements.filter(el => ids.includes(el.id))
+                    const rest = data.elements.filter(el => !ids.includes(el.id))
+                    data.elements = where === "front" ? rest.concat(moving) : moving.concat(rest)
+                    return [] //drawing follows the list order each frame, nothing needs rebuilding, so blocks and controls stay where they are
+                })
+            },
+        },
+        align: { //lines up the selection's edges or middles with the outermost one
+            label: "align", run(edge) {
+                const elements = levelEditor.selectedParts()
+                if (elements.length < 2) return
+                const boxes = elements.map(el => levelElements.bounds(el))
+                const all = levelElements.unionBounds(elements)
+                const target = { left: all.x, right: all.x + all.width, center: all.x + all.width / 2, top: all.y, bottom: all.y + all.height, middle: all.y + all.height / 2 }[edge]
+                levelEditor.edit(`align ${edge} ${levelEditor.describe(elements)}`, () => {
+                    elements.forEach((el, i) => {
+                        const b = boxes[i]
+                        const at = { left: b.x, right: b.x + b.width, center: b.x + b.width / 2, top: b.y, bottom: b.y + b.height, middle: b.y + b.height / 2 }[edge]
+                        const isX = ["left", "right", "center"].includes(edge)
+                        levelElements.move(el, isX ? target - at : 0, isX ? 0 : target - at, true)
+                    })
+                    return elements.map(el => el.id)
+                })
+            },
+        },
+        group: { //clicking one selects them all, like a room's pieces
+            label: "group, clicking one selects them all, ungroup to edit one", run() {
+                const elements = levelEditor.selected()
+                const groups = new Set(elements.map(el => el.group).filter(Boolean))
+                levelEditor.edit(`${groups.size ? "ungroup" : "group"} ${levelEditor.describe(elements)}`, data => {
+                    if (groups.size) { //every piece of those groups, even ones not selected, like one picked in the explorer
+                        for (const el of data.elements) if (groups.has(el.group)) delete el.group
+                    } else {
+                        const id = levelEditor.newGroupId(data)
+                        for (const el of elements) el.group = id
+                    }
+                    return []
+                })
+                levelEditor.renderRight()
+            },
+        },
+        shape: { //switch selected map and blocks to the other one
+            label: "map or block", run(typeName) {
+                const shapes = levelEditor.selected().filter(el => levelElements.groups.shape.includes(el.type) && el.type !== typeName)
+                const ids = shapes.map(el => el.id)
+                levelEditor.edit(`${levelEditor.describe(shapes)} to ${typeName}`, data => {
+                    data.elements = data.elements.map(el => {
+                        if (!ids.includes(el.id)) return el
+                        const shared = { friction: el.friction, restitution: el.restitution, ...(el.group ? { group: el.group } : {}) } //and its group
+                        return { ...levelElements.create(typeName, { ...levelElements.shapeGeometry(el), ...shared }), id: el.id }
+                    })
+                    const changed = new Set(ids)
+                    const removed = [] //a constraint can't hold map, it goes in the same undo step
+                    for (const el of data.elements) {
+                        for (const key of levelElements.refKeys(el)) {
+                            const target = ids.includes(el[key]) && levelData.find(data, el[key])
+                            if (!target || levelElements.isRefTo(el, key, target)) continue
+                            if (levelElements.types[el.type]?.rebuildWithRefs) removed.push(el.id)
+                            else el[key] = null
+                            changed.add(el.id)
+                        }
+                    }
+                    data.elements = data.elements.filter(el => !removed.includes(el.id))
+                    return [...changed]
+                })
+            },
+        },
+        collide: { //the inspector's collides checks, toggles one category for every selected map and block, mixed turns it on for all
+            label: "collides with it, the other side has to collide back too", run(name) {
+                const elements = levelEditor.selected().filter(el => levelElements.types[el.type]?.props.some(prop => prop.kind === "mask"))
+                if (!elements.length) return
+                const isOn = !elements.every(el => levelElements.collision.has(el.collides, name))
+                levelEditor.edit(`${levelEditor.describe(elements)}.collides ${isOn ? "+" : "-"} ${name}`, () => {
+                    for (const el of elements) el.collides = levelElements.collision.toggle(el.collides, name, isOn)
+                    return elements.map(el => el.id)
+                })
+                levelEditor.renderRight()
+            },
+        },
+        //adding
         add: { //an element from an add menu, in the middle of the view, "powerUp:heal" uses the type's preset("heal"), or drag it onto the level
             label: "add", run: arg => levelEditor.place(levelEditor.creation("add", arg)),
         },
@@ -893,31 +1101,48 @@ const levelEditor = {
                 levelEditor.renderLeft()
             },
         },
-        pick: { //click an element for a ref prop of the selected element
-            label: "pick it by clicking it, esc stops", run(key) {
+        finishPath: { label: "finish the path", keys: ["enter"], run: () => levelEditor.pathDraw && levelEditor.finishPath(false) },
+        preset: { //a common shape from levelElements.presets, as map, or block with the block tool, in the middle of the view, or drag it onto the level
+            label: "shape", run: name => levelEditor.place(levelEditor.creation("preset", name)),
+        },
+        addSpot: { //another place the selected boss could spawn, drag it where it goes
+            label: "another place it could spawn", run() {
                 const el = levelEditor.selected()[0]
-                levelEditor.picking = levelEditor.picking ? null : el ? { id: el.id, key } : null
-                levelEditor.renderRight()
+                if (!el || !Array.isArray(el.spots)) return
+                const last = el.spots.length ? el.spots[el.spots.length - 1] : [el.x, el.y]
+                const spot = [last[0] + 300, last[1]]
+                levelEditor.edit(`${levelEditor.describe([el])} add spot ${levelEditor.formatValue(spot[0])}, ${levelEditor.formatValue(spot[1])}`, () => {
+                    el.spots.push(spot)
+                    return [el.id]
+                })
             },
         },
-        pickLink: { //click an element to link it to the selected button or toggle
-            label: "link something by clicking it, esc stops, linking something already linked to another makes it on while either is, linking another button, toggle, zone, or timer makes it only on while both are", run() {
+        removeSpot: {
+            label: "remove this spot", run(index) {
                 const el = levelEditor.selected()[0]
-                levelEditor.picking = levelEditor.picking ? null : el ? { id: el.id, isLink: true } : null
-                levelEditor.renderRight()
+                if (!el || !Array.isArray(el.spots)) return
+                levelEditor.edit(`${levelEditor.describe([el])} remove spot ${Number(index) + 2}`, () => {
+                    el.spots.splice(Number(index), 1)
+                    return [el.id]
+                })
             },
         },
-        fullTest: { //the export JS, everything a run would do
-            label: "play the level's export JS like a run, editing anything stops it", run() {
-                levelEditor.isFullTest = !levelEditor.isFullTest
-                levelEditor.updatePanels() //the panels stay as they are, tab hides them to see the level like a player
-                levelEditor.isTesting = false
-                levelEditor.drag = null
-                levelEditor.picking = null
-                levelEditor.pathDraw = null
-                levelEditor.vertex = null
-                levelEditor.renderLeft()
-                levelEditor.restart()
+        constrain: { //a constraint from a point above the selected block, drag the point where it goes
+            label: "hold it with a Matter.js constraint to a point in the level", run() {
+                const el = levelEditor.selected()[0]
+                if (!el || el.type !== "block") return
+                const c = levelElements.center(el)
+                const anchor = levelEditor.snapPoint({ x: c.x, y: c.y - 200 })
+                const constraint = levelElements.create("constraint", { x: anchor.x, y: anchor.y, body: el.id, length: Math.round(c.y - anchor.y) })
+                levelEditor.edit(`add ${levelEditor.describe([constraint])}`, data => [levelData.add(data, constraint).id])
+                levelEditor.select([constraint.id])
+            },
+        },
+        addCode: { //the code panel, applying adds code at the end of the level, after everything else
+            label: "javascript that runs as part of the level, after everything above it", run() {
+                levelEditor.codeEditing = "new"
+                levelEditor.openPanel("new code", "", "", "code")
+                document.querySelector("#level-editor-code textarea").placeholder = "paste or write javascript, apply or ⌘enter runs it as part of the level"
             },
         },
         editCode: {
@@ -947,14 +1172,21 @@ const levelEditor = {
                 })
             },
         },
-        addCode: { //the code panel, applying adds code at the end of the level, after everything else
-            label: "javascript that runs as part of the level, after everything above it", run() {
-                levelEditor.codeEditing = "new"
-                levelEditor.openPanel("new code", "", "", "code")
-                document.querySelector("#level-editor-code textarea").placeholder = "paste or write javascript, apply or ⌘enter runs it as part of the level"
+        //picking and linking
+        pick: { //click an element for a ref prop of the selected element
+            label: "pick it by clicking it, esc stops", run(key) {
+                const el = levelEditor.selected()[0]
+                levelEditor.picking = levelEditor.picking ? null : el ? { id: el.id, key } : null
+                levelEditor.renderRight()
             },
         },
-        selectId: { label: "select", run: id => levelEditor.select([Number(id)]) },
+        pickLink: { //click an element to link it to the selected button or toggle
+            label: "link something by clicking it, esc stops, linking something already linked to another makes it on while either is, linking another button, toggle, zone, or timer makes it only on while both are", run() {
+                const el = levelEditor.selected()[0]
+                levelEditor.picking = levelEditor.picking ? null : el ? { id: el.id, isLink: true } : null
+                levelEditor.renderRight()
+            },
+        },
         unlink: { //from the selected button, toggle, zone, or timer
             label: "unlink", run(id) {
                 const el = levelData.find(levelEditor.data, Number(id))
@@ -968,34 +1200,7 @@ const levelEditor = {
                 })
             },
         },
-        constrain: { //a constraint from a point above the selected block, drag the point where it goes
-            label: "hold it with a Matter.js constraint to a point in the level", run() {
-                const el = levelEditor.selected()[0]
-                if (!el || el.type !== "block") return
-                const c = levelElements.center(el)
-                const anchor = levelEditor.snapPoint({ x: c.x, y: c.y - 200 })
-                const constraint = levelElements.create("constraint", { x: anchor.x, y: anchor.y, body: el.id, length: Math.round(c.y - anchor.y) })
-                levelEditor.edit(`add ${levelEditor.describe([constraint])}`, data => [levelData.add(data, constraint).id])
-                levelEditor.select([constraint.id])
-            },
-        },
-        finishPath: { label: "finish the path", keys: ["enter"], run: () => levelEditor.pathDraw && levelEditor.finishPath(false) },
-        preset: { //a common shape from levelElements.presets, as map, or block with the block tool, in the middle of the view, or drag it onto the level
-            label: "shape", run: name => levelEditor.place(levelEditor.creation("preset", name)),
-        },
-        timeScale: { //the simulation menu's game speed
-            label: "game speed", run(scale) {
-                levelEditor.timeScale = Number(scale) || 1
-                levelEditor.renderLeft()
-            },
-        },
-        debugDraw: { //the simulation menu's draw toggles, see drawDebug()
-            label: "draw", run(name) {
-                if (levelEditor.debugDraw.has(name)) levelEditor.debugDraw.delete(name)
-                else levelEditor.debugDraw.add(name)
-                levelEditor.renderLeft()
-            },
-        },
+        //explorer
         jumpTo: { //the explorer, select it and go to it
             label: "select it and go to it", run(id) {
                 const el = levelData.find(levelEditor.data, Number(id))
@@ -1018,104 +1223,13 @@ const levelEditor = {
                 levelEditor.select(levelEditor.selection.filter(id => !levelEditor.isLocked(levelData.find(levelEditor.data, id))))
             },
         },
-        panels: { //hide the panels to see the level like a player does
-            label: "hide or show the editor panels", keys: ["tab"], run() {
-                levelEditor.isPanelsHidden = !levelEditor.isPanelsHidden
-                levelEditor.updatePanels()
+        exploreMore: { //a type with more than 100 elements shows 100 more each click
+            label: "show more", run(typeName) {
+                levelEditor.exploreLimits[typeName] = (levelEditor.exploreLimits[typeName] || 100) + 100
+                levelEditor.renderExplorer()
             },
         },
-        addSpot: { //another place the selected boss could spawn, drag it where it goes
-            label: "another place it could spawn", run() {
-                const el = levelEditor.selected()[0]
-                if (!el || !Array.isArray(el.spots)) return
-                const last = el.spots.length ? el.spots[el.spots.length - 1] : [el.x, el.y]
-                const spot = [last[0] + 300, last[1]]
-                levelEditor.edit(`${levelEditor.describe([el])} add spot ${levelEditor.formatValue(spot[0])}, ${levelEditor.formatValue(spot[1])}`, () => {
-                    el.spots.push(spot)
-                    return [el.id]
-                })
-            },
-        },
-        removeSpot: {
-            label: "remove this spot", run(index) {
-                const el = levelEditor.selected()[0]
-                if (!el || !Array.isArray(el.spots)) return
-                levelEditor.edit(`${levelEditor.describe([el])} remove spot ${Number(index) + 2}`, () => {
-                    el.spots.splice(Number(index), 1)
-                    return [el.id]
-                })
-            },
-        },
-        collide: { //the inspector's collides checks, toggles one category for every selected map and block, mixed turns it on for all
-            label: "collides with it, the other side has to collide back too", run(name) {
-                const elements = levelEditor.selected().filter(el => levelElements.types[el.type]?.props.some(prop => prop.kind === "mask"))
-                if (!elements.length) return
-                const isOn = !elements.every(el => levelElements.collision.has(el.collides, name))
-                levelEditor.edit(`${levelEditor.describe(elements)}.collides ${isOn ? "+" : "-"} ${name}`, () => {
-                    for (const el of elements) el.collides = levelElements.collision.toggle(el.collides, name, isOn)
-                    return elements.map(el => el.id)
-                })
-                levelEditor.renderRight()
-            },
-        },
-        shape: { //switch selected map and blocks to the other one
-            label: "map or block", run(typeName) {
-                const shapes = levelEditor.selected().filter(el => levelElements.groups.shape.includes(el.type) && el.type !== typeName)
-                const ids = shapes.map(el => el.id)
-                levelEditor.edit(`${levelEditor.describe(shapes)} to ${typeName}`, data => {
-                    data.elements = data.elements.map(el => {
-                        if (!ids.includes(el.id)) return el
-                        const shared = { friction: el.friction, restitution: el.restitution }
-                        return { ...levelElements.create(typeName, { ...levelElements.shapeGeometry(el), ...shared }), id: el.id }
-                    })
-                    return ids
-                })
-            },
-        },
-        test: { //start restarts the level at the spawn with blocks back in place, and mobs and power ups if the box is checked, stop restarts it without them
-            label: "restart the level at the enter to play it, again to stop", run() {
-                levelEditor.isTesting = !levelEditor.isTesting || levelEditor.isFullTest
-                levelEditor.isFullTest = false
-                levelEditor.renderLeft()
-                levelEditor.restart()
-            },
-        },
-        code: {
-            label: "level as javascript", run() {
-                levelEditor.openPanel(`${levelData.functionName(levelEditor.data.name)}()`, levelData.code(levelEditor.data))
-            },
-        },
-        importLevel: {
-            label: "paste a level's javascript, it replaces this level", run() {
-                levelEditor.openPanel("import level", "", "", "import")
-            },
-        },
-        importText: { //the import panel's import button
-            label: "replace this level with the pasted javascript", run() {
-                const text = document.querySelector("#level-editor-code textarea").value
-                if (!text.trim()) return
-                let imported, isCaptured
-                try {
-                    ({ data: imported, isCaptured } = levelData.fromText(text))
-                } catch (error) {
-                    console.error(error)
-                    simulation.inGameConsole(`<em>//couldn't import that, ${levelEditor.escape(error.message)}</em>`)
-                    return levelEditor.restart() //running the code cleared the world
-                }
-                levelEditor.run("closeCode")
-                levelEditor.select([])
-                levelEditor.edit("import level", data => { //one undo step, the name stays, it's where the level is saved
-                    const name = data.name
-                    for (const key of Object.keys(data)) delete data[key]
-                    Object.assign(data, imported, { name })
-                    return []
-                })
-                levelEditor.applyLevelProps()
-                levelEditor.renderLeft()
-                levelEditor.restart(false)
-                simulation.inGameConsole(`<em>//imported ${imported.elements.length} elements${isCaptured ? ", only the map and blocks, the code had no level editor data" : ""}</em>`)
-            },
-        },
+        //analysis
         analyze: { //the analysis in the inspector, click a line to go to what it's about
             label: "issues, the level checked against the written levels", run() {
                 levelEditor.analysisReport = levelAnalysis.run(levelEditor.data, { isLive: true })
@@ -1153,34 +1267,74 @@ const levelEditor = {
                 levelEditor.isAnalysisJump = false
             },
         },
+        //levels, export, and import
+        code: {
+            label: "level as javascript", run() {
+                levelEditor.openPanel(`${levelData.functionName(levelEditor.data.name)}()`, levelData.code(levelEditor.data))
+            },
+        },
         copyPanel: {
             label: "copy", run() {
                 const panel = document.getElementById("level-editor-code")
                 levelEditor.copy(panel.querySelector("textarea").value, panel.querySelector("[data-code-name]").textContent)
             },
         },
-        pool: { //in or out of the random level pool from settings, without opening it
-            label: "add it to the random level pool for runs, or take it out", run() {
-                const pool = localSettings.levelPool
-                const name = levelEditor.data.name
-                pool.added = levelEditor.isInPool() ? pool.added.filter(n => n !== name) : pool.added.concat(name)
-                if (localSettings.isAllowed) localStorage.setItem("localSettings", JSON.stringify(localSettings)); //update local storage
-                simulation.inGameConsole(levelEditor.isInPool() ? `<em>//${name} is in the level pool</em>` : `<em>//${name} is out of the level pool</em>`)
-                levelEditor.renderLeft()
+        downloadPanel: { //the export as a file, a backup that doesn't depend on the clipboard
+            label: "save it as a .js file", run() {
+                const panel = document.getElementById("level-editor-code")
+                const name = panel.querySelector("[data-code-name]").textContent.replace(/\W/g, "") || "level"
+                const link = document.createElement("a")
+                link.href = URL.createObjectURL(new Blob([panel.querySelector("textarea").value], { type: "text/javascript" }))
+                link.download = `${name}.js`
+                link.click()
+                setTimeout(() => URL.revokeObjectURL(link.href), 1000)
             },
         },
         closeCode: { label: "close", run: () => document.getElementById("level-editor-code").classList.remove("le-open") },
-        levelDefaults: { //the level properties most written levels use, the name stays
-            label: "typical level properties", run() {
-                const defaults = levelElements.level.defaults()
-                levelEditor.edit("level properties to default", data => {
-                    Object.assign(data, defaults)
+        importLevel: {
+            label: "paste a level's javascript, it replaces this level", run() {
+                levelEditor.openPanel("import level", "", "", "import")
+            },
+        },
+        importText: { //the import panel's import button
+            label: "replace this level with the pasted javascript", run() {
+                const text = document.querySelector("#level-editor-code textarea").value
+                if (!text.trim()) return
+                let imported, isCaptured
+                try {
+                    ({ data: imported, isCaptured } = levelData.fromText(text))
+                } catch (error) {
+                    console.error(error)
+                    simulation.inGameConsole(`<em>//couldn't import that, ${levelEditor.escape(error.message)}</em>`)
+                    return levelEditor.restart() //running the code cleared the world
+                }
+                levelEditor.run("closeCode")
+                levelEditor.select([])
+                levelEditor.edit("import level", data => { //one undo step, the name stays, it's where the level is saved
+                    const name = data.name
+                    for (const key of Object.keys(data)) delete data[key]
+                    Object.assign(data, imported, { name })
                     return []
                 })
                 levelEditor.applyLevelProps()
+                levelEditor.renderLeft()
+                levelEditor.restart(false)
+                simulation.inGameConsole(`<em>//imported ${imported.elements.length} elements${isCaptured ? ", only the map and blocks, the code had no level editor data" : ""}</em>`)
             },
         },
+        openFile: { //the import panel, a file instead of pasting, then it imports
+            label: "load a level from a .js or .txt file", run: () => document.getElementById("level-editor-import-file").click(),
+        },
         newLevel: { label: "a new level with ground, an enter, and an exit", run: () => levelEditor.setData(levelData.blank(levelData.freeName("untitled"))) },
+        duplicateLevel: { //a copy of this level to experiment on, it opens the copy
+            label: "fork, a copy of this level under a new name, then edit the copy", run() {
+                levelEditor.flush()
+                const copy = levelData.copy(levelEditor.data)
+                copy.name = levelData.freeName(`${levelEditor.data.name}-copy`)
+                levelEditor.setData(copy)
+                simulation.inGameConsole(`<em>//forked as ${levelEditor.escape(copy.name)}</em>`)
+            },
+        },
         load: { label: "load", run: arg => levelEditor.load(arg) },
         deleteLevel: {
             label: "delete level", run(name) {
@@ -1196,6 +1350,26 @@ const levelEditor = {
                 } else {
                     levelEditor.renderLeft()
                 }
+            },
+        },
+        pool: { //in or out of the random level pool from settings, without opening it
+            label: "add it to the random level pool for runs, or take it out", run() {
+                const pool = localSettings.levelPool
+                const name = levelEditor.data.name
+                pool.added = levelEditor.isInPool() ? pool.added.filter(n => n !== name) : pool.added.concat(name)
+                if (localSettings.isAllowed) localStorage.setItem("localSettings", JSON.stringify(localSettings)); //update local storage
+                simulation.inGameConsole(levelEditor.isInPool() ? `<em>//${name} is in the level pool</em>` : `<em>//${name} is out of the level pool</em>`)
+                levelEditor.renderLeft()
+            },
+        },
+        levelDefaults: { //the level properties most written levels use, the name stays
+            label: "typical level properties", run() {
+                const defaults = levelElements.level.defaults()
+                levelEditor.edit("level properties to default", data => {
+                    Object.assign(data, defaults)
+                    return []
+                })
+                levelEditor.applyLevelProps()
             },
         },
     },
@@ -1252,8 +1426,13 @@ const levelEditor = {
         levelEditor.edit(`${label} ${levelEditor.describe(copies)}`, data => {
             for (const el of copies) ids.push(levelData.add(data, el).id)
             const newIds = new Map(elements.map((original, i) => [original.id, ids[i]])) //a copied button and door stay linked to each other, not to the originals
+            const newGroups = new Map() //copies of a group are their own group
             for (const el of copies) {
                 for (const key of levelElements.refKeys(el)) if (newIds.has(el[key])) el[key] = newIds.get(el[key])
+                if (el.group) {
+                    if (!newGroups.has(el.group)) newGroups.set(el.group, levelEditor.newGroupId(data))
+                    el.group = newGroups.get(el.group)
+                }
             }
             return ids
         })
@@ -1305,7 +1484,10 @@ const levelEditor = {
         if (levelEditor.isGridShown) levelEditor.drawGrid()
         levelEditor.drawGuides()
         levelEditor.drawProblems()
-        if (hover && !levelEditor.selection.includes(hover.id)) levelEditor.outline(hover, levelEditor.colors.hover, 1.5)
+        if (hover && !levelEditor.selection.includes(hover.id)) {
+            levelEditor.outline(hover, levelEditor.colors.hover, 1.5)
+            if (hover.group) for (const el of levelEditor.data.elements) if (el.group === hover.group && el !== hover) levelEditor.outline(el, levelEditor.colors.hover, 1.5, [6, 4]) //the rest of its group, dashed, they select together
+        }
         const isDragging = drag && (drag.kind === "move" || drag.kind === "handle" || drag.kind === "vertex")
         for (const el of levelEditor.selected()) levelEditor.outline(el, levelEditor.colors.select, 3, isDragging ? [9, 5] : []) //thick, so it shows on the dark map
         if (drag && drag.kind === "vertex") {
@@ -1702,22 +1884,29 @@ const levelEditor = {
             </div>`,
         },
         {
-            id: "simulation",
-            title: "simulation",
-            render: () => `<div class="le-grid le-two le-run le-flush-x le-flush-top">${levelEditor.button("test", levelEditor.isTesting ? "■ stop test" : "▶ test", "", levelEditor.isTesting)}${levelEditor.button("fullTest", levelEditor.isFullTest ? "■ stop JS test" : "▶ JS test", "", levelEditor.isFullTest)}</div>
-            <div class="le-row">
-                <label class="le-label le-check" title="mobs and power ups spawn while testing"><input type="checkbox" data-setting="testSpawning"${levelEditor.isTestSpawning ? " checked" : ""}>mobs, power ups, from level</label>
-                <input class="le-number le-short" data-setting="testLevel" value="${levelEditor.testLevel}" spellcheck="false" title="levels cleared while editing, for mob types and difficulty">
-            </div>
-            <div class="le-row"><span class="le-label">time</span><span class="le-segment">${[0.1, 0.25, 0.5, 1].map(scale => levelEditor.button("timeScale", `${scale}×`, scale, levelEditor.timeScale === scale, "game speed, it lowers the frame cap")).join("")}</span></div>
-            <div class="le-row"><select data-setting="lookMode" title="how the camera follows the mouse, mouse look is the motion sickness tech">${[["static", "static mouse"], ["smooth", "smooth mouse look"], ["instant", "mouse look"]].map(([mode, text]) => `<option value="${mode}"${levelEditor.lookMode === mode ? " selected" : ""}>${text}</option>`).join("")}</select></div>
-            <div class="le-grid le-gap-above le-flush-x le-flush-bottom">${levelEditor.debugLayers.map(([name, tip]) => levelEditor.button("debugDraw", name, name, levelEditor.debugDraw.has(name), tip)).join("")}</div>`,
+            id: "load",
+            title: "export/import",
+            render: () => `<div class="le-load" data-load-local></div>
+                <div class="le-grid le-two le-gap-above le-flush-x">${levelEditor.button("newLevel", "new")}${levelEditor.button("duplicateLevel", "fork")}${levelEditor.button("importLevel", "import")}${levelEditor.button("code", "export")}${levelEditor.button("pool", levelEditor.isInPool() ? "in level pool" : "add to level pool", "", levelEditor.isInPool(), undefined, { className: "le-wide" })}</div>
+                <div class="le-load" data-load-written></div>`, //the local levels, then new, import, the pool, and export, then the written levels, filled in when it opens, see renderLoadList()
         },
         {
-            id: "explorer",
-            title: "explorer",
-            isClosed: true,
-            render: () => `<div class="le-explorer" data-explorer>${levelEditor.explorerHtml()}</div>`,
+            id: "simulation",
+            title: "simulation",
+            render: () => { //quick test plays the elements, test export plays the export javascript like a run, the settings it ignores are grayed out while it runs
+                const isExport = levelEditor.isFullTest
+                const exportNote = isExport ? ", test export ignores this" : ""
+                return `<div class="le-grid le-two le-run le-flush-x le-flush-top">${levelEditor.button("test", levelEditor.isTesting ? "■ stop" : "▶ quick test", "", levelEditor.isTesting)}${levelEditor.button("fullTest", isExport ? "■ stop" : "▶ test export", "", isExport)}</div>
+            <div class="le-row">
+                <label class="le-label le-check${isExport ? " le-inactive" : ""}" title="quick test spawns mobs and power ups${isExport ? ", test export always does" : ""}"><input type="checkbox" data-setting="testSpawning"${levelEditor.isTestSpawning ? " checked" : ""}${isExport ? " disabled" : ""}>mobs, power ups</label>
+                <label class="le-label le-check le-invincible" title="the player takes no damage, in both tests too"><input type="checkbox" data-setting="invincible"${levelEditor.isInvincible ? " checked" : ""}>invincible</label>
+            </div>
+            <div class="le-row"><span class="le-label">level</span><input class="le-number le-short" data-setting="testLevel" value="${levelEditor.testLevel}" spellcheck="false" title="how many levels into a run you're testing, it picks mob types and difficulty, at 0 random mobs don't spawn">
+                <span class="le-label le-seed-label">seed</span><input class="le-number" data-setting="testSeed" value="${levelEditor.escape(levelEditor.testSeed)}" placeholder="random" spellcheck="false" title="the same seed starts each test the same: mob types, which spots get mobs, bosses, power ups, and debris, what mobs do after is still random, empty is random"></div>
+            <div class="le-row${isExport ? " le-inactive" : ""}"><span class="le-label">time</span><span class="le-segment">${[0.1, 0.25, 0.5, 1].map(scale => levelEditor.button("timeScale", `${scale}×`, scale, levelEditor.timeScale === scale, `game speed, it lowers the frame cap${exportNote}`, { disabled: isExport })).join("")}</span></div>
+            <div class="le-row${isExport ? " le-inactive" : ""}"><select data-setting="lookMode" title="how the camera follows the mouse, mouse look is the motion sickness tech${exportNote}"${isExport ? " disabled" : ""}>${[["static", "static mouse"], ["smooth", "smooth mouse look"], ["instant", "mouse look"]].map(([mode, text]) => `<option value="${mode}"${levelEditor.lookMode === mode ? " selected" : ""}>${text}</option>`).join("")}</select></div>
+            <div class="le-grid le-gap-above le-flush-x le-flush-bottom${isExport ? " le-inactive" : ""}">${levelEditor.debugLayers.map(([name, tip]) => levelEditor.button("debugDraw", name, name, levelEditor.debugDraw.has(name), tip + exportNote, { disabled: isExport })).join("")}</div>`
+            },
         },
         {
             id: "add",
@@ -1725,7 +1914,7 @@ const levelEditor = {
             render: () => { //spots, a boss, and a 2nd boss are all a level needs for mobs, and starting, random, and debris for power ups, they show the power ups they can be
                 const main = { startingPowerUps: ["gun", "tech", "ammo", "heal"], randomPowerUp: ["heal", "ammo"], debris: ["block", "heal", "ammo"] }
                 return `<div class="le-add-part">
-                        <div class="le-shapes le-flush-x">${levelElements.presets.map(preset => `<button class="le-button le-shape" data-command="preset" data-arg="${preset.name}" title="${preset.name}, as map, or block with the block tool">${levelElements.presetIcon(preset)}</button>`).join("")}</div>
+                        <div class="le-shapes le-flush-x">${levelElements.presets.map(preset => levelEditor.button("preset", levelElements.presetIcon(preset), preset.name, false, `${preset.name}, as map, or block with the block tool`, { className: "le-shape" })).join("")}</div>
                         ${levelEditor.elementList()}
                     </div>
                     <div class="le-add-part">
@@ -1742,12 +1931,18 @@ const levelEditor = {
             },
         },
         {
-            id: "load",
-            title: "export/import",
-            render: () => `<div class="le-load" data-load-local></div>
-                <div class="le-grid le-two le-gap-above le-flush-x">${levelEditor.button("newLevel", "new")}${levelEditor.button("importLevel", "import")}${levelEditor.button("pool", levelEditor.isInPool() ? "in level pool" : "add to level pool", "", levelEditor.isInPool())}${levelEditor.button("code", "export")}</div>
-                <div class="le-load" data-load-written></div>`, //the local levels, then new, import, the pool, and export, then the written levels, filled in when it opens, see renderLoadList()
+            id: "explorer",
+            title: "explorer",
+            isClosed: true,
+            render: () => `<input class="le-explore-search" data-explore-search value="${levelEditor.escape(levelEditor.exploreSearch)}" placeholder="search: type, #id, or position" spellcheck="false" autocomplete="off">
+                <div class="le-explorer" data-explorer>${levelEditor.explorerHtml()}</div>`,
         },
+        // { //the help menu, off for now, levelEditor.help and helpHtml() are kept for when it comes back
+        //     id: "help",
+        //     title: "help",
+        //     isClosed: true,
+        //     render: () => levelEditor.helpHtml(),
+        // },
     ],
     openPanel(name, text, html, mode = "") { //the code panel in the middle of the screen, html shows instead of the text when there is some, copy always copies the text, mode "import" is a box to paste into, "code" edits a code element
         const panel = document.getElementById("level-editor-code")
@@ -1763,6 +1958,8 @@ const levelEditor = {
         report.innerHTML = html || ""
         panel.querySelector("[data-code-name]").textContent = name
         panel.querySelector('[data-command="copyPanel"]').hidden = isEditable
+        panel.querySelector('[data-command="downloadPanel"]').hidden = isEditable || !!html
+        panel.querySelector('[data-command="openFile"]').hidden = !isImport
         panel.querySelector('[data-command="importText"]').hidden = !isImport
         panel.querySelector('[data-command="applyCode"]').hidden = mode !== "code"
         panel.classList.add("le-open")
@@ -1794,7 +1991,7 @@ const levelEditor = {
     },
     elementList() { //every level element by kind, and each named preset like exit fill, picking one adds it, an option's data-command and data-arg are what it runs
         const option = (command, arg, text, tip) => `<option value="${levelEditor.escape(arg)}" data-command="${command}" data-arg="${levelEditor.escape(arg)}" title="${levelEditor.escape(tip)}">${levelEditor.escape(text)}</option>`
-        return `<select class="le-mob-list le-element-list le-flush-x" title="add a level element in the middle of the view">
+        return `<select class="le-list le-element-list le-flush-x" title="add a level element in the middle of the view">
             <option value="">level element</option>
             ${levelEditor.elementGroups().map(group => `<optgroup label="${group.title}">${group.names.map(name => {
             const type = levelElements.types[name]
@@ -1803,27 +2000,15 @@ const levelEditor = {
         }).join("")}</optgroup>`).join("")}
         </select>`
     },
-    addButtons(group, skip = []) { //a button for each type in a group, and one for each of its named presets
-        return levelElements.groups[group].filter(name => !skip.includes(name)).map(name => levelEditor.addButton(name) + levelEditor.presetButtons(name)).join("")
-    },
     addButton(name, text) { //its tooltip is the type's tip
         const type = levelElements.types[name]
         const command = type.addCommand || "add"
         const isOn = command === "drawPath" && !!levelEditor.pathDraw
         return levelEditor.button(command, text || type.label, name, isOn, type.tip || `add ${type.label}`)
     },
-    presetButtons(name, text = preset => preset) { //a button for each of the type's names, text(preset) is what the button shows
-        const type = levelElements.types[name]
-        return (type.names || []).map(preset => levelEditor.button("add", text(preset), `${name}:${preset}`, false, (type.tips && type.tips[preset]) || `add ${preset}`)).join("")
-    },
-    orb(name) { //the power up's orb from powerUps.orb, without the game's hover help, "block" is a little block, difficulty has no orb so it's a black circle like in the level
-        if (name === "block") return `<span class="le-orb"><span class="le-block-icon"></span></span>`
-        if (name === "difficulty") return `<span class="le-orb"><span class="le-difficulty-icon"></span></span>`
-        return powerUps.orb[name] ? `<span class="le-orb">${powerUps.orb[name]().replace(/ data-help="[^"]*"/g, "")}</span>` : ""
-    },
     powerUpList() { //every power up with its orb, picking one adds it, browsers with customizable selects show the orbs (appearance: base-select), others just the names
         const type = levelElements.types.powerUp
-        return `<select class="le-mob-list le-rich-list le-flush-x" data-add="powerUp" title="a power up by name">
+        return `<select class="le-list le-rich-list le-flush-x" data-add="powerUp" title="a power up by name">
             <option value="">power up by name</option>
             ${type.names.map(name => `<option value="${name}" title="${levelEditor.escape(type.tips[name] || "")}">${levelEditor.orb(name)}<span>${name}</span></option>`).join("")}
         </select>`
@@ -1831,123 +2016,38 @@ const levelEditor = {
     mobList() { //a random group, then every mob and boss by tier with its picture, picking one adds it, an option's data-arg is its whole add command
         const tiers = spawn.tier.map((names, i) => [`tier ${i}`, names]).concat(spawn.bossTier.map((names, i) => [`tier ${i} bosses`, names])).filter(([, names]) => names.length)
         const icons = levelEditor.mobIcons || {}
-        return `<select class="le-mob-list le-rich-list le-flush-x" data-add="namedMob" title="${levelEditor.escape(levelElements.types.namedMob.tip)}">
+        return `<select class="le-list le-rich-list le-flush-x" data-add="namedMob" title="${levelEditor.escape(levelElements.types.namedMob.tip)}">
             <option value="">mob by name</option>
             <optgroup label="random"><option value="group" data-arg="mobGroup" title="${levelEditor.escape(levelElements.types.mobGroup.tip)}">${levelEditor.mobIcon("group", [{ fill: "rgb(255,80,160)", x: -14, y: 4, r: 9, sides: 5 }, { fill: "rgb(255,80,80)", x: 8, y: -6, r: 10, sides: 4 }, { fill: "rgb(255,120,80)", x: 10, y: 10, r: 7, sides: 3 }])}<span>group</span></option></optgroup>
             ${tiers.map(([label, names]) => `<optgroup label="${label}">${names.map(name => `<option value="${name}">${icons[name] || ""}<span>${name}</span></option>`).join("")}</optgroup>`).join("")}
         </select>`
     },
-    mobExamples: { //a few of what the add menu's mob, boss, and 2nd boss buttons can spawn, drawn under them like the power up buttons' orbs
-        mobSpot: ["starter", "shooter", "hopper", "spinner"],
-        boss: ["hydraBoss", "powerUpBossBaby", "sneakBoss"],
-        secondaryBoss: ["mantisBoss", "pentaLaserBoss", "spiderBoss"],
-    },
-    mobExamplesHtml(typeName) { //[ pictures ], 13 × 13 each
-        const pictures = (levelEditor.mobExamples[typeName] || []).filter(name => levelEditor.mobShapes[name]).map(name => {
-            const { shapes, links, orbs } = levelEditor.mobShapes[name]
-            return levelEditor.mobIcon(name, shapes, links, orbs, 13, 13)
-        })
-        return `<span class="le-options le-mob-examples">[${pictures.join("")}]</span>`
-    },
-    sampleMobs() { //spawns every mob and boss once, far away, to draw it from what it made, then takes it all away again
-        if (levelEditor.mobIcons || typeof spawn === "undefined") return
-        const icons = {}
-        const allowShields = spawn.allowShields
-        spawn.allowShields = false //random shields would hide the mob
-        for (const name of levelElements.mobNames()) {
-            const start = levelData.mark()
-            const spawned = { mob: mob.length, powerUp: powerUp.length }
-            const ephemera = new Set(simulation.ephemera)
+    recall(key, fallback) { //an editor setting saved with remember(), or fallback, localStorage can be blocked, older saves are plain text
+        try {
+            const text = localStorage.getItem(key)
+            if (text === null) return fallback
             try {
-                spawn[name](0, -100000)
-                const made = levelData.made(start)
-                const shapes = mob.slice(spawned.mob).filter(who => !who.shield).map(who => ({
-                    points: who.vertices.map(v => ({ x: v.x, y: v.y + 100000 })),
-                    fill: who.fill,
-                    stroke: who.stroke,
-                }))
-                const end = (body, point) => body ? { x: body.position.x + point.x, y: body.position.y + point.y + 100000 } : { x: point.x, y: point.y + 100000 }
-                const links = made.cons.concat(made.consBB, made.constraints).filter(c => c.bodyA && c.bodyB).map(c => [end(c.bodyA, c.pointA), end(c.bodyB, c.pointB)]) //tails, legs, and chains, not ends pinned to the level, a spider's are at 0, 0 until it moves
-                const orbs = powerUp.slice(spawned.powerUp).map(who => ({ x: who.position.x, y: who.position.y + 100000, r: who.size, fill: who.color }))
-                if (shapes.length) {
-                    icons[name] = levelEditor.mobExtras[name]?.icon || levelEditor.mobIcon(name, shapes, links, orbs)
-                    levelEditor.mobShapes[name] = { shapes, links, orbs }
-                }
-            } catch (error) { } //it's only a picture
-            levelData.unbuild(levelData.made(start))
-            levelData.removeSpawned(spawned)
-            simulation.ephemera = simulation.ephemera.filter(effect => ephemera.has(effect))
+                return JSON.parse(text)
+            } catch (error) {
+                return text
+            }
+        } catch (error) {
+            return fallback
         }
-        spawn.allowShields = allowShields
-        levelEditor.mobIcons = icons
     },
-    mobExtras: { //what a mob does that its shape doesn't show, drawn on its picture: lasers (how many), a laser sword, a sniper's sight, a sucker's dark middle
-        laser: { lasers: 1 }, laserLayer: { lasers: 1 }, beamer: { lasers: 1 }, focuser: { lasers: 1 }, quadLaser: { lasers: 4 }, pentaLaserBoss: { lasers: 5 },
-        laserTargetingBoss: { lasers: 1 }, laserBombingBoss: { lasers: 1 }, laserLayerBoss: { lasers: 1 },
-        slasher: { sword: true }, slasher2: { sword: true }, slasher3: { sword: true }, slasher4: { sword: true }, slasher5: { sword: true }, slicer: { sword: true }, slicer5: { sword: true }, slashBoss: { sword: true },
-        sniper: { sight: true }, sucker: { hole: true }, bigSucker: { hole: true },
-        powerUpBoss: { nodeOrbs: true }, powerUpBossBaby: { nodeOrbs: true }, //it carries a power up at each corner
-        mayflyBoss: { //its swarm of cells doesn't fit, so a cartoon mayfly: wings, a pink head, a white body that thins out, and long tail threads
-            icon: `<svg class="le-mob-icon" width="26" height="16" viewBox="0 0 26 16" aria-hidden="true">
-                <ellipse cx="8.5" cy="4" rx="3" ry="5.5" transform="rotate(-30 8.5 4)" fill="rgba(200,225,240,0.7)" stroke="#222" stroke-width="0.6"/>
-                <ellipse cx="11.5" cy="4.5" rx="2.5" ry="4.5" transform="rotate(20 11.5 4.5)" fill="rgba(200,225,240,0.7)" stroke="#222" stroke-width="0.6"/>
-                <path d="M15.5 10.5 Q20 11 25 6.5 M15.5 11 Q20 13 25.5 10.5 M15.5 11.5 Q19.5 15 25 14.5" stroke="#777" stroke-width="0.6" fill="none"/>
-                ${[[14.5, 10.5, 1.3], [12.5, 10, 1.7], [10, 9.5, 2.1], [7, 9.5, 2.4]].map(([x, y, r]) => `<circle cx="${x}" cy="${y}" r="${r}" fill="#fff" stroke="#222" stroke-width="0.6"/>`).join("")}
-                <circle cx="3.2" cy="9.5" r="2.3" fill="rgb(182,99,124)" stroke="#222" stroke-width="0.6"/>
-            </svg>`,
-        },
-    },
-    mobIcon(name, shapes, links = [], orbs = [], w = 26, h = 16) { //shapes are { points, fill, stroke } in world space, or { x, y, r, sides, fill } made up, it's fit into a w × h picture around the biggest
-        shapes = shapes.map(shape => shape.points ? shape : { ...shape, points: Array.from({ length: shape.sides }, (_, i) => ({ x: shape.x + shape.r * Math.cos(2 * Math.PI * i / shape.sides), y: shape.y + shape.r * Math.sin(2 * Math.PI * i / shape.sides) })) })
-        const boxes = shapes.map(shape => levelElements.boundsOf(shape.points))
-        const mainIndex = boxes.reduce((best, b, i) => b.width * b.height > 1.5 * boxes[best].width * boxes[best].height ? i : best, 0) //the first, or a much bigger body, a spider spawns its legs first
-        const main = boxes[mainIndex]
-        const center = { x: main.x + main.width / 2, y: main.y + main.height / 2 }
-        const size = Math.max(main.width, main.height) / 2
-        const extra = levelEditor.mobExtras[name] || {}
-        if (extra.nodeOrbs) { //a dot at each corner, in the colors of the power ups it spawned
-            const colors = orbs.length ? orbs.map(o => o.fill) : ["rgba(255,0,255,0.6)"]
-            const r = Math.max(main.width, main.height) / 9
-            orbs = shapes[mainIndex].points.map((p, i) => ({ x: p.x, y: p.y, r, fill: colors[i % colors.length] }))
-        }
-        const lines = [] //[from, to, color, dash]
-        for (let i = 0; i < (extra.lasers || 0); i++) {
-            const a = 2 * Math.PI * i / extra.lasers
-            lines.push([center, { x: center.x + 2.4 * size * Math.cos(a), y: center.y + 2.4 * size * Math.sin(a) }, "#f00", ""])
-        }
-        if (extra.sword) lines.push([center, { x: center.x + 2.6 * size, y: center.y - 0.6 * size }, "rgb(110,130,170)", ""])
-        if (extra.sight) lines.push([center, { x: center.x + 3 * size, y: center.y }, "rgba(255,0,0,0.7)", "2 2"])
-        const points = shapes.flatMap(shape => shape.points).concat(links.flat(), lines.flatMap(line => [line[0], line[1]]), orbs.flatMap(o => [{ x: o.x - o.r, y: o.y - o.r }, { x: o.x + o.r, y: o.y + o.r }]))
-        let box = levelElements.boundsOf(points)
-        const reach = 7 * size //a mob that spreads out far, like a culture, is drawn around its first part
-        if (box.width > 2 * reach || box.height > 2 * reach) box = { x: center.x - reach, y: center.y - reach, width: 2 * reach, height: 2 * reach }
-        const k = Math.min((w - 2) / (box.width || 1), (h - 2) / (box.height || 1))
-        const ox = (w - box.width * k) / 2 - box.x * k
-        const oy = (h - box.height * k) / 2 - box.y * k
-        const xy = p => `${(ox + p.x * k).toFixed(1)},${(oy + p.y * k).toFixed(1)}`
-        const isNone = color => !color || color === "transparent" || /^(rgba|hsla)\([^,]+,[^,]+,[^,]+,\s*0(\.0*)?\s*\)$/.test(color) //no color, or see-through
-        const linkPath = links.length ? `<path d="${links.map(([a, b]) => `M${xy(a)}L${xy(b)}`).join("")}" stroke="#999" stroke-width="0.7" fill="none"/>` : ""
-        const polygons = shapes.map(shape => {
-            const isInvisible = isNone(shape.fill) && isNone(shape.stroke)
-            return `<polygon points="${shape.points.map(xy).join(" ")}" fill="${isNone(shape.fill) ? "none" : levelEditor.escape(shape.fill)}" stroke="${isInvisible ? "#777" : "#222"}" stroke-width="${shapes.length > 8 ? 0.5 : 0.8}"${isInvisible ? ` stroke-dasharray="2 1.5"` : ""}/>`
-        }).join("")
-        const hole = extra.hole ? `<circle cx="${(ox + center.x * k).toFixed(1)}" cy="${(oy + center.y * k).toFixed(1)}" r="${(0.6 * size * k).toFixed(1)}" fill="#000"/>` : ""
-        const lineMarks = lines.map(([a, b, color, dash]) => `<path d="M${xy(a)}L${xy(b)}" stroke="${color}" stroke-width="1.2"${dash ? ` stroke-dasharray="${dash}"` : ""}/>`).join("")
-        const orbMarks = orbs.map(o => `<circle cx="${(ox + o.x * k).toFixed(1)}" cy="${(oy + o.y * k).toFixed(1)}" r="${Math.max(1, o.r * k).toFixed(1)}" fill="${levelEditor.escape(o.fill || "#888")}"/>`).join("")
-        return `<svg class="le-mob-icon" width="${w}" height="${h}" viewBox="0 0 ${w} ${h}" aria-hidden="true">${linkPath}${lineMarks}${polygons}${hole}${orbMarks}</svg>`
+    remember(key, value) { //an editor setting for next time, like the camera mode or which menus are open
+        try {
+            localStorage.setItem(key, JSON.stringify(value))
+        } catch (error) { }
     },
     openSections() { //which sections are folded, remembered for next time
-        try {
-            return JSON.parse(localStorage.getItem("levelEditorSections")) || {}
-        } catch (error) {
-            return {}
-        }
+        return levelEditor.recall("levelEditorSections", {}) || {}
     },
     escape(text) {
         return String(text).replace(/&/g, "&amp;").replace(/"/g, "&quot;").replace(/</g, "&lt;").replace(/>/g, "&gt;")
     },
-    button(command, text, arg = "", isOn = false, title = levelEditor.tip(command)) {
-        return `<button class="le-button${isOn ? " le-on" : ""}" data-command="${command}" data-arg="${levelEditor.escape(arg)}" title="${levelEditor.escape(title)}">${text}</button>`
+    button(command, text, arg = "", isOn = false, title = levelEditor.tip(command), { className = "", disabled = false } = {}) { //className adds classes, like le-half, le-wide, or le-shape
+        return `<button class="le-button${isOn ? " le-on" : ""}${className ? ` ${className}` : ""}" data-command="${command}" data-arg="${levelEditor.escape(arg)}" title="${levelEditor.escape(title)}"${disabled ? " disabled" : ""}>${text}</button>`
     },
     renderLeft() {
         const open = levelEditor.openSections()
@@ -1960,10 +2060,11 @@ const levelEditor = {
     },
     renderStatus() { //the bar along the bottom, like VS Code's: grid, zoom, tools, and the mouse, then on the right the analysis, history, and tab hide
         document.getElementById("level-editor-status").innerHTML = `<span class="le-status-item" title="snap size, hold alt to place freely"><input class="le-number" data-setting="grid" value="${levelEditor.grid}" spellcheck="false">${levelEditor.button("grid", "grid", "", levelEditor.isGridShown)}</span>
-            <span class="le-status-item" title="the editor's zoom, the wheel zooms too">${levelEditor.statusIcon("zoom")}<input class="le-number" data-setting="zoom" value="${Math.round(levelEditor.zoomScale)}" spellcheck="false"></span>
+            <span class="le-status-item" title="the editor's zoom, the wheel zooms too">${levelEditor.statusIcon("zoom")}<input class="le-number" data-setting="zoom" value="${Math.round(levelEditor.zoomScale)}" spellcheck="false">${levelEditor.button("fit", "fit")}</span>
             <span class="le-status-item"><span class="le-segment le-tool-icons">${levelEditor.tools.map(tool => levelEditor.button("tool", levelEditor.toolIcon(tool), tool, levelEditor.tool === tool, tool)).join("")}</span>${levelEditor.keyCap("tool")}</span>
             <span class="le-status-mouse" data-status-mouse title="where the mouse is, snapped to the grid"></span>
             <span class="le-status-item le-status-right">
+                <button class="le-button le-status-unsaved" data-command="code" data-status-unsaved${levelData.store.isFailing ? "" : " hidden"} title="the browser wouldn't save the level, storage is full or blocked, export it and copy it somewhere safe">not saved, export a backup</button>
                 <button class="le-button le-status-problems${levelEditor.problemIsFix ? " le-status-fix" : ""}" data-command="analyze" data-status-problems title="${levelEditor.escape(levelEditor.tip("analyze"))}">${levelEditor.problemText}</button>
             </span>
             <span class="le-status-item">${levelEditor.keyCap("undo")}<span class="le-segment le-history-box">${levelEditor.button("undo", levelEditor.arrowIcon("undo"))}${levelEditor.button("redo", levelEditor.arrowIcon("redo"))}${levelEditor.button("history", "history ▴", "", levelEditor.isHistoryOpen)}</span></span>
@@ -1972,24 +2073,9 @@ const levelEditor = {
         levelEditor.updateHistoryButtons()
         levelEditor.countProblems(0)
     },
-    statusIcon(name) { //zoom is a magnifying glass
-        const icons = {
-            zoom: `<circle cx="6.5" cy="6" r="4.5" fill="#fff" stroke="#333" stroke-width="1.6"/><path d="M10 9.5 L15 13" stroke="#333" stroke-width="2.4" stroke-linecap="round"/>`,
-        }
-        return `<svg class="le-tool-icon le-status-icon" viewBox="0 0 17 14" width="17" height="14" aria-label="${name}">${icons[name]}</svg>`
-    },
-    toolIcon(tool) { //tiny drawings for the status bar's draw tools, simple enough to read from far away
-        const icons = {
-            select: `<rect x="4.5" y="0.5" width="8" height="13" rx="4" fill="#fff" stroke="#333"/><path d="M4.5 5.5 H12.5 M8.5 0.5 V5.5" stroke="#333"/><path d="M8.5 0.5 A4 4 0 0 0 4.5 4.5 V5.5 H8.5 Z" fill="#0cf"/>`,
-            map: `<rect x="1.5" y="2" width="14" height="10" fill="${color.map}"/>`,
-            block: `<rect x="2.5" y="2.5" width="12" height="9" fill="${color.block}" stroke="${color.blockS}" stroke-width="1.5"/>`,
-            measure: `<rect x="0.5" y="3.5" width="16" height="7" fill="#fd4" stroke="#333"/><path d="M4.5 3.5 V6.5 M8.5 3.5 V7.5 M12.5 3.5 V6.5" stroke="#333"/>`,
-        }
-        return `<svg class="le-tool-icon" viewBox="0 0 17 14" width="17" height="14" aria-label="${tool}">${icons[tool]}</svg>`
-    },
-    arrowIcon(name) { //undo curls back to the left, redo is it mirrored, in the text color so disabled grays them
-        const flip = name === "redo" ? ` transform="matrix(-1 0 0 1 16 0)"` : ""
-        return `<svg class="le-tool-icon" viewBox="0 0 16 14" width="16" height="14" aria-label="${name}"><g fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"${flip}><path d="M3.5 5 H9 A4 4 0 0 1 9 13 H6"/><path d="M6.5 2 L3.5 5 L6.5 8"/></g></svg>`
+    updateSaveWarning(isFailing) { //levelData.store.onChange, the status bar warns while the level can't be saved
+        const warning = document.querySelector?.("[data-status-unsaved]")
+        if (warning) warning.hidden = !isFailing
     },
     creation(command, arg, at) { //what an add button makes, its middle at at, snapped, or in the middle of the view, for clicking and dragging onto the level
         const center = levelEditor.snapPoint(at || levelEditor.viewCenter())
@@ -2077,11 +2163,14 @@ const levelEditor = {
             const label = type ? type.label : typeName
             const canHide = levelEditor.isHideable(list[0])
             const toggles = (arg, isHidden, isLocked) => `${canHide ? levelEditor.button("hide", "hide", arg, isHidden) : ""}${levelEditor.button("lock", "lock", arg, isLocked)}`
-            const shown = list.slice(0, 100) //a big level's maps would be a long list, the rest are picked in the level
+            const search = levelEditor.exploreSearch.trim().toLowerCase()
+            const matches = search ? list.filter(el => `${label} ${levelElements.summary(el)} #${el.id}`.toLowerCase().includes(search)) : list
+            if (!matches.length) return ""
+            const shown = matches.slice(0, levelEditor.exploreLimits[typeName] || 100) //a big level's maps would be a long list, show more lists more
             const rows = shown.map(el => `<div class="le-explore-row${levelEditor.selection.includes(el.id) ? " le-selected" : ""}">
                 <button class="le-button le-explore-name" data-command="jumpTo" data-arg="${el.id}" title="select it and go to it">${levelEditor.escape(type && type.isCode ? levelElements.codeTitle(el) : levelElements.summary(el))} <span class="le-id">#${el.id}</span></button>${toggles(`id:${el.id}`, levelEditor.hiddenIds.has(el.id), levelEditor.lockedIds.has(el.id))}</div>`).join("")
-            const more = list.length > shown.length ? `<div class="le-comment">//${list.length - shown.length} more, click them in the level</div>` : ""
-            return `<details class="le-explore-group" data-section="explore-${typeName}"${open[`explore-${typeName}`] ? " open" : ""}><summary><span class="le-explore-type">${levelEditor.escape(label)} <span class="le-id">${list.length}</span></span>${toggles(`type:${typeName}`, levelEditor.hiddenTypes.has(typeName), levelEditor.lockedTypes.has(typeName))}</summary>${rows}${more}</details>`
+            const more = matches.length > shown.length ? `<div class="le-row">${levelEditor.button("exploreMore", `show more (${matches.length - shown.length} left)`, typeName)}</div>` : ""
+            return `<details class="le-explore-group" data-section="explore-${typeName}"${open[`explore-${typeName}`] || search ? " open" : ""}><summary><span class="le-explore-type">${levelEditor.escape(label)} <span class="le-id">${search ? `${matches.length} of ` : ""}${list.length}</span></span>${toggles(`type:${typeName}`, levelEditor.hiddenTypes.has(typeName), levelEditor.lockedTypes.has(typeName))}</summary>${rows}${more}</details>`
         }).join("")
     },
     renderExplorer() { //after changes and selecting, only while it's open
@@ -2092,7 +2181,7 @@ const levelEditor = {
     updatePanels() { //tab hides the panels, a hint says how to get them back
         document.body.classList.toggle("le-panels-hidden", levelEditor.isActive && levelEditor.isPanelsHidden)
         const hint = document.getElementById("level-editor-hint")
-        if (hint) hint.innerHTML = `${levelEditor.isFullTest ? "JS test · " : ""}${levelEditor.keyCap("panels")} show`
+        if (hint) hint.innerHTML = `${levelEditor.isFullTest ? "test export · " : ""}${levelEditor.keyCap("panels")} show`
     },
     updateStatusMouse(point) { //each frame, only touches the page when it changes
         const p = levelEditor.snapPoint(point)
@@ -2189,6 +2278,7 @@ const levelEditor = {
         } else {
             panel.innerHTML = levelEditor.inspectLevel()
         }
+        for (const box of panel.querySelectorAll("[data-mixed]")) box.indeterminate = true //a checkbox for many that don't match, the dash state
         levelEditor.inspected = levelEditor.isAnalysisShown ? "analysis" : elements.map(el => `${el.id}:${el.type}`).join()
         levelEditor.renderExplorer()
     },
@@ -2275,25 +2365,36 @@ const levelEditor = {
     formatValue(value) {
         return typeof value === "number" ? String(Number(value.toFixed(6))) : String(value ?? "")
     },
-    field(owner, prop) {
-        const value = levelEditor.propValue(owner, prop)
-        const key = `<span class="color-var">${prop.key}</span><span class="color-symbol">:</span>`
-        const data = `data-key="${prop.key}"${owner === levelEditor.data ? ` data-owner="level"` : ""}`
+    propKey(owner, prop) { //its name, the mouse over it shows what it does
+        const tip = levelElements.tipOf(owner === levelEditor.data ? "level" : owner.type, prop)
+        return `<span class="color-var"${tip ? ` title="${levelEditor.escape(tip)}"` : ""}>${prop.key}</span><span class="color-symbol">:</span>`
+    },
+    propsCode(owners, props, isWrapped = true) { //their props as fields, wrapped in { } unless the caller adds more inside, like an element's vertices
+        const fields = props.map(prop => levelEditor.fieldFor(owners, prop)).join("")
+        return isWrapped ? `<div class="le-code"><span class="color-symbol">{</span>${fields}<span class="color-symbol">}</span></div>` : fields
+    },
+    fieldFor(owners, prop) { //a prop written like code, for one owner or several, data-owner says which: "level", "many", or the selected element
+        const isMany = owners.length > 1
+        const owner = owners[0]
+        const value = isMany ? levelEditor.manyValue(owners, prop) : levelEditor.propValue(owner, prop)
+        const isMixed = isMany && value === undefined
+        const key = levelEditor.propKey(owner, prop)
+        const data = `data-key="${prop.key}"${isMany ? ` data-owner="many"` : owner === levelEditor.data ? ` data-owner="level"` : ""}`
         let input
         if (prop.kind === "bool") {
-            input = `<input type="checkbox" ${data}${value ? " checked" : ""}>`
+            input = `<input type="checkbox" ${data}${value ? " checked" : ""}${isMixed ? ` data-mixed title="mixed, some are on and some are off, click to turn it on for all"` : ""}>` //renderRight() makes a mixed one indeterminate
         } else if (prop.kind === "select") {
-            input = `<select ${data}>${prop.options.map(option => `<option${option === value ? " selected" : ""}>${option}</option>`).join("")}</select>`
+            input = `<select ${data}>${isMixed ? `<option value="" selected></option>` : ""}${prop.options.map(option => `<option${option === value ? " selected" : ""}>${option}</option>`).join("")}</select>`
         } else if (prop.kind === "mask") {
-            return levelEditor.maskField([owner], prop)
-        } else if (prop.kind === "ref") { //another element by id, from a list or picked by clicking it
+            return levelEditor.maskField(owners, prop)
+        } else if (prop.kind === "ref") { //another element by id, from a list or picked by clicking it, only for one, sharedProps() leaves refs out
             const options = levelEditor.data.elements.filter(other => levelElements.isRefTo(owner, prop.key, other))
             input = `<select ${data}><option value="">null</option>${options.map(other => `<option value="${other.id}"${other.id === value ? " selected" : ""} title="${levelEditor.escape(levelElements.summary(other))}">${other.type} #${other.id}</option>`).join("")}</select>${levelEditor.button("pick", "pick", prop.key, levelEditor.picking && levelEditor.picking.key === prop.key)}`
         } else {
             const isText = prop.kind === "text" || prop.kind === "color"
-            const text = levelEditor.formatValue(value)
-            input = `${isText ? `<span class="le-quote">"</span>` : ""}<input class="le-value${isText ? " le-text" : ""}" ${data} value="${levelEditor.escape(text)}" style="width: ${levelEditor.fieldWidth(text)}" spellcheck="false" autocomplete="off">${isText ? `<span class="le-quote">"</span>` : ""}`
-            if (prop.kind === "color") input = `<input type="color" class="le-swatch" data-swatch value="${levelEditor.hexColor(value)}" title="pick a color">${input}`
+            const text = isMixed ? "" : levelEditor.formatValue(value)
+            input = `${isText ? `<span class="le-quote">"</span>` : ""}<input class="le-value${isText ? " le-text" : ""}" ${data} value="${levelEditor.escape(text)}"${isMixed ? ` placeholder="mixed"` : ""} style="width: ${levelEditor.fieldWidth(text || (isMixed ? "mixed" : ""))}" spellcheck="false" autocomplete="off">${isText ? `<span class="le-quote">"</span>` : ""}`
+            if (prop.kind === "color") input = `<input type="color" class="le-swatch" data-swatch value="${levelEditor.hexColor(isMixed ? "#000" : value)}" title="pick a color">${input}`
         }
         return `<div class="le-prop">${key} ${input}<span class="color-symbol">,</span></div>`
     },
@@ -2304,7 +2405,7 @@ const levelEditor = {
             const state = count === elements.length ? " le-on" : count ? " le-mixed" : ""
             return `<button class="le-chip${state}" data-command="collide" data-arg="${name}" title="cat.${name}${count && count < elements.length ? ", mixed, click to turn it on for all" : ""}">${name}</button>`
         }).join("")
-        return `<div class="le-prop le-mask"><span class="color-var">${prop.key}</span><span class="color-symbol">: [</span>${chips}<span class="color-symbol">],</span></div>`
+        return `<div class="le-prop le-mask"><span class="color-var" title="${levelEditor.escape(levelElements.tipOf(elements[0].type, prop))}">${prop.key}</span><span class="color-symbol">: [</span>${chips}<span class="color-symbol">],</span></div>`
     },
     fieldWidth(text) { //as wide as its text, it's monospace
         return `${Math.min(26, Math.max(2, String(text).length + 0.5))}ch`
@@ -2314,7 +2415,7 @@ const levelEditor = {
         return `<div class="le-row"><span class="le-name">code</span><span class="le-id">#${el.id}</span></div>
             <pre class="le-code-view" data-command="editCode" title="edit the code">${levelEditor.escape(el.code) || " "}</pre>
             ${runtime && runtime.error ? `<div class="le-error">//${levelEditor.escape(runtime.error.message)}</div>` : ""}
-            <div class="le-actions le-flush-x"><div class="le-grid le-even">${levelEditor.button("editCode", "edit code")}${levelEditor.button("delete", "delete")}</div></div>`
+            <div class="le-actions le-flush-x"><div class="le-grid le-even">${levelEditor.button("editCode", "edit code")}</div></div>${levelEditor.hotkeys(false, true)}`
     },
     inspectElement(el) {
         const type = levelElements.types[el.type]
@@ -2327,17 +2428,18 @@ const levelEditor = {
         const isVertexMode = levelEditor.vertexElement() === el
         return `<div class="le-row"><span class="le-name">${levelElements.nameOf(el.type)}</span><span class="le-id">#${el.id}</span><span class="le-fill"></span>${shapes}</div>
             <div class="le-code"><span class="color-symbol">{</span>
-                ${props.filter(prop => !prop.isShown || prop.isShown(el)).map(prop => levelEditor.field(el, prop)).join("")}
+                ${levelEditor.propsCode([el], props.filter(prop => !prop.isShown || prop.isShown(el)), false)}
                 ${isVertexMode ? levelEditor.inspectVertices(el) : el.vertices ? `<div class="le-prop"><span class="color-var">vertices</span><span class="color-symbol">:</span> <span class="le-comment">[${el.vertices.length}]</span><span class="color-symbol">,</span></div>` : ""}
             <span class="color-symbol">}</span></div>
             ${Array.isArray(el.spots) ? levelEditor.inspectSpots(el) : ""}
             ${levelElements.isLinkSource(el) ? levelEditor.inspectLinks(el) : ""}
             ${isVertexMode && levelEditor.vertex.error ? `<div class="le-error">//${levelEditor.escape(levelEditor.vertex.error)}</div>` : ""}
             ${runtime && runtime.error ? `<div class="le-error">//${levelEditor.escape(runtime.error.message)}</div>` : ""}
-            ${levelEditor.actionRows(levelElements.isRotatable(el), [
-                (isVertexEditable ? levelEditor.button("vertices", "vertices", "", isVertexMode) : "") + (el.type === "block" ? levelEditor.button("constrain", "constraint") : ""),
-                type && type.isSingleton ? "" : levelEditor.button("duplicate", "duplicate") + levelEditor.button("delete", "delete"),
-            ])}
+            ${levelEditor.actionRows(levelElements.isRotatable(el), [{ //vertices half and the flips a quarter each, then constraint across the row
+                quarters: (isVertexEditable ? levelEditor.button("vertices", "vertices", "", isVertexMode, undefined, { className: "le-half" }) : "") +
+                    levelEditor.arrangeButtons([el], isVertexEditable, !isVertexEditable) +
+                    (el.type === "block" ? levelEditor.button("constrain", "constraint", "", false, undefined, { className: "le-wide" }) : ""),
+            }, el.group ? levelEditor.button("group", "ungroup", "", true, "it's in a group, picked on its own from the explorer, ungroup takes the whole group apart") : ""])}${levelEditor.hotkeys(levelEditor.isCopyable(el), !(type && type.isSingleton))}
             <pre class="le-js-view">${levelEditor.escape(levelData.elementCode(levelEditor.data, el))}</pre>`
     },
     inspectLinks(el) { //what this button or toggle turns on and off, written like a list
@@ -2368,29 +2470,30 @@ const levelEditor = {
         const values = elements.map(el => levelEditor.propValue(el, levelEditor.findProp(prop.key, el)))
         return values.every(value => value === values[0]) ? values[0] : undefined
     },
-    fieldMany(elements, prop) { //like field(), for all of them, blank when they're different
-        const value = levelEditor.manyValue(elements, prop)
-        const isMixed = value === undefined
-        const key = `<span class="color-var">${prop.key}</span><span class="color-symbol">:</span>`
-        const data = `data-key="${prop.key}" data-owner="many"`
-        let input
-        if (prop.kind === "bool") {
-            input = `<input type="checkbox" ${data}${value ? " checked" : ""}>`
-        } else if (prop.kind === "select") {
-            input = `<select ${data}>${isMixed ? `<option value="" selected></option>` : ""}${prop.options.map(option => `<option${option === value ? " selected" : ""}>${option}</option>`).join("")}</select>`
-        } else if (prop.kind === "mask") {
-            return levelEditor.maskField(elements, prop)
-        } else {
-            const isText = prop.kind === "text" || prop.kind === "color"
-            const text = isMixed ? "" : levelEditor.formatValue(value)
-            input = `${isText ? `<span class="le-quote">"</span>` : ""}<input class="le-value${isText ? " le-text" : ""}" ${data} value="${levelEditor.escape(text)}" placeholder="${isMixed ? "mixed" : ""}" style="width: ${levelEditor.fieldWidth(text || "mixed")}" spellcheck="false" autocomplete="off">${isText ? `<span class="le-quote">"</span>` : ""}`
-            if (prop.kind === "color") input = `<input type="color" class="le-swatch" data-swatch value="${levelEditor.hexColor(isMixed ? "#000" : value)}" title="pick a color">${input}`
-        }
-        return `<div class="le-prop">${key} ${input}<span class="color-symbol">,</span></div>`
-    },
-    actionRows(isRotatable, lines) { //the inspector's bottom buttons, touching, each line split evenly, the turns on their own line on top
-        const rows = lines.filter(Boolean).map(buttons => `<div class="le-grid le-even">${buttons}</div>`).join("")
+    actionRows(isRotatable, lines) { //the inspector's bottom buttons, touching, each line split evenly, or { quarters } for a 4 column grid where wide buttons take half, the turns on their own line on top
+        const rows = lines.filter(line => line && (line.quarters ?? line)).map(line => line.quarters ? `<div class="le-grid le-quarters">${line.quarters}</div>` : `<div class="le-grid le-even">${line}</div>`).join("")
         return isRotatable || rows ? `<div class="le-actions le-flush-x">${isRotatable ? levelEditor.rotateRow() : ""}${rows}</div>` : ""
+    },
+    isDrawing(elements) { //all drawing elements (isDrawing types), only they show front and back
+        return elements.every(el => levelElements.types[el.type]?.isDrawing)
+    },
+    hotkeys(isCopyable, isDeletable) { //cut, copy, and paste's keys on the left, delete's on the right, drawn like the other key caps, clicking one does it too
+        const cap = (command, text, arg = "") => `<button class="pause-hint le-key-cap le-hotkey" data-command="${command}" data-arg="${arg}" title="${command}"><strong class="key-input-train">${text}</strong></button>`
+        const keys = (isCopyable ? [cap("cut", levelEditor.keyText("mod+x")), cap("copy", levelEditor.keyText("mod+c")), cap("paste", levelEditor.keyText("mod+v"), "view")] : []).join("")
+        return isCopyable || isDeletable ? `<div class="le-hotkeys"><span class="le-hotkey-group">${keys}</span>${isDeletable ? cap("delete", "DEL") : ""}</div>` : ""
+    },
+    arrangeButtons(elements, isOrderWide = false, isFlipWide = false) { //flip, and draw order for drawing elements, where what's on top shows, code has neither, a quarter each in a quarters grid, isOrderWide makes front and back a half each, isFlipWide the flips when nothing shares their row
+        if (elements.every(el => levelElements.isCode(el))) return ""
+        const isDrawing = levelEditor.isDrawing(elements)
+        const isFlippable = elements.length > 1 || levelElements.canFlip(elements[0]) //many flip around their middle, one only if it has something to mirror
+        const flipClass = isFlippable && isFlipWide && !isDrawing ? "le-half" : "" //a half each when nothing shares their row
+        const orderClass = isOrderWide || !isFlippable ? "le-half" : ""
+        const flips = isFlippable ? levelEditor.button("flip", "flip ↔", "x", false, "mirror left and right", { className: flipClass }) + levelEditor.button("flip", "flip ↕", "y", false, "mirror up and down", { className: flipClass }) : ""
+        const order = isDrawing ? levelEditor.button("arrange", "front", "front", false, "draw in front of the others in its layer, it moves to the end of the list", { className: orderClass }) + levelEditor.button("arrange", "back", "back", false, "draw behind the others in its layer, it moves to the start of the list", { className: orderClass }) : ""
+        return flips + order
+    },
+    alignButtons() { //each lines the selection up with its outermost edge or its middle, see alignIcon()
+        return ["left", "center", "right", "top", "middle", "bottom"].map(edge => levelEditor.button("align", levelEditor.alignIcon(edge), edge, false, `align ${edge}${edge === "center" || edge === "middle" ? "s" : " edges"}`)).join("")
     },
     rotateRow() { //type any angle and press enter, or a turn button, shift turns the other way, or drag the round handle above it
         const turn = degrees => levelEditor.button("rotate", `↻ ${degrees}°`, degrees, false, `rotate ${degrees}° clockwise, shift for counterclockwise`)
@@ -2400,11 +2503,14 @@ const levelEditor = {
         const isShapes = elements.every(el => levelElements.groups.shape.includes(el.type))
         const props = levelEditor.sharedProps(elements)
         return `<div class="le-row"><span class="le-name">${elements.length} selected</span></div>
-            ${props.length ? `<div class="le-code"><span class="color-symbol">{</span>${props.map(prop => levelEditor.fieldMany(elements, prop)).join("")}<span class="color-symbol">}</span></div>` : ""}
+            ${props.length ? levelEditor.propsCode(elements, props) : ""}
             ${levelEditor.actionRows(elements.some(levelElements.isRotatable), [
                 isShapes ? levelElements.groups.shape.map(name => levelEditor.button("shape", name, name)).join("") : "",
-                levelEditor.button("duplicate", "duplicate") + levelEditor.button("delete", "delete"),
-            ])}`
+                levelEditor.alignButtons(),
+                { //the flips and group share a row, drawing elements' front and back fill the flips' row, so group gets the next
+                    quarters: levelEditor.arrangeButtons(elements) + levelEditor.button("group", elements.some(el => el.group) ? "ungroup" : "group", "", elements.some(el => el.group), undefined, { className: levelEditor.isDrawing(elements) ? "le-wide" : "le-half" }),
+                },
+            ])}${levelEditor.hotkeys(elements.some(levelEditor.isCopyable), elements.some(el => !levelEditor.isSingleton(el)))}`
     },
     inspectAnalysis() { //the analysis in the inspector, each line about elements goes to them when clicked
         const report = levelEditor.analysisReport || levelAnalysis.run(levelEditor.data, { isLive: true })
@@ -2425,12 +2531,10 @@ const levelEditor = {
         return `<div class="le-row"><span class="le-name">issues</span><span class="le-fill"></span><span class="le-segment">${levelEditor.button("copyAnalysis", "copy")}${levelEditor.button("closeAnalysis", "×")}</span></div>
             <div class="le-analysis">${lines}</div>`
     },
-    inspectLevel() { //nothing selected, the level's properties and code
-        const code = levelEditor.data.elements.filter(el => levelElements.types[el.type]?.isCode)
+    inspectLevel() { //nothing selected, the level's properties, + code is in the add menu and code elements are in the explorer
         return `<div class="le-row"><span class="le-name">level</span><span class="le-fill"></span>${levelEditor.button("levelDefaults", "default")}</div>
-            <div class="le-code"><span class="color-symbol">{</span>${levelElements.level.props.map(prop => levelEditor.field(levelEditor.data, prop)).join("")}<span class="color-symbol">}</span></div>
-            <div class="le-row le-spots"><span class="color-var">code</span><span class="color-symbol">:</span><span class="le-fill"></span>${levelEditor.button("addCode", "+ code")}</div>
-            ${code.length ? `<div class="le-code-list">${code.map(el => `<button class="le-button le-code-item" data-command="selectId" data-arg="${el.id}" title="${levelEditor.escape(el.code.slice(0, 400))}"><span class="le-id">#${el.id}</span> ${levelEditor.escape(levelElements.codeTitle(el))}</button>`).join("")}</div>` : ""}
+            ${levelEditor.propsCode([levelEditor.data], levelElements.level.props)}
+            ${levelEditor.nameError ? `<div class="le-error">//name not changed: ${levelEditor.escape(levelEditor.nameError)}</div>` : ""}
             ${levelData.codeError ? `<div class="le-error">//${levelEditor.escape(levelData.codeError.message)}</div>` : ""}`
     },
     revertField(input) {
@@ -2498,6 +2602,7 @@ const levelEditor = {
             } else {
                 el[key] = value
             }
+            if (key === "link" || key === "orLink") levelElements.tidyLinks(el) //like unlink, orLink moves up when link is cleared
             return [el.id]
         })
         levelEditor.refreshRight()
@@ -2505,15 +2610,19 @@ const levelEditor = {
     setLevelProp(key, value) {
         const data = levelEditor.data
         if (key === "name") {
-            if (value !== data.name && levelData.isNameFree(value)) {
+            levelEditor.nameError = ""
+            if (value !== data.name) {
                 levelEditor.flush()
-                levelData.store.rename(data.name, value)
-                data.name = value
-                level.levels = [value]
-                levelEditor.renderRight()
-                levelEditor.updateHistoryButtons() //the name at the top
+                levelEditor.nameError = levelData.nameProblem(value)
+                if (!levelEditor.nameError && !levelData.store.rename(data.name, value)) levelEditor.nameError = "couldn't save it under the new name, storage is full or blocked, the old name is kept"
+                if (!levelEditor.nameError) {
+                    data.name = value
+                    level.levels = [value]
+                    levelEditor.updateHistoryButtons() //the name at the top
+                    levelEditor.renderLoadList() //the local levels list
+                }
             }
-            return levelEditor.refreshFields()
+            return levelEditor.renderRight()
         }
         levelEditor.edit(`level.${key} = ${levelEditor.codeValue(value)}`, () => {
             data[key] = value
@@ -2535,6 +2644,8 @@ const levelEditor = {
 // events
 //*********************************************************************
 {
+    levelData.store.onChange = levelEditor.updateSaveWarning //the status bar warns while the level can't be saved
+    levelData.onError = () => { if (levelEditor.isActive) levelEditor.countProblems() } //an error while the level runs shows in the issues count
     //during a run #dmg covers the canvas, so mouse events land on either one
     const isGameSurface = target => target.id === "canvas" || target.id === "dmg"
     document.body.addEventListener("mousedown", event => { //capture, before the body's listener, so a left click edits instead of firing
@@ -2595,9 +2706,7 @@ const levelEditor = {
         if (section) {
             const open = levelEditor.openSections()
             open[section] = event.target.open
-            try {
-                localStorage.setItem("levelEditorSections", JSON.stringify(open))
-            } catch (error) { }
+            levelEditor.remember("levelEditorSections", open)
         }
     }, true) //toggle doesn't bubble
     document.getElementById("level-editor-left").addEventListener("mousedown", event => { //an add button can be dragged onto the level
@@ -2646,15 +2755,22 @@ const levelEditor = {
         }
         if (event.target.dataset.setting === "lookMode") {
             levelEditor.lookMode = event.target.value
-            try {
-                localStorage.setItem("levelEditorLookMode", levelEditor.lookMode)
-            } catch (error) { }
+            levelEditor.remember("levelEditorLookMode", levelEditor.lookMode)
             event.target.blur() //WASD goes back to the player
+        }
+        if (event.target.dataset.setting === "invincible") {
+            levelEditor.isInvincible = event.target.checked
+            levelEditor.remember("levelEditorInvincible", levelEditor.isInvincible)
+            event.target.blur()
         }
         if (event.target.dataset.setting === "testSpawning") {
             levelEditor.isTestSpawning = event.target.checked
             if (levelEditor.isTesting) levelEditor.restart()
             event.target.blur()
+        }
+        if (event.target.dataset.setting === "testSeed") {
+            levelEditor.testSeed = event.target.value.trim()
+            levelEditor.restart()
         }
         if (event.target.dataset.setting === "testLevel") {
             const value = Number(event.target.value)
@@ -2697,8 +2813,21 @@ const levelEditor = {
             levelEditor.setVertices(points, summary => `edit vertices ${summary}`)
         }
     })
+    document.getElementById("level-editor-import-file").addEventListener("change", event => { //open file, its text goes in the import box and imports
+        const file = event.target.files[0]
+        event.target.value = "" //the same file can be opened again
+        if (!file) return
+        file.text().then(text => {
+            document.querySelector("#level-editor-code textarea").value = text
+            levelEditor.run("importText")
+        })
+    })
     for (const panel of [left, right]) { //fields are in both panels, the level properties are in the inspector with nothing selected
         panel.addEventListener("input", event => {
+            if (event.target.matches("[data-explore-search]")) { //lists only what matches, as it's typed
+                levelEditor.exploreSearch = event.target.value
+                levelEditor.renderExplorer()
+            }
             if (event.target.matches(".le-value")) event.target.style.width = levelEditor.fieldWidth(event.target.value)
             if (event.target.matches("[data-swatch]")) { //the color picker fills in the text next to it, and the level shows it right away
                 const text = event.target.parentElement.querySelector("[data-key]")

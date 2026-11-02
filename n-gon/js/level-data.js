@@ -74,6 +74,12 @@ const levelData = {
     isNameFree(name) {
         return levelData.isValidName(name) && !levelData.isWrittenLevel(name) && !levelData.store.has(name)
     },
+    nameProblem(name) { //why a name can't be used, or ""
+        if (!levelData.isValidName(name)) return `names use letters, numbers, - and _, no spaces, start with a letter, and are up to ${levelData.nameMax} long`
+        if (levelData.isWrittenLevel(name)) return "that's the name of one of the game's levels"
+        if (levelData.store.has(name)) return "another local level has that name"
+        return ""
+    },
     freeName(base) { //base, base2, base3, ...
         base = String(base).replace(/[^\w-]/g, "").slice(0, levelData.nameMax - 3)
         if (!/^[A-Za-z]/.test(base)) base = "level" + base
@@ -99,6 +105,7 @@ const levelData = {
         levelData.applySettings(data)
         levelData.trackEphemera(() => { }) //the last level code's effects go away, like mirrors
         levelData.codeLayers = null
+        levelData.codeError = null //the last level's error doesn't carry into this one
         levelData.drawnByCode = levelData.hasCode(data) ? levelData.codeDraws(data) : {}
         if (levelData.hasCode(data)) {
             levelData.runCode(data)
@@ -128,10 +135,10 @@ const levelData = {
     // code elements, a level with code runs in its list order inside one function, like a written level
     //*********************************************************************
     hasCode(data) {
-        return data.elements.some(el => levelElements.types[el.type]?.isCode)
+        return data.elements.some(el => levelElements.isCode(el))
     },
     codeText(data) {
-        return data.elements.filter(el => levelElements.types[el.type]?.isCode).map(el => el.code).join("\n")
+        return data.elements.filter(el => levelElements.isCode(el)).map(el => el.code).join("\n")
     },
     codeHas(data, text) {
         return levelData.codeText(data).includes(text)
@@ -160,7 +167,7 @@ const levelData = {
                 chunk = null
             },
         }
-        const source = data.elements.map(el => levelElements.types[el.type]?.isCode ? `__level.start(${el.id});\n${el.code}\n;__level.end(${el.id});` : `__level.build(${el.id});`).join("\n")
+        const source = data.elements.map(el => levelElements.isCode(el) ? `__level.start(${el.id});\n${el.code}\n;__level.end(${el.id});` : `__level.build(${el.id});`).join("\n")
         level.custom = () => { }
         level.customTopLayer = () => { }
         levelData.codeError = null
@@ -184,8 +191,10 @@ const levelData = {
         try {
             layers[name]()
         } catch (error) {
-            if (!levelData.codeError) console.error(`level code ${name === "top" ? "customTopLayer" : "custom"}:`, error) //once, it would repeat every cycle
+            const isNew = !levelData.codeError
+            if (isNew) console.error(`level code ${name === "top" ? "customTopLayer" : "custom"}:`, error) //once, it would repeat every cycle
             levelData.codeError = error
+            if (isNew && levelData.onError) levelData.onError()
         }
     },
     codeEphemera: [], //effects the level's code started, like mirrors, removed when it runs again
@@ -235,6 +244,7 @@ const levelData = {
         const spawn = data.elements.find(el => el.type === "spawn") || { x: 0, y: 0 }
         return { x: spawn.x + data.constraintTextX, y: spawn.y + data.constraintTextY }
     },
+    onError: null, //called when an element or the level's code throws while running, the editor recounts its issues
     linkState(el, depth = 0) { //true while the button, toggle, zone, or timer el is linked to is on, false while off, null without one
         const sourceState = id => {
             const from = levelData.find(levelData.data, id)
@@ -271,7 +281,7 @@ const levelData = {
             if (!runtime || !runtime[name]) continue
             const type = levelElements.types[el.type]
             if (levelData.drawnByCode[el.type]) continue //the level's code draws it
-            if (el.link && type.isLinkable && !type.handlesLink && levelData.linkOn(el) === false) continue //its button has it off
+            if ((el.link || el.orLink) && type.isLinkable && !type.handlesLink && levelData.linkOn(el) === false) continue //its button has it off
             const start = isTimed ? performance.now() : 0
             try {
                 runtime[name]()
@@ -279,6 +289,7 @@ const levelData = {
                 runtime[name] = null
                 runtime.error = error
                 console.error(`${el.type} #${el.id}:`, error)
+                if (levelData.onError) levelData.onError() //the editor's issues count, an error while running comes after the last count
             }
             if (isTimed) runtime[name + "Ms"] = 0.97 * (runtime[name + "Ms"] || 0) + 0.03 * (performance.now() - start) //averaged, a single frame's time is too coarse
         }
@@ -292,7 +303,7 @@ const levelData = {
             runtime = levelData.isSkipped(el) ? {} : type.build(el, { isLive, isEditor: levelData.isEditor, isSpawning: levelData.isSpawning && !isLive }) || {} //hidden in the editor's explorer
         } catch (error) {
             runtime = { error }
-            console.error(`${el.type} #${el.id}:`, error)
+            if (!error.isUnfinished) console.error(`${el.type} #${el.id}:`, error) //an unfinished element, like a constraint with no block yet, only shows in the inspector and the issues
         }
         Object.assign(runtime, levelData.made(start)) //anything added while building belongs to this element, so the level.* helpers can be used as they are
         if (isLive) {
@@ -399,6 +410,7 @@ const levelData = {
             return { on, off: `!(${on})` }
         }
         const context = { //for code(el, name, context)
+            data,
             nameOf: id => names.get(id),
             isReferenced: id => referenced.has(id),
             link(el) { //javascript for when el is on and off, from its button, toggle, zone, or timer, and what that's linked to
@@ -864,6 +876,9 @@ const levelData = {
         indexKey: "localLevels", //{ names: [], recent: "" }
         levels: null, //name: data, loaded on first use
         recent: "", //the level the editor opened last
+        isFailing: false, //a write failed and hasn't worked since, storage is full or blocked, the editor warns until each key saves
+        failedKeys: new Set(), //keys whose last write failed, a later small write working doesn't clear another key's failure
+        onChange: null, //called after each write with isFailing, the editor's not saved warning
         quota: 5000000, //characters, about what browsers allow each site in localStorage, there's no way to ask for the real limit
         used() { //characters in localStorage, local levels share it with settings and checkpoints
             let total = 0
@@ -882,7 +897,8 @@ const levelData = {
                 return null
             }
         },
-        write(key, value) {
+        write(key, value) { //true if it worked
+            let isSaved = true
             try {
                 if (value === null) {
                     localStorage.removeItem(key)
@@ -891,13 +907,26 @@ const levelData = {
                 }
             } catch (error) {
                 console.warn("local level not saved", error)
+                isSaved = false
             }
+            if (isSaved) levelData.store.failedKeys.delete(key)
+            else levelData.store.failedKeys.add(key)
+            levelData.store.isFailing = levelData.store.failedKeys.size > 0
+            if (levelData.store.onChange) levelData.store.onChange(levelData.store.isFailing)
+            return isSaved
         },
         load() {
             if (levelData.store.levels) return
             levelData.store.levels = {}
             const index = levelData.store.read(levelData.store.indexKey) || {}
-            for (const name of Array.isArray(index.names) ? index.names : []) {
+            const names = Array.isArray(index.names) ? index.names.slice() : []
+            try { //a level saved without its index, like after a rename whose index write failed, is still found
+                for (let i = 0; i < localStorage.length; i++) {
+                    const key = localStorage.key(i)
+                    if (key && key.startsWith(levelData.store.prefix) && !names.includes(key.slice(levelData.store.prefix.length))) names.push(key.slice(levelData.store.prefix.length))
+                }
+            } catch (error) { }
+            for (const name of names) {
                 const data = levelData.store.read(levelData.store.prefix + name)
                 if (data && levelData.isValidName(name)) levelData.store.levels[name] = levelData.normalize({ ...data, name })
             }
@@ -912,8 +941,8 @@ const levelData = {
                 level.localMaps[name] = () => levelData.play(levelData.store.get(name))
             }
         },
-        saveIndex() {
-            levelData.store.write(levelData.store.indexKey, { names: Object.keys(levelData.store.levels), recent: levelData.store.recent })
+        saveIndex() { //true if it saved
+            return levelData.store.write(levelData.store.indexKey, { names: Object.keys(levelData.store.levels), recent: levelData.store.recent })
         },
         names() {
             levelData.store.load()
@@ -931,14 +960,15 @@ const levelData = {
             levelData.store.load()
             return levelData.store.recent ? levelData.store.get(levelData.store.recent) : null
         },
-        save(data, isRecent = true) {
+        save(data, isRecent = true) { //true if it reached localStorage, it's kept for this page either way
             levelData.store.load()
             const isNew = !levelData.store.has(data.name)
             levelData.store.levels[data.name] = levelData.copy(data)
-            levelData.store.write(levelData.store.prefix + data.name, data)
+            const isSaved = levelData.store.write(levelData.store.prefix + data.name, data)
             if (isRecent) levelData.store.recent = data.name
             if (isNew || isRecent) levelData.store.saveIndex()
             if (isNew) levelData.store.sync()
+            return isSaved && !levelData.store.isFailing
         },
         hasWork() { //a local level that's more than the blank one opening the editor saves, the title page shows its editor button
             return levelData.store.names().some(name => {
@@ -955,15 +985,24 @@ const levelData = {
             levelData.store.sync()
             levelData.store.renameInPool(name, null)
         },
-        rename(oldName, newName) {
+        rename(oldName, newName) { //the new copy is saved before the old one goes, so a failed save loses nothing
             const data = levelData.store.get(oldName)
             if (!data || !levelData.isNameFree(newName)) return false
             data.name = newName
+            if (!levelData.store.write(levelData.store.prefix + newName, data)) return false
+            const recent = levelData.store.recent
+            levelData.store.levels[newName] = data
             delete levelData.store.levels[oldName]
-            levelData.store.write(levelData.store.prefix + oldName, null)
-            if (levelData.store.recent === oldName) levelData.store.recent = newName
-            levelData.store.save(data, levelData.store.recent === newName)
-            levelData.store.saveIndex()
+            if (recent === oldName) levelData.store.recent = newName
+            if (!levelData.store.saveIndex()) { //the index still says the old name, undo it all and keep the old one
+                levelData.store.levels[oldName] = levelData.store.levels[newName]
+                levelData.store.levels[oldName].name = oldName
+                delete levelData.store.levels[newName]
+                levelData.store.recent = recent
+                levelData.store.write(levelData.store.prefix + newName, null)
+                return false
+            }
+            levelData.store.write(levelData.store.prefix + oldName, null) //only once the new name is saved and listed
             levelData.store.sync()
             levelData.store.renameInPool(oldName, newName)
             return true
