@@ -11,6 +11,7 @@ Object.assign(levelEditor, {
     data: null, //the level being edited, the same object as levelData.data
     selection: [], //element ids
     tool: "select",
+    toolTips: { select: "select, mouse 2", pan: "pan, mouse 3, double click to teleport" }, //the status bar's tool buttons, the mouse button that does it with any tool
     tools: ["select", "pan", "map", "block", "measure"], //the draw tool, map and block draw new rects, select only selects and moves, measure draws a ruler with jump reach, pan moves the view without a middle mouse button, the right mouse button always selects
     measure: null, //{ start, end } the measure tool's ruler, it stays until the next one
     timeScale: 1, //simulation menu, slows the game by lowering the frame cap
@@ -908,6 +909,9 @@ Object.assign(levelEditor, {
                 levelEditor.updatePanels()
             },
         },
+        levelZoom: { //the status bar's magnifying glass
+            label: "the level's own zoom, what it uses in a run", run: () => levelEditor.zoomTo(levelEditor.data.zoom),
+        },
         fit: { //the selection, or with nothing selected the whole level, fills the view
             label: "fit the selection in the view, or the whole level with nothing selected", run() {
                 const elements = levelEditor.selected().length ? levelEditor.selected() : levelEditor.data.elements.filter(el => !levelElements.isCode(el))
@@ -1126,6 +1130,23 @@ Object.assign(levelEditor, {
                         for (const el of elements) el.group = id
                     }
                     return []
+                })
+                levelEditor.renderRight()
+            },
+        },
+        round: { //switch selected circles to ellipses and back, where it is, its color, layer, and group stay
+            label: "circle or ellipse", run(typeName) {
+                const rounds = levelEditor.selected().filter(el => levelElements.types[el.type]?.rounds?.includes(typeName) && el.type !== typeName)
+                if (!rounds.length) return
+                const ids = rounds.map(el => el.id)
+                levelEditor.edit(`${levelEditor.describe(rounds)} to ${typeName}`, data => {
+                    data.elements = data.elements.map(el => {
+                        if (!ids.includes(el.id)) return el
+                        const shared = { x: el.x, y: el.y, color: el.color, layer: el.layer, ...(el.group ? { group: el.group } : {}) }
+                        const size = typeName === "ellipse" ? { radiusX: el.radius, radiusY: el.radius, angle: 0 } : { radius: Math.round((el.radiusX + el.radiusY) / 2) } //an ellipse becomes a circle as big as its radii on average
+                        return { ...levelElements.create(typeName, { ...shared, ...size }), id: el.id }
+                    })
+                    return ids
                 })
                 levelEditor.renderRight()
             },
@@ -1483,7 +1504,7 @@ Object.assign(levelEditor, {
         return command.keys ? `${command.label}  ${levelEditor.keyText(command.keys[0])}` : command.label
     },
     isTyping(target) { //keys go to a field being typed in, not the game or the editor's keys, menus and buttons don't keep them
-        return !!target.matches?.("textarea, select, input:not([type=checkbox]):not([type=color])") || !!target.isContentEditable
+        return !!target.matches?.("textarea, select, input:not([type=checkbox]):not([type=color])") || !!target.closest?.("select") || !!target.isContentEditable //an open list's option too, so esc closes the list
     },
     keyDown(event) {
         levelEditor.isFree = event.altKey
@@ -1975,7 +1996,7 @@ Object.assign(levelEditor, {
             id: "load",
             title: "export/import",
             render: () => `<div class="le-load" data-load-local></div>
-                <div class="le-grid le-two le-gap-above le-flush-x">${levelEditor.button("newLevel", "new")}${levelEditor.button("duplicateLevel", "fork")}${levelEditor.button("importLevel", "import")}${levelEditor.button("code", "export")}${levelEditor.button("pool", levelEditor.isInPool() ? "in level pool" : "add to level pool", "", levelEditor.isInPool(), undefined, { className: "le-wide" })}</div>
+                <div class="le-grid le-sixths le-gap-above le-flush-x">${levelEditor.button("newLevel", "new", "", false, undefined, { className: "le-third" })}${levelEditor.button("importLevel", "import", "", false, undefined, { className: "le-third" })}${levelEditor.button("code", "export", "", false, undefined, { className: "le-third" })}${levelEditor.button("duplicateLevel", "fork", "", false, undefined, { className: "le-half" })}${levelEditor.button("pool", levelEditor.isInPool() ? "in level pool" : "add to level pool", "", levelEditor.isInPool(), undefined, { className: "le-half" })}</div>
                 <div class="le-load" data-load-written></div>`, //the local levels, then new, import, the pool, and export, then the written levels, filled in when it opens, see renderLoadList()
         },
         {
@@ -2074,17 +2095,17 @@ Object.assign(levelEditor, {
             { title: "movement", names: ["boost", "mover", "transport", "elevator", "vanish", "spinner", "wind", "portal"] },
             { title: "hazards", names: ["slime", "laser", "fizzler"] },
             { title: "controls", names: ["button", "toggle", "zone", "timer", "keyhole", "key", "door"] }, //and what they open
-            { title: "drawing", names: ["fill", "circle", "ellipse", "path", "bezier", "text", "drip"] },
+            { title: "drawing", names: ["fill", "circle", "path", "bezier", "text", "drip"] }, //ellipse comes from a circle's info box
         ]
         const listed = new Set(groups.flatMap(group => group.names))
-        groups[groups.length - 1].names.push(...levelElements.groups.element.filter(name => !listed.has(name)))
+        groups[groups.length - 1].names.push(...levelElements.groups.element.filter(name => !listed.has(name) && !levelElements.types[name].isAddedAs))
         return groups.map(group => ({ ...group, names: group.names.filter(name => levelElements.types[name]) }))
     },
     elementList() { //every level element by kind, and each named preset like exit fill, picking one adds it, an option's data-command and data-arg are what it runs
         const option = (command, arg, text, tip) => `<option value="${levelEditor.escape(arg)}" data-command="${command}" data-arg="${levelEditor.escape(arg)}" title="${levelEditor.escape(tip)}">${levelEditor.elementIcon(arg)}<span>${levelEditor.escape(text)}</span></option>`
-        return `<select class="le-list le-rich-list le-flush-x" title="add a level element in the middle of the view">
+        return `<select class="le-list le-rich-list le-two-col le-flush-x" title="add a level element in the middle of the view">
             <option value="">level element</option>
-            ${levelEditor.elementGroups().map(group => `<optgroup label="${group.title}">${group.names.map(name => {
+            ${levelEditor.elementGroups().map(group => `<optgroup label="${group.title}"><legend>${group.title}</legend>${group.names.map(name => {
             const type = levelElements.types[name]
             return option(type.addCommand || "add", name, type.label, type.tip || `add ${type.label}`) +
                 (type.names || []).map(preset => option("add", `${name}:${preset}`, preset, (type.tips && type.tips[preset]) || `add ${preset}`)).join("")
@@ -2099,7 +2120,7 @@ Object.assign(levelEditor, {
     },
     powerUpList() { //every power up with its orb, picking one adds it, browsers with customizable selects show the orbs (appearance: base-select), others just the names
         const type = levelElements.types.powerUp
-        return `<select class="le-list le-rich-list le-flush-x" data-add="powerUp" title="a power up by name">
+        return `<select class="le-list le-rich-list le-two-col le-flush-x" data-add="powerUp" title="a power up by name">
             <option value="">power up by name</option>
             ${type.names.map(name => `<option value="${name}" title="${levelEditor.escape(type.tips[name] || "")}">${levelEditor.orb(name)}<span>${name}</span></option>`).join("")}
         </select>`
@@ -2107,10 +2128,10 @@ Object.assign(levelEditor, {
     mobList() { //a random group, then every mob and boss by tier with its picture, picking one adds it, an option's data-arg is its whole add command
         const tiers = spawn.tier.map((names, i) => [`tier ${i}`, names]).concat(spawn.bossTier.map((names, i) => [`tier ${i} bosses`, names])).filter(([, names]) => names.length)
         const icons = levelEditor.mobIcons || {}
-        return `<select class="le-list le-rich-list le-flush-x" data-add="namedMob" title="${levelEditor.escape(levelElements.types.namedMob.tip)}">
+        return `<select class="le-list le-rich-list le-two-col le-flush-x" data-add="namedMob" title="${levelEditor.escape(levelElements.types.namedMob.tip)}">
             <option value="">mob by name</option>
-            <optgroup label="random"><option value="group" data-arg="mobGroup" title="${levelEditor.escape(levelElements.types.mobGroup.tip)}">${levelEditor.mobIcon("group", [{ fill: "rgb(255,80,160)", x: -14, y: 4, r: 9, sides: 5 }, { fill: "rgb(255,80,80)", x: 8, y: -6, r: 10, sides: 4 }, { fill: "rgb(255,120,80)", x: 10, y: 10, r: 7, sides: 3 }])}<span>group</span></option></optgroup>
-            ${tiers.map(([label, names]) => `<optgroup label="${label}">${names.map(name => `<option value="${name}">${icons[name] || ""}<span>${name}</span></option>`).join("")}</optgroup>`).join("")}
+            <optgroup label="random"><legend>random</legend><option value="group" data-arg="mobGroup" title="${levelEditor.escape(levelElements.types.mobGroup.tip)}">${levelEditor.mobIcon("group", [{ fill: "rgb(255,80,160)", x: -14, y: 4, r: 9, sides: 5 }, { fill: "rgb(255,80,80)", x: 8, y: -6, r: 10, sides: 4 }, { fill: "rgb(255,120,80)", x: 10, y: 10, r: 7, sides: 3 }])}<span>group</span></option></optgroup>
+            ${tiers.map(([label, names]) => `<optgroup label="${label}"><legend>${label}</legend>${names.map(name => `<option value="${name}" title="${name}">${icons[name] || ""}<span>${name}</span></option>`).join("")}</optgroup>`).join("")}
         </select>`
     },
     recall(key, fallback) { //an editor setting saved with remember(), or fallback, localStorage can be blocked, older saves are plain text
@@ -2151,8 +2172,8 @@ Object.assign(levelEditor, {
     },
     renderStatus() { //the bar along the bottom, like VS Code's: grid, zoom, tools, and the mouse, then on the right the analysis, history, and tab hide
         document.getElementById("level-editor-status").innerHTML = `<span class="le-status-item" title="snap size, hold alt to place freely"><input class="le-number" data-setting="grid" value="${levelEditor.grid}" spellcheck="false">${levelEditor.button("grid", "grid", "", levelEditor.isGridShown)}</span>
-            <span class="le-status-item" title="the editor's zoom, the wheel zooms too">${levelEditor.statusIcon("zoom")}<input class="le-number" data-setting="zoom" value="${Math.round(levelEditor.zoomScale)}" spellcheck="false">${levelEditor.button("fit", "fit")}</span>
-            <span class="le-status-item"><span class="le-segment le-tool-icons">${levelEditor.tools.map(tool => levelEditor.button("tool", levelEditor.toolIcon(tool), tool, levelEditor.tool === tool, tool)).join("")}</span>${levelEditor.keyCap("tool")}</span>
+            <span class="le-status-item" title="the editor's zoom, the wheel zooms too">${levelEditor.button("levelZoom", levelEditor.statusIcon("zoom"), "", false, undefined, { className: "le-icon-button" })}<input class="le-number" data-setting="zoom" value="${Math.round(levelEditor.zoomScale)}" spellcheck="false">${levelEditor.button("fit", "fit")}</span>
+            <span class="le-status-item"><span class="le-segment le-tool-icons">${levelEditor.tools.map(tool => levelEditor.button("tool", levelEditor.toolIcon(tool), tool, levelEditor.tool === tool, levelEditor.toolTips[tool] || tool)).join("")}</span>${levelEditor.keyCap("tool")}</span>
             <span class="le-status-mouse" data-status-mouse title="where the mouse is, snapped to the grid"></span>
             <span class="le-status-item le-status-right">
                 <button class="le-button le-status-unsaved" data-command="code" data-status-unsaved${levelData.store.isFailing ? "" : " hidden"} title="the browser wouldn't save the level, storage is full or blocked, export it and copy it somewhere safe">not saved, export a backup</button>
@@ -2269,8 +2290,9 @@ Object.assign(levelEditor, {
         if (!box || !box.closest("details").open) return
         box.innerHTML = levelEditor.explorerHtml()
     },
-    updatePanels() { //tab hides the panels, a hint says how to get them back
+    updatePanels() { //tab hides the panels, a hint says how to get them back, invincible hides the health bars and the left panel moves up
         document.body.classList.toggle("le-panels-hidden", levelEditor.isActive && levelEditor.isPanelsHidden)
+        document.body.classList.toggle("le-invincible", levelEditor.isActive && levelEditor.isInvincible)
         const hint = document.getElementById("level-editor-hint")
         if (hint) hint.innerHTML = `${levelEditor.isFullTest ? "test export · " : ""}${levelEditor.keyCap("panels")} show`
     },
@@ -2346,7 +2368,7 @@ Object.assign(levelEditor, {
         document.querySelector("#level-editor-left [data-load-local]").innerHTML =
             group("local", levelData.store.names().map(name => `<span class="le-pair">${levelEditor.button("load", name, `local:${name}`, name === current)}${levelEditor.button("deleteLevel", "×", name)}</span>`), levelEditor.storageText())
         document.querySelector("#level-editor-left [data-load-written]").innerHTML =
-            `<details class="le-load-group" data-section="load-written"${open["load-written"] ? " open" : ""}><summary>more levels</summary>${ //written levels fold away
+            `<details class="le-load-group" data-section="load-written"${open["load-written"] ? " open" : ""}><summary>load more levels</summary>${ //written levels fold away
                 titled("n-gon", written("written", Object.keys(level.maps).filter(name => !hidden.includes(name)))) +
                 titled("community", written("more", level.communityLevels)) +
                 titled("training", written("more", level.trainingLevels)) +
@@ -2527,7 +2549,8 @@ Object.assign(levelEditor, {
         const runtime = levelData.runtimes.get(el.id)
         const isShape = levelElements.groups.shape.includes(el.type)
         const isVertexEditable = levelElements.isVertexEditable(el)
-        const shapes = isShape ? `<span class="le-segment">${levelElements.groups.shape.map(name => levelEditor.button("shape", name, name, el.type === name)).join("")}</span>` : ""
+        const shapes = isShape ? `<span class="le-segment">${levelElements.groups.shape.map(name => levelEditor.button("shape", name, name, el.type === name)).join("")}</span>` :
+            type?.rounds ? `<span class="le-segment">${type.rounds.map(name => levelEditor.button("round", name, name, el.type === name, name === "ellipse" ? "stretch it into an ellipse, with a radius each way and an angle" : "back to a circle, its radius is the ellipse's two on average")).join("")}</span>` : ""
         const props = type ? type.props : []
         const isVertexMode = levelEditor.vertexElement() === el
         return `<div class="le-row"><span class="le-name">${levelElements.nameOf(el.type)}</span><span class="le-id">#${el.id}</span><span class="le-fill"></span>${shapes}</div>
@@ -2867,6 +2890,7 @@ Object.assign(levelEditor, {
         if (event.target.dataset.setting === "invincible") {
             levelEditor.isInvincible = event.target.checked
             levelEditor.remember("levelEditorInvincible", levelEditor.isInvincible)
+            levelEditor.updatePanels()
             event.target.blur()
         }
         if (event.target.dataset.setting === "testSpawning") {

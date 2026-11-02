@@ -2525,6 +2525,15 @@ body.level-editor .le-status {
     flex: none;
 }
 
+/* the magnifying glass is a button with no box, it goes to the level's zoom */
+.le-button.le-icon-button {
+    display: inline-flex;
+    padding: 0;
+    border: none;
+    background: none;
+    cursor: pointer;
+}
+
 /* the browser wouldn't save, stays until a save works */
 .le-status-unsaved {
     margin-right: 8px;
@@ -2836,6 +2845,18 @@ body.level-editor #right-HUD-constraint {
     display: none !important;
 }
 
+/* invincible: no health or defense bars, nothing can hurt the player, the left panel goes up where they were */
+body.level-editor.le-invincible #health,
+body.level-editor.le-invincible #health-bg,
+body.level-editor.le-invincible #defense-bar {
+    display: none !important;
+}
+
+body.level-editor.le-invincible #level-editor-left {
+    top: 9px;
+    max-height: calc((100vh - 61px) / 1.1);
+}
+
 /* under the health bar, gray like the pause menu's open menus, the open menus inside are the lighter card color */
 #level-editor-left {
     zoom: 1.1; /* everything in it 10% bigger, easier to read, top, left, and sizes are before the zoom */
@@ -3078,6 +3099,19 @@ body.level-editor #right-HUD-constraint {
     grid-template-columns: repeat(2, minmax(0, 1fr));
 }
 
+/* export/import's buttons, new, import, and export a third each, fork and add to level pool a half */
+.le-grid.le-sixths {
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+}
+
+.le-grid.le-sixths .le-button.le-third {
+    grid-column: span 2;
+}
+
+.le-grid.le-sixths .le-button.le-half {
+    grid-column: span 3;
+}
+
 /* the inspector's action buttons, flips a quarter, vertices, constraint, and delete a half */
 .le-grid.le-quarters {
     grid-template-columns: repeat(4, minmax(0, 1fr));
@@ -3302,6 +3336,46 @@ body.level-editor #right-HUD-constraint {
 
 .le-rich-list::picker(select) {
     max-height: 60vh;
+}
+
+/* the add menu's lists in two columns, each group's title (its legend) across both, smaller names, a long one is cut off */
+/* options right in the list, like power up by name, make the columns themselves, the first "pick one" option and groups go across */
+.le-two-col::picker(select) {
+    width: 320px;
+}
+
+.le-two-col::picker(select):popover-open { /* only while open, a display here would show it closed too */
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    align-content: start;
+}
+
+.le-two-col option[value=""],
+.le-two-col optgroup {
+    grid-column: 1 / -1;
+}
+
+.le-two-col optgroup {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.le-two-col legend {
+    grid-column: 1 / -1;
+    padding: 3px 4px 1px;
+    font-weight: bold;
+}
+
+.le-two-col option {
+    min-width: 0;
+    font-size: 11px;
+}
+
+.le-two-col option span {
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 
 .le-mob-icon {

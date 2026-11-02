@@ -1618,9 +1618,10 @@ levelElements.define("text", { //words in the game's stroke font, like the const
 
 levelElements.define("circle", { //a filled circle drawn behind or in front of the player, the shape written levels draw most
     isDrawing: true, //only drawn, to top and to bottom change what's on top
-    tip: "colored circle drawn behind or in front of the player, drag the handle to change its radius",
+    tip: "colored circle drawn behind or in front of the player, drag the handle to change its radius, ellipse in its info box stretches it into an ellipse",
     group: "element",
     label: "circle fill",
+    rounds: ["circle", "ellipse"], //the info box switches between them, see the round command
     isBackground: true, //lock background colors in editor settings makes the mouse go through it
     defaults: () => ({ x: 0, y: -200, radius: 100, color: "rgba(0,0,0,0.1)", layer: "under player" }),
     props: [
@@ -1654,6 +1655,8 @@ levelElements.define("ellipse", { //a filled ellipse, angle turns it, degrees co
     tip: "colored ellipse drawn behind or in front of the player, drag its handles to change each radius, rotate turns it",
     group: "element",
     label: "ellipse fill",
+    rounds: ["circle", "ellipse"],
+    isAddedAs: "circle", //not in the add menu, a circle's info box turns it into one
     isBackground: true, //lock background colors in editor settings makes the mouse go through it
     defaults: () => ({ x: 0, y: -200, radiusX: 150, radiusY: 75, angle: 0, color: "rgba(0,0,0,0.1)", layer: "under player" }),
     props: [
