@@ -178,24 +178,20 @@ Object.assign(levelEditor, {
         keyhole: `<g transform="translate(12.75 10.6) scale(0.125 0.18)"><polygon points="-70,12 70,12 70,-8 -70,-8" fill="#444"/><polygon points="-93,9 -93,-11 -73,-41 -47,-41 -18,9" fill="#444"/><polygon points="97,9 97,-11 77,-41 51,-41 22,9" fill="#444"/><rect x="-38" y="-26" width="80" height="25" fill="rgba(254,248,164,0.73)"/></g>`, //level.keyButton: the map base, its two cradle walls, and the key color between them
         key: `<g transform="translate(13 8) scale(0.22)"><polygon points="37.5,0 25,21.65 -25,21.65 -37.5,0 -25,-21.65 25,-21.65" fill="#FEF8A4" stroke="rgba(254,248,164,0.35)" stroke-width="22"/><polygon points="37.5,0 25,21.65 -25,21.65 -37.5,0 -25,-21.65 25,-21.65" fill="#FEF8A4" stroke="rgba(0,0,0,0.25)" stroke-width="3"/></g>`, //level.key: the glowing yellow hexagon, a faint edge so it shows on white
         door: `<rect x="9" y="1" width="5" height="14" fill="#666"/><path d="M19 12V3M16.5 5.5L19 2.5L21.5 5.5" fill="none" stroke="#444" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>`,
-        fill: `<rect x="3" y="2" width="13" height="9" fill="rgba(0,0,0,0.25)"/><rect x="10" y="5" width="13" height="9" fill="rgba(0,0,0,0.25)"/>`,
+        fill: `<rect x="3" y="2" width="13" height="9" fill="rgba(0,0,0,0.25)"/><circle cx="16.5" cy="9.5" r="5.5" fill="rgba(0,0,0,0.25)"/>`,
         "fill:exit fill": `<rect x="3" y="1" width="20" height="13" fill="#d4f4f4" stroke="#9cc" stroke-width="0.8"/><path d="M10 14V8a3 3 0 0 1 6 0V14Z" fill="#c8eef0" stroke="#466" stroke-width="0.8"/><rect x="1" y="14" width="24" height="2" fill="#444"/>`,
-        "fill:shadow fill": `<rect x="1" y="14" width="24" height="2" fill="#444"/><circle cx="9" cy="6" r="2.5" fill="none" stroke="#444" stroke-width="1.1"/><path d="M9 8.5V10.5M9 10.5L7 14M9 10.5L11 14" fill="none" stroke="#444" stroke-width="1.1"/><rect x="11" y="1" width="13" height="13" fill="rgba(0,0,0,0.35)"/>`,
         circle: `<circle cx="13" cy="8" r="6.5" fill="none" stroke="#444" stroke-width="1.3"/>`,
         path: `<polyline points="2,13 6,7 11,10 14,3 19,6 24,2" fill="none" stroke="#444" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round"/>`,
-        bezier: `<path d="M3 14L7 2M23 14L19 2" stroke="#9ab" stroke-width="0.7"/><rect x="5.8" y="0.8" width="2.4" height="2.4" fill="#fff" stroke="#9ab" stroke-width="0.6"/><rect x="17.8" y="0.8" width="2.4" height="2.4" fill="#fff" stroke="#9ab" stroke-width="0.6"/><path d="M3 14C7 2 19 2 23 14" fill="none" stroke="#444" stroke-width="1.6" stroke-linecap="round"/>`,
         text: `<path transform="translate(1.85 3) scale(0.28)" d="M-1 0H21M10 0V40M29 0L48 40M48 0L29 40M57 0H79M68 0V40" fill="none" stroke="#444" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>`, //"txt" in the game's stroke font
-        drip: `<path d="M5 1.5H21" stroke="#444" stroke-width="1.5"/><path d="M13 4C15.5 8 17 10 17 11.5A4 4 0 0 1 9 11.5C9 10 10.5 8 13 4Z" fill="hsla(160,100%,35%,0.6)"/>`,
     },
     elementIcon(arg) { //"type" or "type:preset", or nothing for a type without a picture
         const picture = levelEditor.elementIcons[arg]
         return picture ? `<svg class="le-mob-icon" width="26" height="16" viewBox="0 0 26 16" aria-hidden="true">${picture}</svg>` : ""
     },
     drawButtons: [ //the add menu's drawing row under the shapes: [command, arg, picture], 30 × 22 like the shapes, in the colors each one starts with
-        ["add", "fill", `<rect x="3" y="2" width="16" height="12" fill="rgba(0,0,0,0.25)"/><rect x="11" y="8" width="16" height="12" fill="rgba(0,0,0,0.25)"/>`], //two see-through fills overlapping
-        ["add", "fill:exit fill", `<rect x="3" y="2" width="24" height="18" fill="#d4f4f4" stroke="#9cc"/><path d="M11 20V10a4 4 0 0 1 8 0V20Z" fill="#c8eef0" stroke="#466"/><rect x="1" y="20" width="28" height="2" fill="#444"/>`], //the cyan room around the exit door
-        ["add", "circle", `<circle cx="15" cy="11" r="9" fill="none" stroke="#444" stroke-width="1.5"/>`],
+        ["add", "fill", `<rect x="3" y="2" width="16" height="12" fill="rgba(0,0,0,0.25)"/><circle cx="19" cy="13.5" r="7.5" fill="rgba(0,0,0,0.25)"/>`], //a see-through rect and circle overlapping, it can be either, or an ellipse
         ["drawPath", "path", `<polyline points="3,18 7,10 13,13 16,5 22,9 27,4" fill="none" stroke="#444" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>`], //uneven, so it doesn't read as a letter
+        ["add", "fill:exit fill", `<rect x="3" y="2" width="24" height="18" fill="#d4f4f4" stroke="#9cc"/><path d="M11 20V10a4 4 0 0 1 8 0V20Z" fill="#c8eef0" stroke="#466"/><rect x="1" y="20" width="28" height="2" fill="#444"/>`], //the cyan room around the exit door
         ["add", "text", `<path transform="translate(2.1 4.4) scale(0.33)" d="M-1 0H21M10 0V40M29 0L48 40M48 0L29 40M57 0H79M68 0V40" fill="none" stroke="#444" stroke-width="5.5" stroke-linecap="round" stroke-linejoin="round"/>`], //"txt" in the game's stroke font, simulation.draw.font's t() and x()
     ],
     svgIcon(picture, fill = "none") { //one of the saved pictures above as a 30 × 22 svg

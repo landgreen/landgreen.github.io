@@ -30,21 +30,37 @@ const levelData = {
             if (data[key] === undefined || data[key] === null || data[key] === "") data[key] = defaults[key]
         }
         data.zoom = Number(data.zoom) || defaults.zoom
+        if (typeof data.levelCode !== "string") data.levelCode = "" //the level info box's code, see runLevelCode()
+        for (const key of ["author", "log"]) if (typeof data[key] !== "string") data[key] = "" //not in level.defaults(), the typical level properties button keeps them
         if (!Array.isArray(data.mobVeto)) data.mobVeto = []
-        data.elements = Array.isArray(data.elements) ? data.elements.filter(el => el && typeof el === "object") : []
-        data.nextId = Math.max(Number(data.nextId) || 1, ...data.elements.map(el => (el.id || 0) + 1))
+        data.elements = Array.isArray(data.elements) ? data.elements.filter(el => el && typeof el === "object" && typeof el.type === "string" && /^\w+$/.test(el.type)) : [] //a type is a name, the editor shows it
+        const isId = id => Number.isInteger(id) && id > 0 //ids are whole numbers, the editor shows them, so an imported level can't put html there
+        data.nextId = Math.max(isId(Number(data.nextId)) ? Number(data.nextId) : 1, ...data.elements.map(el => isId(el.id) ? el.id + 1 : 1))
         for (const el of data.elements) {
             if (el.type === "decor") el.type = "fill" //its old name
-            if (!el.id) el.id = data.nextId++
+            if (el.type === "bezier") levelData.bezierToPath(el) //the path's curves do it now
+            if (!isId(el.id)) el.id = data.nextId++
             levelElements.fillDefaults(el)
             if ("veto" in el && !Array.isArray(el.veto)) el.veto = []
             if ("handles" in el && !Array.isArray(el.handles)) el.handles = []
             if (el.layer === "back" || el.layer === "front") el.layer = el.layer === "back" ? "under player" : "over player" //their old names
         }
+        if (data.elements.some(el => el.type === "drip")) levelData.dripsToCode(data) //drip isn't an element anymore
         for (const type of levelElements.groups.core) { //every level needs a spawn and an exit, unless its code sets them, like a written level that picks a layout
             if (!data.elements.some(el => el.type === type) && !levelData.hasCode(data)) levelData.add(data, levelElements.create(type))
         }
         return data
+    },
+    dripsToCode(data) { //older saves' drips, each one's lines go in the level code so it still drips
+        const parts = data.levelCode.trim() ? levelData.sectionsOf(data.levelCode) : { setup: [], custom: [], top: [] }
+        for (const el of data.elements.filter(el => el.type === "drip")) {
+            const name = `drip${el.id}`
+            const y = Number(el.y) || 0
+            parts.setup.push(`const ${name} = level.drip(${levelElements.args(Number(el.x) || 0, y, y + (Number(el.length) || 600), Number(el.period) || 100, String(el.color || "hsla(160, 100%, 35%, 0.5)"))}); //was a drip element`)
+            parts.custom.push(`${name}.draw();`)
+        }
+        data.levelCode = levelData.sectionsText(parts)
+        data.elements = data.elements.filter(el => el.type !== "drip")
     },
     add(data, el) {
         el.id = data.nextId++
@@ -94,6 +110,13 @@ const levelData = {
         }
     },
 
+    bezierToPath(el) { //an older save's bezier, one curved line from x, y to x2, y2 bent by cx1, cy1 and cx2, cy2, as a path with two curved vertices
+        const center = { x: (el.x + el.x2) / 2, y: (el.y + el.y2) / 2 }
+        const path = { x: center.x, y: center.y, vertices: [[el.x - center.x, el.y - center.y], [el.x2 - center.x, el.y2 - center.y]], handles: [[el.cx1 - el.x, el.cy1 - el.y], [el.x2 - el.cx2, el.y2 - el.cy2]], closed: false, fill: "none" }
+        for (const key of ["x2", "y2", "cx1", "cy1", "cx2", "cy2", "edited"]) delete el[key] //its edited code was written for a bezier
+        Object.assign(el, path, { type: "path" })
+    },
+
     //*********************************************************************
     // playing, builds data into the world, each element's runtime remembers what it made so the editor can rebuild one at a time
     //*********************************************************************
@@ -108,10 +131,12 @@ const levelData = {
         levelData.unbuildAll() //clearMap already removed the last level's bodies, but not constraints in the world, like a spinner's pin
         levelData.runtimes = new Map()
         levelData.applySettings(data)
+        if (data.author.trim()) simulation.inGameConsole(levelData.authorLog(data)) //like community levels
+        if (data.log.trim()) simulation.inGameConsole(levelData.safeHtml(data.log)) //the level's own message
         levelData.trackEphemera(() => { }) //the last level code's effects go away, like mirrors
         levelData.codeLayers = null
         levelData.codeError = null //the last level's error doesn't carry into this one
-        levelData.drawnByCode = levelData.hasCode(data) ? levelData.codeDraws(data) : {}
+        levelData.drawnByCode = levelData.hasCode(data) || data.levelCode.trim() ? levelData.codeDraws(data) : {}
         if (levelData.hasCode(data)) {
             levelData.runCode(data)
         } else {
@@ -126,13 +151,16 @@ const levelData = {
             level.announceMobTypes()
         }
         simulation.fallHeight = levelData.fallHeight(data)
+        levelData.runLevelCode(data)
         level.custom = () => {
             levelData.runCodeLayer("custom")
             levelData.layer("custom")
+            levelData.runLevelCodeLayer("custom")
         }
         level.customTopLayer = () => {
             levelData.runCodeLayer("top")
             levelData.layer("top")
+            levelData.runLevelCodeLayer("top")
         }
         if (!levelData.isEditor) simulation.zoomTransition(data.zoom)
     },
@@ -142,14 +170,107 @@ const levelData = {
     hasCode(data) {
         return data.elements.some(el => levelElements.isCode(el))
     },
-    codeText(data) {
-        return data.elements.filter(el => levelElements.isCode(el)).map(el => el.code).join("\n")
+    codeText(data) { //all the level's own javascript: code elements and the level code
+        return data.elements.filter(el => levelElements.isCode(el)).map(el => el.code).concat(data.levelCode || "").join("\n")
     },
     codeHas(data, text) {
         return levelData.codeText(data).includes(text)
     },
     codeDraws(data) { //door types the level's code draws itself, so their elements don't draw them again
         return { spawn: levelData.codeHas(data, "level.enter.draw"), exit: levelData.codeHas(data, "level.exit.drawAndCheck") }
+    },
+    codeParts(data) { //every piece of javascript the level runs, [{ where, code }]: code elements, elements with edited code, and the level code, importing asks before running any
+        const parts = []
+        for (const el of data.elements) {
+            if (levelElements.isCode(el)) {
+                if (String(el.code).trim()) parts.push({ where: `code #${el.id}`, code: String(el.code) })
+            } else if (el.edited) {
+                parts.push({ where: `${levelElements.nameOf(el.type)} #${el.id}, edited code`, code: String(el.edited.text) })
+            }
+        }
+        if (String(data.levelCode || "").trim()) parts.push({ where: "level code", code: String(data.levelCode) })
+        return parts
+    },
+    runsCode: data => levelData.codeParts(data).length > 0,
+    riskyCode: /\b(?:localStorage|sessionStorage|indexedDB|localSettings|saveGame|levelData|cookie|fetch|XMLHttpRequest|WebSocket|sendBeacon|EventSource|location|eval|Function|constructor|globalThis|window|innerHTML|outerHTML|insertAdjacentHTML|createElement|import)\b/g,
+    codeFlags(text) { //names in code worth a close look before running it: what it could use to change saves, reach the internet, or change the page, not a complete list
+        return [...new Set(String(text).match(levelData.riskyCode) || [])]
+    },
+    withoutCode(data) { //a copy without its javascript: no code elements or level code, and edited elements go back to what their settings make
+        const copy = levelData.copy(data)
+        copy.elements = copy.elements.filter(el => !levelElements.isCode(el))
+        for (const el of copy.elements) delete el.edited
+        copy.levelCode = ""
+        return levelData.normalize(copy) //a spawn and exit, if its code made them
+    },
+    //*********************************************************************
+    // saved data, level code can read saves and settings but not change them
+    // a level's javascript is made inside a function whose arguments are read-only stand-ins for localStorage, sessionStorage, and localSettings, and no indexedDB
+    // only the level's own code sees them, so the game's own saving still works, even when level code calls it
+    // community levels from level2.js are made again from their source the same way, see communityLevel()
+    // it stops code that changes saves plainly, like a settings line in a community map, not code written to get around it, the import warning is for that
+    //*********************************************************************
+    codeFunction(params, body) { //Function(...params, body) for a level's javascript, with the read-only stand-ins, see codeGlobals()
+        Function(...params, body) //read alone first: code that can't be read throws a SyntaxError here, and its brackets can't close the function below early
+        const globals = levelData.codeGlobals()
+        const names = Object.keys(globals)
+        return Function(...names, `return function (${params.join(", ")}) {${body}\n}`)(...names.map(name => globals[name]))
+    },
+    codeGlobals() { //what level code sees in place of the game's saved data
+        const storage = name => { //reading localStorage throws when the browser blocks it
+            try {
+                return globalThis[name]
+            } catch (error) {
+                return undefined
+            }
+        }
+        return {
+            localStorage: levelData.readOnly(storage("localStorage"), "localStorage", true),
+            sessionStorage: levelData.readOnly(storage("sessionStorage"), "sessionStorage", true),
+            localSettings: levelData.readOnly(typeof localSettings === "undefined" ? undefined : localSettings, "localSettings"),
+            indexedDB: undefined,
+        }
+    },
+    readOnlies: new WeakMap(), //each object's read-only stand-in, so the same object is always the same stand-in
+    readOnly(value, name, isStorage = false) { //value and everything in it can be read, changing any of it throws in the editor and does nothing in a run
+        if (value === null || typeof value !== "object") return value
+        if (levelData.readOnlies.has(value)) return levelData.readOnlies.get(value)
+        const refuse = () => {
+            if (levelEditor.isActive) throw new Error(`level code can't change ${name}`) //shows in the info box and the issues
+            if (!levelData.refused.has(name)) console.warn(`level code can't change ${name}`) //a run keeps going without the change
+            levelData.refused.add(name)
+            return true
+        }
+        const proxy = new Proxy(value, {
+            get(target, key) {
+                if (isStorage && ["setItem", "removeItem", "clear"].includes(key)) return refuse
+                const got = Reflect.get(target, key)
+                if (isStorage && typeof got === "function") return got.bind(target) //storage's methods only work on the real storage
+                return levelData.readOnly(got, name)
+            },
+            set: refuse,
+            deleteProperty: refuse,
+            defineProperty: refuse,
+            setPrototypeOf: refuse,
+        })
+        levelData.readOnlies.set(value, proxy)
+        return proxy
+    },
+    refused: new Set(), //what level code tried to change in a run, warned about once
+    communityLevels: new Map(), //name: the community level made again from its source, see communityLevel()
+    communityLevel(name) { //a community level from level2.js, made again from its own source so its code gets the read-only stand-ins, level.load() runs it
+        if (!levelData.communityLevels.has(name)) {
+            const original = moreLevels[name]
+            const source = original.toString()
+            let made = original
+            try {
+                made = Object.values(levelData.codeFunction([], `"use strict";\nreturn { ${source} }`)()).find(value => typeof value === "function") || original //name() { ... }
+            } catch (error) {
+                console.error(`community level ${name} runs without read-only saves:`, error) //written some other way, it still runs
+            }
+            levelData.communityLevels.set(name, made)
+        }
+        return levelData.communityLevels.get(name)
     },
     isSkipped: () => false, //the editor hides elements from its explorer by not building them while editing
     codeLayers: null, //{ custom, top } the level.custom and level.customTopLayer the level's code set
@@ -179,7 +300,7 @@ const levelData = {
         try {
             const spawned = { mob: mob.length, powerUp: powerUp.length }
             try {
-                levelData.trackEphemera(() => Function("__level", `"use strict";\n${source}`).call(level, api))
+                levelData.trackEphemera(() => levelData.codeFunction(["__level"], `"use strict";\n${source}`).call(level, api))
             } finally {
                 if (!levelData.isSpawning) levelData.removeSpawned(spawned)
             }
@@ -189,6 +310,42 @@ const levelData = {
             if (chunk) levelData.runtimes.set(chunk, { ...levelData.made(marks.get(chunk)), isCode: true, error })
         }
         levelData.codeLayers = { custom: level.custom, top: level.customTopLayer }
+    },
+    //*********************************************************************
+    // level code, data.levelCode, the level info box's code, it runs last, after everything else is made, like the end of a written level
+    // written like an element's edited code: setup lines, then //level.custom and //level.customTopLayer and their lines, which run each frame after the elements'
+    //*********************************************************************
+    levelCodeRuntime: null, //{ maps, bodies, ..., custom, top } what it made and its layers
+    runLevelCode(data) { //an error while it runs is the level's code error
+        if (levelData.levelCodeRuntime) levelData.unbuild(levelData.levelCodeRuntime)
+        levelData.levelCodeRuntime = null
+        if (!data.levelCode.trim()) return
+        const start = levelData.mark()
+        const spawned = { mob: mob.length, powerUp: powerUp.length }
+        const before = new Set(simulation.ephemera)
+        let layers = {}
+        try {
+            layers = levelData.editedFunction(data.levelCode).call(level) || {}
+        } catch (error) {
+            console.error("level code:", error)
+            levelData.codeError = error
+        } finally {
+            levelData.codeEphemera.push(...simulation.ephemera.filter(effect => !before.has(effect))) //its effects go away when it runs again, like code elements'
+            if (!levelData.isSpawning) levelData.removeSpawned(spawned)
+        }
+        levelData.levelCodeRuntime = { ...levelData.made(start), custom: layers.custom, top: layers.top }
+    },
+    runLevelCodeLayer(name) { //an error stops only that layer
+        const runtime = levelData.levelCodeRuntime
+        if (!runtime || !runtime[name]) return
+        try {
+            runtime[name]()
+        } catch (error) {
+            runtime[name] = null
+            console.error(`level code ${name === "top" ? "customTopLayer" : "custom"}:`, error)
+            levelData.codeError = error
+            if (levelData.onError) levelData.onError()
+        }
     },
     runCodeLayer(name) { //the level code's level.custom or customTopLayer, an error doesn't stop the level
         const layers = levelData.codeLayers
@@ -237,6 +394,21 @@ const levelData = {
             constraints: engine.world.constraints.slice(start.constraints),
         }
     },
+    authorLog: data => `<strong>${levelData.escape(data.name)}</strong> by <span class='color-var'>${levelData.escape(data.author.trim())}</span>`, //what community levels log when they load, the author is plain text
+    authorLine: /^simulation\.inGameConsole\(`<strong>[^<`]*<\/strong> by <span class=['"]color-var['"]>([^<`]*)<\/span>`\)$/, //that line in a written level's source, capture() reads the author from it
+    authorOf(source) { //the author a written level logs, or ""
+        for (const line of levelData.scanLines(source)) {
+            const match = (line.comment === -1 ? line.text : line.text.slice(0, line.comment)).trim().replace(/;$/, "").match(levelData.authorLine)
+            if (match) return levelData.unescape(match[1].trim()) //html in the source, plain text in the level
+        }
+        return ""
+    },
+    escape: text => String(text).replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[c]), //plain text in html
+    unescape: text => String(text).replace(/&(amp|lt|gt|quot|#39);/g, (all, name) => ({ amp: "&", lt: "<", gt: ">", quot: '"', "#39": "'" })[name]),
+    safeTag: /^<\/?(?:b|strong|i|em|u|s|br|span|sub|sup|small|code)(?:\s+(?:class|data-help)\s*=\s*(?:"[\w\s-]*"|'[\w\s-]*')|\s+style\s*=\s*(?:"[\w\s#%.,:;()-]*"|'[\w\s#%.,:;()-]*'))*\s*\/?>/i, //a formatting tag, with only class, data-help, or a plain style
+    safeHtml(text) { //a log's html, it can't run javascript: formatting tags like <b>, <br>, and the game's color-var spans stay, any other < shows as text
+        return String(text).replace(/<[^<]*/g, part => levelData.safeTag.test(part) ? part : `&lt;${part.slice(1)}`)
+    },
     applySettings(data) { //the level properties, simulation.clearMap() sets them back for the next level
         level.defaultZoom = data.zoom
         document.body.style.backgroundColor = data.background
@@ -255,7 +427,7 @@ const levelData = {
             const from = levelData.find(levelData.data, id)
             const runtime = from && levelElements.isLinkSource(from) && levelData.runtimes.get(from.id)
             if (!runtime) return null
-            const own = levelElements.types[from.type].linkOn(from, runtime)
+            const own = runtime.linkOn ? runtime.linkOn() : levelElements.types[from.type].linkOn(from, runtime) //edited code's own check, see buildEdited()
             const above = depth < 8 ? levelData.linkState(from, depth + 1) : null //a link source linked to another is only on while both are, like a timer that only runs while a button is down
             return above === false ? false : own
         }
@@ -331,30 +503,87 @@ const levelData = {
         const sections = { setup: [], custom: [], top: [] }
         let section = sections.setup
         for (const line of String(text).split("\n")) {
-            if (line.trim() === "//level.custom") section = sections.custom
-            else if (line.trim() === "//level.customTopLayer") section = sections.top
+            if (line.trim().startsWith("//level.customTopLayer")) section = sections.top //anything after it on the line is a comment
+            else if (line.trim().startsWith("//level.custom")) section = sections.custom
             else section.push(line)
         }
         return sections
     },
     sectionsText({ setup = [], custom = [], top = [] }) {
-        return [...setup, ...(custom.length ? ["//level.custom", ...custom] : []), ...(top.length ? ["//level.customTopLayer", ...top] : [])].join("\n")
+        const zones = levelData.zones
+        const isHeaded = !(custom.length || top.length) || setup[0]?.trim().startsWith(zones.setup) //only code with a part that repeats says which part runs once
+        return [...(isHeaded ? [] : [zones.setup]), ...setup, ...(custom.length ? [zones.custom, ...custom] : []), ...(top.length ? [zones.top, ...top] : [])].join("\n")
     },
-    typeCode(el, name, context) { //an element's { setup, custom, top } for export: its edited code with its variable name now, or what its type writes
+    zones: { //the comment lines that start each part of edited code, the level code, and the info box's code, sectionsOf() reads the //level.custom and //level.customTopLayer at their start
+        setup: "//runs once when the level starts",
+        custom: "//level.custom: runs every game cycle", //drawn under the player
+        top: "//level.customTopLayer: runs every game cycle", //drawn over the player
+    },
+    typeCode(el, name, context) { //an element's { setup, custom, top } for export: its edited code with its variable name now, and the names of the elements it names now, or what its type writes
         if (!el.edited) return levelElements.types[el.type].code(el, name, context)
-        const text = name && el.edited.name && name !== el.edited.name ? el.edited.text.replace(new RegExp(`\\b${el.edited.name}\\b`, "g"), name) : el.edited.text
+        const renames = new Map()
+        if (name && el.edited.name && name !== el.edited.name) renames.set(el.edited.name, name)
+        for (const [id, old] of Object.entries(el.edited.names || {})) {
+            const now = context && context.nameOf(Number(id))
+            if (now && now !== old) renames.set(old, now)
+        }
+        const text = renames.size ? el.edited.text.replace(new RegExp(`\\b(${[...renames.keys()].join("|")})\\b`, "g"), old => renames.get(old)) : el.edited.text //all at once, so two names can swap
         return levelData.sectionsOf(text)
     },
-    editedFunction(text) { //one function that runs the setup and returns the layers, making it throws a SyntaxError if the code can't be read, without running any of it
+    editedRefs(data, el) { //ids of the elements an element's code names: what its refs point at, like a door's button or a constraint's block, and what those buttons are linked to
+        const ids = []
+        const add = (id, depth) => {
+            const other = id && levelData.find(data, id)
+            if (!other || ids.includes(id) || depth > 8) return
+            ids.push(id)
+            if (levelElements.isLinkSource(other)) for (const key of ["link", "orLink"]) add(other[key], depth + 1)
+        }
+        for (const key of levelElements.refKeys(el)) add(el[key], 0)
+        return ids
+    },
+    editedFunction(text, refNames = [], selfName = "") { //one function that runs the setup and returns the layers, making it throws a SyntaxError if the code can't be read, without running any of it
+        //refNames are its arguments, the other elements its code names, selfName is the element's own variable, returned so a link source's code can be checked
         const { setup, custom, top } = levelData.sectionsOf(text)
         const layer = lines => lines.some(line => line.trim()) ? `() => {\n${lines.join("\n")}\n}` : "null"
-        return Function(`"use strict";\n${setup.join("\n")}\nreturn { custom: ${layer(custom)}, top: ${layer(top)} }`)
+        const self = selfName ? `, self: typeof ${selfName} === "undefined" ? undefined : ${selfName}` : ""
+        return levelData.codeFunction(refNames, `"use strict";\n${setup.join("\n")}\nreturn { custom: ${layer(custom)}, top: ${layer(top)}${self} }`)
+    },
+    editedRef(id) { //what edited code gets for another element it names: a link source's object, looked up each time it's used since it can be rebuilt, or a block's body
+        const other = levelData.find(levelData.data, id)
+        if (other && levelElements.isLinkSource(other)) {
+            const self = () => {
+                const runtime = levelData.runtimes.get(id)
+                return runtime && (runtime.self || runtime[other.type]) //like runtime.button, or its own edited code's
+            }
+            return new Proxy({}, {
+                get(target, key) {
+                    const who = self()
+                    const value = who && who[key]
+                    return typeof value === "function" ? value.bind(who) : value
+                },
+                set(target, key, value) {
+                    const who = self()
+                    if (who) who[key] = value
+                    return true
+                },
+            })
+        }
+        const runtime = levelData.runtimes.get(id)
+        return runtime ? runtime.bodies[0] || runtime.maps[0] : undefined
     },
     buildEdited(el, options) { //like a type's build(), its custom and top run each frame, mobs and power ups only spawn when they would
-        const group = levelElements.types[el.type]?.group
-        if ((group === "mob" || group === "powerUp") && !options.isSpawning) return {}
-        const layers = levelData.editedFunction(el.edited.text).call(level)
-        return { custom: layers.custom, top: layers.top }
+        const type = levelElements.types[el.type]
+        if ((type?.group === "mob" || type?.group === "powerUp") && !options.isSpawning) return {}
+        const refs = Object.entries(el.edited.names || {})
+        const selfName = type?.linkOn && el.edited.name ? el.edited.name : ""
+        const layers = levelData.editedFunction(el.edited.text, refs.map(([, name]) => name), selfName).call(level, ...refs.map(([id]) => levelData.editedRef(Number(id))))
+        const runtime = { custom: layers.custom, top: layers.top }
+        if (selfName) { //a link source, on when its code's object is, like button1.isUp is off
+            const on = Function(selfName, `return ${type.linkCode(el, selfName).on}`)
+            runtime.self = layers.self
+            runtime.linkOn = () => layers.self === undefined ? null : !!on(layers.self)
+        }
+        return runtime
     },
     unbuild(runtime) {
         if (!runtime) return
@@ -405,6 +634,8 @@ const levelData = {
     unbuildAll() {
         for (const runtime of levelData.runtimes.values()) levelData.unbuild(runtime)
         levelData.runtimes = new Map()
+        if (levelData.levelCodeRuntime) levelData.unbuild(levelData.levelCodeRuntime)
+        levelData.levelCodeRuntime = null
     },
     runtimeContains(id, point) { //the element's bodies, blocks can be pushed away from where they start
         const runtime = levelData.runtimes.get(id)
@@ -471,11 +702,7 @@ const levelData = {
         const gate = list => link && list.length ? [`if (${link.on}) {`, ...list.map(line => "    " + line), "}"] : list
         const custom = gate(lines.custom || [])
         const top = gate(lines.top || [])
-        return [
-            ...(lines.setup || []),
-            ...(custom.length ? ["//level.custom", ...custom] : []),
-            ...(top.length ? ["//level.customTopLayer", ...top] : []),
-        ].join("\n")
+        return levelData.sectionsText({ setup: lines.setup || [], custom, top }) //with each part's comment line, like the box it's edited in
     },
     code(data) {
         const groups = {}
@@ -504,6 +731,9 @@ const levelData = {
             if (!groups[type.group]) groups[type.group] = []
             groups[type.group].unshift(...type.codeAll(elements, data))
         }
+        const levelCode = levelData.levelCodeSections(data) //the level code goes last, its layers after the elements'
+        custom.push(...levelCode.custom)
+        top.push(...levelCode.top)
         const indent = lines => lines.map(line => "    " + line)
         const fallHeight = levelData.fallHeight(data)
         const name = levelData.functionName(data.name)
@@ -511,6 +741,8 @@ const levelData = {
             `${name}() { //made in the level editor, paste it into level.maps in js/level.js and add "${name}" to level.playableLevels`,
             ...indent([
                 ...(groups.core || []),
+                ...(data.author.trim() ? [`simulation.inGameConsole(\`${levelData.authorLog(data).replace(/[`\\]|\$\{/g, c => "\\" + c)}\`);`] : []),
+                ...(data.log.trim() ? [`simulation.inGameConsole(${levelElements.args(levelData.safeHtml(data.log))});`] : []),
                 `level.announceText(${levelElements.args(levelData.constraintText(data).x, levelData.constraintText(data).y)}, true) //the run's constraint`,
                 "level.announceMobTypes()",
                 `level.defaultZoom = ${data.zoom}`,
@@ -536,12 +768,16 @@ const levelData = {
                 ...(groups.mob || []),
                 ...(groups.powerUp || []),
                 ...(groups.mob ? ["powerUps.addResearchToLevel() //needs to run after mobs are spawned"] : []),
+                ...(levelCode.setup.length ? ["", "//level code", ...levelCode.setup] : []),
                 `${levelData.dataMark}${JSON.stringify(data)}`, //import level reads this back
             ]),
             "},",
         ].join("\n").replace(/^\s+$/gm, "")
     },
 
+    levelCodeSections(data) { //{ setup, custom, top } of the level code, empty without any
+        return data.levelCode.trim() ? levelData.sectionsOf(data.levelCode) : { setup: [], custom: [], top: [] }
+    },
     codeInOrder(data, names, context) { //a level with code, everything in its list order like runCode(), the elements' custom and top run after the code's
         const lines = []
         const custom = []
@@ -571,6 +807,10 @@ const levelData = {
         }
         const has = text => levelData.codeHas(data, text)
         const text = levelData.constraintText(data)
+        const levelCode = levelData.levelCodeSections(data) //last, its layers after the elements'
+        if (levelCode.setup.length) lines.push("", "//level code", ...levelCode.setup)
+        custom.push(...levelCode.custom)
+        top.push(...levelCode.top)
         const indent = list => list.map(line => "    " + line)
         const name = levelData.functionName(data.name)
         const hasMobs = data.elements.some(el => levelElements.groups.mob.includes(el.type))
@@ -606,15 +846,19 @@ const levelData = {
         ].join("\n").replace(/^\s+$/gm, "")
     },
     dataMark: "//level editor: ",
-    fromText(text) { //{ data, isCaptured } from export JS, its level editor line if it has one, or the map and blocks its code makes
+    dataOf(text) { //the data on export's level editor line, or null without one, nothing runs
         const line = String(text).split("\n").find(row => row.trim().startsWith(levelData.dataMark.trim()))
-        if (line) return { data: levelData.normalize(JSON.parse(line.trim().slice(levelData.dataMark.trim().length))), isCaptured: false }
+        return line ? levelData.normalize(JSON.parse(line.trim().slice(levelData.dataMark.trim().length))) : null
+    },
+    fromText(text) { //{ data, isCaptured } from export JS, its level editor line if it has one, or the map and blocks its code makes, which runs it, the editor asks first
+        const data = levelData.dataOf(text)
+        if (data) return { data, isCaptured: false }
         const source = String(text).trim().replace(/,\s*$/, "")
         let maps
         try {
-            maps = new Function(`return { ${source} }`)() //a level.maps function, name() { ... }
+            maps = levelData.codeFunction([], `return { ${source} }`)() //a level.maps function, name() { ... }
         } catch (error) {
-            maps = new Function(`return { imported() { ${source} } }`)() //or just what goes inside one
+            maps = levelData.codeFunction([], `return { imported() { ${source} } }`)() //or just what goes inside one
         }
         const fn = Object.values(maps).find(value => typeof value === "function")
         if (!fn) throw new Error("no level function")
@@ -625,6 +869,17 @@ const levelData = {
         } finally {
             delete level.maps[name]
         }
+    },
+    sourceData(text) { //a written level's code as data without running any of it, its code stays code elements, the zoom and colors are the defaults, see fromSource()
+        const source = String(text).trim().replace(/,\s*$/, "")
+        let isFunction = true
+        try {
+            Function(`return { ${source} }`) //only reads it, a level.maps function, name() { ... }
+        } catch (error) {
+            isFunction = false //or just what goes inside one
+        }
+        const whole = isFunction ? source : `imported() {\n${source}\n}`
+        return levelData.normalize({ name: "imported", author: levelData.authorOf(whole), elements: levelData.fromSource(whole) })
     },
 
     //*********************************************************************
@@ -645,6 +900,7 @@ const levelData = {
                 background: document.body.style.backgroundColor || "#ddd",
                 mapColor: color.map,
                 blockColor: color.block,
+                author: levelData.authorOf(source),
                 elements: levelData.fromSource(source),
             })
         } finally {
@@ -843,6 +1099,10 @@ const levelData = {
                 continue
             }
             if (/^spawn\.randomMobPositions\s*=\s*\[$/.test(text)) continue //handled below, it's more than one line
+            if (levelData.authorLine.test(text)) { //the author log, capture() makes it the level's author
+                used.add(i)
+                continue
+            }
             const call = text.match(/^([\w.]+)\((.*)\)$/)
             if (!call) continue
             const args = levelData.callArgs(call[2])

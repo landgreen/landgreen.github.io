@@ -551,7 +551,7 @@ levelElements.define("map", {
     color: "#444",
     isLinkable: true,
     handlesLink: true, //appears or disappears instead of only running while it's on
-    writesLink: true, //its code() uses context.link, so linked it can't be edited as code
+    writesLink: true, //its code() uses context.link, edited, its link can't change
     defaults: () => ({ x: 0, y: 0, width: 100, height: 100, friction: 0.1, restitution: 0, collides: levelElements.collision.defaults.map, link: null, orLink: null, on: "appears" }),
     props: [
         ...levelElements.rect(),
@@ -1058,10 +1058,9 @@ levelElements.define("fizzler", { //level.fizzler
 //a link source can be linked to another link source, then it's only on while both are, see levelData.linkState()
 //a link source has linkOn(el, runtime), true while on, and linkCode(el, name), the javascript for on and off
 levelElements.isLinkSource = el => !!levelElements.types[el.type]?.linkOn
-levelElements.isCodeEditable = el => { //its code can be edited in the info box: not code, the enter and exit, mob spots' shared list, or code tied to other elements, like link sources, doors, and constraints
-    const type = levelElements.types[el.type]
-    const isLinkWritten = type?.writesLink && (el.link || el.orLink) //map, slime, and door write their link into their own code
-    return !!type && !!type.code && !type.codeAll && !type.isCode && !type.isSingleton && !isLinkWritten && !levelElements.isLinkSource(el) && type.props.every(prop => prop.kind !== "ref" || prop.key === "link" || prop.key === "orLink")
+levelElements.isCodeEditable = el => { //its code can be edited in the info box: not code, the enter and exit, mob spots' shared list, or a timer, its code is only a comment
+    const type = levelElements.types[el.type] //code naming other elements, like a door's button or a constraint's block, keeps up with their names, see levelData.editedRefs()
+    return !!type && !!type.code && !type.codeAll && !type.isCode && !type.isSingleton && type.canEditCode !== false
 }
 levelElements.runsProp = () => levelElements.prop.select("runs", ["while on", "while off"], { isShown: el => !!(el.link || el.orLink) }) //what a linked element does with its link, only shown once it has one
 levelElements.keyColors = ["yellow", "pink", "teal"] //level.keyColors by name
@@ -1192,27 +1191,77 @@ levelElements.zoneWho = { //what a zone notices, and the same as javascript
     mob: { list: () => mob, code: "mob" },
     any: { list: () => [player].concat(body, mob), code: "[player].concat(body, mob)" },
 }
-levelElements.define("zone", { //a trigger, a link source that's on while the player is inside, only the editor draws it
-    tip: "invisible box, linked doors open and linked elements run while the player (or a block or mob) is inside, stays on once something has been in",
+levelElements.define("zone", { //a trigger, a link source that's on while the player is inside, only the editor draws it, a box, or with circle a circle around x, y
+    tip: "invisible box or circle, linked doors open and linked elements run while the player (or a block or mob) is inside, stays on once something has been in",
     group: "element",
     isBackground: true, //it's often big, lock it so the mouse goes through
-    defaults: () => ({ x: 0, y: -400, width: 400, height: 400, who: "player", on: "inside" }),
+    defaults: () => ({ x: 0, y: -400, width: 400, height: 400, radius: 200, circle: false, who: "player", on: "inside" }),
     props: [
-        ...levelElements.rect(),
+        ...levelElements.rect().map(prop => prop.key === "width" || prop.key === "height" ? { ...prop, isShown: el => !el.circle } : prop),
+        levelElements.prop.number("radius", { isGrid: true, min: 1, isShown: el => !!el.circle }),
+        levelElements.prop.bool("circle", { write: (el, value) => levelElements.types.zone.round(el, value) }),
         levelElements.prop.select("who", Object.keys(levelElements.zoneWho)),
         levelElements.prop.select("on", ["inside", "stays on"]), //stays on once it's been entered
     ],
+    round(el, isCircle) { //a box becomes the circle in its middle, as big as the box on average, and back to the box around the circle, x, y is a circle's center
+        if (!!el.circle === !!isCircle) return
+        if (isCircle) {
+            el.radius = Math.max(1, Math.round((el.width + el.height) / 4))
+            el.x += el.width / 2
+            el.y += el.height / 2
+        } else {
+            el.width = el.height = 2 * el.radius
+            el.x -= el.radius
+            el.y -= el.radius
+        }
+        el.circle = !!isCircle
+    },
+    bounds: el => el.circle ? { x: el.x - el.radius, y: el.y - el.radius, width: 2 * el.radius, height: 2 * el.radius } : { x: el.x, y: el.y, width: el.width, height: el.height },
+    contains(el, p) {
+        if (el.circle) return Math.hypot(p.x - el.x, p.y - el.y) <= el.radius
+        return p.x >= el.x && p.x <= el.x + el.width && p.y >= el.y && p.y <= el.y + el.height
+    },
+    handles(el) {
+        if (el.circle) return [{ id: "radius", x: el.x + el.radius, y: el.y }]
+        const { x, y, width: w, height: h } = el
+        return [
+            { id: "nw", x, y }, { id: "n", x: x + w / 2, y }, { id: "ne", x: x + w, y },
+            { id: "e", x: x + w, y: y + h / 2 }, { id: "se", x: x + w, y: y + h }, { id: "s", x: x + w / 2, y: y + h },
+            { id: "sw", x, y: y + h }, { id: "w", x, y: y + h / 2 },
+        ]
+    },
+    dragHandle(el, id, point, min) {
+        if (id === "radius") return el.radius = Math.max(1, Math.round(Math.hypot(point.x - el.x, point.y - el.y)))
+        const box = { x: el.x, y: el.y, width: el.width, height: el.height }
+        levelElements.dragHandle(box, id, point, min) //a plain box, like any rect
+        Object.assign(el, box)
+    },
+    summary: el => el.circle ? `zone(${levelElements.args(el.x, el.y, el.radius)})` : `zone(${levelElements.args(el.x, el.y, el.width, el.height)})`,
     overlay(el) {
         ctx.fillStyle = "rgba(255,80,80,0.06)"
-        ctx.fillRect(el.x, el.y, el.width, el.height)
-        ctx.strokeRect(el.x, el.y, el.width, el.height)
-        levelElements.drawLinks(el, { x: el.x + el.width / 2, y: el.y + el.height / 2 })
+        if (el.circle) {
+            ctx.beginPath()
+            ctx.arc(el.x, el.y, el.radius, 0, 2 * Math.PI)
+            ctx.fill()
+            ctx.stroke()
+        } else {
+            ctx.fillRect(el.x, el.y, el.width, el.height)
+            ctx.strokeRect(el.x, el.y, el.width, el.height)
+        }
+        levelElements.drawLinks(el, el.circle ? el : { x: el.x + el.width / 2, y: el.y + el.height / 2 })
     },
     linkOn: (el, runtime) => runtime.zone ? runtime.zone.isOn : null,
     linkCode: (el, name) => ({ on: `${name}.isOn`, off: `!${name}.isOn` }),
     build(el) {
-        const zone = { isOn: false, min: { x: el.x, y: el.y }, max: { x: el.x + el.width, y: el.y + el.height } }
         const who = levelElements.zoneWho[el.who] || levelElements.zoneWho.player
+        if (el.circle) { //a body is in once its center is
+            const zone = { isOn: false, x: el.x, y: el.y, radius: el.radius }
+            return {
+                zone,
+                custom() { if (el.on !== "stays on" || !zone.isOn) zone.isOn = who.list().some(body => Vector.magnitude(Vector.sub(body.position, zone)) < zone.radius) },
+            }
+        }
+        const zone = { isOn: false, min: { x: el.x, y: el.y }, max: { x: el.x + el.width, y: el.y + el.height } }
         return {
             zone,
             custom() { if (el.on !== "stays on" || !zone.isOn) zone.isOn = Matter.Query.region(who.list(), zone).length > 0 },
@@ -1220,9 +1269,10 @@ levelElements.define("zone", { //a trigger, a link source that's on while the pl
     },
     code(el, name) {
         const who = levelElements.zoneWho[el.who] || levelElements.zoneWho.player
-        const check = `${name}.isOn = Matter.Query.region(${who.code}, ${name}).length > 0;`
+        const check = el.circle ? `${name}.isOn = ${who.code}.some(body => Vector.magnitude(Vector.sub(body.position, ${name})) < ${name}.radius);` : `${name}.isOn = Matter.Query.region(${who.code}, ${name}).length > 0;`
+        const setup = el.circle ? `const ${name} = { isOn: false, x: ${levelElements.args(el.x)}, y: ${levelElements.args(el.y)}, radius: ${levelElements.args(el.radius)} }; //trigger zone, a circle` : `const ${name} = { isOn: false, min: { x: ${levelElements.args(el.x)}, y: ${levelElements.args(el.y)} }, max: { x: ${levelElements.args(el.x + el.width)}, y: ${levelElements.args(el.y + el.height)} } }; //trigger zone`
         return {
-            setup: [`const ${name} = { isOn: false, min: { x: ${levelElements.args(el.x)}, y: ${levelElements.args(el.y)} }, max: { x: ${levelElements.args(el.x + el.width)}, y: ${levelElements.args(el.y + el.height)} } }; //trigger zone`],
+            setup: [setup],
             custom: [el.on === "stays on" ? `if (!${name}.isOn) ${check} //stays on once it's been entered` : check],
         }
     },
@@ -1230,6 +1280,7 @@ levelElements.define("zone", { //a trigger, a link source that's on while the pl
 
 levelElements.timerCode = el => `${el.offset ? `(simulation.cycle + ${levelElements.args(el.offset)})` : "simulation.cycle"} % ${levelElements.args(el.onTime + el.offTime)} < ${levelElements.args(el.onTime)}`
 levelElements.define("timer", { //a link source that's on for onTime cycles, then off for offTime, over and over
+    canEditCode: false, //what's linked to it writes the check, its own code is only a comment
     tip: "linked doors open and linked elements run for onTime cycles, then stop for offTime, over and over, 60 cycles is a second, offset shifts when",
     group: "element",
     defaults: () => ({ x: 0, y: -200, onTime: 60, offTime: 60, offset: 0 }),
@@ -1320,8 +1371,35 @@ for (const name of ["boost", "mover", "transport", "laser", "wind", "slime", "fi
 for (const name of levelElements.linkSources) { //a link source linked to another is only on while both are, set with the other one's link button, the row only shows once it's set
     const type = levelElements.types[name]
     const defaults = type.defaults
-    type.defaults = () => ({ ...defaults(), link: null, orLink: null })
-    type.props.push(levelElements.prop.ref("link", levelElements.linkSources, { isShown: el => el.link !== null && el.link !== undefined }), levelElements.orLinkProp())
+    type.defaults = () => ({ ...defaults(), log: "", link: null, orLink: null })
+    type.props.push(levelElements.prop.text("log"), levelElements.prop.ref("link", levelElements.linkSources, { isShown: el => el.link !== null && el.link !== undefined }), levelElements.orLinkProp())
+    const build = type.build
+    type.build = (el, options) => { //with a log, writes it in the in-game console each time it turns on, not if it's on when the level starts
+        const runtime = build(el, options)
+        if (!String(el.log).trim()) return runtime
+        const custom = runtime.custom
+        let wasOn = null
+        runtime.custom = () => {
+            if (custom) custom.call(runtime)
+            const isOn = type.linkOn(el, runtime) === true && levelData.linkState(el) !== false //and what it's linked to
+            if (wasOn === false && isOn) simulation.inGameConsole(levelData.safeHtml(el.log)) //html that can't run javascript
+            wasOn = isOn
+        }
+        return runtime
+    }
+    const code = type.code
+    type.code = (el, varName, context) => { //the same in export, a WasOn variable and two lines after its own custom lines
+        const lines = code(el, varName, context)
+        if (!String(el.log).trim()) return lines
+        const own = type.linkCode(el, varName).on
+        const above = context && el.link ? context.link(el) : null
+        const on = above ? `${own} && ${above.on.includes("||") ? `(${above.on})` : above.on}` : own
+        return {
+            ...lines,
+            setup: [...(lines.setup || []), `let ${varName}WasOn = null; //its log shows each time it turns on`],
+            custom: [...(lines.custom || []), `if (${varName}WasOn === false && (${on})) simulation.inGameConsole(${levelElements.args(levelData.safeHtml(el.log))});`, `${varName}WasOn = ${on};`],
+        }
+    }
 }
 
 //a pair of portals, one element so the two ends stay together, end A is x, y, angle and end B is x2, y2, angle2
@@ -1434,18 +1512,17 @@ levelElements.layers = ["under player", "over player"] //a drawing's layer: leve
 levelElements.isOver = el => el.layer === "over player"
 levelElements.define("fill", { //colored rect drawn behind or in front of the player, like the fillRect shading in written levels, older saves call it decor, see levelData.normalize()
     isDrawing: true, //only drawn, to top and to bottom change what's on top
-    tip: "colored rect drawn behind or in front of the player, for shading and backgrounds",
+    tip: "colored rect drawn behind or in front of the player, for shading and backgrounds, rect, circle, or ellipse in its info box changes its shape",
     group: "element",
     label: "fill",
+    rounds: ["fill", "circle", "ellipse"], //the info box switches between them, see the round command and levelElements.roundShape()
     isBackground: true, //lock background colors in editor settings makes the mouse go through it
     defaults: () => ({ x: 0, y: -400, width: 400, height: 400, color: "rgba(0,0,0,0.1)", layer: "under player" }),
-    names: ["exit fill", "shadow fill"], //each gets a button in the add menu
+    names: ["exit fill"], //the add menu's exit fill button
     tips: {
         "exit fill": "the light cyan room color behind the exit, placed around the exit door",
-        "shadow fill": "see-through dark rect drawn in front of the player, like the shading in standard levels",
     },
     preset(name, data) { //x and y place it, otherwise it goes in the middle of the view
-        if (name === "shadow fill") return { color: "rgba(0,0,0,0.1)", layer: "over player" } //written levels mostly shade in customTopLayer
         const exit = data && data.elements.find(el => el.type === "exit")
         const room = { width: 400, height: 350, color: "#d4f4f4", layer: "under player" } //the light cyan room behind the exit in written levels
         return exit ? { ...room, x: exit.x - 150, y: exit.y + 20 - room.height } : room
@@ -1464,6 +1541,14 @@ levelElements.define("fill", { //colored rect drawn behind or in front of the pl
     },
 })
 
+levelElements.roundShape = (el, typeName) => { //a fill, circle, or ellipse's size as another of them, around the same middle: a rect fits the ellipse, a circle is as big as both radii on average
+    const round = n => Number(n.toFixed(3))
+    const half = el.type === "fill" ? { x: el.width / 2, y: el.height / 2 } : el.type === "circle" ? { x: el.radius, y: el.radius } : { x: el.radiusX, y: el.radiusY }
+    const center = el.type === "fill" ? { x: el.x + half.x, y: el.y + half.y } : { x: el.x, y: el.y }
+    if (typeName === "fill") return { x: round(center.x - half.x), y: round(center.y - half.y), width: round(2 * half.x), height: round(2 * half.y) } //an ellipse's turn is dropped
+    if (typeName === "circle") return { ...center, radius: Math.max(1, Math.round((half.x + half.y) / 2)) }
+    return { ...center, radiusX: round(half.x), radiusY: round(half.y), angle: el.angle || 0 }
+}
 levelElements.isNoColor = color => !color || color === "none" || color === "transparent"
 //a path's curves: handles[i] is null for a corner, or [dx, dy] for a curved vertex, its handle out toward the next vertex, mirrored toward the one before
 //the line between two vertices is a bezier from each end's handle, or straight when neither has one
@@ -1614,36 +1699,6 @@ levelElements.define("path", { //lines and shapes of any outline, drawn behind o
 })
 
 //*********************************************************************
-levelElements.define("drip", { //level.drip, a drop that falls over and over
-    isDrawing: true, //only drawn, to top and to bottom change what's on top
-    tip: "a drop that falls from x, y, over and over, drag the bottom to change how far",
-    group: "element",
-    defaults: () => ({ x: 0, y: -600, length: 600, period: 100, color: "hsla(160, 100%, 35%, 0.5)" }),
-    props: [
-        ...levelElements.position(),
-        levelElements.prop.number("length", { isGrid: true, min: 10 }), //how far it falls
-        levelElements.prop.number("period", { step: 10, min: 1 }), //cycles between drops, plus up to 40 at random
-        levelElements.prop.color("color"),
-    ],
-    bounds: el => ({ x: el.x - 10, y: el.y - 10, width: 20, height: el.length + 20 }),
-    handles: el => [{ id: "end", x: el.x, y: el.y + el.length }],
-    dragHandle(el, id, point) { el.length = Math.max(10, point.y - el.y) },
-    overlay(el) {
-        ctx.beginPath()
-        ctx.moveTo(el.x, el.y)
-        ctx.lineTo(el.x, el.y + el.length)
-        ctx.stroke()
-    },
-    build(el) {
-        const drip = level.drip(el.x, el.y, el.y + el.length, el.period, el.color)
-        return { custom() { drip.draw() } }
-    },
-    code: (el, name) => ({
-        setup: [`const ${name} = level.drip(${levelElements.args(el.x, el.y, el.y + el.length, el.period, el.color)});`],
-        custom: [`${name}.draw();`],
-    }),
-})
-
 levelElements.define("text", { //words in the game's stroke font, like the constraint and level name at the start of a level, it doesn't jitter when the camera moves slowly like fillText does
     isDrawing: true, //only drawn, to top and to bottom change what's on top
     tip: "words drawn in the game's line font, like the level name at the start, letters, numbers, and . , ! ? : ' - + = / ( ) %, x, y is the top left, or the top middle when centered",
@@ -1687,10 +1742,11 @@ levelElements.define("text", { //words in the game's stroke font, like the const
 
 levelElements.define("circle", { //a filled circle drawn behind or in front of the player, the shape written levels draw most
     isDrawing: true, //only drawn, to top and to bottom change what's on top
-    tip: "colored circle drawn behind or in front of the player, drag the handle to change its radius, ellipse in its info box stretches it into an ellipse",
+    tip: "colored circle drawn behind or in front of the player, drag the handle to change its radius, rect or ellipse in its info box changes its shape",
     group: "element",
     label: "circle fill",
-    rounds: ["circle", "ellipse"], //the info box switches between them, see the round command
+    rounds: ["fill", "circle", "ellipse"],
+    isAddedAs: "fill", //not in the add menu, a fill's info box turns it into one
     isBackground: true, //lock background colors in editor settings makes the mouse go through it
     defaults: () => ({ x: 0, y: -200, radius: 100, color: "rgba(0,0,0,0.1)", layer: "under player" }),
     props: [
@@ -1724,8 +1780,8 @@ levelElements.define("ellipse", { //a filled ellipse, angle turns it, degrees co
     tip: "colored ellipse drawn behind or in front of the player, drag its handles to change each radius, rotate turns it",
     group: "element",
     label: "ellipse fill",
-    rounds: ["circle", "ellipse"],
-    isAddedAs: "circle", //not in the add menu, a circle's info box turns it into one
+    rounds: ["fill", "circle", "ellipse"],
+    isAddedAs: "fill", //not in the add menu, a fill's info box turns it into one
     isBackground: true, //lock background colors in editor settings makes the mouse go through it
     defaults: () => ({ x: 0, y: -200, radiusX: 150, radiusY: 75, angle: 0, color: "rgba(0,0,0,0.1)", layer: "under player" }),
     props: [
@@ -1784,96 +1840,6 @@ levelElements.define("ellipse", { //a filled ellipse, angle turns it, degrees co
     },
     code(el) {
         const lines = ["ctx.beginPath();", `ctx.ellipse(${levelElements.args(el.x, el.y, el.radiusX, el.radiusY)}, ${el.angle ? levelElements.angleCode(el.angle) : "0"}, 0, 2 * Math.PI);`, `ctx.fillStyle = ${levelElements.args(el.color)};`, "ctx.fill();"]
-        return levelElements.isOver(el) ? { top: lines } : { custom: lines }
-    },
-})
-
-levelElements.bezierPoints = el => [{ x: el.x, y: el.y }, { x: el.cx1, y: el.cy1 }, { x: el.cx2, y: el.cy2 }, { x: el.x2, y: el.y2 }] //start, its control, the end's control, end
-levelElements.bezierAt = (el, t) => { //a point on the curve
-    const [a, b, c, d] = levelElements.bezierPoints(el)
-    const s = 1 - t
-    return {
-        x: s * s * s * a.x + 3 * s * s * t * b.x + 3 * s * t * t * c.x + t * t * t * d.x,
-        y: s * s * s * a.y + 3 * s * s * t * b.y + 3 * s * t * t * c.y + t * t * t * d.y,
-    }
-}
-levelElements.define("bezier", { //a curved line, ctx.bezierCurveTo, drag either end or either control point
-    isDrawing: true, //only drawn, to top and to bottom change what's on top
-    tip: "curved line from x, y to x2, y2, drag the ends and the two control points that bend it",
-    group: "element",
-    label: "bezier",
-    isBackground: true, //lock background colors in editor settings makes the mouse go through it
-    defaults: () => ({ x: -200, y: -200, cx1: -100, cy1: -450, cx2: 100, cy2: -450, x2: 200, y2: -200, stroke: "rgba(0,0,0,0.25)", lineWidth: 10, layer: "under player" }),
-    props: [
-        ...levelElements.position(),
-        ...["cx1", "cy1", "cx2", "cy2", "x2", "y2"].map(key => levelElements.prop.number(key, { isGrid: true })),
-        levelElements.prop.color("stroke"),
-        levelElements.prop.number("lineWidth", { step: 1, min: 0 }),
-        levelElements.prop.select("layer", levelElements.layers),
-    ],
-    samples: el => Array.from({ length: 33 }, (_, i) => levelElements.bezierAt(el, i / 32)),
-    bounds(el) { //the curve, not its control points
-        const b = levelElements.boundsOf(levelElements.types.bezier.samples(el))
-        const pad = Math.max(10, el.lineWidth / 2)
-        return { x: b.x - pad, y: b.y - pad, width: b.width + 2 * pad, height: b.height + 2 * pad }
-    },
-    contains(el, p) { //near the curve
-        const points = levelElements.types.bezier.samples(el)
-        const reach = Math.max(8, el.lineWidth / 2 + 4)
-        for (let i = 0; i < points.length - 1; i++) {
-            const a = points[i]
-            const dx = points[i + 1].x - a.x
-            const dy = points[i + 1].y - a.y
-            const t = Math.max(0, Math.min(1, ((p.x - a.x) * dx + (p.y - a.y) * dy) / (dx * dx + dy * dy || 1)))
-            if (Math.hypot(p.x - a.x - t * dx, p.y - a.y - t * dy) < reach) return true
-        }
-        return false
-    },
-    move(el, dx, dy) {
-        for (const [x, y] of [["x", "y"], ["cx1", "cy1"], ["cx2", "cy2"], ["x2", "y2"]]) {
-            el[x] += dx
-            el[y] += dy
-        }
-    },
-    handles: el => [{ id: "start", x: el.x, y: el.y }, { id: "c1", x: el.cx1, y: el.cy1 }, { id: "c2", x: el.cx2, y: el.cy2 }, { id: "end", x: el.x2, y: el.y2 }],
-    dragHandle(el, id, point) {
-        const [x, y] = { start: ["x", "y"], c1: ["cx1", "cy1"], c2: ["cx2", "cy2"], end: ["x2", "y2"] }[id]
-        el[x] = point.x
-        el[y] = point.y
-    },
-    pivot: el => ({ x: (el.x + el.x2) / 2, y: (el.y + el.y2) / 2 }),
-    flip: (el, axis, center) => levelElements.flipEnds(el, axis, center, [["x", "y"], ["cx1", "cy1"], ["cx2", "cy2"], ["x2", "y2"]]),
-    rotate(el, degrees, center) {
-        for (const [x, y] of [["x", "y"], ["cx1", "cy1"], ["cx2", "cy2"], ["x2", "y2"]]) {
-            const p = levelElements.rotatePoint({ x: el[x], y: el[y] }, center, degrees)
-            el[x] = p.x
-            el[y] = p.y
-        }
-    },
-    overlay(el) { //each end to its control point
-        ctx.beginPath()
-        ctx.moveTo(el.x, el.y)
-        ctx.lineTo(el.cx1, el.cy1)
-        ctx.moveTo(el.x2, el.y2)
-        ctx.lineTo(el.cx2, el.cy2)
-        ctx.stroke()
-    },
-    summary: el => `bezier(${levelElements.args(el.x, el.y, el.x2, el.y2)})`,
-    build(el) {
-        const draw = () => {
-            if (levelElements.isNoColor(el.stroke) || el.lineWidth <= 0) return
-            ctx.beginPath()
-            ctx.moveTo(el.x, el.y)
-            ctx.bezierCurveTo(el.cx1, el.cy1, el.cx2, el.cy2, el.x2, el.y2)
-            ctx.strokeStyle = el.stroke
-            ctx.lineWidth = el.lineWidth
-            ctx.stroke()
-        }
-        return levelElements.isOver(el) ? { top: draw } : { custom: draw }
-    },
-    code(el) {
-        if (levelElements.isNoColor(el.stroke) || el.lineWidth <= 0) return {} //drawn nothing in the editor too
-        const lines = ["ctx.beginPath();", `ctx.moveTo(${levelElements.args(el.x, el.y)});`, `ctx.bezierCurveTo(${levelElements.args(el.cx1, el.cy1, el.cx2, el.cy2, el.x2, el.y2)});`, `ctx.strokeStyle = ${levelElements.args(el.stroke)};`, `ctx.lineWidth = ${levelElements.args(el.lineWidth)};`, "ctx.stroke();"]
         return levelElements.isOver(el) ? { top: lines } : { custom: lines }
     },
 })
@@ -2267,6 +2233,7 @@ levelElements.tips = {
     small: "a few small mobs instead of one",
     veto: "bosses it won't be, pick one to cross it out or bring it back, a vetoed boss's turn goes to the next one in its tier",
     mobVeto: "mobs the level's mob spots won't spawn, pick one to cross it out or bring it back, the level's other mob types spawn instead",
+    log: "a message in the in-game console each time it turns on, text or html like <b>bold</b>, <br> for a new line, or <span class='color-var'>, no other tags or attributes, empty logs nothing",
     x2: "the other end's x, game units",
     y2: "the other end's y, game units",
 }
@@ -2275,7 +2242,7 @@ levelElements.typeTips = {
     button: { on: "when its links are on: while pressed (down), while not (up), or for good once pressed (stays down)" },
     keyhole: { on: "on while the key is in, or for good once it's been in", color: "the key of this color fits" },
     key: { color: "fits the keyhole of this color" },
-    zone: { on: "on while something's inside, or for good once something has been" },
+    zone: { on: "on while something's inside, or for good once something has been", circle: "a circle around x, y instead of a box, something is inside once its center is", radius: "game units, from x, y" },
     boost: { launchHeight: "about how high it throws the player, game units" },
     transport: { distance: "how far it slides from its start, game units" },
     door: { distance: "how far up it slides to open, game units", speed: "how fast it opens and closes" },
@@ -2288,11 +2255,9 @@ levelElements.typeTips = {
     timer: { onTime: "frames it's on, 60 is a second", offTime: "frames it's off, 60 is a second", offset: "frames to shift it, so timers can take turns" },
     portal: { angle: "which way end A faces, degrees, 0 is right, 90 up", angle2: "which way end B faces, degrees", exit: "how things come out: keep their momentum, straight out, or launched" },
     path: { closed: "joins the last point to the first and fills it" },
-    drip: { length: "how far it falls, game units", period: "frames between drops, plus up to 40 at random" },
     text: { text: "letters, numbers, and . , ! ? : ' - + = / ( ) %", size: "how tall the letters are, 40 is the font's own size", align: "which side of x the text is on" },
     circle: { radius: "game units" },
     ellipse: { radiusX: "half its width before turning, game units", radiusY: "half its height before turning, game units" },
-    bezier: { cx1: "the control point that bends the start", cy1: "the control point that bends the start", cx2: "the control point that bends the end", cy2: "the control point that bends the end" },
     constraint: {
         x: "the circle end, in the level, or on its anchor block",
         y: "the circle end, in the level, or on its anchor block",
@@ -2308,6 +2273,8 @@ levelElements.typeTips = {
     namedMob: { name: "which mob" },
     level: {
         name: "letters, numbers, - and _, no spaces, it's the save name and the level pool name",
+        author: "who made it, plain text, when it loads the in-game console says the level's name and who made it, empty says nothing",
+        log: "a message in the in-game console when the level starts, after the author's, text or html like <b>bold</b>, <br> for a new line, or <span class='color-var'>, no other tags or attributes",
         zoom: "how far the camera sees, standard levels use 1300 to 2600",
         background: "the color behind everything",
         mapColor: "the color of the map",
@@ -2323,6 +2290,8 @@ levelElements.tipOf = (typeName, prop) => prop.tip || levelElements.typeTips[typ
 levelElements.level = {
     props: [
         levelElements.prop.text("name"),
+        levelElements.prop.text("author"), //who made it, the level logs its name and author when it loads, see levelData.authorLog()
+        levelElements.prop.text("log"), //a message in the in-game console when the level starts, after the author's
         levelElements.prop.number("zoom", { step: 100, min: 200 }), //level.defaultZoom when it's played
         levelElements.prop.color("background"),
         levelElements.prop.color("mapColor"),

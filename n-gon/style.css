@@ -840,6 +840,17 @@ levelPoolMenu.place() sets its position, width, and height */
     padding: 1px 7px;
 }
 
+.level-pool-button+.level-pool-button {
+    margin-left: 0;
+}
+
+/* the thumbnails button while thumbnails are on */
+.level-pool-button-on,
+.level-pool-button-on:hover {
+    background-color: #666;
+    color: #fff;
+}
+
 /* about the size of the words in settings */
 .level-route {
     display: flex;
@@ -931,6 +942,37 @@ levelPoolMenu.place() sets its position, width, and height */
 
 .level-chip-dragging {
     opacity: 0.3;
+}
+
+/* thumbnails on, each level is its thumbnail with the name under it, see levelPoolMenu.thumbnail() */
+.level-pool-thumbnails .level-pool-zone {
+    grid-template-columns: repeat(auto-fill, minmax(9.5em, 1fr));
+}
+
+.level-pool-thumbnails .level-chip {
+    padding: 0;
+}
+
+.level-chip-thumbnail {
+    display: block;
+    width: 100%;
+    aspect-ratio: 2;
+    pointer-events: none;
+}
+
+.level-chip-out .level-chip-thumbnail {
+    opacity: 0.4;
+}
+
+.level-chip-out:hover .level-chip-thumbnail {
+    opacity: 1;
+}
+
+.level-chip-name {
+    display: block;
+    padding: 3px 8px 4px;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .level-pool-shake {
@@ -2687,63 +2729,12 @@ body.level-editor #text-log {
     border-top: none;
 }
 
-.le-code-buttons+.le-js-view,
-.le-code-buttons+.le-js-edit {
+.le-code-buttons+.le-js-view {
     margin-top: 0;
 }
 
-.le-code-error {
-    margin: 4px 0;
-}
-
-.le-js-edit {
-    display: block;
-    box-sizing: border-box;
-    width: calc(100% + 12px);
-    margin: 0 -6px -6px;
-    padding: 6px 8px;
-    border: none;
-    border-radius: 0 0 6px 6px;
-    background-color: #fff;
-    font-family: monospace;
-    font-size: 10px;
-    line-height: 1.35;
-    white-space: pre;
-    resize: vertical;
-}
-
-/* the code box's colors: a pre behind the box with the same text in colors, the box's own text is see-through, only its caret and selection show */
-.le-js-edit-box {
-    position: relative;
-    margin: 0 -6px -6px;
-}
-
-.le-js-edit-box .le-js-edit {
-    width: 100%;
-    margin: 0;
-}
-
-.le-js-edit-box .le-js-colors {
-    position: absolute;
-    inset: 0;
-    overflow: hidden;
-    pointer-events: none;
-}
-
-.le-js-edit-box textarea.le-js-edit {
-    position: relative;
-    background: transparent;
-    color: transparent;
-    caret-color: #000;
-}
-
-.le-js-edit-box textarea.le-js-edit::selection {
-    background-color: rgba(0, 120, 255, 0.25);
-}
-
 /* GitHub's light theme, the most used light code colors */
-.le-js-view,
-.le-js-colors {
+.le-js-view {
     color: #1f2328;
 }
 
@@ -2765,6 +2756,45 @@ body.level-editor #text-log {
 
 .le-hl-call {
     color: #8250df;
+}
+
+/* the code panel's error line, under its name */
+.le-panel-error {
+    margin-top: 6px;
+}
+
+.le-hl-zone { /* the comment starting each part, runs once or every game cycle, a band so the parts stand apart, no bold so the letters keep their width */
+    color: #0550ae;
+    background-color: rgba(84, 174, 255, 0.18);
+}
+
+/* the level info box's list of code pieces and elements with edited code, each a link that selects it */
+.le-code-link {
+    display: flex;
+    gap: 6px;
+    width: 100%;
+    padding: 1px 4px;
+    border: none;
+    background: none;
+    font: inherit;
+    font-size: 12px;
+    text-align: left;
+    cursor: pointer;
+}
+
+.le-code-link span:first-child {
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.le-code-link:hover {
+    background-color: var(--hover-card-color);
+}
+
+.le-code-link-error {
+    color: #c00;
 }
 
 /* the settings while edited code runs instead */
@@ -2949,7 +2979,14 @@ body.level-editor.le-invincible #level-editor-left {
     max-height: calc((100vh - 61px) / 1.1);
 }
 
-/* under the health bar, gray like the pause menu's open menus, the open menus inside are the lighter card color */
+/* the left and right panels and the code panel cast the experiment menu's shadow (.experiment-start-box), a little lighter, the status bar doesn't */
+#level-editor-left,
+#level-editor-right,
+#level-editor-code {
+    box-shadow: 8px 8px 6px rgba(0, 0, 50, 0.1);
+}
+
+/* under the health bar, a plain gray as light as the pause menu's open menus, the open menus inside are the lighter card color */
 #level-editor-left {
     zoom: 1.1; /* everything in it 10% bigger, easier to read, top, left, and sizes are before the zoom */
     top: 40px;
@@ -2957,7 +2994,7 @@ body.level-editor.le-invincible #level-editor-left {
     width: 260px; /* 8px wider for the padding, so the menus inside keep their width */
     max-height: calc((100vh - 92px) / 1.1); /* above the status bar */
     padding: 10px;
-    background-color: #e2e9ec;
+    background-color: #e7e7e7; /* the pause menu's #e2e9ec with its blue taken out, the same lightness */
 }
 
 #level-editor-right {
@@ -3047,13 +3084,24 @@ body.level-editor.le-invincible #level-editor-left {
     color: #fff;
 }
 
-/* quick test and test export's play is green and stop red, unlike the menus' black arrows */
+/* quick test and test export's play is a green outline and stop a red one, the same size, unlike the menus' black arrows */
+.le-play,
+.le-stop {
+    width: 0.8em;
+    height: 0.8em;
+    margin-right: 0.15em;
+    vertical-align: -0.08em;
+    fill: none;
+    stroke-width: 1.6;
+    stroke-linejoin: round;
+}
+
 .le-play {
-    color: #1a9c3c;
+    stroke: #1a9c3c;
 }
 
 .le-stop {
-    color: #ff5a5a; /* bright, on the dark on button */
+    stroke: #ff5a5a; /* bright, on the dark on button */
 }
 
 /* the status bar's draw tools are tiny drawings, the one in use gets a light background so the dark map still shows */
@@ -3484,9 +3532,9 @@ body.level-editor.le-invincible #level-editor-left {
     grid-template-columns: repeat(7, 1fr);
 }
 
-/* the drawing row under them: fill, exit fill, circle, draw path, text */
+/* the drawing row under them: fill, draw path, exit fill, text */
 .le-shapes.le-draws {
-    grid-template-columns: repeat(5, 1fr);
+    grid-template-columns: repeat(4, 1fr);
 }
 
 .le-shapes+.le-shapes {
@@ -3789,22 +3837,127 @@ body.level-editor #level-editor-code:not(.le-open) {
     font-family: monospace;
 }
 
-#level-editor-code textarea {
+/* the code panel's box is see-through over a pre with its text in colors, like the info box's code box */
+.le-panel-box {
+    position: relative;
+    margin-top: 6px;
+}
+
+#level-editor-code textarea,
+.le-panel-colors {
     box-sizing: border-box;
     width: 100%;
     height: min(70vh, 700px);
-    margin-top: 6px;
+    margin: 0;
     padding: 6px;
     border: 1px solid #bbb;
     border-radius: 4px;
     font: inherit;
     font-size: 12px;
+    line-height: 1.35;
     white-space: pre;
+}
+
+#level-editor-code textarea {
+    position: relative;
+    display: block;
+    background: transparent;
+    color: transparent;
+    caret-color: #000;
     resize: none;
+}
+
+#level-editor-code textarea::placeholder {
+    color: #888;
+}
+
+#level-editor-code textarea::selection {
+    background-color: rgba(0, 120, 255, 0.25);
+}
+
+.le-panel-colors {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+    border-color: transparent;
+    background-color: #fff;
+    color: #1f2328;
+    pointer-events: none;
 }
 
 #level-editor-code [hidden] {
     display: none;
+}
+
+/* an element's or the level's code: runs once, level.custom, and level.customTopLayer stacked like a sandwich, drag the lines between them, a folded part is a strip with its name */
+.le-parts {
+    display: flex;
+    flex-direction: column;
+    height: min(70vh, 700px);
+    margin-top: 6px;
+}
+
+.le-part {
+    display: flex;
+    flex: 0 1 0;
+    flex-direction: column;
+    min-height: 0;
+    overflow: hidden;
+}
+
+.le-part.le-folded {
+    flex: 0 0 auto;
+}
+
+.le-part-name {
+    padding: 2px 6px;
+    overflow: hidden;
+    border: none;
+    border-radius: 4px 4px 0 0;
+    background-color: rgba(84, 174, 255, 0.18); /* the part comment's band, .le-hl-zone */
+    color: #0550ae;
+    font: inherit;
+    font-size: 12px;
+    text-align: left;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    cursor: pointer;
+}
+
+.le-part.le-folded .le-part-name {
+    border-radius: 4px;
+}
+
+.le-part-box {
+    position: relative;
+    flex: 1;
+    min-height: 0;
+}
+
+.le-part.le-folded .le-part-box {
+    display: none;
+}
+
+#level-editor-code .le-part-box textarea,
+#level-editor-code .le-part-box .le-panel-colors {
+    height: 100%;
+    border-radius: 0 0 4px 4px;
+}
+
+.le-part-line {
+    flex: 0 0 9px;
+    background: linear-gradient(to bottom, transparent 4px, #bbb 4px, #bbb 5px, transparent 5px);
+    cursor: row-resize;
+}
+
+.le-part-line:hover,
+.le-part-line.le-dragging {
+    background: linear-gradient(to bottom, transparent 3px, #0969da 3px, #0969da 6px, transparent 6px);
+}
+
+body.le-part-dragging {
+    cursor: row-resize;
+    user-select: none;
 }
 
 .le-report {
@@ -3828,6 +3981,24 @@ body.level-editor #level-editor-code:not(.le-open) {
     margin-top: 8px;
     color: #999;
     font-style: italic;
+}
+
+/* the import warning, a pasted level's javascript before it runs, see confirmImport() */
+.le-import-warning {
+    color: #c00;
+}
+
+.le-import-flags code {
+    color: #c00;
+}
+
+.le-import-code {
+    margin: 2px 0 0;
+    padding: 4px 6px;
+    overflow-x: auto;
+    background-color: #eef1f3;
+    color: #1f2328;
+    white-space: pre;
 }
 
 /* the analysis in the inspector, see inspectAnalysis() */

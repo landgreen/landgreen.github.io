@@ -43,7 +43,7 @@ Object.assign(levelEditor, {
                 <li>Aim for 2 to 12 heal and ammo power ups in total. <b>Random</b> places a heal or ammo, and <b>debris</b> scatters small blocks and power ups.</li>
                 <li>Keep it light: aim for fewer than about 100 map pieces and 50 blocks. Fewer, larger pieces usually run better than many small ones.</li>
                 <li>The level's <b>zoom</b> controls how much the camera shows during a run. Higher numbers show more; existing levels use 1300 to 2600.</li>
-                <li>Use fill and shadow fill to make rooms easier to read. A light exit fill helps mark the end.</li>
+                <li>Use fills to make rooms easier to read. A light exit fill helps mark the end.</li>
                 <li>Click the issues count in the bottom bar for suggestions. <b>Fix</b> marks missing essentials, <b>warn</b> marks likely problems, and <b>note</b> marks something unusual that may be fine.</li>
             </ul>`],
         ["testing", `
@@ -62,7 +62,7 @@ Object.assign(levelEditor, {
             <p>A block's <b>constraint</b> can pin it to a point in the level, or set its <b>anchor</b> to another block to tie the two together, like a chain or a pendulum.</p>
             <p>Link two controls to the same object and either can turn it on. Link one control to another and both must be on. For example, link a zone to a timer, then the timer to a laser, to make the laser pulse only while something is in the zone.</p>`],
         ["code", `
-            <p>Code is optional. For behavior the editor's tools can't make, <b>+ code</b> lets you add your own JavaScript.</p>
+            <p>Code is optional. For behavior the editor's tools can't make, <b>+ code</b> at the bottom of the level's info box (click empty space) lets you add your own JavaScript.</p>
             <p>To explore how existing levels work, open one from <b>load more levels</b> in <b>export/import</b>. This makes a local copy, so you can experiment without changing the original.</p>
             <p>If you're writing code: each code element runs when the level loads and can use variables defined in earlier code elements. Put behavior that needs to repeat each frame in <code>level.custom</code>.</p>`],
         ["sharing and submitting", `

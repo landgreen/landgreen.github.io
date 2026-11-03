@@ -52,7 +52,7 @@ const levelAnalysis = {
         const ground = of("map").slice()
         if (spawn && spawn.bump) ground.push({ type: "map", x: spawn.x - 50, y: spawn.y + 40, width: 100, height: 20 }) //the bumps the doors stand on
         if (exit && exit.bump) ground.push({ type: "map", x: exit.x, y: exit.y + 20, width: 100, height: 20 })
-        const code = data.elements.filter(el => levelElements.isCode(el)).map(el => el.code).join("\n")
+        const code = levelData.codeText(data) //code elements and the level code
         return { data, of, spawn, exit, ground, code, inCode: text => code.includes(text), norms: levelAnalysis.norms, live: options.isLive ? levelAnalysis.live(data) : null }
     },
     live(data) { //what each element made and what its custom and top layers cost a frame, from levelData's runtimes
@@ -299,8 +299,8 @@ levelAnalysis.check("layout", c => {
     const { line, at, distance } = levelAnalysis
     const lines = []
     const maps = c.of("map")
-    if (c.code) lines.push(line("note", "code", c.of("code").length, "these checks can't see what it makes"))
-    if (!maps.length) return lines.concat(c.code ? [] : [line("fix", "map", 0, "draw some ground", [], "map")])
+    if (c.code.trim()) lines.push(line("note", "code", c.of("code").length + (c.data.levelCode.trim() ? 1 : 0), "these checks can't see what it makes"))
+    if (!maps.length) return lines.concat(c.code.trim() ? [] : [line("fix", "map", 0, "draw some ground", [], "map")])
     if (c.spawn) {
         if (levelAnalysis.inMap(c, c.spawn)) lines.push(line("fix", "enter in the map", "", `at ${at(c.spawn.x, c.spawn.y)}`, [c.spawn]))
         else if (!levelAnalysis.isGroundBelow(c, c.spawn)) lines.push(line("warn", "enter", "", "nothing below it", [c.spawn]))

@@ -382,7 +382,8 @@ const level = {
     load(name) {
         const mapCollection = [level.maps, level.localMaps, moreLevels].find(maps => typeof maps[name] === "function")
         if (!mapCollection) throw new Error(`unknown level: ${name}`)
-        mapCollection[name].call(level)
+        const map = mapCollection === moreLevels && level.communityLevels.includes(name) ? levelData.communityLevel(name) : mapCollection[name] //community levels can read saves and settings but not change them
+        map.call(level)
     },
     newLevelOrPhase() { //runs on each new level but also on final boss phases
         //used for generalist and pigeonhole principle
