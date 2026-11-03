@@ -2631,21 +2631,17 @@ body.level-editor #text-log {
     margin-left: 10px;
 }
 
-/* the simulation menu's invincible, on the right of mobs, power ups */
-.le-invincible {
-    margin-left: auto;
-}
-
 /* cut, copy, and paste's keys under the inspector's delete */
 .le-hotkeys .le-key-cap {
     font-size: 15px;
 }
 
+/* the top of the info box, like a header */
 .le-hotkeys {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-top: 8px;
+    margin-bottom: 8px;
 }
 
 .le-hotkey-group {
@@ -2681,6 +2677,102 @@ body.level-editor #text-log {
 }
 
 /* the inspector's js view, the lines this element writes in export JS */
+/* edit and revert, flush above the code, and the box an element's code is typed into, the same place and size as the code */
+.le-code-buttons {
+    margin-top: 8px;
+}
+
+.le-actions+.le-code-buttons { /* right under the action rows, one box */
+    margin-top: 0;
+    border-top: none;
+}
+
+.le-code-buttons+.le-js-view,
+.le-code-buttons+.le-js-edit {
+    margin-top: 0;
+}
+
+.le-code-error {
+    margin: 4px 0;
+}
+
+.le-js-edit {
+    display: block;
+    box-sizing: border-box;
+    width: calc(100% + 12px);
+    margin: 0 -6px -6px;
+    padding: 6px 8px;
+    border: none;
+    border-radius: 0 0 6px 6px;
+    background-color: #fff;
+    font-family: monospace;
+    font-size: 10px;
+    line-height: 1.35;
+    white-space: pre;
+    resize: vertical;
+}
+
+/* the code box's colors: a pre behind the box with the same text in colors, the box's own text is see-through, only its caret and selection show */
+.le-js-edit-box {
+    position: relative;
+    margin: 0 -6px -6px;
+}
+
+.le-js-edit-box .le-js-edit {
+    width: 100%;
+    margin: 0;
+}
+
+.le-js-edit-box .le-js-colors {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+    pointer-events: none;
+}
+
+.le-js-edit-box textarea.le-js-edit {
+    position: relative;
+    background: transparent;
+    color: transparent;
+    caret-color: #000;
+}
+
+.le-js-edit-box textarea.le-js-edit::selection {
+    background-color: rgba(0, 120, 255, 0.25);
+}
+
+/* GitHub's light theme, the most used light code colors */
+.le-js-view,
+.le-js-colors {
+    color: #1f2328;
+}
+
+.le-hl-comment {
+    color: #6e7781;
+}
+
+.le-hl-string {
+    color: #0a3069;
+}
+
+.le-hl-number { /* and true, false, null */
+    color: #0550ae;
+}
+
+.le-hl-keyword {
+    color: #cf222e;
+}
+
+.le-hl-call {
+    color: #8250df;
+}
+
+/* the settings while edited code runs instead */
+.le-overridden {
+    opacity: 0.45;
+    pointer-events: none;
+}
+
 .le-js-view { /* the bottom of the inspector, out to its edges, a slightly darker region with no lines */
     margin: 8px -6px -6px;
     padding: 6px 8px;
@@ -2953,6 +3045,15 @@ body.level-editor.le-invincible #level-editor-left {
 .le-button.le-on {
     background-color: #666;
     color: #fff;
+}
+
+/* quick test and test export's play is green and stop red, unlike the menus' black arrows */
+.le-play {
+    color: #1a9c3c;
+}
+
+.le-stop {
+    color: #ff5a5a; /* bright, on the dark on button */
 }
 
 /* the status bar's draw tools are tiny drawings, the one in use gets a light background so the dark map still shows */
@@ -3262,20 +3363,6 @@ body.level-editor.le-invincible #level-editor-left {
 .le-number.le-short {
     width: 20px;
     padding: 1px 2px;
-}
-
-.le-check {
-    min-width: 0;
-    font-size: 12px;
-    display: inline-flex;
-    align-items: center;
-    gap: 2px;
-    white-space: nowrap;
-    cursor: pointer;
-}
-
-.le-check input {
-    margin: 0;
 }
 
 /* a code element, written out, click it to edit */

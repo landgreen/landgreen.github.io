@@ -551,6 +551,7 @@ levelElements.define("map", {
     color: "#444",
     isLinkable: true,
     handlesLink: true, //appears or disappears instead of only running while it's on
+    writesLink: true, //its code() uses context.link, so linked it can't be edited as code
     defaults: () => ({ x: 0, y: 0, width: 100, height: 100, friction: 0.1, restitution: 0, collides: levelElements.collision.defaults.map, link: null, orLink: null, on: "appears" }),
     props: [
         ...levelElements.rect(),
@@ -873,6 +874,7 @@ levelElements.define("slime", { //level.hazard
     tip: "hurts the player while they're inside it, with rise it starts empty and fills up, linked it fills while on and drains while off",
     group: "element",
     handlesLink: true, //with rise it drains while off instead of stopping
+    writesLink: true, //its code() uses context.link
     defaults: () => ({ x: 0, y: -100, width: 400, height: 100, damage: 0.0025, rise: 0 }),
     props: [
         ...levelElements.rect(),
@@ -947,26 +949,87 @@ levelElements.segment = { //geometry for a line between two points, x, y and x2,
     },
 }
 
+levelElements.laserAngle = el => { //the laser's angle now, radians: where x2, y2 points, plus spin and swing, by simulation.cycle like written levels' oscillating lasers
+    let angle = Math.atan2(el.y2 - el.y, el.x2 - el.x)
+    if (el.spin) angle += el.spin * Math.PI / 180 / 60 * simulation.cycle
+    if (el.swing) angle += el.swing * Math.PI / 180 * Math.sin(2 * Math.PI / el.swingTime * simulation.cycle)
+    return angle
+}
 levelElements.define("laser", {
-    tip: "beam between two points that hurts the player, drag either end",
+    tip: "beam between two points that hurts the player, drag either end, spin and swing turn it around x, y, motion makes it a motion sensor",
     group: "element",
-    defaults: () => ({ x: 0, y: -300, x2: 400, y2: -300, damage: 0.12 }),
+    defaults: () => ({ x: 0, y: -300, x2: 400, y2: -300, damage: 0.12, spin: 0, swing: 0, swingTime: 240, motion: false }),
     props: [
         ...levelElements.position(),
         levelElements.prop.number("x2", { isGrid: true }),
         levelElements.prop.number("y2", { isGrid: true }),
         levelElements.prop.number("damage", { step: 0.02, min: 0 }),
+        levelElements.prop.number("spin", { step: 15 }), //degrees a second around x, y
+        levelElements.prop.number("swing", { step: 5, min: 0 }), //degrees each way
+        levelElements.prop.number("swingTime", { step: 30, min: 10, isShown: el => el.swing > 0 }), //frames for one swing there and back
+        levelElements.prop.bool("motion"), //level.laser's motionQuery()
     ],
     ...levelElements.segment,
+    flip(el, axis, center) { //the ends mirror, and it spins the other way
+        levelElements.segment.flip(el, axis, center)
+        if (el.spin) el.spin = -el.spin
+    },
+    overlay(el) { //the line, and where it turns: a circle for spin, the two ends of a swing
+        levelElements.segment.overlay(el)
+        if (!el.spin && !el.swing) return
+        const length = Math.hypot(el.x2 - el.x, el.y2 - el.y)
+        const base = Math.atan2(el.y2 - el.y, el.x2 - el.x)
+        const reach = el.swing * Math.PI / 180
+        ctx.save()
+        ctx.setLineDash([12, 8])
+        ctx.lineWidth = 2
+        ctx.strokeStyle = "rgba(255,0,0,0.35)"
+        ctx.beginPath()
+        if (el.spin) {
+            ctx.arc(el.x, el.y, length, 0, 2 * Math.PI)
+        } else {
+            for (const side of [-1, 1]) {
+                ctx.moveTo(el.x, el.y)
+                ctx.lineTo(el.x + length * Math.cos(base + side * reach), el.y + length * Math.sin(base + side * reach))
+            }
+            ctx.moveTo(el.x + length * Math.cos(base - reach), el.y + length * Math.sin(base - reach))
+            ctx.arc(el.x, el.y, length, base - reach, base + reach)
+        }
+        ctx.stroke()
+        ctx.restore()
+    },
     summary: el => `laser(${[el.x, el.y, el.x2, el.y2].map(n => Number(n.toFixed(2))).join(", ")})`,
     build(el) {
         const laser = level.laser({ x: el.x, y: el.y }, { x: el.x2, y: el.y2 }, el.damage)
-        return { custom() { laser.query() } }
+        const length = Math.hypot(el.x2 - el.x, el.y2 - el.y)
+        return {
+            custom() {
+                if (el.spin || el.swing) {
+                    const angle = levelElements.laserAngle(el)
+                    laser.look = { x: el.x + length * Math.cos(angle), y: el.y + length * Math.sin(angle) }
+                }
+                if (el.motion) laser.motionQuery()
+                else laser.query()
+            },
+        }
     },
-    code: (el, name) => ({
-        setup: [`const ${name} = level.laser({ x: ${levelElements.args(el.x)}, y: ${levelElements.args(el.y)} }, { x: ${levelElements.args(el.x2)}, y: ${levelElements.args(el.y2)} }, ${levelElements.args(el.damage)});`],
-        custom: [`${name}.query();`],
-    }),
+    code(el, name) {
+        const a = levelElements.args
+        const custom = []
+        if (el.spin || el.swing) { //like written levels' oscillating lasers
+            const length = Math.hypot(el.x2 - el.x, el.y2 - el.y)
+            const base = Math.atan2(el.y2 - el.y, el.x2 - el.x)
+            const parts = base ? [a(base)] : [] //pointing right is 0
+            if (el.spin) parts.push(`${a(el.spin * Math.PI / 180 / 60)} * simulation.cycle`)
+            if (el.swing) parts.push(`${a(el.swing * Math.PI / 180)} * Math.sin(${a(2 * Math.PI / el.swingTime)} * simulation.cycle)`)
+            custom.push(`const ${name}Angle = ${parts.join(" + ")};`, `${name}.look = { x: ${a(el.x)} + ${a(length)} * Math.cos(${name}Angle), y: ${a(el.y)} + ${a(length)} * Math.sin(${name}Angle) };`)
+        }
+        custom.push(el.motion ? `${name}.motionQuery();` : `${name}.query();`)
+        return {
+            setup: [`const ${name} = level.laser({ x: ${a(el.x)}, y: ${a(el.y)} }, { x: ${a(el.x2)}, y: ${a(el.y2)} }, ${a(el.damage)});`],
+            custom,
+        }
+    },
 })
 
 levelElements.define("fizzler", { //level.fizzler
@@ -995,6 +1058,11 @@ levelElements.define("fizzler", { //level.fizzler
 //a link source can be linked to another link source, then it's only on while both are, see levelData.linkState()
 //a link source has linkOn(el, runtime), true while on, and linkCode(el, name), the javascript for on and off
 levelElements.isLinkSource = el => !!levelElements.types[el.type]?.linkOn
+levelElements.isCodeEditable = el => { //its code can be edited in the info box: not code, the enter and exit, mob spots' shared list, or code tied to other elements, like link sources, doors, and constraints
+    const type = levelElements.types[el.type]
+    const isLinkWritten = type?.writesLink && (el.link || el.orLink) //map, slime, and door write their link into their own code
+    return !!type && !!type.code && !type.codeAll && !type.isCode && !type.isSingleton && !isLinkWritten && !levelElements.isLinkSource(el) && type.props.every(prop => prop.kind !== "ref" || prop.key === "link" || prop.key === "orLink")
+}
 levelElements.runsProp = () => levelElements.prop.select("runs", ["while on", "while off"], { isShown: el => !!(el.link || el.orLink) }) //what a linked element does with its link, only shown once it has one
 levelElements.keyColors = ["yellow", "pink", "teal"] //level.keyColors by name
 levelElements.keyColor = name => level.keyColors[Math.max(0, levelElements.keyColors.indexOf(name))]
@@ -1199,6 +1267,7 @@ levelElements.define("timer", { //a link source that's on for onTime cycles, the
 })
 
 levelElements.define("door", {
+    writesLink: true, //its code() uses context.link
     tip: "slides up to open, link it to a button or toggle, without one it stays shut",
     group: "element",
     isLinkable: true,
@@ -2189,6 +2258,10 @@ levelElements.tips = {
     length: "game units",
     name: "",
     count: "how many",
+    spin: "keeps turning around x, y, degrees a second, negative turns the other way, 0 doesn't",
+    swing: "sways back and forth around x, y, this many degrees each way from where it points, 0 doesn't",
+    swingTime: "frames for one swing there and back, 60 is a second",
+    motion: "a motion sensor: a faint white beam, when the player crosses it, it flashes white for a second, then hurts like a laser for about 10 seconds",
     who: "what turns it on by being inside: the player, a block, a mob, or any of them",
     on: "",
     small: "a few small mobs instead of one",

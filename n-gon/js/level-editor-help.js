@@ -48,7 +48,7 @@ Object.assign(levelEditor, {
             </ul>`],
         ["testing", `
             <ul>
-                <li><b>▶ quick test</b> returns the player to the enter and puts blocks back where they started. Check <b>mobs, power ups</b> to include them in the test, and <b>invincible</b> to explore without taking damage.</li>
+                <li><b>▶ quick test</b> returns the player to the enter and puts blocks back where they started. Turn on <b>mobs</b> to include mobs and power ups in the test, and <b>invincible</b> to explore without taking damage.</li>
                 <li><b>level</b> sets how far into a run you're testing. Try 1 and 10 to see how the fights change. At 0, random mobs don't spawn.</li>
                 <li><b>▶ test export</b> runs the code that <b>export</b> produces, with the normal game camera and mouse controls. It always includes mobs and power ups. You don't need to know JavaScript to use it; try it before sharing your level.</li>
                 <li><b>Time</b> slows the game so you can watch something closely. Test export ignores it, and grays out the settings it doesn't use.</li>

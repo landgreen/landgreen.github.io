@@ -305,7 +305,8 @@ const levelData = {
         let runtime
         try {
             if (!type) throw new Error(`unknown element type: ${el.type}`)
-            runtime = levelData.isSkipped(el) ? {} : type.build(el, { isLive, isEditor: levelData.isEditor, isSpawning: levelData.isSpawning && !isLive }) || {} //hidden in the editor's explorer
+            const options = { isLive, isEditor: levelData.isEditor, isSpawning: levelData.isSpawning && !isLive }
+            runtime = levelData.isSkipped(el) ? {} : el.edited ? levelData.buildEdited(el, options) : type.build(el, options) || {} //hidden in the editor's explorer, or its edited code
         } catch (error) {
             runtime = { error }
             if (!error.isUnfinished) console.error(`${el.type} #${el.id}:`, error) //an unfinished element, like a constraint with no block yet, only shows in the inspector and the issues
@@ -320,6 +321,40 @@ const levelData = {
             }
         }
         return runtime
+    },
+    //*********************************************************************
+    // edited code, an element's code changed in the editor's info box: el.edited = { name, text }
+    // text is like the info box's code: setup lines, then //level.custom and //level.customTopLayer and their lines, name is the variable name it was written with
+    // it runs instead of what the element's settings make, a link still turns it on and off, see levelElements.isCodeEditable()
+    //*********************************************************************
+    sectionsOf(text) { //{ setup, custom, top } lines
+        const sections = { setup: [], custom: [], top: [] }
+        let section = sections.setup
+        for (const line of String(text).split("\n")) {
+            if (line.trim() === "//level.custom") section = sections.custom
+            else if (line.trim() === "//level.customTopLayer") section = sections.top
+            else section.push(line)
+        }
+        return sections
+    },
+    sectionsText({ setup = [], custom = [], top = [] }) {
+        return [...setup, ...(custom.length ? ["//level.custom", ...custom] : []), ...(top.length ? ["//level.customTopLayer", ...top] : [])].join("\n")
+    },
+    typeCode(el, name, context) { //an element's { setup, custom, top } for export: its edited code with its variable name now, or what its type writes
+        if (!el.edited) return levelElements.types[el.type].code(el, name, context)
+        const text = name && el.edited.name && name !== el.edited.name ? el.edited.text.replace(new RegExp(`\\b${el.edited.name}\\b`, "g"), name) : el.edited.text
+        return levelData.sectionsOf(text)
+    },
+    editedFunction(text) { //one function that runs the setup and returns the layers, making it throws a SyntaxError if the code can't be read, without running any of it
+        const { setup, custom, top } = levelData.sectionsOf(text)
+        const layer = lines => lines.some(line => line.trim()) ? `() => {\n${lines.join("\n")}\n}` : "null"
+        return Function(`"use strict";\n${setup.join("\n")}\nreturn { custom: ${layer(custom)}, top: ${layer(top)} }`)
+    },
+    buildEdited(el, options) { //like a type's build(), its custom and top run each frame, mobs and power ups only spawn when they would
+        const group = levelElements.types[el.type]?.group
+        if ((group === "mob" || group === "powerUp") && !options.isSpawning) return {}
+        const layers = levelData.editedFunction(el.edited.text).call(level)
+        return { custom: layers.custom, top: layers.top }
     },
     unbuild(runtime) {
         if (!runtime) return
@@ -431,7 +466,7 @@ const levelData = {
         if (!type) return "//unknown type"
         if (type.isCode) return el.code
         const { names, context } = levelData.codeNames(data)
-        const lines = type.codeAll ? { setup: type.codeAll(data.elements.filter(other => other.type === el.type), data) } : type.code ? type.code(el, names.get(el.id), context) : {}
+        const lines = type.codeAll ? { setup: type.codeAll(data.elements.filter(other => other.type === el.type), data) } : type.code ? levelData.typeCode(el, names.get(el.id), context) : {}
         const link = type.isLinkable && !type.handlesLink && context.link(el)
         const gate = list => link && list.length ? [`if (${link.on}) {`, ...list.map(line => "    " + line), "}"] : list
         const custom = gate(lines.custom || [])
@@ -457,7 +492,7 @@ const levelData = {
                 continue
             }
             if (!type || !type.code) continue
-            const lines = type.code(el, names.get(el.id), context)
+            const lines = levelData.typeCode(el, names.get(el.id), context)
             const link = type.isLinkable && !type.handlesLink && context.link(el)
             const gate = list => link && list.length ? [`if (${link.on}) {`, ...list.map(line => "    " + line), "}"] : list //only runs while its button has it on
             if (!groups[type.group]) groups[type.group] = []
@@ -526,7 +561,7 @@ const levelData = {
                 continue
             }
             if (!type.code) continue
-            const out = type.code(el, names.get(el.id), context)
+            const out = levelData.typeCode(el, names.get(el.id), context)
             const link = type.isLinkable && !type.handlesLink && context.link(el)
             const gate = list => link && list.length ? [`if (${link.on}) {`, ...list.map(line => "    " + line), "}"] : list
             lines.push(...(out.setup || []))
