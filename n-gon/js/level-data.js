@@ -41,15 +41,28 @@ const levelData = {
             if (el.type === "bezier") levelData.bezierToPath(el) //the path's curves do it now
             if (!isId(el.id)) el.id = data.nextId++
             levelElements.fillDefaults(el)
+            for (const key of levelElements.refKeys(el)) if (!isId(el[key])) el[key] = null
+            if (el.type === "powerUp" && !levelElements.types.powerUp.names.includes(el.name)) el.name = "heal"
+            if (el.type === "namedMob" && !levelElements.mobNames().includes(el.name)) el.name = "starter"
             if ("veto" in el && !Array.isArray(el.veto)) el.veto = []
             if ("handles" in el && !Array.isArray(el.handles)) el.handles = []
             if (el.layer === "back" || el.layer === "front") el.layer = el.layer === "back" ? "under player" : "over player" //their old names
+            if (el.edited) levelData.normalizeEdited(el)
         }
         if (data.elements.some(el => el.type === "drip")) levelData.dripsToCode(data) //drip isn't an element anymore
         for (const type of levelElements.groups.core) { //every level needs a spawn and an exit, unless its code sets them, like a written level that picks a layout
             if (!data.elements.some(el => el.type === type) && !levelData.hasCode(data)) levelData.add(data, levelElements.create(type))
         }
         return data
+    },
+    normalizeEdited(el) { //edited code's names go into the javascript as variable and argument names, so each has to be a plain name, or an imported level could hide code where importing doesn't show it
+        const isName = name => typeof name === "string" && /^[A-Za-z_$][\w$]*$/.test(name)
+        const edited = el.edited
+        if (typeof edited !== "object") return delete el.edited
+        edited.text = String(edited.text ?? "") //importing shows it before it can run
+        if (!isName(edited.name)) delete edited.name
+        const names = edited.names && typeof edited.names === "object" ? edited.names : {}
+        edited.names = Object.fromEntries(Object.entries(names).filter(([id, name]) => /^[1-9]\d*$/.test(id) && isName(name)))
     },
     dripsToCode(data) { //older saves' drips, each one's lines go in the level code so it still drips
         const parts = data.levelCode.trim() ? levelData.sectionsOf(data.levelCode) : { setup: [], custom: [], top: [] }
@@ -692,17 +705,20 @@ const levelData = {
         }
         return { names, context }
     },
+    exportElement(el, name, context) { //one element's generated lines, including its control links
+        const type = levelElements.types[el.type]
+        const lines = levelData.typeCode(el, name, context)
+        const link = type.isLinkable && !type.handlesLink && context.link(el)
+        const gate = list => link && list.length ? [`if (${link.on}) {`, ...list.map(line => "    " + line), "}"] : list
+        return { setup: lines.setup || [], custom: gate(lines.custom || []), top: gate(lines.top || []) }
+    },
     elementCode(data, el) { //the lines one element writes in export JS, for the inspector's js view
         const type = levelElements.types[el.type]
         if (!type) return "//unknown type"
         if (type.isCode) return el.code
         const { names, context } = levelData.codeNames(data)
-        const lines = type.codeAll ? { setup: type.codeAll(data.elements.filter(other => other.type === el.type), data) } : type.code ? levelData.typeCode(el, names.get(el.id), context) : {}
-        const link = type.isLinkable && !type.handlesLink && context.link(el)
-        const gate = list => link && list.length ? [`if (${link.on}) {`, ...list.map(line => "    " + line), "}"] : list
-        const custom = gate(lines.custom || [])
-        const top = gate(lines.top || [])
-        return levelData.sectionsText({ setup: lines.setup || [], custom, top }) //with each part's comment line, like the box it's edited in
+        const lines = type.codeAll ? { setup: type.codeAll(data.elements.filter(other => other.type === el.type), data), custom: [], top: [] } : levelData.exportElement(el, names.get(el.id), context)
+        return levelData.sectionsText(lines)
     },
     code(data) {
         const groups = {}
@@ -719,21 +735,16 @@ const levelData = {
                 continue
             }
             if (!type || !type.code) continue
-            const lines = levelData.typeCode(el, names.get(el.id), context)
-            const link = type.isLinkable && !type.handlesLink && context.link(el)
-            const gate = list => link && list.length ? [`if (${link.on}) {`, ...list.map(line => "    " + line), "}"] : list //only runs while its button has it on
+            const lines = levelData.exportElement(el, names.get(el.id), context)
             if (!groups[type.group]) groups[type.group] = []
             groups[type.group].push(...(lines.setup || []))
-            custom.push(...gate(lines.custom || []))
-            top.push(...gate(lines.top || []))
+            custom.push(...lines.custom)
+            top.push(...lines.top)
         }
         for (const [type, elements] of together) {
             if (!groups[type.group]) groups[type.group] = []
             groups[type.group].unshift(...type.codeAll(elements, data))
         }
-        const levelCode = levelData.levelCodeSections(data) //the level code goes last, its layers after the elements'
-        custom.push(...levelCode.custom)
-        top.push(...levelCode.top)
         const indent = lines => lines.map(line => "    " + line)
         const fallHeight = levelData.fallHeight(data)
         const name = levelData.functionName(data.name)
@@ -741,8 +752,7 @@ const levelData = {
             `${name}() { //made in the level editor, paste it into level.maps in js/level.js and add "${name}" to level.playableLevels`,
             ...indent([
                 ...(groups.core || []),
-                ...(data.author.trim() ? [`simulation.inGameConsole(\`${levelData.authorLog(data).replace(/[`\\]|\$\{/g, c => "\\" + c)}\`);`] : []),
-                ...(data.log.trim() ? [`simulation.inGameConsole(${levelElements.args(levelData.safeHtml(data.log))});`] : []),
+                ...levelData.exportAnnouncements(data),
                 `level.announceText(${levelElements.args(levelData.constraintText(data).x, levelData.constraintText(data).y)}, true) //the run's constraint`,
                 "level.announceMobTypes()",
                 `level.defaultZoom = ${data.zoom}`,
@@ -768,15 +778,28 @@ const levelData = {
                 ...(groups.mob || []),
                 ...(groups.powerUp || []),
                 ...(groups.mob ? ["powerUps.addResearchToLevel() //needs to run after mobs are spawned"] : []),
-                ...(levelCode.setup.length ? ["", "//level code", ...levelCode.setup] : []),
-                `${levelData.dataMark}${JSON.stringify(data)}`, //import level reads this back
+                ...levelData.exportLevelCode(data),
+                `${levelData.dataMark}${JSON.stringify(data).replace(/\u2028/g, "\\u2028").replace(/\u2029/g, "\\u2029")}`, //import level reads this back
             ]),
             "},",
         ].join("\n").replace(/^\s+$/gm, "")
     },
 
-    levelCodeSections(data) { //{ setup, custom, top } of the level code, empty without any
-        return data.levelCode.trim() ? levelData.sectionsOf(data.levelCode) : { setup: [], custom: [], top: [] }
+    exportAnnouncements(data) {
+        return [
+            ...(data.author.trim() ? [`simulation.inGameConsole(\`${levelData.authorLog(data).replace(/[`\\]|\$\{/g, c => "\\" + c)}\`);`] : []),
+            ...(data.log.trim() ? [`simulation.inGameConsole(${levelElements.args(levelData.safeHtml(data.log))});`] : []),
+        ]
+    },
+    exportLevelCode(data) { //its setup and two layers share a private scope, just like runLevelCode
+        if (!data.levelCode.trim()) return []
+        const { setup, custom, top } = levelData.sectionsOf(data.levelCode)
+        const lines = ["", "//level code", ";(() => {", ...setup.map(line => "    " + line)]
+        for (const [layer, body] of [["custom", custom], ["customTopLayer", top]]) {
+            if (!body.length) continue
+            lines.push(`    level.${layer} = ((before, after) => () => { before(); after(); })(level.${layer}, () => {`, ...body.map(line => "        " + line), "    });")
+        }
+        return lines.concat("})();")
     },
     codeInOrder(data, names, context) { //a level with code, everything in its list order like runCode(), the elements' custom and top run after the code's
         const lines = []
@@ -797,26 +820,21 @@ const levelData = {
                 continue
             }
             if (!type.code) continue
-            const out = levelData.typeCode(el, names.get(el.id), context)
-            const link = type.isLinkable && !type.handlesLink && context.link(el)
-            const gate = list => link && list.length ? [`if (${link.on}) {`, ...list.map(line => "    " + line), "}"] : list
+            const out = levelData.exportElement(el, names.get(el.id), context)
             lines.push(...(out.setup || []))
             if (draws[el.type]) continue //the level's code draws it
-            custom.push(...gate(out.custom || []))
-            top.push(...gate(out.top || []))
+            custom.push(...out.custom)
+            top.push(...out.top)
         }
         const has = text => levelData.codeHas(data, text)
         const text = levelData.constraintText(data)
-        const levelCode = levelData.levelCodeSections(data) //last, its layers after the elements'
-        if (levelCode.setup.length) lines.push("", "//level code", ...levelCode.setup)
-        custom.push(...levelCode.custom)
-        top.push(...levelCode.top)
         const indent = list => list.map(line => "    " + line)
         const name = levelData.functionName(data.name)
         const hasMobs = data.elements.some(el => levelElements.groups.mob.includes(el.type))
         return [
             `${name}() { //made in the level editor, paste it into level.maps in js/level.js and add "${name}" to level.playableLevels`,
             ...indent([
+                ...levelData.exportAnnouncements(data),
                 ...lines,
                 "",
                 "//level properties from the level editor", //after the code, so changing them in the editor wins
@@ -840,7 +858,8 @@ const levelData = {
                     ...indent(["customTopLayerFromCode();", ...top]),
                     "};",
                 ] : []),
-                `${levelData.dataMark}${JSON.stringify(data)}`, //import level reads this back
+                ...levelData.exportLevelCode(data),
+                `${levelData.dataMark}${JSON.stringify(data).replace(/\u2028/g, "\\u2028").replace(/\u2029/g, "\\u2029")}`, //import level reads this back
             ]),
             "},",
         ].join("\n").replace(/^\s+$/gm, "")
@@ -1103,7 +1122,8 @@ const levelData = {
                 used.add(i)
                 continue
             }
-            const call = text.match(/^([\w.]+)\((.*)\)$/)
+            const namedMob = text.match(/^spawn\["(\w+)"\]\((.*)\)$/)
+            const call = text.match(/^([\w.]+)\((.*)\)$/) || (namedMob && [text, "spawn." + namedMob[1], namedMob[2]])
             if (!call) continue
             const args = levelData.callArgs(call[2])
             if (args.includes(undefined)) continue

@@ -60,7 +60,7 @@ const levelElements = {
             return levelElements.collision.names.filter(name => levelElements.collision.isBack(type, name))
         },
         mask(text) { return String(text).split(" ").filter(Boolean).reduce((mask, name) => mask | cat[name], 0) },
-        code(text) { return String(text).split(" ").filter(Boolean).map(name => `cat.${name}`).join(" | ") || "0" },
+        code(text) { return String(text).split(" ").filter(name => levelElements.collision.names.includes(name)).map(name => `cat.${name}`).join(" | ") || "0" },
         isDefault(el) { return el.collides === levelElements.collision.defaults[el.type] },
     },
     linkSources: ["button", "toggle", "keyhole", "zone", "timer"], //turn linked elements on and off, each has linkOn(el, runtime) and linkCode(el, name), see button
@@ -147,13 +147,13 @@ const levelElements = {
         const type = levelElements.types[el.type]
         if (type && type.handles) return type.handles(el)
         if (el.width === undefined && !el.vertices) return []
-        const { x, y, width: w, height: h } = el.vertices ? levelElements.bounds(el) : el
-        return [
-            { id: "nw", x, y }, { id: "n", x: x + w / 2, y }, { id: "ne", x: x + w, y },
-            { id: "e", x: x + w, y: y + h / 2 }, { id: "se", x: x + w, y: y + h }, { id: "s", x: x + w / 2, y: y + h },
-            { id: "sw", x, y: y + h }, { id: "w", x, y: y + h / 2 },
-        ]
+        return levelElements.rectHandles(el.vertices ? levelElements.bounds(el) : el)
     },
+    rectHandles: ({ x, y, width: w, height: h }) => [ //the 8 resize handles around a rect, the ids dragHandle() reads
+        { id: "nw", x, y }, { id: "n", x: x + w / 2, y }, { id: "ne", x: x + w, y },
+        { id: "e", x: x + w, y: y + h / 2 }, { id: "se", x: x + w, y: y + h }, { id: "s", x: x + w / 2, y: y + h },
+        { id: "sw", x, y: y + h }, { id: "w", x, y: y + h / 2 },
+    ],
     dragHandle(el, id, point, min) { //move a handle to point, min is the smallest size
         const type = levelElements.types[el.type]
         if (type && type.dragHandle) return type.dragHandle(el, id, point, min)
@@ -455,7 +455,7 @@ const levelElements = {
     // setup runs once when the level loads, name is a variable name for it like boost1, custom and top run each cycle
     //*********************************************************************
     args(...values) { //numbers without float noise, strings quoted, like they'd be written by hand
-        return values.map(value => typeof value === "number" ? String(Number(value.toFixed(6))) : typeof value === "string" ? JSON.stringify(value) : value).join(", ")
+        return values.map(value => typeof value === "number" ? String(Number(value.toFixed(6))) : JSON.stringify(value)?.replace(/\u2028/g, "\\u2028").replace(/\u2029/g, "\\u2029")).join(", ")
     },
     marker(el, radius, fill, text) { //where a mob or power up spawns, the editor draws it with type.overlay()
         ctx.setLineDash([])
@@ -586,7 +586,7 @@ levelElements.define("map", {
         const link = context && context.link(el)
         if (!link) return { setup }
         setup.push(`const ${name} = map[map.length - 1];`)
-        return { setup, custom: [`level.setMapPart(${name}, ${el.on === "appears" ? link.on : link.off}); //${el.on} while it's on`] }
+        return { setup, custom: [`level.setMapPart(${name}, ${el.on === "appears" ? link.on : link.off}); //${el.on === "appears" ? "appears" : "disappears"} while it's on`] }
     },
 })
 
@@ -1129,7 +1129,7 @@ levelElements.define("toggle", { //level.toggle, a lever the player flips
         }
     },
     code: (el, name) => ({
-        setup: [`const ${name} = level.toggle(${levelElements.args(el.x, el.y)}${el.isOn || el.staysOn ? `, ${el.isOn}` : ""}${el.staysOn ? ", true" : ""});${el.staysOn ? " //stays on once it's flipped" : ""}`],
+        setup: [`const ${name} = level.toggle(${levelElements.args(el.x, el.y)}${el.isOn || el.staysOn ? `, ${!!el.isOn}` : ""}${el.staysOn ? ", true" : ""});${el.staysOn ? " //stays on once it's flipped" : ""}`],
         custom: [`${name}.query();`],
     }),
 })
@@ -1199,11 +1199,11 @@ levelElements.define("zone", { //a trigger, a link source that's on while the pl
     props: [
         ...levelElements.rect().map(prop => prop.key === "width" || prop.key === "height" ? { ...prop, isShown: el => !el.circle } : prop),
         levelElements.prop.number("radius", { isGrid: true, min: 1, isShown: el => !!el.circle }),
-        levelElements.prop.bool("circle", { write: (el, value) => levelElements.types.zone.round(el, value) }),
+        levelElements.prop.bool("circle", { write: (el, value) => levelElements.types.zone.setCircle(el, value) }),
         levelElements.prop.select("who", Object.keys(levelElements.zoneWho)),
         levelElements.prop.select("on", ["inside", "stays on"]), //stays on once it's been entered
     ],
-    round(el, isCircle) { //a box becomes the circle in its middle, as big as the box on average, and back to the box around the circle, x, y is a circle's center
+    setCircle(el, isCircle) { //a box becomes the circle in its middle, as big as the box on average, and back to the box around the circle, x, y is a circle's center
         if (!!el.circle === !!isCircle) return
         if (isCircle) {
             el.radius = Math.max(1, Math.round((el.width + el.height) / 4))
@@ -1221,15 +1221,7 @@ levelElements.define("zone", { //a trigger, a link source that's on while the pl
         if (el.circle) return Math.hypot(p.x - el.x, p.y - el.y) <= el.radius
         return p.x >= el.x && p.x <= el.x + el.width && p.y >= el.y && p.y <= el.y + el.height
     },
-    handles(el) {
-        if (el.circle) return [{ id: "radius", x: el.x + el.radius, y: el.y }]
-        const { x, y, width: w, height: h } = el
-        return [
-            { id: "nw", x, y }, { id: "n", x: x + w / 2, y }, { id: "ne", x: x + w, y },
-            { id: "e", x: x + w, y: y + h / 2 }, { id: "se", x: x + w, y: y + h }, { id: "s", x: x + w / 2, y: y + h },
-            { id: "sw", x, y: y + h }, { id: "w", x, y: y + h / 2 },
-        ]
-    },
+    handles: el => el.circle ? [{ id: "radius", x: el.x + el.radius, y: el.y }] : levelElements.rectHandles(el),
     dragHandle(el, id, point, min) {
         if (id === "radius") return el.radius = Math.max(1, Math.round(Math.hypot(point.x - el.x, point.y - el.y)))
         const box = { x: el.x, y: el.y, width: el.width, height: el.height }
@@ -1314,7 +1306,7 @@ levelElements.define("timer", { //a link source that's on for onTime cycles, the
     linkOn: el => (simulation.cycle + el.offset) % (el.onTime + el.offTime) < el.onTime,
     linkCode: el => ({ on: levelElements.timerCode(el), off: `!(${levelElements.timerCode(el)})` }),
     build: () => ({}),
-    code: (el, name) => ({ setup: [`//${name}: on ${el.onTime} cycles, off ${el.offTime}, what's linked to it checks ${levelElements.timerCode(el)}`] }),
+    code: (el, name) => ({ setup: [`//${name}: on ${Number(el.onTime)} cycles, off ${Number(el.offTime)}, what's linked to it checks ${levelElements.timerCode(el)}`] }),
 })
 
 levelElements.define("door", {
@@ -1499,7 +1491,7 @@ levelElements.define("portal", {
     },
     code(el, name) {
         const end = (x, y) => `{ x: ${levelElements.args(x)}, y: ${levelElements.args(y)} }`
-        const exit = el.exit === "momentum" ? "" : `, level.portalExit.${el.exit}, level.portalExit.${el.exit}`
+        const exit = !["straight", "launch"].includes(el.exit) ? "" : `, level.portalExit.${el.exit}, level.portalExit.${el.exit}`
         return {
             setup: [`const ${name} = level.portal(${end(el.x, el.y)}, ${levelElements.angleCode(el.angle)}, ${end(el.x2, el.y2)}, ${levelElements.angleCode(el.angle2)}${exit});`],
             custom: [`${name}.query();`],
@@ -2034,9 +2026,9 @@ levelElements.define("namedMob", { //one mob picked by name, for levels that wan
     overlay: el => levelElements.marker(el, 40, "rgba(255,40,40,0.35)", el.name),
     summary: el => `${el.name}(${levelElements.args(el.x, el.y)})`,
     build(el, options) {
-        if (options.isSpawning && typeof spawn[el.name] === "function") spawn[el.name](el.x, el.y)
+        if (options.isSpawning && levelElements.mobNames().includes(el.name) && typeof spawn[el.name] === "function") spawn[el.name](el.x, el.y)
     },
-    code: el => ({ setup: [`spawn.${el.name}(${levelElements.args(el.x, el.y)});`] }),
+    code: el => ({ setup: levelElements.mobNames().includes(el.name) ? [`spawn[${JSON.stringify(el.name)}](${levelElements.args(el.x, el.y)});`] : [] }),
 })
 levelElements.bossType = (spawnName, label, radius, fill) => ({ //a boss spawns at its spot or one of its other spots, picked at random each time the level loads
     ...levelElements.mobType(spawnName, label, radius, fill, false),
@@ -2134,7 +2126,7 @@ levelElements.define("powerUp", {
     build(el, options) {
         if (options.isSpawning) for (let i = 0; i < el.count; i++) powerUps.spawn(el.x + 25 * i, el.y, el.name) //25 apart, power ups in the same spot lag while they push apart
     },
-    code: el => ({ setup: [el.count > 1 ? `for (let i = 0; i < ${el.count}; i++) powerUps.spawn(${levelElements.args(el.x)} + 25 * i, ${levelElements.args(el.y, el.name)});` : `powerUps.spawn(${levelElements.args(el.x, el.y, el.name)});`] }),
+    code: el => ({ setup: [el.count > 1 ? `for (let i = 0; i < ${Number(el.count)}; i++) powerUps.spawn(${levelElements.args(el.x)} + 25 * i, ${levelElements.args(el.y, el.name)});` : `powerUps.spawn(${levelElements.args(el.x, el.y, el.name)});`] }),
 })
 
 levelElements.powerUpCall = (call, label, fill) => ({ //a powerUps function that picks for the player, like the starting power ups

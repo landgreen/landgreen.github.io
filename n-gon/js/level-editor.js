@@ -15,9 +15,8 @@ Object.assign(levelEditor, {
     tools: ["select", "pan", "map", "block", "measure"], //the draw tool, map and block draw new rects, select only selects and moves, measure draws a ruler with jump reach, pan moves the view without a middle mouse button, the right mouse button always selects
     measure: null, //{ start, end } the measure tool's ruler, it stays until the next one
     timeScale: 1, //simulation menu, slows the game by lowering the frame cap
-    isMouseLook: false, //simulation menu's mouse look button, the camera leans toward the mouse with no smoothing, off it stays on the player, remembered in localStorage
     isTimeScaled: false,
-    debugDraw: new Set(), //simulation menu's draw toggles, like "wireframe" and "velocity"
+    debugDraw: new Set(), //simulation menu's draw toggles, like "wireframe" and "bounds"
     grid: 25, //snap size, hold alt to place freely
     isGridShown: true,
     isFree: false, //alt is held
@@ -26,6 +25,12 @@ Object.assign(levelEditor, {
     isTesting: false, //start test restarts the level like a run, stop test restarts it for editing
     testSeed: "", //simulation menu, Math.seed for each level start, so tests spawn the same, empty keeps it random
     spawnLists: null, //the mob and boss lists in their first order, a seeded test reshuffles them from it
+    isMouseLook: false, //simulation menu's mouse look button, the camera leans toward the mouse with no smoothing, off it stays on the player, remembered in localStorage
+    isCamera: false, //the simulation menu's camera button, the player hides and stops colliding, WASD or the arrows fly the view, see flyCamera(), not remembered
+    cameraAnchor: null, //where the hidden player is held while the camera flies
+    cameraVelocity: { x: 0, y: 0 }, //the flying camera eases in and out
+    cameraSaved: null, //{ draw, mask } the player's m.draw and collision mask to put back
+    isFast: false, //shift is held, the camera flies faster
     isInvincible: true, //simulation menu, the player takes no damage while editing and testing, see m.takeDamage(), remembered in localStorage
     isFullTest: false, //JS test plays the level's export JS like a run, with the panels still open, editing anything goes back to editing
     isTestSpawning: true, //the simulation menu's mobs button, mobs and power ups spawn while testing, never while editing so it isn't a fight
@@ -50,6 +55,7 @@ Object.assign(levelEditor, {
     problemIsFix: false, //the status bar's analysis count, a moment after changes stop
     partDrag: null, //{ line, y, sizes, height } dragging a line between the code panel's parts
     codeEditing: null, //id of the code element open in the code panel, "level" for the level code popped out, or "element:12" for an element's code popped out
+    fileRequest: 0, //invalidate pending file reads when their panel closes or changes
     pendingImport: null, //{ text, data } a pasted level waiting on the import warning, data is null without a level editor line, see confirmImport()
     picking: null, //{ id, key, isLink } while picking an element by clicking it, for a ref prop, or isLink to link it to button id
     preview: null, //{ owner, key, value } while a color picker is open, value is the color to put back before the change is saved
@@ -77,11 +83,11 @@ Object.assign(levelEditor, {
         const data = levelData.store.getRecent() || levelData.blank(levelData.freeName("untitled"))
         levelData.store.save(data)
         levelEditor.reset(data)
-        levelEditor.isMouseLook = levelEditor.recall("levelEditorMouseLook", false) === true //the simulation menu's settings, remembered for next time
         levelEditor.isInvincible = levelEditor.recall("levelEditorInvincible", true) !== false //on unless it was turned off
         levelEditor.isTestSpawning = levelEditor.recall("levelEditorMobs", true) !== false
         const testLevel = Number(levelEditor.recall("levelEditorTestLevel", 5))
         if (Number.isFinite(testLevel) && testLevel >= 0) levelEditor.testLevel = Math.min(30, Math.round(testLevel))
+        levelEditor.isMouseLook = levelEditor.recall("levelEditorMouseLook", false) === true //the simulation menu's settings, remembered for next time
         const layers = levelEditor.recall("levelEditorDebugDraw", [])
         levelEditor.debugDraw = new Set(Array.isArray(layers) ? layers.filter(name => levelEditor.debugLayers.some(([layer]) => layer === name)) : [])
         const grid = Number(levelEditor.recall("levelEditorGrid", 25))
@@ -103,7 +109,7 @@ Object.assign(levelEditor, {
         levelEditor.preview = null
         levelEditor.picking = null
         levelEditor.codeEditing = null //a code draft belongs to the level it was opened in, switching levels closes it
-        document.getElementById("level-editor-code").classList.remove("le-open")
+        levelEditor.run("closeCode")
         levelEditor.hiddenIds.clear() //ids are only the same within a level
         levelEditor.lockedIds.clear()
         levelEditor.problems = new Map()
@@ -162,6 +168,7 @@ Object.assign(levelEditor, {
     close() { //also called by simulation.splashReturn()
         if (!levelEditor.isActive) return
         levelEditor.flush()
+        levelEditor.setCamera(false, false)
         levelEditor.isActive = false
         levelEditor.isFullTest = false
         levelEditor.isPanelsHidden = false
@@ -170,7 +177,7 @@ Object.assign(levelEditor, {
         levelData.isEditor = false
         levelData.isSkipped = () => false
         document.body.classList.remove("level-editor")
-        document.getElementById("level-editor-code").classList.remove("le-open")
+        levelEditor.run("closeCode")
         if (levelEditor.gameCamera) simulation.camera = levelEditor.gameCamera
         levelEditor.gameCamera = null
         m.look = m.lookDefault
@@ -225,7 +232,11 @@ Object.assign(levelEditor, {
             if (!isTool) levelEditor.pan = { x: 0, y: 0 }
         }, 300)
     },
-    teleport(point) { //middle double click, pan tool double click, or mouse 4 or 5, the player goes there
+    teleport(point) { //middle double click, pan tool double click, or mouse 4 or 5, the player goes there, or in camera mode the camera does
+        if (levelEditor.isCamera) {
+            levelEditor.pan = { x: point.x - m.pos.x, y: point.y - m.pos.y }
+            return
+        }
         Matter.Body.setPosition(player, point)
         Matter.Body.setVelocity(player, { x: 0, y: 0 })
         m.resetHistory()
@@ -424,6 +435,7 @@ Object.assign(levelEditor, {
         return { x: m.pos.x + levelEditor.pan.x, y: m.pos.y + levelEditor.pan.y }
     },
     look() { //replaces m.look, static follows the player without leaning toward the mouse, so moving to a panel doesn't move the view
+        if (levelEditor.isCamera) levelEditor.flyCamera()
         m.angle = Math.atan2(simulation.mouseInGame.y - m.pos.y, simulation.mouseInGame.x - m.pos.x)
         const scale = levelEditor.lookScale()
         m.transSmoothX = canvas.width2 - m.pos.x - levelEditor.pan.x - (simulation.mouse.x - canvas.width2) * scale
@@ -433,6 +445,60 @@ Object.assign(levelEditor, {
     },
     lookScale() { //how far the view leans toward the mouse, mouse look leans right away with no smoothing, like the motion sickness tech
         return levelEditor.isMouseLook ? 1.2 : 0
+    },
+    drawNothing() { }, //m.draw while the camera flies, the player is hidden
+    setCamera(isOn, isDrop = true) { //camera mode on or off, off drops the player in the middle of the view unless that's inside the map
+        if (isOn === levelEditor.isCamera) return
+        levelEditor.isCamera = isOn
+        if (isOn) {
+            levelEditor.cameraSaved = { draw: m.draw, mask: player.collisionFilter.mask }
+            levelEditor.cameraAnchor = { x: player.position.x, y: player.position.y }
+            levelEditor.cameraVelocity = { x: 0, y: 0 }
+            if (m.isHolding) m.drop()
+            levelEditor.flyCamera()
+            return
+        }
+        const saved = levelEditor.cameraSaved
+        if (m.draw === levelEditor.drawNothing) m.draw = saved.draw
+        player.collisionFilter.mask = saved.mask
+        levelEditor.cameraSaved = levelEditor.cameraAnchor = null
+        if (!isDrop) return
+        const to = levelEditor.viewCenter()
+        if (Matter.Query.point(map, to).length) { //it would be stuck, the player stays and the view goes back to it
+            levelEditor.pan = { x: 0, y: 0 }
+            return simulation.inGameConsole(`<em>//the middle of the view is inside the map, the player stayed where it was</em>`)
+        }
+        levelEditor.teleport({ x: to.x, y: to.y + player.position.y - m.pos.y }) //m.pos isn't the body's center, so the view doesn't move
+        levelEditor.pan = { x: 0, y: 0 }
+    },
+    flyCamera() { //each frame in camera mode, from look(): the player stays hidden where it was with no collisions or damage, WASD or the arrows move the view, shift is faster
+        let anchor = levelEditor.cameraAnchor
+        if (Vector.magnitude(Vector.sub(player.position, anchor)) > 100) { //a restart or respawn moved the player, the view stays where it is
+            levelEditor.pan.x += anchor.x - player.position.x
+            levelEditor.pan.y += anchor.y - player.position.y
+            anchor = levelEditor.cameraAnchor = { x: player.position.x, y: player.position.y }
+        }
+        Matter.Body.setPosition(player, anchor)
+        Matter.Body.setVelocity(player, { x: 0, y: 0 })
+        if (m.draw !== levelEditor.drawNothing) { //a new skin or level start can set them again
+            levelEditor.cameraSaved.draw = m.draw
+            m.draw = levelEditor.drawNothing
+        }
+        if (player.collisionFilter.mask) {
+            levelEditor.cameraSaved.mask = player.collisionFilter.mask
+            player.collisionFilter.mask = 0
+        }
+        m.immuneCycle = m.cycle + 10
+        input.fire = input.field = false //no guns or field from where it's hidden
+        const speed = canvas.height / simulation.zoom * (levelEditor.isFast ? 0.03 : 0.012) / levelEditor.timeScale //a screen in about a second and a half at any zoom, slow motion doesn't slow it
+        const dx = (input.right ? 1 : 0) - (input.left ? 1 : 0)
+        const dy = (input.down ? 1 : 0) - (input.up ? 1 : 0)
+        const length = Math.hypot(dx, dy) || 1
+        const v = levelEditor.cameraVelocity
+        v.x += (dx / length * speed - v.x) * 0.2
+        v.y += (dy / length * speed - v.y) * 0.2
+        levelEditor.pan.x += v.x
+        levelEditor.pan.y += v.y
     },
     camera() { //replaces simulation.camera, without zooming out when the mouse is near the edge
         simulation.edgeZoomOutSmooth = 1
@@ -930,6 +996,13 @@ Object.assign(levelEditor, {
                 levelEditor.renderLeft()
             },
         },
+        camera: { //the simulation menu's camera button
+            label: "camera", run() {
+                levelEditor.setCamera(!levelEditor.isCamera)
+                if (levelEditor.isCamera) simulation.inGameConsole(`<em>//camera: WASD or the arrows fly, shift is faster, camera again drops the player in the middle</em>`)
+                levelEditor.renderLeft()
+            },
+        },
         mouseLook: { //the simulation menu's mouse look button
             label: "mouse look", run() {
                 levelEditor.isMouseLook = !levelEditor.isMouseLook
@@ -976,6 +1049,7 @@ Object.assign(levelEditor, {
         },
         fullTest: { //the export JS, everything a run would do
             label: "test export: plays the javascript export writes, exactly what the game would load, mobs and power ups always spawn, editing anything stops it", run() {
+                levelEditor.setCamera(false, false) //a run has a player
                 levelEditor.isFullTest = !levelEditor.isFullTest
                 levelEditor.updatePanels() //the panels stay as they are, tab hides them to see the level like a player
                 levelEditor.isTesting = false
@@ -998,7 +1072,7 @@ Object.assign(levelEditor, {
                     return
                 }
                 const code = document.getElementById("level-editor-code")
-                if (code.classList.contains("le-open")) return code.classList.remove("le-open") //esc closes the javascript first
+                if (code.classList.contains("le-open")) return levelEditor.run("closeCode") //esc closes the javascript first
                 if (levelEditor.picking) { //then stops picking
                     levelEditor.picking = null
                     return levelEditor.renderRight()
@@ -1472,7 +1546,11 @@ Object.assign(levelEditor, {
                 if (levelEditor.partSizes[i]) document.querySelectorAll("#level-editor-code .le-part textarea")[i].focus()
             },
         },
-        closeCode: { label: "close", run: () => document.getElementById("level-editor-code").classList.remove("le-open") },
+        closeCode: { label: "close", run() {
+            levelEditor.fileRequest++
+            levelEditor.pendingImport = null
+            document.getElementById("level-editor-code").classList.remove("le-open")
+        } },
         importLevel: {
             label: "paste a level's javascript, it replaces this level", run() {
                 levelEditor.openPanel("import level", "", "", "import")
@@ -1605,6 +1683,7 @@ Object.assign(levelEditor, {
     },
     keyDown(event) {
         levelEditor.isFree = event.altKey
+        levelEditor.isFast = event.shiftKey
         if (!levelEditor.isActive || simulation.paused || levelEditor.isTyping(event.target)) return
         const combo = levelEditor.keyCombo(event)
         if (!combo.includes("mod+") && Object.values(input.key).includes(event.code)) return //a key the player set for the game, like jump, stays a game key
@@ -1642,6 +1721,9 @@ Object.assign(levelEditor, {
             const newGroups = new Map() //copies of a group are their own group
             for (const el of copies) {
                 for (const key of levelElements.refKeys(el)) if (newIds.has(el[key])) el[key] = newIds.get(el[key])
+                if (el.edited?.names) {
+                    el.edited.names = Object.fromEntries(Object.entries(el.edited.names).map(([id, name]) => [newIds.get(Number(id)) ?? id, name]))
+                }
                 if (el.group) {
                     if (!newGroups.has(el.group)) newGroups.set(el.group, levelEditor.newGroupId(data))
                     el.group = newGroups.get(el.group)
@@ -1695,6 +1777,15 @@ Object.assign(levelEditor, {
             for (const el of levelEditor.data.elements) if (levelEditor.canPick(el)) levelEditor.outline(el, levelEditor.colors.pick, el === hover ? 3 : 1.5, el === hover ? [] : [6, 4])
         }
         if (levelEditor.isGridShown) levelEditor.drawGrid()
+        if (levelEditor.isCamera) { //where the hidden player is
+            ctx.beginPath()
+            ctx.arc(m.pos.x, m.pos.y, 30, 0, 2 * Math.PI)
+            ctx.setLineDash([6, 6])
+            ctx.lineWidth = levelEditor.px(1.5)
+            ctx.strokeStyle = "rgba(0,0,0,0.35)"
+            ctx.stroke()
+            ctx.setLineDash([])
+        }
         levelEditor.drawGuides()
         levelEditor.drawProblems()
         if (hover && !levelEditor.selection.includes(hover.id)) {
@@ -1747,7 +1838,6 @@ Object.assign(levelEditor, {
     debugLayers: [ //[name, tooltip], drawn over the level by drawDebug()
         ["wireframe", "every body's outline, map, blocks, mobs, the player, power ups, and bullets"],
         ["bounds", "each body's axis aligned bounding box, it stretches with velocity"],
-        ["velocity", "each moving body's velocity, 5 frames long"],
         ["constraints", "every Matter constraint, its two points and the line between them"],
         ["centers", "each body's center of mass and angle"],
         ["collisions", "contact points between bodies touching this frame"],
@@ -1803,17 +1893,6 @@ Object.assign(levelEditor, {
             }
             ctx.lineWidth = width
             ctx.strokeStyle = "rgba(0,0,0,0.7)"
-            ctx.stroke()
-        }
-        if (layers.has("velocity")) {
-            ctx.beginPath()
-            for (const who of bodies) {
-                if (who.isStatic || who.speed < 0.05) continue
-                ctx.moveTo(who.position.x, who.position.y)
-                ctx.lineTo(who.position.x + 5 * who.velocity.x, who.position.y + 5 * who.velocity.y)
-            }
-            ctx.lineWidth = levelEditor.px(1.5)
-            ctx.strokeStyle = "rgba(255,90,0,0.9)"
             ctx.stroke()
         }
         if (layers.has("constraints")) {
@@ -2109,7 +2188,7 @@ Object.assign(levelEditor, {
             <div class="le-row"><span class="le-label">level</span><input class="le-number le-short" data-setting="testLevel" value="${levelEditor.testLevel}" spellcheck="false" title="how many levels into a run you're testing, it picks mob types and difficulty, at 0 random mobs don't spawn">
                 <span class="le-label le-seed-label">seed</span><input class="le-number" data-setting="testSeed" value="${levelEditor.escape(levelEditor.testSeed)}" placeholder="random" spellcheck="false" title="the same seed starts each test the same: mob types, which spots get mobs, bosses, power ups, and debris, what mobs do after is still random, empty is random"></div>
             <div class="le-row${isExport ? " le-inactive" : ""}"><span class="le-label">time</span><span class="le-segment">${[0.1, 0.25, 0.5, 1].map(scale => levelEditor.button("timeScale", `${scale}×`, scale, levelEditor.timeScale === scale, `game speed, it lowers the frame cap${exportNote}`, { disabled: isExport })).join("")}</span></div>
-            <div class="le-grid le-gap-above le-flush-x le-flush-bottom">${levelEditor.button("mouseLook", "mouse look", "", levelEditor.isMouseLook, `the camera leans toward the mouse right away, no smoothing, off it stays on the player so moving to a panel doesn't move the view${exportNote}`, { disabled: isExport })}${levelEditor.button("testSpawning", "mobs", "", levelEditor.isTestSpawning || isExport, `quick test spawns mobs and power ups${isExport ? ", test export always does" : ""}`, { disabled: isExport })}${levelEditor.button("invincible", "invincible", "", levelEditor.isInvincible, "the player takes no damage, in both tests too, the health bars hide")}${levelEditor.debugLayers.map(([name, tip]) => levelEditor.button("debugDraw", name, name, levelEditor.debugDraw.has(name), tip + exportNote, { disabled: isExport })).join("")}</div>`
+            <div class="le-grid le-sixths le-gap-above le-flush-x le-flush-bottom">${levelEditor.button("camera", "camera", "", levelEditor.isCamera, `the player hides and stops colliding, WASD or the arrows fly the view anywhere, shift is faster, adding puts things in the middle, camera again drops the player in the middle of the view${exportNote}`, { disabled: isExport, className: "le-third" })}${levelEditor.button("mouseLook", "mouse look", "", levelEditor.isMouseLook, `the camera leans toward the mouse right away, no smoothing, off it stays on the player so moving to a panel doesn't move the view${exportNote}`, { disabled: isExport, className: "le-third" })}${levelEditor.button("invincible", "invincible", "", levelEditor.isInvincible, "the player takes no damage, in both tests too, the health bars hide", { className: "le-third" })}${levelEditor.debugLayers.map(([name, tip]) => levelEditor.button("debugDraw", name, name, levelEditor.debugDraw.has(name), tip + exportNote, { disabled: isExport, className: "le-third" })).toSpliced(2, 0, levelEditor.button("testSpawning", "mobs", "", levelEditor.isTestSpawning || isExport, `quick test spawns mobs and power ups${isExport ? ", test export always does" : ""}`, { disabled: isExport, className: "le-third" })).join("")}</div>`
             },
         },
         {
@@ -2149,6 +2228,7 @@ Object.assign(levelEditor, {
         // },
     ],
     openPanel(name, text, html, mode = "") { //the code panel in the middle of the screen, html shows instead of the text when there is some, copy always copies the text, mode "import" is a box to paste into, "code" edits a code element, "confirm" is the import warning
+        levelEditor.fileRequest++
         const panel = document.getElementById("level-editor-code")
         const isConfirm = mode === "confirm"
         if (!isConfirm && mode !== "import") levelEditor.pendingImport = null //back keeps it for the import box
@@ -2384,7 +2464,7 @@ Object.assign(levelEditor, {
     },
     creation(command, arg, at) { //what an add button makes, its middle at at, snapped, or 100 above the middle of the view, for clicking and dragging onto the level
         const view = levelEditor.viewCenter()
-        const center = levelEditor.snapPoint(at || { x: view.x, y: view.y - 100 }) //above the player, not on top of it where it's hard to see
+        const center = levelEditor.snapPoint(at || (levelEditor.isCamera ? view : { x: view.x, y: view.y - 100 })) //above the player, not on top of it where it's hard to see, in camera mode in the middle
         if (command === "preset") {
             const preset = levelElements.presets.find(p => p.name === arg)
             if (!preset) return null
@@ -2719,7 +2799,7 @@ Object.assign(levelEditor, {
     vetoField(owner, prop) { //veto: [hydraBoss], crossed out like collides' names, click one to bring it back, the list under it crosses out or brings back what's picked, a tier's last one can't be vetoed
         const veto = owner[prop.key]
         const icons = levelEditor.mobIcons || {}
-        const chips = veto.map(name => `<button class="le-chip" data-command="veto" data-arg="${prop.key}:${name}" title="vetoed, click to bring it back">${icons[name] || ""}${name}</button>`).join("")
+        const chips = veto.map(name => `<button class="le-chip" data-command="veto" data-arg="${prop.key}:${levelEditor.escape(name)}" title="vetoed, click to bring it back">${Object.hasOwn(icons, name) ? icons[name] : ""}${levelEditor.escape(name)}</button>`).join("")
         const options = prop.tiers().map(([label, names]) => `<optgroup label="${label}">${names.map(name => {
             const blocked = levelElements.vetoBlocks(prop, veto, name)
             return `<option value="${name}"${veto.includes(name) ? ` class="le-vetoed" title="vetoed, pick it to bring it back"` : ""}${blocked ? ` disabled title="${levelEditor.escape(blocked)}"` : ""}>${icons[name] || ""}<span>${name}</span></option>`
@@ -2778,7 +2858,7 @@ Object.assign(levelEditor, {
     },
     inspectSpots(el) { //other places a boss could spawn
         return `<div class="le-row le-spots"><span class="color-var">spots</span><span class="le-fill"></span>${levelEditor.button("addSpot", "+ spot")}</div>
-            ${el.spots.map(([x, y], i) => `<div class="le-prop"><span class="le-comment">${i + 2}:</span> [${levelEditor.formatValue(x)}, ${levelEditor.formatValue(y)}] ${levelEditor.button("removeSpot", "×", i)}</div>`).join("")}`
+            ${el.spots.map(([x, y], i) => `<div class="le-prop"><span class="le-comment">${i + 2}:</span> [${levelEditor.escape(levelEditor.formatValue(x))}, ${levelEditor.escape(levelEditor.formatValue(y))}] ${levelEditor.button("removeSpot", "×", i)}</div>`).join("")}`
     },
     inspectVertices(el) { //sides buttons for maps and blocks, and the vertices written like spawn.mapVertex to edit as text
         const count = levelElements.points(el).length
@@ -3089,7 +3169,10 @@ Object.assign(levelEditor, {
     document.documentElement.addEventListener("mouseleave", () => { levelEditor.isMouseOnCanvas = false })
     window.addEventListener("mouseup", levelEditor.mouseUp)
     window.addEventListener("keydown", levelEditor.keyDown, true) //capture, so it runs before the game's keys, which were added first
-    window.addEventListener("keyup", event => { levelEditor.isFree = event.altKey })
+    window.addEventListener("keyup", event => {
+        levelEditor.isFree = event.altKey
+        levelEditor.isFast = event.shiftKey
+    })
     window.addEventListener("beforeunload", () => levelEditor.flush())
 
     for (const id of ["level-editor-left", "level-editor-right", "level-editor-code", "level-editor-status", "level-editor-history"]) {
@@ -3262,10 +3345,14 @@ Object.assign(levelEditor, {
         const file = event.target.files[0]
         event.target.value = "" //the same file can be opened again
         if (!file) return
+        const request = ++levelEditor.fileRequest
         file.text().then(text => {
+            if (request !== levelEditor.fileRequest) return
             document.querySelector("#level-editor-code textarea").value = text
             levelEditor.colorPanel()
             levelEditor.run("importText")
+        }).catch(error => {
+            if (request === levelEditor.fileRequest) simulation.inGameConsole(`<em>//couldn't read the file: ${levelEditor.escape(error.message)}</em>`)
         })
     })
     for (const panel of [left, right]) { //fields are in both panels, the level properties are in the inspector with nothing selected

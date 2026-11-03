@@ -178,11 +178,6 @@ Object.assign(levelEditor, {
         keyhole: `<g transform="translate(12.75 10.6) scale(0.125 0.18)"><polygon points="-70,12 70,12 70,-8 -70,-8" fill="#444"/><polygon points="-93,9 -93,-11 -73,-41 -47,-41 -18,9" fill="#444"/><polygon points="97,9 97,-11 77,-41 51,-41 22,9" fill="#444"/><rect x="-38" y="-26" width="80" height="25" fill="rgba(254,248,164,0.73)"/></g>`, //level.keyButton: the map base, its two cradle walls, and the key color between them
         key: `<g transform="translate(13 8) scale(0.22)"><polygon points="37.5,0 25,21.65 -25,21.65 -37.5,0 -25,-21.65 25,-21.65" fill="#FEF8A4" stroke="rgba(254,248,164,0.35)" stroke-width="22"/><polygon points="37.5,0 25,21.65 -25,21.65 -37.5,0 -25,-21.65 25,-21.65" fill="#FEF8A4" stroke="rgba(0,0,0,0.25)" stroke-width="3"/></g>`, //level.key: the glowing yellow hexagon, a faint edge so it shows on white
         door: `<rect x="9" y="1" width="5" height="14" fill="#666"/><path d="M19 12V3M16.5 5.5L19 2.5L21.5 5.5" fill="none" stroke="#444" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>`,
-        fill: `<rect x="3" y="2" width="13" height="9" fill="rgba(0,0,0,0.25)"/><circle cx="16.5" cy="9.5" r="5.5" fill="rgba(0,0,0,0.25)"/>`,
-        "fill:exit fill": `<rect x="3" y="1" width="20" height="13" fill="#d4f4f4" stroke="#9cc" stroke-width="0.8"/><path d="M10 14V8a3 3 0 0 1 6 0V14Z" fill="#c8eef0" stroke="#466" stroke-width="0.8"/><rect x="1" y="14" width="24" height="2" fill="#444"/>`,
-        circle: `<circle cx="13" cy="8" r="6.5" fill="none" stroke="#444" stroke-width="1.3"/>`,
-        path: `<polyline points="2,13 6,7 11,10 14,3 19,6 24,2" fill="none" stroke="#444" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round"/>`,
-        text: `<path transform="translate(1.85 3) scale(0.28)" d="M-1 0H21M10 0V40M29 0L48 40M48 0L29 40M57 0H79M68 0V40" fill="none" stroke="#444" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>`, //"txt" in the game's stroke font
     },
     elementIcon(arg) { //"type" or "type:preset", or nothing for a type without a picture
         const picture = levelEditor.elementIcons[arg]

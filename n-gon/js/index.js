@@ -1887,6 +1887,7 @@ if (localSettings.isAllowed && !localSettings.isEmpty) {
         delete localSettings.banList
         localStorage.setItem("localSettings", JSON.stringify(localSettings)); //update local storage
     }
+    if (localSettings.isLevelPoolThumbnails === undefined) localSettings.isLevelPoolThumbnails = true
     localSettings.isCommunityMaps = localSettings.levelPool.added.some(name => level.communityLevels.includes(name))
     simulation.isCommunityMaps = localSettings.isCommunityMaps
 
@@ -1947,7 +1948,7 @@ if (localSettings.isAllowed && !localSettings.isEmpty) {
     const isAllowed = localSettings.isAllowed //don't overwrite isAllowed value
     localSettings = {
         levelPool: { banned: [], added: [] }, //official levels taken out of the pool, community and local levels put in
-        isLevelPoolThumbnails: false, //the level pool menu's thumbnails button
+        isLevelPoolThumbnails: true, //the level pool menu's thumbnails button
         isAllowed: isAllowed,
         personalSeeds: [],
         isJunkExperiment: false,

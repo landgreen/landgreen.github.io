@@ -1,3 +1,4 @@
+level editor: camera - the player hides and WASD flies the view anywhere, turning it off drops the player there, replaces the velocity drawing
 level editor: import asks before running a level's javascript, shows you the code first, or imports it without the code
 community maps and level editor code can read your saves and settings but can't change them
 level editor: the level element list is just elements and triggers, drawings use the drawing buttons, shadow fill and drip are gone

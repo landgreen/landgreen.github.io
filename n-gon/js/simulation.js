@@ -1905,7 +1905,9 @@ const simulation = {
         cons() {
             ctx.beginPath();
             for (let i = 0, len = cons.length; i < len; ++i) {
-                ctx.moveTo(cons[i].pointA.x, cons[i].pointA.y);
+                const { pointA, bodyA } = cons[i];
+                if (bodyA) ctx.moveTo(bodyA.position.x + pointA.x, bodyA.position.y + pointA.y);
+                else ctx.moveTo(pointA.x, pointA.y);
                 // ctx.lineTo(cons[i].bodyB.position.x, cons[i].bodyB.position.y);
                 ctx.lineTo(cons[i].bodyB.position.x + cons[i].pointB.x, cons[i].bodyB.position.y + cons[i].pointB.y);
             }
