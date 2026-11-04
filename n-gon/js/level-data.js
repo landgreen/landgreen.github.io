@@ -1347,16 +1347,27 @@ const levelEditor = {
     isActive: false, //level.start(), m.death(), m.takeDamage(), the autosave, and the mouse lock check it every run
     files: ["js/level-analysis.js", "js/level-editor.js", "js/level-editor-icons.js", "js/level-editor-help.js"], //js/level-editor-mob-pictures.js loads later, see loadMobPictures()
     filesPromise: null,
+    isLoaded: false, //every file ran, js/level-editor.js replaces open() before the icons and help files run, so its open() waits for this
+    loadedFiles: [], //a retry after a failed download only adds the rest, running js/level-analysis.js twice would declare levelAnalysis twice
     loadFiles() { //all at once, they run in this order
+        if (levelEditor.isLoaded) return Promise.resolve()
         if (levelEditor.filesPromise) return levelEditor.filesPromise
-        levelEditor.filesPromise = Promise.all(levelEditor.files.map(src => new Promise((resolve, reject) => {
+        levelEditor.filesPromise = Promise.all(levelEditor.files.filter(src => !levelEditor.loadedFiles.includes(src)).map(src => new Promise((resolve, reject) => {
             const script = document.createElement("script")
             script.src = src
             script.async = false //in order, each adds to the one before
-            script.onload = resolve
-            script.onerror = () => reject(new Error(`failed to load ${src}`))
+            script.onload = () => {
+                levelEditor.loadedFiles.push(src)
+                resolve()
+            }
+            script.onerror = () => {
+                script.remove()
+                reject(new Error(`failed to load ${src}`))
+            }
             document.head.appendChild(script)
-        }))).catch(error => {
+        }))).then(() => {
+            levelEditor.isLoaded = true
+        }).catch(error => {
             levelEditor.filesPromise = null
             throw error
         })

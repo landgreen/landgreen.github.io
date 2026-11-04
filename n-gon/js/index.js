@@ -2182,7 +2182,7 @@ const levelPoolMenu = {
             </div>
             ${levelPoolMenu.header("local", addAll("local", local))}
             ${levelPoolMenu.zone("local", local, "")}
-            ${levelPoolMenu.header("community", addAll("community", community))}
+            ${levelPoolMenu.header(`community<a class="level-pool-site-link" href="https://whyisthisnotavalable.github.io/n-vote/" target="_blank" rel="noopener" title="n-vote, a fan site for n-gon maps: upload your levels, download other players' maps, and rate them. import a download in the level editor, then add it to the pool">upload, download, and rate maps on n-vote</a>`, addAll("community", community))}
             ${levelPoolMenu.zone("community", community, "")}
             ${levelPoolMenu.header("banned", addAll("banned", banned))}
             ${levelPoolMenu.zone("banned", banned, "")}`

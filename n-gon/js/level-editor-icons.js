@@ -28,7 +28,12 @@ Object.assign(levelEditor, {
         script.src = "js/level-editor-mob-pictures.js"
         script.onload = () => {
             levelEditor.isLoadingMobPictures = false
-            levelEditor.useMobPictures(levelEditor.mobPictureData || {})
+            try {
+                levelEditor.useMobPictures(levelEditor.mobPictureData || {})
+            } catch (error) { //it's only pictures, the mobs list shows names
+                levelEditor.mobIcons = {}
+                return console.warn("mob pictures didn't load", error)
+            }
             if (levelEditor.isActive) { //mob by name, the boss buttons, and veto lists show them
                 levelEditor.renderLeft()
                 levelEditor.refreshRight()

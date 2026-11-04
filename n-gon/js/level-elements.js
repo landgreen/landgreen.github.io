@@ -457,7 +457,7 @@ const levelElements = {
     args(...values) { //numbers without float noise, strings quoted, like they'd be written by hand
         return values.map(value => typeof value === "number" ? String(Number(value.toFixed(6))) : JSON.stringify(value)?.replace(/\u2028/g, "\\u2028").replace(/\u2029/g, "\\u2029")).join(", ")
     },
-    marker(el, radius, fill, text) { //where a mob or power up spawns, the editor draws it with type.overlay()
+    marker(el, radius, fill, text, fontSize = Math.max(16, radius * 0.5)) { //where a mob or power up spawns, the editor draws it with type.overlay()
         ctx.setLineDash([])
         ctx.beginPath()
         ctx.arc(el.x, el.y, radius, 0, 2 * Math.PI)
@@ -466,7 +466,7 @@ const levelElements = {
         ctx.lineWidth = 2
         ctx.strokeStyle = "rgba(0,0,0,0.5)"
         ctx.stroke()
-        ctx.font = `${Math.max(16, radius * 0.5)}px monospace`
+        ctx.font = `${fontSize}px monospace`
         ctx.textAlign = "center"
         ctx.textBaseline = "middle"
         ctx.fillStyle = "#000"
@@ -765,8 +765,10 @@ levelElements.define("transport", { //platform that slides back and forth
 })
 
 levelElements.define("elevator", {
-    tip: "platform that rises and falls, or only when the player stands on it with onTouch",
+    tip: "platform that rises and falls, or only when the player stands on it with onTouch, linked it only starts a trip while on",
     group: "element",
+    handlesLink: true, //while off it finishes its trip and waits at the bottom, without move() it would fall through the map
+    writesLink: true, //its code() uses context.link
     defaults: () => ({ x: 0, y: -25, width: 200, height: 25, travel: 500, force: 0.003, onTouch: false }),
     props: [
         ...levelElements.rect(),
@@ -776,15 +778,27 @@ levelElements.define("elevator", {
     ],
     build(el) {
         const elevator = level.elevator(el.x, el.y, el.width, el.height, el.y - el.travel, el.force)
-        return { custom: el.onTouch ? () => elevator.moveOnTouch() : () => elevator.move() }
+        return {
+            custom() {
+                const isOn = levelData.linkOn(el) !== false
+                if (el.onTouch) {
+                    elevator.moveOnTouch(isOn)
+                } else {
+                    elevator.move(isOn)
+                }
+            },
+        }
     },
     overlay(el) {
         ctx.strokeRect(el.x, el.y - el.travel, el.width, el.height + el.travel)
     },
-    code: (el, name) => ({
-        setup: [`const ${name} = level.elevator(${levelElements.args(el.x, el.y, el.width, el.height, el.y - el.travel, el.force)});`],
-        custom: [`${name}.${el.onTouch ? "moveOnTouch" : "move"}();`],
-    }),
+    code(el, name, context) {
+        const link = context && context.link(el)
+        return {
+            setup: [`const ${name} = level.elevator(${levelElements.args(el.x, el.y, el.width, el.height, el.y - el.travel, el.force)});`],
+            custom: [`${name}.${el.onTouch ? "moveOnTouch" : "move"}(${link ? link.on : ""});`],
+        }
+    },
 })
 
 levelElements.define("vanish", { //platform that shrinks away after the player touches it, then comes back
@@ -1359,7 +1373,7 @@ levelElements.linkable = name => { //a link prop, so a button or toggle can turn
     type.defaults = () => ({ ...defaults(), link: null, orLink: null, runs: "while on" })
     type.props.push(levelElements.prop.ref("link", levelElements.linkSources), levelElements.orLinkProp(), levelElements.runsProp())
 }
-for (const name of ["boost", "mover", "transport", "laser", "wind", "slime", "fizzler", "spinner"]) levelElements.linkable(name)
+for (const name of ["boost", "mover", "transport", "elevator", "laser", "wind", "slime", "fizzler", "spinner"]) levelElements.linkable(name)
 for (const name of levelElements.linkSources) { //a link source linked to another is only on while both are, set with the other one's link button, the row only shows once it's set
     const type = levelElements.types[name]
     const defaults = type.defaults
@@ -1971,7 +1985,7 @@ levelElements.define("mobSpot", { //a place a random mob might spawn, spawn.rand
     props: [...levelElements.position(), levelElements.prop.bool("small")], //small spots get a few small mobs instead of one
     bounds: el => ({ x: el.x - 20, y: el.y - 20, width: 40, height: 40 }),
     contains: (el, p) => Math.hypot(p.x - el.x, p.y - el.y) < 20,
-    overlay: el => levelElements.marker(el, 20, "rgba(255,80,80,0.2)", el.small ? "s" : "?"),
+    overlay: el => levelElements.marker(el, 20, "rgba(255,80,80,0.2)", el.small ? "s" : "mob"),
     build(el, options) {
         if (options.isSpawning) spawn.randomMobPositions.push({ x: el.x, y: el.y, isSmall: el.small }) //levelData.play() calls spawn.randomMobFromArray() after
     },
@@ -2030,7 +2044,7 @@ levelElements.define("namedMob", { //one mob picked by name, for levels that wan
     },
     code: el => ({ setup: levelElements.mobNames().includes(el.name) ? [`spawn[${JSON.stringify(el.name)}](${levelElements.args(el.x, el.y)});`] : [] }),
 })
-levelElements.bossType = (spawnName, label, radius, fill) => ({ //a boss spawns at its spot or one of its other spots, picked at random each time the level loads
+levelElements.bossType = (spawnName, label, radius, fill, fontSize) => ({ //a boss spawns at its spot or one of its other spots, picked at random each time the level loads, fontSize for a long label
     ...levelElements.mobType(spawnName, label, radius, fill, false),
     defaults: () => ({ x: 0, y: -300, spots: [], veto: [] }), //spots: [[x, y], ...] other places it could spawn, the editor shows them as handles to drag, veto: boss names it won't be
     props: [...levelElements.position(), levelElements.prop.veto("veto", levelElements.vetoTiers.boss, "boss")],
@@ -2065,7 +2079,7 @@ levelElements.bossType = (spawnName, label, radius, fill) => ({ //a boss spawns 
             ctx.fill()
             ctx.stroke()
             ctx.setLineDash([])
-            ctx.font = `${Math.max(16, radius * 0.4)}px monospace`
+            ctx.font = `${fontSize ?? Math.max(16, radius * 0.4)}px monospace`
             ctx.textAlign = "center"
             ctx.textBaseline = "middle"
             ctx.fillStyle = "rgba(0,0,0,0.6)"
@@ -2073,7 +2087,7 @@ levelElements.bossType = (spawnName, label, radius, fill) => ({ //a boss spawns 
             ctx.textBaseline = "alphabetic"
             ctx.textAlign = "left"
         })
-        levelElements.marker(el, radius, fill, el.spots.length ? `${label} 1` : label)
+        levelElements.marker(el, radius, fill, el.spots.length ? `${label} 1` : label, fontSize)
     },
     build(el, options) {
         if (!options.isSpawning) return
@@ -2091,7 +2105,7 @@ levelElements.bossType = (spawnName, label, radius, fill) => ({ //a boss spawns 
     },
 })
 levelElements.define("boss", { ...levelElements.bossType("randomLevelBoss", "boss", 80, "rgba(200,0,60,0.35)"), tip: "the level's boss, picked by the run's tier, add spots in the inspector for other places it could spawn" })
-levelElements.define("secondaryBoss", { ...levelElements.bossType("secondaryBossChance", "2nd boss", 70, "rgba(160,0,100,0.3)"), tip: "a second boss, it only spawns with the 2 bosses difficulty option" })
+levelElements.define("secondaryBoss", { ...levelElements.bossType("secondaryBossChance", "2nd boss", 85, "rgba(160,0,100,0.3)", 27), tip: "a second boss, it only spawns with the 2 bosses difficulty option" })
 
 //*********************************************************************
 // power ups, the editor's power ups menu

@@ -1,7 +1,7 @@
 "use strict";
 //checks a local level against the standard levels, the analysis button in the level editor's export menu
 //  levelAnalysis.run(data, { isLive }) returns { sections: [{ title, lines: [{ status, label, value, text }] }] }
-//  status is "fix", "warn", "note", or "ok", isLive adds what the editor measures while the level runs
+//  status is "fix", "warn", "note", or "ok", isLive adds what the editor measures while the level runs, hidden is the elements the explorer hides
 //add a check with levelAnalysis.check(section, context => lines), see docs/level-editor.md
 const levelAnalysis = {
     //from the 22 playable levels in js/level.js (labs through refinery), run in headless Chrome at levelsCleared 5
@@ -12,8 +12,10 @@ const levelAnalysis = {
         debris: 40, //standard levels scatter about 16
         zoom: [1000, 3000], //standard levels use 1300 to 2600
         size: [21000, 9000], //the widest and tallest standard levels, a note past double
-        near: { mob: 450, boss: 1400, secondaryBoss: 750, startingPowerUps: 500, exit: 450 }, //the closest a standard level puts each to the spawn
+        near: { mob: 450, boss: 1400, secondaryBoss: 1400, startingPowerUps: 500, exit: 450 }, //the closest a standard level puts each to the spawn, a 2nd boss is as dangerous as the boss, so the same, one modular level has its 2nd boss about 700 away
         bossApart: 400, //the closest a standard level puts its 2 bosses
+        farGap: 3000, //an empty gap this wide splits off the far side, standard levels have none
+        tinyArea: 100, //map pieces and blocks smaller than 10 × 10, usually a misclick while drawing
         map: [100, 200], //map pieces, standard levels have up to 82, the community levels that lag have 300 to 900
         mapVertices: 1500, //refinery has the most, 1251, from its round shapes
         blocks: [50, 100], //blocks and debris, standard levels have up to 38, ace has 236
@@ -53,7 +55,7 @@ const levelAnalysis = {
         if (spawn && spawn.bump) ground.push({ type: "map", x: spawn.x - 50, y: spawn.y + 40, width: 100, height: 20 }) //the bumps the doors stand on
         if (exit && exit.bump) ground.push({ type: "map", x: exit.x, y: exit.y + 20, width: 100, height: 20 })
         const code = levelData.codeText(data) //code elements and the level code
-        return { data, of, spawn, exit, ground, code, inCode: text => code.includes(text), norms: levelAnalysis.norms, live: options.isLive ? levelAnalysis.live(data) : null }
+        return { data, of, spawn, exit, ground, code, inCode: text => code.includes(text), norms: levelAnalysis.norms, live: options.isLive ? levelAnalysis.live(data) : null, hidden: options.hidden || [] }
     },
     live(data) { //what each element made and what its custom and top layers cost a frame, from levelData's runtimes
         const elements = data.elements.map(el => {
@@ -81,11 +83,56 @@ const levelAnalysis = {
     inMap(context, point) { //at least 5 deep, so something resting on a surface isn't in it
         return context.ground.some(el => [[0, 0], [5, 0], [-5, 0], [0, 5], [0, -5]].every(([dx, dy]) => levelElements.contains(el, { x: point.x + dx, y: point.y + dy })))
     },
-    isGroundBelow(context, point) { //shapes are convex, so any map piece under the point with a part lower than it catches it
+    isGroundBelow(context, point) { //a map piece's outline crosses the line straight down from the point, its bounds alone reach under points a slope doesn't
         return context.ground.some(el => {
             const b = levelElements.bounds(el)
-            return point.x >= b.x && point.x <= b.x + b.width && b.y + b.height > point.y
+            if (point.x < b.x || point.x > b.x + b.width || b.y + b.height <= point.y) return false
+            const points = levelElements.points(el)
+            for (let i = 0; i < points.length; i++) {
+                const p = points[i]
+                const q = points[(i + 1) % points.length]
+                if ((p.x - point.x) * (q.x - point.x) > 0) continue //this edge is all on one side
+                const y = p.x === q.x ? Math.max(p.y, q.y) : p.y + (q.y - p.y) * (point.x - p.x) / (q.x - p.x)
+                if (y > point.y) return true
+            }
+            return false
         })
+    },
+    far(context) { //elements past an empty gap from the enter's part of the level, on either axis, with how far and which way
+        const boxes = context.data.elements.filter(el => !levelElements.isCode(el)).map(el => ({ el, b: levelElements.bounds(el) }))
+        const found = new Map()
+        for (const [lo, size] of [["x", "width"], ["y", "height"]]) {
+            const sorted = boxes.slice().sort((a, b) => a.b[lo] - b.b[lo])
+            const clusters = [] //runs of boxes with no gap wider than farGap between them
+            for (const box of sorted) {
+                const last = clusters[clusters.length - 1]
+                if (last && box.b[lo] <= last.hi + context.norms.farGap) {
+                    last.boxes.push(box)
+                    last.hi = Math.max(last.hi, box.b[lo] + box.b[size])
+                } else clusters.push({ lo: box.b[lo], hi: box.b[lo] + box.b[size], boxes: [box] })
+            }
+            const main = clusters.find(cluster => cluster.boxes.some(box => box.el === context.spawn))
+            if (!main) continue
+            for (const cluster of clusters) {
+                if (cluster === main) continue
+                const isAfter = cluster.lo > main.hi
+                for (const box of cluster.boxes) {
+                    if (found.has(box.el)) continue
+                    const gap = isAfter ? box.b[lo] - main.hi : main.lo - (box.b[lo] + box.b[size])
+                    found.set(box.el, { gap, isBelow: lo === "y" && isAfter })
+                }
+            }
+        }
+        return found
+    },
+    area(points) { //of an outline, shoelace
+        let sum = 0
+        for (let i = 0; i < points.length; i++) {
+            const p = points[i]
+            const q = points[(i + 1) % points.length]
+            sum += p.x * q.y - q.x * p.y
+        }
+        return Math.abs(sum) / 2
     },
     overlap(a, b) { //how deep two convex outlines overlap, 0 if they don't
         let depth = Infinity
@@ -205,16 +252,18 @@ levelAnalysis.check("errors", c => { //javascript that throws while the level ru
 levelAnalysis.check("bosses", c => {
     const { line, at, distance } = levelAnalysis
     const lines = []
-    const firsts = []
+    const spotsOf = {} //each boss type's spots, with the element each is on
+    const bossCalls = (c.code.match(/spawn\.\w*Boss\s*\(/g) || []).length //spawn.randomLevelBoss( or a named one like spawn.mantisBoss(, not secondaryBossChance(
+    const inCode = { boss: bossCalls > 0, secondaryBoss: c.inCode("secondaryBossChance") || bossCalls > (c.of("boss").length ? 0 : 1) }
     for (const [type, label] of [["boss", "boss"], ["secondaryBoss", "2nd boss"]]) {
         const list = c.of(type)
         if (!list.length) {
-            if (c.inCode(type === "boss" ? "randomLevelBoss" : "secondaryBossChance")) lines.push(line("ok", label, "in code"))
+            if (inCode[type]) lines.push(line("ok", label, "in code"))
             else lines.push(line("fix", label, 0, type === "boss" ? "add a boss" : "add a 2nd boss", [], type))
             continue
         }
-        firsts.push(list[0])
-        const places = list.flatMap(el => levelElements.types[type].places(el).map(([x, y]) => ({ x, y })))
+        spotsOf[type] = list.flatMap(el => levelElements.types[type].places(el).map(([x, y]) => ({ x, y, el })))
+        const places = spotsOf[type]
         lines.push(list.length > 1 ?
             line("warn", label, list.length, "standard levels have 1, give it more spots instead", list) :
             line("ok", label, 1, places.length > 1 ? `${places.length} spots` : ""))
@@ -226,8 +275,11 @@ levelAnalysis.check("bosses", c => {
         const stuck = places.filter(p => levelAnalysis.inMap(c, p))
         if (stuck.length) lines.push(line("warn", `${label} in the map`, stuck.length, `at ${at(stuck[0].x, stuck[0].y)}`, list.filter(el => placesOf(el).some(p => levelAnalysis.inMap(c, p)))))
     }
-    if (firsts.length === 2 && distance(firsts[0], firsts[1]) < c.norms.bossApart) {
-        lines.push(line("note", "bosses together", `${Math.round(distance(firsts[0], firsts[1]))} apart`, `standard levels keep them ${c.norms.bossApart}+ apart`))
+    if (spotsOf.boss && spotsOf.secondaryBoss) { //the closest pair of spots, either one could be picked
+        let closest = null
+        for (const a of spotsOf.boss) for (const b of spotsOf.secondaryBoss) if (!closest || distance(a, b) < distance(closest[0], closest[1])) closest = [a, b]
+        const d = distance(closest[0], closest[1])
+        if (d < c.norms.bossApart) lines.push(line("note", "bosses together", `${Math.round(d)} apart`, `at ${at(closest[0].x, closest[0].y)}, standard levels keep them ${c.norms.bossApart}+ apart`, [closest[0].el, closest[1].el]))
     }
     return lines
 })
@@ -252,11 +304,8 @@ levelAnalysis.check("mobs", c => {
     if (groups > 2 * c.norms.groups) lines.push(line("note", "groups", groups, `standard levels have up to ${c.norms.groups}`))
     else lines.push(line("ok", "groups", groups))
     const all = spots.concat(singles, c.of("mobGroup"), c.of("namedMob"))
-    if (c.spawn && all.length) {
-        const nearest = all.reduce((a, b) => distance(a, c.spawn) < distance(b, c.spawn) ? a : b)
-        const d = distance(nearest, c.spawn)
-        if (d < c.norms.near.mob) lines.push(line("warn", "mob near enter", `${Math.round(d)} away`, `at ${at(nearest.x, nearest.y)}, standard levels keep mobs ${c.norms.near.mob}+ from the enter`, [nearest]))
-    }
+    const near = c.spawn ? all.filter(el => distance(el, c.spawn) < c.norms.near.mob).sort((a, b) => distance(a, c.spawn) - distance(b, c.spawn)) : [] //closest first
+    if (near.length) lines.push(line("warn", near.length > 1 ? "mobs near enter" : "mob near enter", `${Math.round(distance(near[0], c.spawn))} away`, `at ${at(near[0].x, near[0].y)}${near.length > 1 ? ` and ${near.length - 1} more` : ""}, standard levels keep mobs ${c.norms.near.mob}+ from the enter`, near))
     const stuck = all.filter(el => levelAnalysis.inMap(c, el))
     if (stuck.length) lines.push(line("warn", "mobs in the map", stuck.length, `at ${at(stuck[0].x, stuck[0].y)}`, stuck))
     return lines
@@ -309,7 +358,7 @@ levelAnalysis.check("layout", c => {
         const door = { x: c.exit.x + 50, y: c.exit.y - 50 }
         if (levelAnalysis.inMap(c, door)) lines.push(line("fix", "exit in the map", "", `at ${at(c.exit.x, c.exit.y)}`, [c.exit]))
         else if (!levelAnalysis.isGroundBelow(c, door)) lines.push(line("warn", "exit", "", "nothing below it", [c.exit]))
-        if (c.spawn && distance(door, c.spawn) < c.norms.near.exit) lines.push(line("note", "exit near enter", `${Math.round(distance(door, c.spawn))} away`))
+        if (c.spawn && distance(door, c.spawn) < c.norms.near.exit) lines.push(line("note", "exit near enter", `${Math.round(distance(door, c.spawn))} away`, "", [c.exit]))
     }
     const b = levelElements.boundsOf(maps.flatMap(el => levelElements.points(el)))
     const [wide, tall] = c.norms.size
@@ -335,6 +384,38 @@ levelAnalysis.check("layout", c => {
     if (shut.length) lines.push(line("note", "doors", shut.length, `${levelElements.summary(shut[0])} has no button or toggle, it stays shut`, shut))
     const loose = c.of("constraint").filter(el => !c.of("block").some(block => block.id === el.body))
     if (loose.length) lines.push(line("warn", "constraints", loose.length, `${levelElements.summary(loose[0])} has no block`, loose))
+    const tiny = maps.concat(blocks).filter(el => levelAnalysis.area(levelElements.points(el)) < c.norms.tinyArea)
+    if (tiny.length) lines.push(line("warn", "tiny shapes", tiny.length, `${levelElements.summary(tiny[0])}, almost no area, usually a misclick`, tiny))
+    if (c.spawn) {
+        const far = levelAnalysis.far(c)
+        if (far.size) {
+            const [el, { gap }] = [...far].sort((a, b) => b[1].gap - a[1].gap)[0] //the farthest
+            const isBelow = [...far.values()].some(f => f.isBelow)
+            lines.push(line("warn", "far from the level", far.size, `${levelElements.summary(el)}, ${Math.round(gap)} past the rest${isBelow ? ", below the level it moves the fall line down, so falling takes longer" : ""}`, [...far.keys()]))
+        }
+    }
+    if (c.hidden.length) lines.push(line("note", "hidden", c.hidden.length, "hidden in the editor, they're still in the level and its export", c.hidden))
+    return lines
+})
+
+levelAnalysis.check("elements", c => {
+    const { line, at } = levelAnalysis
+    const lines = []
+    const keyColors = new Set(c.of("key").map(el => el.color))
+    const holeColors = new Set(c.of("keyhole").map(el => el.color))
+    const noKey = c.of("keyhole").filter(el => !keyColors.has(el.color))
+    if (noKey.length && !c.inCode("level.key(")) lines.push(line("warn", "keyhole", noKey.length, `no ${noKey[0].color} key fits it`, noKey))
+    const noHole = c.of("key").filter(el => !holeColors.has(el.color))
+    if (noHole.length && !c.inCode("level.keyButton(")) lines.push(line("warn", "key", noHole.length, `no ${noHole[0].color} keyhole for it`, noHole))
+    const linked = new Set(c.data.elements.flatMap(el => [el.link, el.orLink]).filter(id => id !== null && id !== undefined))
+    const idle = c.data.elements.filter(el => levelElements.linkSources.includes(el.type) && !linked.has(el.id) && !String(el.log ?? "").trim() && !el.edited)
+    if (idle.length) lines.push(line("note", "does nothing", idle.length, `${levelElements.summary(idle[0])} has nothing linked, no log, and no edited code`, idle))
+    if (c.spawn) { //the player's middle, head, feet, and sides at the enter
+        const body = [[0, 0], [0, -30], [0, 30], [-20, 0], [20, 0]].map(([dx, dy]) => ({ x: c.spawn.x + dx, y: c.spawn.y + dy }))
+        const hazards = c.of("slime").filter(el => el.damage > 0).concat(c.of("laser").filter(el => el.damage > 0), c.of("wind"))
+        const hit = hazards.filter(el => body.some(p => levelElements.contains(el, p)))
+        if (hit.length) lines.push(line("warn", "hazard at enter", hit.length, `${levelElements.summary(hit[0])}, at ${at(c.spawn.x, c.spawn.y)}, the player ${hit[0].type === "wind" ? "is pushed" : "is hurt"} before they can move`, hit))
+    }
     return lines
 })
 
@@ -352,6 +433,9 @@ levelAnalysis.check("settings", c => {
     }
     const blockContrast = levelAnalysis.contrast(c.data.blockColor, c.data.background)
     if (blockContrast !== null && blockContrast < 1.25 && c.of("block").length) lines.push(line("note", "block color", `${blockContrast.toFixed(1)}:1`, "hard to see on the background"))
+    const name = String(c.data.name ?? "").trim()
+    if (!name || name === "untitled") lines.push(line("note", "name", name || "none", "name it before exporting or adding it to the level pool"))
+    if (!String(c.data.author ?? "").trim()) lines.push(line("note", "author", "none", "the level says who made it in the in-game console when it loads"))
     return lines
 })
 

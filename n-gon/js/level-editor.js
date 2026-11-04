@@ -70,7 +70,7 @@ Object.assign(levelEditor, {
     nameError: "", //why the last name typed wasn't used, shown under the level's properties
     exploreSearch: "", //the explorer's search box
     exploreLimits: {}, //type: how many the explorer lists, 100 to start, show more adds 100
-    mobIcons: null, //mob name: a little svg of it for mob by name, drawn from the saved pictures, see loadMobPictures()
+    mobIcons: null, //mob name: a little svg of it for the mobs list, drawn from the saved pictures, see loadMobPictures()
     mobPictureData: null, //js/level-editor-mob-pictures.js sets it, each mob's saved outlines, colors, and lines
     isLoadingMobPictures: false,
     mobShapes: {}, //mob name: { shapes, links, orbs } it was drawn from, to draw it again at other sizes, like the mob and boss buttons' examples
@@ -79,6 +79,13 @@ Object.assign(levelEditor, {
     // opening and closing
     //*********************************************************************
     async open() {
+        if (!levelEditor.isLoaded) { //clicked again while the icons and help files are still downloading, or after one failed
+            try {
+                await levelEditor.loadFiles()
+            } catch (error) {
+                return console.error(error)
+            }
+        }
         if (simulation.isStartingGame || levelEditor.isActive) return
         const data = levelData.store.getRecent() || levelData.blank(levelData.freeName("untitled"))
         levelData.store.save(data)
@@ -156,7 +163,7 @@ Object.assign(levelEditor, {
         } finally {
             Math.random = random
         }
-        levelEditor.loadMobPictures() //once, for mob by name's pictures
+        levelEditor.loadMobPictures() //once, for the mobs list's pictures
         level.disableExit = true //the exit charges, but doesn't leave
         simulation.removeEphemera("levelEditor", true)
         simulation.ephemera.push({ name: "levelEditor", do() { levelEditor.frame() } })
@@ -379,6 +386,9 @@ Object.assign(levelEditor, {
     },
     isHidden(el) { //the explorer's hide, not built while editing
         return levelEditor.isHideable(el) && (levelEditor.hiddenTypes.has(el.type) || levelEditor.hiddenIds.has(el.id))
+    },
+    runAnalysis() { //with what the editor measures while the level runs, and what the explorer hides
+        return levelAnalysis.run(levelEditor.data, { isLive: true, hidden: levelEditor.data.elements.filter(levelEditor.isHidden) })
     },
     elementAt(point) { //the smallest element under point, so things on top of big map pieces can be picked
         let best = null
@@ -1456,6 +1466,7 @@ Object.assign(levelEditor, {
                 const ids = levelEditor.toggleView(levelEditor.hiddenTypes, levelEditor.hiddenIds, arg)
                 levelEditor.select(levelEditor.selection.filter(id => !levelEditor.isHidden(levelData.find(levelEditor.data, id))))
                 if (!levelEditor.isTesting && !levelEditor.isFullTest) levelData.rebuild(ids)
+                levelEditor.countProblems() //the analysis notes hidden elements
             },
         },
         lock: { //"type:map" or "id:12", the mouse goes through locked elements
@@ -1473,7 +1484,7 @@ Object.assign(levelEditor, {
         //analysis
         analyze: { //the analysis in the inspector, click a line to go to what it's about
             label: "issues, the level checked against the standard levels", run() {
-                levelEditor.analysisReport = levelAnalysis.run(levelEditor.data, { isLive: true })
+                levelEditor.analysisReport = levelEditor.runAnalysis()
                 levelEditor.isAnalysisShown = true
                 levelEditor.renderRight()
             },
@@ -1485,7 +1496,7 @@ Object.assign(levelEditor, {
             },
         },
         copyAnalysis: {
-            label: "copy the issues as text", run: () => levelEditor.copy(levelAnalysis.text(levelEditor.analysisReport || levelAnalysis.run(levelEditor.data, { isLive: true })), "issues"),
+            label: "copy the issues as text", run: () => levelEditor.copy(levelAnalysis.text(levelEditor.analysisReport || levelEditor.runAnalysis()), "issues"),
         },
         fixProblem: { //an analysis line that adding something fixes, like no boss, adds it somewhere sensible, goes to it, and keeps the analysis open
             label: "add it", run(typeName) {
@@ -1763,9 +1774,12 @@ Object.assign(levelEditor, {
         select: "rgb(0,170,255)",
         pick: "rgb(255,120,0)",
         hover: "rgba(0,170,255,0.6)",
-        guide: "rgba(0,120,255,0.4)",
-        grid: "rgba(0,0,0,0.06)",
-        axis: "rgba(0,0,0,0.15)",
+        guide: "rgba(106,102,152,0.6)", //lavender, cyan is only for selected
+        grid: "rgba(90,85,150,0.1)", //lavender gray lines, like the panels' on
+        axis: "rgba(106,102,152,0.45)",
+        fix: "#c62a2a", //the analysis' colors, the same as --le-fix, --le-warn, and --le-ok in style.css
+        warn: "#c26a00",
+        ok: "#2f8a55",
     },
     frame() {
         levelEditor.applyTimeScale()
@@ -1802,7 +1816,7 @@ Object.assign(levelEditor, {
             levelEditor.drawVertices(el)
         } else if (drag && drag.kind === "vertex") {
             const { error } = levelEditor.vertexPreview(drag)
-            levelEditor.outline(levelEditor.vertexDragCopy(drag), error ? "#e00" : levelEditor.colors.select, 2, [], error ? "rgba(255,0,0,0.15)" : "rgba(0,170,255,0.15)")
+            levelEditor.outline(levelEditor.vertexDragCopy(drag), error ? levelEditor.colors.fix : levelEditor.colors.select, 2, [], error ? "rgba(255,0,0,0.15)" : "rgba(0,170,255,0.15)")
             if (error) { //on a light box so it shows over the map
                 const x = point.x + levelEditor.px(14)
                 const y = point.y + levelEditor.px(22)
@@ -1811,7 +1825,7 @@ Object.assign(levelEditor, {
                 ctx.textBaseline = "alphabetic"
                 ctx.fillStyle = "rgba(255,255,255,0.85)"
                 ctx.fillRect(x - levelEditor.px(3), y - levelEditor.px(12), ctx.measureText(error).width + levelEditor.px(6), levelEditor.px(16))
-                ctx.fillStyle = "#c00"
+                ctx.fillStyle = levelEditor.colors.fix
                 ctx.fillText(error, x, y)
             }
         } else if (isDragging) {
@@ -1942,7 +1956,7 @@ Object.assign(levelEditor, {
         const { height, distance } = levelEditor.jumpReach()
         const isReach = levelEditor.canReach(start, end)
         ctx.lineWidth = px(1.5)
-        ctx.strokeStyle = "rgba(0,120,255,0.45)"
+        ctx.strokeStyle = levelEditor.colors.guide
         ctx.setLineDash([px(6), px(5)])
         ctx.beginPath() //how far a jump reaches both ways: as high as a jump goes for half its distance, then falling, past where it lands
         const reach = across => across <= distance / 2 ? height : height * (1 - ((across - distance / 2) / (distance / 2)) ** 2)
@@ -1961,7 +1975,7 @@ Object.assign(levelEditor, {
         ctx.moveTo(start.x, start.y)
         ctx.lineTo(end.x, end.y)
         ctx.lineWidth = px(2)
-        ctx.strokeStyle = isReach ? "#0a6" : "#d22"
+        ctx.strokeStyle = isReach ? levelEditor.colors.ok : levelEditor.colors.fix
         ctx.stroke()
         for (const p of [start, end]) {
             ctx.beginPath()
@@ -1988,7 +2002,7 @@ Object.assign(levelEditor, {
         ctx.fillRect(x - px(4), y - px(13), width + px(8), px(36))
         ctx.fillStyle = "#000"
         ctx.fillText(lines[0], x, y)
-        ctx.fillStyle = isReach ? "#0a6" : "#d22"
+        ctx.fillStyle = isReach ? levelEditor.colors.ok : levelEditor.colors.fix
         ctx.fillText(lines[1], x, y + px(16))
     },
     stepDiff(index) { //what a history step changed, for its tooltip
@@ -2024,7 +2038,7 @@ Object.assign(levelEditor, {
         for (const [id, lines] of levelEditor.problems) {
             const el = levelData.find(levelEditor.data, id)
             if (!el || levelEditor.isHidden(el)) continue
-            levelEditor.outline(el, lines.some(line => line.status === "fix") ? "#e00" : "#f80", 2, [8, 5])
+            levelEditor.outline(el, lines.some(line => line.status === "fix") ? levelEditor.colors.fix : levelEditor.colors.warn, 2, [8, 5])
         }
     },
     drawTip(point, lines) { //the analysis lines about the element under the mouse, above it on a light box
@@ -2038,7 +2052,7 @@ Object.assign(levelEditor, {
         ctx.fillStyle = "rgba(255,255,255,0.9)"
         ctx.fillRect(x - levelEditor.px(4), y - levelEditor.px(13), width + levelEditor.px(8), levelEditor.px(16) * texts.length + levelEditor.px(4))
         texts.forEach((text, i) => {
-            ctx.fillStyle = lines[i].status === "fix" ? "#c00" : "#b60"
+            ctx.fillStyle = lines[i].status === "fix" ? levelEditor.colors.fix : levelEditor.colors.warn
             ctx.fillText(text, x, y)
             y += levelEditor.px(16)
         })
@@ -2176,7 +2190,8 @@ Object.assign(levelEditor, {
             title: "import/export",
             render: () => `<div class="le-load" data-load-local></div>
                 <div class="le-grid le-sixths le-gap-above le-flush-x">${levelEditor.button("newLevel", "new", "", false, undefined, { className: "le-third" })}${levelEditor.button("importLevel", "import", "", false, undefined, { className: "le-third" })}${levelEditor.button("code", "export", "", false, undefined, { className: "le-third" })}${levelEditor.button("duplicateLevel", "fork", "", false, undefined, { className: "le-half" })}${levelEditor.button("pool", levelEditor.isInPool() ? "in level pool" : "add to level pool", "", levelEditor.isInPool(), undefined, { className: "le-half" })}</div>
-                <div class="le-load" data-load-written></div>`, //the local levels, then new, import, the pool, and export, then the written levels, filled in when it opens, see renderLoadList()
+                <a class="le-button le-site-link le-flush-x" href="https://whyisthisnotavalable.github.io/n-vote/" target="_blank" rel="noopener" title="n-vote, a fan site for n-gon maps: upload your export, download other players' maps, and rate them. import a download here to play it, maps are javascript, so only run ones you trust"><span>n-vote</span><span class="le-site-note">upload, download, rate maps</span></a>
+                <div class="le-load" data-load-written></div>`, //the local levels, then new, import, the pool, and export, then the fan site for sharing levels, then the written levels, filled in when it opens, see renderLoadList()
         },
         {
             id: "simulation",
@@ -2379,7 +2394,7 @@ Object.assign(levelEditor, {
     elementList() { //every level element by kind, and each named preset like exit fill, picking one adds it, an option's data-command and data-arg are what it runs
         const option = (command, arg, text, tip) => `<option value="${levelEditor.escape(arg)}" data-command="${command}" data-arg="${levelEditor.escape(arg)}" title="${levelEditor.escape(tip)}">${levelEditor.elementIcon(arg)}<span>${levelEditor.escape(text)}</span></option>`
         return `<select class="le-list le-rich-list le-two-col le-flush-x" title="add a level element in the middle of the view">
-            <option value="">level element</option>
+            <option value="">level elements</option>
             ${levelEditor.elementGroups().map(group => `<optgroup label="${group.title}"><legend>${group.title}</legend>${group.names.map(name => {
             const type = levelElements.types[name]
             return option(type.addCommand || "add", name, type.label, type.tip || `add ${type.label}`) +
@@ -2396,7 +2411,7 @@ Object.assign(levelEditor, {
     powerUpList() { //every power up with its orb, picking one adds it, browsers with customizable selects show the orbs (appearance: base-select), others just the names
         const type = levelElements.types.powerUp
         return `<select class="le-list le-rich-list le-two-col le-flush-x" data-add="powerUp" title="a power up by name">
-            <option value="">power up by name</option>
+            <option value="">power ups</option>
             ${type.names.map(name => `<option value="${name}" title="${levelEditor.escape(type.tips[name] || "")}">${levelEditor.orb(name)}<span>${name}</span></option>`).join("")}
         </select>`
     },
@@ -2404,7 +2419,7 @@ Object.assign(levelEditor, {
         const tiers = spawn.tier.map((names, i) => [`tier ${i}`, names]).concat(spawn.bossTier.map((names, i) => [`tier ${i} bosses`, names])).filter(([, names]) => names.length)
         const icons = levelEditor.mobIcons || {}
         return `<select class="le-list le-rich-list le-two-col le-flush-x" data-add="namedMob" title="${levelEditor.escape(levelElements.types.namedMob.tip)}">
-            <option value="">mob by name</option>
+            <option value="">mobs</option>
             <optgroup label="random"><legend>random</legend><option value="group" data-arg="mobGroup" title="${levelEditor.escape(levelElements.types.mobGroup.tip)}">${levelEditor.mobIcon("group", [{ fill: "rgb(255,80,160)", x: -14, y: 4, r: 9, sides: 5 }, { fill: "rgb(255,80,80)", x: 8, y: -6, r: 10, sides: 4 }, { fill: "rgb(255,120,80)", x: 10, y: 10, r: 7, sides: 3 }])}<span>group</span></option></optgroup>
             ${tiers.map(([label, names]) => `<optgroup label="${label}"><legend>${label}</legend>${names.map(name => `<option value="${name}" title="${name}">${icons[name] || ""}<span>${name}</span></option>`).join("")}</optgroup>`).join("")}
         </select>`
@@ -2586,7 +2601,7 @@ Object.assign(levelEditor, {
         levelEditor.problemTimer = setTimeout(() => {
             const button = document.querySelector("#level-editor-status [data-status-problems]")
             if (!button || !levelEditor.data) return
-            const report = levelEditor.analysisReport = levelAnalysis.run(levelEditor.data, { isLive: true })
+            const report = levelEditor.analysisReport = levelEditor.runAnalysis()
             const counts = levelAnalysis.counts(report)
             levelEditor.problems = new Map()
             for (const section of report.sections) {
@@ -2939,15 +2954,14 @@ Object.assign(levelEditor, {
             }
         })
     },
-    highlight(text) { //javascript in GitHub's light theme colors: comments, strings, numbers, keywords, and function calls, the rest stays plain, html to put in a pre
+    highlight(text) { //javascript in the editor's code colors, --le-code in style.css: comments, strings, numbers, keywords, and function calls, the rest stays plain, html to put in a pre
         const pattern = /(\/\/.*|\/\*[\s\S]*?(?:\*\/|$))|("(?:[^"\\\n]|\\.)*"?|'(?:[^'\\\n]|\\.)*'?|`(?:[^`\\]|\\.)*`?)|(\b\d+(?:\.\d+)?(?:e-?\d+)?\b|\b(?:true|false|null|undefined)\b)|(\b(?:const|let|var|if|else|for|while|do|return|function|new|this|of|in|break|continue|typeof|switch|case)\b)|([A-Za-z_$][\w$]*(?=\s*\())/g
         const kinds = ["le-hl-comment", "le-hl-string", "le-hl-number", "le-hl-keyword", "le-hl-call"]
         let html = ""
         let last = 0
         for (const match of text.matchAll(pattern)) {
             html += levelEditor.escape(text.slice(last, match.index))
-            const isZone = match[1] && /^\/\/(runs once|level\.custom)/.test(match[1]) //the comment that starts a part: runs once, or each game cycle
-            html += `<span class="${isZone ? "le-hl-zone" : kinds[match.slice(1).findIndex(Boolean)]}">${levelEditor.escape(match[0])}</span>`
+            html += `<span class="${kinds[match.slice(1).findIndex(Boolean)]}">${levelEditor.escape(match[0])}</span>`
             last = match.index + match[0].length
         }
         return html + levelEditor.escape(text.slice(last))
@@ -2988,7 +3002,7 @@ Object.assign(levelEditor, {
             ], true)}`
     },
     inspectAnalysis() { //the analysis in the inspector, each line about elements goes to them when clicked
-        const report = levelEditor.analysisReport || levelAnalysis.run(levelEditor.data, { isLive: true })
+        const report = levelEditor.analysisReport || levelEditor.runAnalysis()
         const escape = levelEditor.escape
         const selected = new Set(levelEditor.selection)
         const lines = report.sections.map(section => `<div class="le-analysis-section">//${escape(section.title)}</div>` + section.lines.map(line => {
@@ -3253,7 +3267,7 @@ Object.assign(levelEditor, {
     const onSettingChange = event => { //the left panel and the status bar, which has grid and zoom
         if (event.target.dataset.key) levelEditor.setProp(event.target)
         const picked = event.target.selectedOptions?.[0]
-        if ((event.target.dataset.add || picked?.dataset.command) && event.target.value) { //a list that adds what's picked, like mob by name or a level element
+        if ((event.target.dataset.add || picked?.dataset.command) && event.target.value) { //a list that adds what's picked, like the mobs list or a level element
             levelEditor.run(picked.dataset.command || "add", picked.dataset.arg || `${event.target.dataset.add}:${event.target.value}`)
             event.target.value = ""
             event.target.blur()

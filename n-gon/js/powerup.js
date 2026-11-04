@@ -485,7 +485,14 @@ const powerUps = {
         size() {
             return 30
         },
-        load(name) {
+        async load(name) {
+            if (name && !level.maps[name] && !level.localMaps[name]) { //community and training levels are in level2.js, which only loads when community maps are on
+                try {
+                    await level.loadMoreLevels()
+                } catch (error) {
+                    return console.error(error)
+                }
+            }
             if (name) level.levels[level.onLevel + 1] = name
             powerUps.warp.exit()
             level.nextLevel();

@@ -2651,18 +2651,19 @@ const level = {
                 }
                 Matter.Body.setVelocity(this, { x: 0, y: this.velocity.y });
             },
-            move() { //goes up and down on its own
-                if (!m.isTimeDilated) this.travel(true)
+            move(isOn = true) { //goes up and down on its own, while off it finishes its trip and waits at the bottom
+                if (!m.isTimeDilated) this.travel(isOn)
                 //edge limits
                 if (this.position.y < maxHeight) {
                     Matter.Body.setPosition(this, { x: this.holdX, y: maxHeight });
                 } else if (this.position.y > y) {
                     Matter.Body.setPosition(this, { x: this.holdX, y: y });
+                    if (!isOn) this.force.y -= this.mass * simulation.g; //waiting at the bottom, undoing force of gravity like moveOnTouch
                 }
                 // hold horizontal position
                 Matter.Body.setPosition(this, { x: this.holdX, y: this.position.y });
             },
-            moveOnTouch() { //waits at the bottom until the player touches it
+            moveOnTouch(isOn = true) { //waits at the bottom until the player touches it, while off touching it doesn't start it
                 if (!m.isTimeDilated) this.travel(false)
                 //draw line to show how far to will extend
                 ctx.beginPath();
@@ -2690,7 +2691,7 @@ const level = {
                     Matter.Body.setPosition(this, { x: this.holdX, y: y });
                     //undoing force of gravity
                     this.force.y -= this.mass * simulation.g;
-                    if (Matter.Query.collides(this, [player]).length) {
+                    if (isOn && Matter.Query.collides(this, [player]).length) {
                         this.isUp = true
                         this.frictionAir = friction.up
                     }

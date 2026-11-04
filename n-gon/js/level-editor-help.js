@@ -56,7 +56,7 @@ Object.assign(levelEditor, {
                 <li>Play all the way to the exit, and try falling off the edges. The exit won't take you to another level while you're in the editor.</li>
             </ul>`],
         ["buttons and moving parts", `
-            <p>Open <b>add → level element</b> for boosts, conveyors, elevators, portals, hazards, controls, and decorations.</p>
+            <p>Open <b>add → level elements</b> for boosts, conveyors, elevators, portals, hazards, controls, and decorations.</p>
             <p>A <b>button</b>, <b>toggle</b>, <b>zone</b>, <b>timer</b>, or <b>keyhole</b> can control other objects. A button responds to weight, a toggle is a lever, a zone detects something inside it, a timer switches on and off, and a keyhole needs a matching key.</p>
             <p>Select a control, press <b>link</b>, then click the object you want it to control. For example, a linked <b>door</b> opens while the button is pressed. Press esc to stop linking.</p>
             <p>A block's <b>constraint</b> can pin it to a point in the level, or set its <b>anchor</b> to another block to tie the two together, like a chain or a pendulum.</p>

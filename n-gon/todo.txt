@@ -1,3 +1,5 @@
+n-vote - a link to the fan site for uploading, downloading, and rating maps, in the level pool and the level editor's import/export
+level editor: elevators can be linked to triggers, while off they finish their trip and wait at the bottom
 level editor: ghost (G) - the player hides and WASD flies the view anywhere through walls, G again drops the player there, replaces the velocity drawing
 level editor: import asks before running a level's javascript, shows you the code first, or imports it without the code
 community maps and level editor code can read your saves and settings but can't change them
@@ -13,11 +15,71 @@ level editor: author - the level's info box has an author, the level says its na
 bug fixes
   level editor: constraints no longer happen while editing, like spawn wimps sending wimps after you
   level editor: pausing hides the editor's menus, they used to stick out from under the pause menu
+  level editor: no more crash when opening the editor before it finished downloading, like clicking it twice on your first visit
+  community maps: yingYang and diamagnetism no longer throw an error every frame when their picture can't download, underpass stops downloading its picture every frame
+  testing: warp (9) to a community or training level works when community maps are off
 
 
 
 
 *********************************************************** TODO *****************************************************
+
+
+
+
+Theme directions
+A. Blueprint (my pick for the base). It's a construction tool, so lean into drafting paper. The pause menu's blue-gray #e2e9ec is already that paper color. Make the selection cyan the editor's one accent and use it for on buttons, selected explorer rows, focused inputs, the current history step and active tools. Then the panels and the map use the same color for "selected." The canvas grid could become faint blue graph lines, with the axis drawn in the accent.
+
+B. Color by element type, using the game's own colors. This one communicates best. Each category gets a thin colored stripe on its explorer group, inspector header and add-menu section:
+
+map: #444
+bodies: block gray
+mobs: damage red #f03
+heal: #0b7
+ammo: #356
+tech: purple 253
+fields: cyan 193
+guns: blue 218
+code: a neutral ink
+Players already know these colors from the experiment menu, so this ties it to the rest of the game without copying it. It also works alongside A.
+
+C. Status bar color shows the mode. VS Code does this: the status bar turns orange while debugging. Pale paper while editing, green while quick test or test export is running, red when there are problems to fix. You'd always know what state you're in at a glance.
+
+Smaller fixes, whichever direction you pick
+Primary buttons: quick test and test export get a filled style instead of only a colored icon.
+Delete: red text or border on hover.
+On state: a cyan tint with a cyan border instead of #666, which reads as heavy and is close to disabled.
+Menu headers: a little more weight, an icon, or a thin accent rule under an open one.
+Labels: #777 at 13px is faint. Go a bit darker, or make the labels smaller and darker.
+CSS variables first: --le-accent, --le-ink, --le-line, --le-error, --le-warn and the code colors. Then trying a theme means changing about ten values, not a hundred.
+Code colors
+The main change I'd make is in how colors are assigned, not which colors. Right now the keys carry the strongest color. Keys are the most common token and the least interesting one, which is why it looks purple everywhere. Better:
+
+token	idea
+keys	near-black slate ink, maybe medium weight
+: , [ ]	faded gray, nearly invisible
+numbers	deep cyan-blue (the field color, darkened)
+strings	warm amber or brown (the explode orange #d60, darkened)
+true / false / null	rose red
+keywords	bold ink or deep teal
+calls	the gun blue
+comments	gray italic
+This also helps people understand the panel: the values are the editable part, so they're what lights up. And it's one palette for the inspector, the JS view and the code panel.
+
+If you'd rather borrow an existing palette:
+
+Solarized Light: calm, warm, slightly cream.
+Xcode's default light: plain keys, red strings, blue numbers, pink bold keywords. Very clean.
+Gruvbox Light: earthy and muted.
+I'd go with the game-derived one above, since its colors already mean something in n-gon.
+
+I can make a quick side-by-side mockup with a sample inspector block and code snippet in two or three palettes before we change anything.
+
+
+
+
+
+
 
 
 
