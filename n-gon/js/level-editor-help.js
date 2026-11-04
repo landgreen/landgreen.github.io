@@ -11,7 +11,7 @@ Object.assign(levelEditor, {
                 <li>Select and drag <b>enter</b> and <b>exit</b> into place.</li>
                 <li>Open <b>add</b> to place <b>mob</b> spots, a <b>boss</b>, and a <b>starting</b> power up.</li>
                 <li>Press <b>▶ quick test</b> in <b>simulation</b> to play. Press <b>■ stop</b> to return to editing.</li>
-                <li>Click the issues count in the bottom bar to check for problems. When you're ready to share, use <b>export</b> in <b>export/import</b>.</li>
+                <li>Click the issues count in the bottom bar to check for problems. When you're ready to share, use <b>export</b> in <b>import/export</b>.</li>
             </ol>`],
         ["drawing", `
             <ul>
@@ -63,7 +63,7 @@ Object.assign(levelEditor, {
             <p>Link two controls to the same object and either can turn it on. Link one control to another and both must be on. For example, link a zone to a timer, then the timer to a laser, to make the laser pulse only while something is in the zone.</p>`],
         ["code", `
             <p>Code is optional. For behavior the editor's tools can't make, <b>+ code</b> at the bottom of the level's info box (click empty space) lets you add your own JavaScript.</p>
-            <p>To explore how existing levels work, open one from <b>load more levels</b> in <b>export/import</b>. This makes a local copy, so you can experiment without changing the original.</p>
+            <p>To explore how existing levels work, open one from <b>load more levels</b> in <b>import/export</b>. This makes a local copy, so you can experiment without changing the original.</p>
             <p>If you're writing code: each code element runs when the level loads and can use variables defined in earlier code elements. Put behavior that needs to repeat each frame in <code>level.custom</code>.</p>`],
         ["sharing and submitting", `
             <ul>

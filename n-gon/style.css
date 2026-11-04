@@ -901,12 +901,6 @@ levelPoolMenu.place() sets its position, width, and height */
     color: #4a525e;
 }
 
-.level-pool-columns {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 0 12px;
-}
-
 .level-chip {
     padding: 4px 8px;
     background-color: var(--card-color);
@@ -3200,8 +3194,9 @@ body.level-editor.le-invincible #level-editor-left {
     margin-top: 14px;
 }
 
-.le-load-group summary {
-    margin: 8px 0 2px;
+.le-load-group summary { /* the size of the buttons above it, not a menu title */
+    margin: 5px 0 -2px;
+    font-size: 1em;
 }
 
 /* the help menu's guide */
@@ -3352,6 +3347,10 @@ body.level-editor.le-invincible #level-editor-left {
     border-bottom-width: 0;
     border-radius: 0 0 var(--le-inner-radius) var(--le-inner-radius);
     overflow: hidden;
+}
+
+.le-flush-bottom>.le-grid:last-child { /* rows inside, like the inspector's action rows, the outline is the last one's bottom line */
+    border-bottom-width: 0;
 }
 
 /* a list right under its buttons joins them */

@@ -450,6 +450,7 @@ Object.assign(levelEditor, {
     setCamera(isOn, isDrop = true) { //camera mode on or off, off drops the player in the middle of the view unless that's inside the map
         if (isOn === levelEditor.isCamera) return
         levelEditor.isCamera = isOn
+        if (levelEditor.isActive) levelEditor.renderStatus() //the status bar's ghost lights up
         if (isOn) {
             levelEditor.cameraSaved = { draw: m.draw, mask: player.collisionFilter.mask }
             levelEditor.cameraAnchor = { x: player.position.x, y: player.position.y }
@@ -996,10 +997,11 @@ Object.assign(levelEditor, {
                 levelEditor.renderLeft()
             },
         },
-        camera: { //the simulation menu's camera button
-            label: "camera", run() {
+        ghost: { //camera mode, the status bar's ghost and the simulation menu's ghost button
+            label: "ghost: the player hides, WASD or the arrows fly the view anywhere through walls, shift is faster, again drops the player in the middle of the view", keys: ["g"], run() {
+                if (levelEditor.isFullTest) return //a run has a player
                 levelEditor.setCamera(!levelEditor.isCamera)
-                if (levelEditor.isCamera) simulation.inGameConsole(`<em>//camera: WASD or the arrows fly, shift is faster, camera again drops the player in the middle</em>`)
+                if (levelEditor.isCamera) simulation.inGameConsole(`<em>//ghost: WASD or the arrows fly, shift is faster, G drops the player in the middle</em>`)
                 levelEditor.renderLeft()
             },
         },
@@ -2171,7 +2173,7 @@ Object.assign(levelEditor, {
         },
         {
             id: "load",
-            title: "export/import",
+            title: "import/export",
             render: () => `<div class="le-load" data-load-local></div>
                 <div class="le-grid le-sixths le-gap-above le-flush-x">${levelEditor.button("newLevel", "new", "", false, undefined, { className: "le-third" })}${levelEditor.button("importLevel", "import", "", false, undefined, { className: "le-third" })}${levelEditor.button("code", "export", "", false, undefined, { className: "le-third" })}${levelEditor.button("duplicateLevel", "fork", "", false, undefined, { className: "le-half" })}${levelEditor.button("pool", levelEditor.isInPool() ? "in level pool" : "add to level pool", "", levelEditor.isInPool(), undefined, { className: "le-half" })}</div>
                 <div class="le-load" data-load-written></div>`, //the local levels, then new, import, the pool, and export, then the written levels, filled in when it opens, see renderLoadList()
@@ -2188,7 +2190,7 @@ Object.assign(levelEditor, {
             <div class="le-row"><span class="le-label">level</span><input class="le-number le-short" data-setting="testLevel" value="${levelEditor.testLevel}" spellcheck="false" title="how many levels into a run you're testing, it picks mob types and difficulty, at 0 random mobs don't spawn">
                 <span class="le-label le-seed-label">seed</span><input class="le-number" data-setting="testSeed" value="${levelEditor.escape(levelEditor.testSeed)}" placeholder="random" spellcheck="false" title="the same seed starts each test the same: mob types, which spots get mobs, bosses, power ups, and debris, what mobs do after is still random, empty is random"></div>
             <div class="le-row${isExport ? " le-inactive" : ""}"><span class="le-label">time</span><span class="le-segment">${[0.1, 0.25, 0.5, 1].map(scale => levelEditor.button("timeScale", `${scale}×`, scale, levelEditor.timeScale === scale, `game speed, it lowers the frame cap${exportNote}`, { disabled: isExport })).join("")}</span></div>
-            <div class="le-grid le-sixths le-gap-above le-flush-x le-flush-bottom">${levelEditor.button("camera", "camera", "", levelEditor.isCamera, `the player hides and stops colliding, WASD or the arrows fly the view anywhere, shift is faster, adding puts things in the middle, camera again drops the player in the middle of the view${exportNote}`, { disabled: isExport, className: "le-third" })}${levelEditor.button("mouseLook", "mouse look", "", levelEditor.isMouseLook, `the camera leans toward the mouse right away, no smoothing, off it stays on the player so moving to a panel doesn't move the view${exportNote}`, { disabled: isExport, className: "le-third" })}${levelEditor.button("invincible", "invincible", "", levelEditor.isInvincible, "the player takes no damage, in both tests too, the health bars hide", { className: "le-third" })}${levelEditor.debugLayers.map(([name, tip]) => levelEditor.button("debugDraw", name, name, levelEditor.debugDraw.has(name), tip + exportNote, { disabled: isExport, className: "le-third" })).toSpliced(2, 0, levelEditor.button("testSpawning", "mobs", "", levelEditor.isTestSpawning || isExport, `quick test spawns mobs and power ups${isExport ? ", test export always does" : ""}`, { disabled: isExport, className: "le-third" })).join("")}</div>`
+            <div class="le-grid le-sixths le-gap-above le-flush-x le-flush-bottom">${levelEditor.button("ghost", "ghost", "", levelEditor.isCamera, `${levelEditor.tip("ghost")}, adding puts things in the middle${exportNote}`, { disabled: isExport, className: "le-third" })}${levelEditor.button("mouseLook", "mouse look", "", levelEditor.isMouseLook, `the camera leans toward the mouse right away, no smoothing, off it stays on the player so moving to a panel doesn't move the view${exportNote}`, { disabled: isExport, className: "le-third" })}${levelEditor.button("invincible", "invincible", "", levelEditor.isInvincible, "the player takes no damage, in both tests too, the health bars hide", { className: "le-third" })}${levelEditor.debugLayers.map(([name, tip]) => levelEditor.button("debugDraw", name, name, levelEditor.debugDraw.has(name), tip + exportNote, { disabled: isExport, className: "le-third" })).toSpliced(2, 0, levelEditor.button("testSpawning", "mobs", "", levelEditor.isTestSpawning || isExport, `quick test spawns mobs and power ups${isExport ? ", test export always does" : ""}`, { disabled: isExport, className: "le-third" })).join("")}</div>`
             },
         },
         {
@@ -2446,7 +2448,8 @@ Object.assign(levelEditor, {
     renderStatus() { //the bar along the bottom, like VS Code's: grid, zoom, tools, and the mouse, then on the right the analysis, history, and tab hide
         document.getElementById("level-editor-status").innerHTML = `<span class="le-status-item" title="snap size, hold alt to place freely"><input class="le-number" data-setting="grid" value="${levelEditor.grid}" spellcheck="false">${levelEditor.button("grid", "grid", "", levelEditor.isGridShown)}</span>
             <span class="le-status-item" title="the editor's zoom, the wheel zooms too">${levelEditor.button("levelZoom", levelEditor.statusIcon("zoom"), "", false, undefined, { className: "le-icon-button" })}<input class="le-number" data-setting="zoom" value="${Math.round(levelEditor.zoomScale)}" spellcheck="false">${levelEditor.button("fit", "fit")}</span>
-            <span class="le-status-item"><span class="le-segment le-tool-icons">${levelEditor.tools.map(tool => levelEditor.button("tool", levelEditor.toolIcon(tool), tool, levelEditor.tool === tool, levelEditor.toolTips[tool] || tool)).join("")}</span>${levelEditor.keyCap("tool")}</span>
+            <span class="le-status-item">${levelEditor.keyCap("ghost")}<span class="le-segment le-tool-icons">${levelEditor.button("ghost", levelEditor.statusIcon("ghost"), "", levelEditor.isCamera, undefined, { disabled: levelEditor.isFullTest })}</span></span>
+            <span class="le-status-item">${levelEditor.keyCap("tool")}<span class="le-segment le-tool-icons">${levelEditor.tools.map(tool => levelEditor.button("tool", levelEditor.toolIcon(tool), tool, levelEditor.tool === tool, levelEditor.toolTips[tool] || tool)).join("")}</span></span>
             <span class="le-status-mouse" data-status-mouse title="where the mouse is, snapped to the grid"></span>
             <span class="le-status-item le-status-right">
                 <button class="le-button le-status-unsaved" data-command="code" data-status-unsaved${levelData.store.isFailing ? "" : " hidden"} title="the browser wouldn't save the level, storage is full or blocked, export it and copy it somewhere safe">not saved, export a backup</button>
@@ -2815,7 +2818,7 @@ Object.assign(levelEditor, {
         return `${levelEditor.hotkeys(false, true)}<div class="le-row"><span class="le-name">code</span><span class="le-id">#${el.id}</span></div>
             <pre class="le-code-view" data-command="editCode" title="edit the code">${levelEditor.escape(el.code) || " "}</pre>
             ${runtime && runtime.error ? `<div class="le-error">//${levelEditor.escape(runtime.error.message)}</div>` : ""}
-            <div class="le-actions le-flush-x"><div class="le-grid le-even">${levelEditor.button("editCode", "edit code")}</div></div>`
+            <div class="le-actions le-flush-x le-flush-bottom"><div class="le-grid le-even">${levelEditor.button("editCode", "edit code")}</div></div>`
     },
     inspectElement(el) {
         const type = levelElements.types[el.type]
@@ -2877,9 +2880,9 @@ Object.assign(levelEditor, {
         const values = elements.map(el => levelEditor.propValue(el, levelEditor.findProp(prop.key, el)))
         return values.every(value => value === values[0]) ? values[0] : undefined
     },
-    actionRows(isRotatable, lines) { //the inspector's bottom buttons, touching, each line split evenly, or { quarters } for a 4 column grid where wide buttons take half, the turns on their own line on top
+    actionRows(isRotatable, lines, isLast = false) { //the inspector's bottom buttons, touching, each line split evenly, or { quarters } for a 4 column grid where wide buttons take half, the turns on their own line on top, isLast reaches the inspector's bottom edge
         const rows = lines.filter(line => line && (line.quarters ?? line)).map(line => line.quarters ? `<div class="le-grid le-quarters">${line.quarters}</div>` : `<div class="le-grid le-even">${line}</div>`).join("")
-        return isRotatable || rows ? `<div class="le-actions le-flush-x">${isRotatable ? levelEditor.rotateRow() : ""}${rows}</div>` : ""
+        return isRotatable || rows ? `<div class="le-actions le-flush-x${isLast ? " le-flush-bottom" : ""}">${isRotatable ? levelEditor.rotateRow() : ""}${rows}</div>` : ""
     },
     isDrawing(elements) { //all drawing elements (isDrawing types), only they show to top and to bottom
         return elements.every(el => levelElements.types[el.type]?.isDrawing)
@@ -2982,7 +2985,7 @@ Object.assign(levelEditor, {
                 { //the flips and group share a row, drawing elements' to top and to bottom fill the flips' row, so group gets the next
                     quarters: levelEditor.arrangeButtons(elements) + levelEditor.button("group", elements.some(el => el.group) ? "ungroup" : "group", "", elements.some(el => el.group), undefined, { className: levelEditor.isDrawing(elements) ? "le-wide" : "le-half" }),
                 },
-            ])}`
+            ], true)}`
     },
     inspectAnalysis() { //the analysis in the inspector, each line about elements goes to them when clicked
         const report = levelEditor.analysisReport || levelAnalysis.run(levelEditor.data, { isLive: true })

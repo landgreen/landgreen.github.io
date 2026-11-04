@@ -140,6 +140,7 @@ Object.assign(levelEditor, {
     statusIcon(name) { //zoom is a magnifying glass
         const icons = {
             zoom: `<circle cx="6.5" cy="6" r="4.5" fill="#fff" stroke="#333" stroke-width="1.6"/><path d="M10 9.5 L15 13" stroke="#333" stroke-width="2.4" stroke-linecap="round"/>`,
+            ghost: `<path d="M3.5 13V6a5 5 0 0 1 10 0V13L11.83 11.5 10.17 13 8.5 11.5 6.83 13 5.17 11.5Z" fill="#fff" stroke="#333" stroke-linejoin="round"/><circle cx="6.9" cy="6" r="1" fill="#333"/><circle cx="10.1" cy="6" r="1" fill="#333"/>`, //ghost mode, the player is gone and goes through walls
         }
         return `<svg class="le-tool-icon le-status-icon" viewBox="0 0 17 14" width="17" height="14" aria-label="${name}">${icons[name]}</svg>`
     },
