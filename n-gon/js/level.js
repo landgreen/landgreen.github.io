@@ -9631,6 +9631,11 @@ const level = {
                 offset.x = i * 2100
                 columns[i]()
             }
+            //thick outer walls so fast things can't slip out of the map
+            spawn.mapRect(-1600, -4300, 1600, 5900); //left map wall
+            spawn.mapRect(6200, -4300, 1600, 5900); //right map wall
+            spawn.mapRect(-1600, -4300, 9400, 1600); //map ceiling
+            spawn.mapRect(-1600, 0, 9400, 1600); //floor
             spawn.randomMobFromArray()
             level.custom = () => {
                 for (let i = 0, len = doCustom.length; i < len; i++) doCustom[i]() //runs all the active code from each room

@@ -746,24 +746,12 @@ const levelData = {
             groups[type.group].unshift(...type.codeAll(elements, data))
         }
         const indent = lines => lines.map(line => "    " + line)
-        const fallHeight = levelData.fallHeight(data)
         const name = levelData.functionName(data.name)
         return [
             `${name}() { //made in the level editor, paste it into level.maps in js/level.js and add "${name}" to level.playableLevels`,
             ...indent([
                 ...(groups.core || []),
-                ...levelData.exportAnnouncements(data),
-                `level.announceText(${levelElements.args(levelData.constraintText(data).x, levelData.constraintText(data).y)}, true) //the run's constraint`,
-                "level.announceMobTypes()",
-                `level.defaultZoom = ${data.zoom}`,
-                "simulation.zoomTransition(level.defaultZoom)",
-                `document.body.style.backgroundColor = ${JSON.stringify(data.background)};`,
-                ...(data.mapColor !== "#444" ? [`color.map = ${JSON.stringify(data.mapColor)};`] : []),
-                ...(data.blockColor !== levelElements.level.defaults().blockColor ? [`color.block = ${JSON.stringify(data.blockColor)};`] : []),
-                ...(data.gravity !== 1 ? [`simulation.g = simulation.gDefault * ${levelElements.args(data.gravity)} //clearMap sets it back for the next level`] : []),
-                ...(data.fall === "sky" ? [`level.fallMode = "start"; //falling keeps going from the sky`] : []),
-
-                ...(fallHeight !== 3000 ? [`simulation.fallHeight = ${fallHeight}`] : []),
+                ...levelData.settingsCode(data),
                 ...(groups.element || []),
                 "",
                 "level.custom = () => {",
@@ -790,6 +778,85 @@ const levelData = {
             ...(data.author.trim() ? [`simulation.inGameConsole(\`${levelData.authorLog(data).replace(/[`\\]|\$\{/g, c => "\\" + c)}\`);`] : []),
             ...(data.log.trim() ? [`simulation.inGameConsole(${levelElements.args(levelData.safeHtml(data.log))});`] : []),
         ]
+    },
+    settingsCode(data) { //the level properties as export writes them, the level info box shows them and settingsOf() reads them back
+        const fallHeight = levelData.fallHeight(data)
+        return [
+            ...levelData.exportAnnouncements(data),
+            `level.announceText(${levelElements.args(levelData.constraintText(data).x, levelData.constraintText(data).y)}, true) //the run's constraint`,
+            "level.announceMobTypes()",
+            `level.defaultZoom = ${data.zoom}`,
+            "simulation.zoomTransition(level.defaultZoom)",
+            `document.body.style.backgroundColor = ${JSON.stringify(data.background)};`,
+            ...(data.mapColor !== "#444" ? [`color.map = ${JSON.stringify(data.mapColor)};`] : []),
+            ...(data.blockColor !== levelElements.level.defaults().blockColor ? [`color.block = ${JSON.stringify(data.blockColor)};`] : []),
+            ...(data.gravity !== 1 ? [`simulation.g = simulation.gDefault * ${levelElements.args(data.gravity)} //clearMap sets it back for the next level`] : []),
+            ...(data.fall === "sky" ? [`level.fallMode = "start"; //falling keeps going from the sky`] : []),
+            ...(fallHeight !== 3000 ? [`simulation.fallHeight = ${fallHeight} //from the lowest part of the level`] : []),
+        ]
+    },
+    settingsOf(text, data) { //the level properties settingsCode() lines set, without running them, a line left out is its default, throws an Error saying which line it can't read
+        const defaults = levelElements.level.defaults()
+        const spawn = data.elements.find(el => el.type === "spawn") || { x: 0, y: 0 }
+        const settings = { author: "", log: "", zoom: defaults.zoom, background: defaults.background, mapColor: defaults.mapColor, blockColor: defaults.blockColor, gravity: 1, fall: "spawn", constraintTextX: defaults.constraintTextX, constraintTextY: defaults.constraintTextY }
+        const string = value => {
+            if (/^"(?:[^"\\\n]|\\.)*"$/.test(value)) {
+                try {
+                    return JSON.parse(value)
+                } catch (error) { //an escape JSON doesn't have, like \x41
+                    return null
+                }
+            }
+            if (/^'[^'\\\n]*'$/.test(value)) return value.slice(1, -1)
+            return null
+        }
+        const number = value => {
+            const [n] = levelData.callArgs(value)
+            return typeof n === "number" ? n : null
+        }
+        const set = (key, value) => { //false when the value couldn't be read
+            if (value === null) return false
+            settings[key] = value
+            return true
+        }
+        const readers = [ //[pattern, (match, line) => true when it read the line]
+            [/^simulation\.inGameConsole\(([\s\S]*)\)$/, (match, line) => {
+                const author = line.match(levelData.authorLine)
+                return author ? set("author", levelData.unescape(author[1].trim())) : set("log", string(match[1].trim()))
+            }],
+            [/^level\.announceText\(([^()]*)\)$/, match => {
+                const [x, y, isConstraint] = levelData.callArgs(match[1])
+                if (typeof x !== "number" || typeof y !== "number" || (isConstraint !== undefined && typeof isConstraint !== "boolean")) return false
+                settings.constraintTextX = Math.round(x - spawn.x)
+                settings.constraintTextY = Math.round(y - spawn.y)
+                return true
+            }],
+            [/^level\.announceMobTypes\(\)$/, () => true],
+            [/^simulation\.zoomTransition\(level\.defaultZoom\)$/, () => true],
+            [/^simulation\.fallHeight\s*=\s*(.+)$/, match => number(match[1]) !== null], //worked out from the level's parts, moving them changes it
+            [/^level\.defaultZoom\s*=\s*(.+)$/, match => {
+                const zoom = number(match[1])
+                return zoom >= 200 && set("zoom", zoom)
+            }],
+            [/^document\.body\.style\.backgroundColor\s*=\s*(.+)$/, match => set("background", string(match[1]))],
+            [/^color\.map\s*=\s*(.+)$/, match => set("mapColor", string(match[1]))],
+            [/^color\.block\s*=\s*(.+)$/, match => set("blockColor", string(match[1]))],
+            [/^simulation\.g\s*=\s*simulation\.gDefault(?:\s*\*\s*(.+))?$/, match => {
+                const gravity = match[1] === undefined ? 1 : number(match[1])
+                return gravity >= 0.1 && set("gravity", gravity)
+            }],
+            [/^level\.fallMode\s*=\s*(.+)$/, match => {
+                const mode = string(match[1])
+                return (mode === "start" || mode === "") && set("fall", mode === "start" ? "sky" : "spawn")
+            }],
+        ]
+        levelData.scanLines(text).forEach((row, i) => {
+            const line = (row.comment === -1 ? row.text : row.text.slice(0, row.comment)).trim().replace(/;$/, "").trim()
+            if (!line) return
+            const reader = readers.find(([pattern]) => pattern.test(line))
+            if (!reader || !reader[1](line.match(reader[0]), line)) throw new Error(`line ${i + 1} isn't a level setting it can read: ${line.length > 60 ? line.slice(0, 59) + "…" : line}, other javascript goes in the level code`)
+        })
+        return settings
     },
     exportLevelCode(data) { //its setup and two layers share a private scope, just like runLevelCode
         if (!data.levelCode.trim()) return []

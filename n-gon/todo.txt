@@ -13,6 +13,7 @@ level editor: log - buttons, toggles, keyholes, zones, timers, and the level its
 level editor: author - the level's info box has an author, the level says its name and who made it in the in-game console when it loads
 
 bug fixes
+  labs: thick outer walls, fast things can't slip out of the map anymore
   level editor: constraints no longer happen while editing, like spawn wimps sending wimps after you
   level editor: pausing hides the editor's menus, they used to stick out from under the pause menu
   level editor: no more crash when opening the editor before it finished downloading, like clicking it twice on your first visit
