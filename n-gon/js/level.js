@@ -3166,15 +3166,29 @@ const level = {
                                 Matter.Query.collides(this, body).length === 0 &&
                                 Matter.Query.collides(this, mob).length === 0
                             ) {
-                                Matter.Body.setPosition(this, { x: this.position.x, y: Math.min(y, this.position.y + speed) })
+                                this.moveTo(Math.min(y, this.position.y + speed))
                                 if (isSetPaths) simulation.draw.requestMapPathRebuild()
                             }
                         }
                     } else if (this.position.y > y - distance) { //try to open
-                        Matter.Body.setPosition(this, { x: this.position.x, y: Math.max(y - distance, this.position.y - speed) })
+                        this.moveTo(Math.max(y - distance, this.position.y - speed))
                         if (isSetPaths) simulation.draw.requestMapPathRebuild()
                     }
                 }
+            },
+            moveTo(newY) { //mines stuck to the door ride along with it
+                const dy = newY - this.position.y
+                const pad = 5
+                for (let i = 0; i < bullet.length; i++) {
+                    const who = bullet[i]
+                    if (who.bulletType === "mine" && who.isStatic &&
+                        who.bounds.min.x < this.bounds.max.x + pad && who.bounds.max.x > this.bounds.min.x - pad &&
+                        who.bounds.min.y < this.bounds.max.y + pad && who.bounds.max.y > this.bounds.min.y - pad
+                    ) {
+                        Matter.Body.setPosition(who, { x: who.position.x, y: who.position.y + dy })
+                    }
+                }
+                Matter.Body.setPosition(this, { x: this.position.x, y: newY })
             },
             isClosed() {
                 return this.position.y > y - 1

@@ -1983,9 +1983,10 @@ levelElements.define("mobSpot", { //a place a random mob might spawn, spawn.rand
     levelProps: ["mobVeto"], //the level's mob veto shows in its inspector too, it's for every spot
     defaults: () => ({ x: 0, y: -300, small: false }),
     props: [...levelElements.position(), levelElements.prop.bool("small")], //small spots get a few small mobs instead of one
-    bounds: el => ({ x: el.x - 20, y: el.y - 20, width: 40, height: 40 }),
-    contains: (el, p) => Math.hypot(p.x - el.x, p.y - el.y) < 20,
-    overlay: el => levelElements.marker(el, 20, "rgba(255,80,80,0.2)", el.small ? "s" : "mob"),
+    radius: el => el.small ? 25 : 45, //about the size of the mobs it spawns
+    bounds(el) { const r = this.radius(el); return { x: el.x - r, y: el.y - r, width: 2 * r, height: 2 * r } },
+    contains(el, p) { return Math.hypot(p.x - el.x, p.y - el.y) < this.radius(el) },
+    overlay(el) { levelElements.marker(el, this.radius(el), "rgba(255,80,80,0.2)", el.small ? "s" : "mob", 22) },
     build(el, options) {
         if (options.isSpawning) spawn.randomMobPositions.push({ x: el.x, y: el.y, isSmall: el.small }) //levelData.play() calls spawn.randomMobFromArray() after
     },

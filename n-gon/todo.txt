@@ -19,6 +19,7 @@ bug fixes
   level editor: no more crash when opening the editor before it finished downloading, like clicking it twice on your first visit
   community maps: yingYang and diamagnetism no longer throw an error every frame when their picture can't download, underpass stops downloading its picture every frame
   testing: warp (9) to a community or training level works when community maps are off
+  mines: mines stuck to doors, like on subway, move with the door instead of floating in the air
 
 
 

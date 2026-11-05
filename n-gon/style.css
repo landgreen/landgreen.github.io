@@ -2561,7 +2561,7 @@ body.level-editor .le-panel {
     height: 26px;
     padding: 0 10px;
     align-items: center;
-    gap: 28px; /* the mouse, grid, zoom, and tools on the left, issues, history, and tab hide on the right */
+    gap: 42px; /* the mouse, grid, zoom, and tools on the left, issues, history, and tab hide on the right */
     border-top: 1px solid var(--le-ink);
     background-color: var(--le-paper);
     color: #000;
@@ -2574,26 +2574,33 @@ body.level-editor .le-status {
     display: flex;
 }
 
-/* smaller screens shrink the status bar, only once the blank middle is used up */
-@media (max-width: 1060px) {
+/* smaller screens shrink the status bar, each step starts about when the mouse readout is squeezed out at the size before it */
+@media (max-width: 1320px) {
     .le-status {
         zoom: 1;
-        gap: 20px;
+        gap: 30px;
+    }
+}
+
+@media (max-width: 1020px) {
+    .le-status {
+        zoom: 0.9;
+        gap: 18px;
+        padding: 0 6px;
     }
 }
 
 @media (max-width: 840px) {
     .le-status {
-        zoom: 0.9;
+        zoom: 0.8;
         gap: 12px;
-        padding: 0 6px;
     }
 }
 
-@media (max-width: 700px) {
+@media (max-width: 710px) {
     .le-status {
-        zoom: 0.8;
-        gap: 8px;
+        zoom: 0.7;
+        gap: 10px;
     }
 }
 
@@ -2691,7 +2698,7 @@ body.level-editor .le-status {
 }
 
 .le-status-mouse {
-    flex: 0 0 110px; /* fixed, so the bar doesn't move as the mouse does */
+    flex: 0 10000 110px; /* fixed, so the bar doesn't move as the mouse does, a narrow bar squeezes it out before the buttons get cut off */
     min-width: 0;
     overflow: hidden;
     font-family: monospace;
