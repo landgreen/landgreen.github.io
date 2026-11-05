@@ -141,6 +141,7 @@ const spawn = {
         spawn.afterDelay(cycles, () => {
             if (!who.alive) return
             who.constraint = Constraint.create({ pointA: { x: who.position.x, y: who.position.y }, bodyB: who, stiffness, damping });
+            cons.push(who.constraint) //in cons so clearing the map removes it with the boss
             Composite.add(engine.world, who.constraint);
         })
     },

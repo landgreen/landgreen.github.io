@@ -98,7 +98,7 @@ const levelAnalysis = {
             return false
         })
     },
-    far(context) { //elements past an empty gap from the enter's part of the level, on either axis, with how far and which way
+    far(context) { //elements past an empty gap from the entrance's part of the level, on either axis, with how far and which way
         const boxes = context.data.elements.filter(el => !levelElements.isCode(el)).map(el => ({ el, b: levelElements.bounds(el) }))
         const found = new Map()
         for (const [lo, size] of [["x", "width"], ["y", "height"]]) {
@@ -270,7 +270,7 @@ levelAnalysis.check("bosses", c => {
         const placesOf = el => levelElements.types[type].places(el).map(([x, y]) => ({ x, y }))
         if (c.spawn) {
             const near = places.filter(p => distance(p, c.spawn) < c.norms.near[type])
-            if (near.length) lines.push(line("warn", `${label} near enter`, `${Math.round(distance(near[0], c.spawn))} away`, `at ${at(near[0].x, near[0].y)}, standard levels keep it ${c.norms.near[type]}+ from the enter`, list.filter(el => placesOf(el).some(p => distance(p, c.spawn) < c.norms.near[type]))))
+            if (near.length) lines.push(line("warn", `${label} near entrance`, `${Math.round(distance(near[0], c.spawn))} away`, `at ${at(near[0].x, near[0].y)}, standard levels keep it ${c.norms.near[type]}+ from the entrance`, list.filter(el => placesOf(el).some(p => distance(p, c.spawn) < c.norms.near[type]))))
         }
         const stuck = places.filter(p => levelAnalysis.inMap(c, p))
         if (stuck.length) lines.push(line("warn", `${label} in the map`, stuck.length, `at ${at(stuck[0].x, stuck[0].y)}`, list.filter(el => placesOf(el).some(p => levelAnalysis.inMap(c, p)))))
@@ -305,7 +305,7 @@ levelAnalysis.check("mobs", c => {
     else lines.push(line("ok", "groups", groups))
     const all = spots.concat(singles, c.of("mobGroup"), c.of("namedMob"))
     const near = c.spawn ? all.filter(el => distance(el, c.spawn) < c.norms.near.mob).sort((a, b) => distance(a, c.spawn) - distance(b, c.spawn)) : [] //closest first
-    if (near.length) lines.push(line("warn", near.length > 1 ? "mobs near enter" : "mob near enter", `${Math.round(distance(near[0], c.spawn))} away`, `at ${at(near[0].x, near[0].y)}${near.length > 1 ? ` and ${near.length - 1} more` : ""}, standard levels keep mobs ${c.norms.near.mob}+ from the enter`, near))
+    if (near.length) lines.push(line("warn", near.length > 1 ? "mobs near entrance" : "mob near entrance", `${Math.round(distance(near[0], c.spawn))} away`, `at ${at(near[0].x, near[0].y)}${near.length > 1 ? ` and ${near.length - 1} more` : ""}, standard levels keep mobs ${c.norms.near.mob}+ from the entrance`, near))
     const stuck = all.filter(el => levelAnalysis.inMap(c, el))
     if (stuck.length) lines.push(line("warn", "mobs in the map", stuck.length, `at ${at(stuck[0].x, stuck[0].y)}`, stuck))
     return lines
@@ -321,7 +321,7 @@ levelAnalysis.check("power ups", c => {
     else lines.push(line("ok", "starting", 1))
     const nearEnter = c.spawn ? starting.filter(el => distance(el, c.spawn) < c.norms.near.startingPowerUps) : []
     if (nearEnter.length) { //a gun or field right at the start is no search at all
-        lines.push(line("warn", "starting near enter", `${Math.round(distance(nearEnter[0], c.spawn))} away`, `at ${at(nearEnter[0].x, nearEnter[0].y)}, it's best deeper in the level, so the player has to search a little for the gun or tech, standard levels keep it ${c.norms.near.startingPowerUps}+ from the enter`, nearEnter))
+        lines.push(line("warn", "starting near entrance", `${Math.round(distance(nearEnter[0], c.spawn))} away`, `at ${at(nearEnter[0].x, nearEnter[0].y)}, it's best deeper in the level, so the player has to search a little for the gun or tech, standard levels keep it ${c.norms.near.startingPowerUps}+ from the entrance`, nearEnter))
     }
     const placed = name => c.of("powerUp").filter(el => el.name === name).reduce((sum, el) => sum + el.count, 0)
     const debris = c.of("debris").reduce((sum, el) => sum + el.count, 0)
@@ -351,14 +351,14 @@ levelAnalysis.check("layout", c => {
     if (c.code.trim()) lines.push(line("note", "code", c.of("code").length + (c.data.levelCode.trim() ? 1 : 0), "these checks can't see what it makes"))
     if (!maps.length) return lines.concat(c.code.trim() ? [] : [line("fix", "map", 0, "draw some ground", [], "map")])
     if (c.spawn) {
-        if (levelAnalysis.inMap(c, c.spawn)) lines.push(line("fix", "enter in the map", "", `at ${at(c.spawn.x, c.spawn.y)}`, [c.spawn]))
-        else if (!levelAnalysis.isGroundBelow(c, c.spawn)) lines.push(line("warn", "enter", "", "nothing below it", [c.spawn]))
+        if (levelAnalysis.inMap(c, c.spawn)) lines.push(line("fix", "entrance in the map", "", `at ${at(c.spawn.x, c.spawn.y)}`, [c.spawn]))
+        else if (!levelAnalysis.isGroundBelow(c, c.spawn)) lines.push(line("warn", "entrance", "", "nothing below it", [c.spawn]))
     }
     if (c.exit) {
         const door = { x: c.exit.x + 50, y: c.exit.y - 50 }
         if (levelAnalysis.inMap(c, door)) lines.push(line("fix", "exit in the map", "", `at ${at(c.exit.x, c.exit.y)}`, [c.exit]))
         else if (!levelAnalysis.isGroundBelow(c, door)) lines.push(line("warn", "exit", "", "nothing below it", [c.exit]))
-        if (c.spawn && distance(door, c.spawn) < c.norms.near.exit) lines.push(line("note", "exit near enter", `${Math.round(distance(door, c.spawn))} away`, "", [c.exit]))
+        if (c.spawn && distance(door, c.spawn) < c.norms.near.exit) lines.push(line("note", "exit near entrance", `${Math.round(distance(door, c.spawn))} away`, "", [c.exit]))
     }
     const b = levelElements.boundsOf(maps.flatMap(el => levelElements.points(el)))
     const [wide, tall] = c.norms.size
@@ -410,11 +410,11 @@ levelAnalysis.check("elements", c => {
     const linked = new Set(c.data.elements.flatMap(el => [el.link, el.orLink]).filter(id => id !== null && id !== undefined))
     const idle = c.data.elements.filter(el => levelElements.linkSources.includes(el.type) && !linked.has(el.id) && !String(el.log ?? "").trim() && !el.edited)
     if (idle.length) lines.push(line("note", "does nothing", idle.length, `${levelElements.summary(idle[0])} has nothing linked, no log, and no edited code`, idle))
-    if (c.spawn) { //the player's middle, head, feet, and sides at the enter
+    if (c.spawn) { //the player's middle, head, feet, and sides at the entrance
         const body = [[0, 0], [0, -30], [0, 30], [-20, 0], [20, 0]].map(([dx, dy]) => ({ x: c.spawn.x + dx, y: c.spawn.y + dy }))
         const hazards = c.of("slime").filter(el => el.damage > 0).concat(c.of("laser").filter(el => el.damage > 0), c.of("wind"))
         const hit = hazards.filter(el => body.some(p => levelElements.contains(el, p)))
-        if (hit.length) lines.push(line("warn", "hazard at enter", hit.length, `${levelElements.summary(hit[0])}, at ${at(c.spawn.x, c.spawn.y)}, the player ${hit[0].type === "wind" ? "is pushed" : "is hurt"} before they can move`, hit))
+        if (hit.length) lines.push(line("warn", "hazard at entrance", hit.length, `${levelElements.summary(hit[0])}, at ${at(c.spawn.x, c.spawn.y)}, the player ${hit[0].type === "wind" ? "is pushed" : "is hurt"} before they can move`, hit))
     }
     return lines
 })

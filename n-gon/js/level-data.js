@@ -11,7 +11,7 @@ const levelData = {
     //*********************************************************************
     // level data
     //*********************************************************************
-    blank(name) { //enter and exit 1000 apart on one piece of ground
+    blank(name) { //entrance and exit 1000 apart on one piece of ground
         return levelData.normalize({
             name,
             elements: [
@@ -446,9 +446,12 @@ const levelData = {
         }
         const a = el.link ? sourceState(el.link) : null
         const b = el.orLink ? sourceState(el.orLink) : null //linked to two, it's on while either is
-        if (a === null) return b
-        if (b === null) return a
-        return a || b
+        const state = a === null ? b : b === null ? a : a || b
+        if (depth || state === null || !(el.delay > 0)) return state
+        const runtime = levelData.runtimes.get(el.id) //its delay follows the link late, kept on its runtime so a rebuild starts it over
+        if (!runtime) return state
+        if (!runtime.delayLine) runtime.delayLine = level.delay(el.delay)
+        return runtime.delayLine.state(state)
     },
     linkOn(el) { //linkState() for el, flipped if it runs while its link is off, null without one
         const state = levelData.linkState(el)
@@ -698,8 +701,12 @@ const levelData = {
             nameOf: id => names.get(id),
             isReferenced: id => referenced.has(id),
             link(el) { //javascript for when el is on and off, from its button, toggle, zone, or timer, and what that's linked to
-                const code = sourceCode(el, 0)
+                let code = sourceCode(el, 0)
                 if (!code) return null
+                if (el.delay > 0) { //exportElement() declares its delay
+                    const on = `${names.get(el.id)}Delay.state(${code.on})`
+                    code = { on, off: `!${on}` }
+                }
                 return el.runs === "while off" ? { on: code.off, off: code.on } : code
             },
         }
@@ -710,7 +717,8 @@ const levelData = {
         const lines = levelData.typeCode(el, name, context)
         const link = type.isLinkable && !type.handlesLink && context.link(el)
         const gate = list => link && list.length ? [`if (${link.on}) {`, ...list.map(line => "    " + line), "}"] : list
-        return { setup: lines.setup || [], custom: gate(lines.custom || []), top: gate(lines.top || []) }
+        const delay = el.delay > 0 && (el.link || el.orLink) ? [`const ${name}Delay = level.delay(${levelElements.args(el.delay)}); //follows its link ${levelElements.args(el.delay)} cycles late`] : []
+        return { setup: [...delay, ...(lines.setup || [])], custom: gate(lines.custom || []), top: gate(lines.top || []) }
     },
     elementCode(data, el) { //the lines one element writes in export JS, for the inspector's js view
         const type = levelElements.types[el.type]

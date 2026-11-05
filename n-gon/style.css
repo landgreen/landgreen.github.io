@@ -845,6 +845,11 @@ levelPoolMenu.place() sets its position, width, and height */
     color: #08c;
 }
 
+/* the site's name in a link button, colored like a regular link */
+.site-link-name {
+    color: #08c;
+}
+
 .level-pool-button {
     margin-left: auto;
     font-size: 0.85em;
@@ -3834,6 +3839,17 @@ body.level-editor.le-invincible #level-editor-left {
 
 .le-prop .color-var[title] {
     cursor: help;
+}
+
+/* a number's name drags left or right to change it, see scrubStart() */
+.le-prop .color-var.le-scrub,
+body.le-scrubbing,
+body.le-scrubbing * {
+    cursor: ew-resize;
+}
+
+body.le-scrubbing {
+    user-select: none;
 }
 
 .le-prop input.le-value {

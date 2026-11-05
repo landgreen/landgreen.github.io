@@ -2955,11 +2955,15 @@ const level = {
         }
     },
     button(x, y, width = 126, isSpawnBase = true, isInvertedVertical = false, color = "hsl(0, 100%, 70%)") {
-        if (isSpawnBase) {
+        if (isSpawnBase) { //its wide side goes 2 into the floor (or ceiling) under it, so no thin line shows between them, moved so its narrow side stays put, Matter centers a shape on its center of mass
             if (isInvertedVertical) {
-                spawn.mapVertex(x + 65, y - 3, "100 -10 -100 -10 -70 10 70 10");
+                const bottom = Matter.Bodies.fromVertices(x + 65, y - 3, Vertices.fromPath("100 -10 -100 -10 -70 10 70 10")).bounds.max.y
+                spawn.mapVertex(x + 65, y - 3, "103 -12 -103 -12 -70 10 70 10");
+                Matter.Body.translate(map[map.length - 1], { x: 0, y: bottom - map[map.length - 1].bounds.max.y })
             } else {
-                spawn.mapVertex(x + 65, y + 2, "100 10 -100 10 -70 -10 70 -10");
+                const top = Matter.Bodies.fromVertices(x + 65, y + 2, Vertices.fromPath("100 10 -100 10 -70 -10 70 -10")).bounds.min.y
+                spawn.mapVertex(x + 65, y + 2, "103 12 -103 12 -70 -10 70 -10");
+                Matter.Body.translate(map[map.length - 1], { x: 0, y: top - map[map.length - 1].bounds.min.y })
             }
             map[map.length - 1].restitution = 0;
             map[map.length - 1].friction = 1;
@@ -3012,6 +3016,102 @@ const level = {
                     ctx.fillRect(this.min.x, this.min.y + drawOffset.down, this.width, 25)
                 }
             }
+        }
+    },
+    scale(x, y, width = 189, mass = 6) { //a trigger shaped like a taller, wider level.button, an amber pad that's on while at least mass sits on it, stacks count, the player is 5 and a 50 × 50 block is 2.5, the gauge on its base fills as weight goes on, run query() and draw() in level.custom, it draws its gauge over the map itself with an ephemera
+        const half = width / 2
+        const lift = 10 //how much taller its base is than a button's, its bottom is in the same place
+        const h = 10 + lift / 2 //half its base's height
+        const run = 3 * h //the slope's width, as steep as a button's
+        const outline = (extra = 0) => `${half + 7 + run * (1 + extra / (2 * h))} ${h + extra} ${-half - 7 - run * (1 + extra / (2 * h))} ${h + extra} ${-half - 7} ${-h} ${half + 7} ${-h}` //the sloped base, like a button's, extra goes on its bottom, the slopes keep going
+        const topY = Matter.Bodies.fromVertices(x + half + 2, y + 2 - lift / 2, Vertices.fromPath(outline())).bounds.min.y //where its top is without the extra, Matter centers a shape on its center of mass
+        spawn.mapVertex(x + half + 2, y + 2 - lift / 2, outline(2)) //2 into the floor under it, so no thin line shows between them
+        const base = map[map.length - 1]
+        Matter.Body.translate(base, { x: 0, y: topY - base.bounds.min.y }) //its top stays put
+        base.restitution = 0;
+        base.friction = 1;
+        base.frictionStatic = 1;
+        const top = { min: { x: x + 2, y: y - 11 - lift }, max: { x: x + width, y: y - 10 - lift } } //on top of the base, like a button's sensor strip
+        const scale = {
+            isOn: false,
+            load: 0, //the mass on it
+            query() {
+                const on = new Set(Matter.Query.region(body, top).filter(who => !who.isStatic))
+                if (Matter.Bounds.overlaps(player.bounds, top) && Matter.Query.region([player], top).length) on.add(player)
+                for (const who of Matter.Query.region(mob, top)) if (who.alive) on.add(who)
+                if (on.size) { //what rests on those, a few layers up a stack
+                    const pairs = engine.pairs.list
+                    for (let pass = 0; pass < 4; pass++) {
+                        const added = on.size
+                        for (let i = 0; i < pairs.length; i++) {
+                            const pair = pairs[i]
+                            if (!pair.isActive || pair.isSensor) continue
+                            const a = pair.bodyA.parent, b = pair.bodyB.parent
+                            if (on.has(a) && !on.has(b) && !b.isStatic && b.position.y < a.position.y) on.add(b)
+                            else if (on.has(b) && !on.has(a) && !a.isStatic && a.position.y < b.position.y) on.add(a)
+                        }
+                        if (on.size === added) break
+                    }
+                }
+                let load = 0
+                for (const who of on) if (who === player || body.includes(who) || mob.includes(who)) load += who.mass
+                this.load = load
+                this.isOn = load >= mass
+            },
+            color() { return this.isOn ? "hsl(130, 60%, 55%)" : "hsl(40, 100%, 62%)" },
+            draw() { //the pad, amber and up like a button, green and pressed down while on
+                ctx.fillStyle = this.color()
+                ctx.fillRect(x + 2, (this.isOn ? y - 14 : y - 21) - lift, width, this.isOn ? 25 : 20)
+            },
+            drawGauge() { //on the base's face, over the map, it fills as weight goes on, the tick at its end is enough
+                const mid = y + 2 - lift / 2 //the middle of the base's face
+                ctx.fillStyle = "rgba(255,255,255,0.14)"
+                ctx.fillRect(x + 8, mid - 3, width - 12, 6)
+                ctx.fillStyle = this.color()
+                ctx.fillRect(x + 8, mid - 3, (width - 12) * Math.min(1, this.load / mass), 6)
+                ctx.fillStyle = "rgba(255,255,255,0.6)"
+                ctx.fillRect(x + width - 6, mid - 5, 2, 10)
+            },
+            gauge: { //an ephemera, they're drawn after the map, it goes away with its base when the level changes
+                name: "scale gauge",
+                do() {
+                    if (!map.includes(base)) return simulation.removeEphemera(this)
+                    scale.drawGauge()
+                },
+            },
+            remove() { simulation.removeEphemera(scale.gauge) }, //for the editor
+        }
+        simulation.ephemera.push(scale.gauge)
+        return scale
+    },
+    cleared(x, y, width, height, who = "box", staysOn = true) { //a trigger that's on once no mobs are left, who is "box" for mobs in the box, "level" for every mob, or "bosses", run query() in level.custom
+        const box = { min: { x: x, y: y }, max: { x: x + width, y: y + height } }
+        const counts = target => target.alive && !target.shield && !target.isMobBullet && target.collisionFilter.category !== cat.mobBullet && (who !== "bosses" || target.isBoss)
+        return {
+            isOn: false,
+            query() {
+                if (staysOn && this.isOn) return
+                const list = who === "box" ? Matter.Query.region(mob, box) : mob
+                this.isOn = !list.some(counts)
+            },
+        }
+    },
+    delay(cycles) { //a link that answers late, state(isOn) is what isOn was cycles ago, so a laser linked to a button turns on and off a second after it with 60, call it every cycle
+        return {
+            changes: [], //[cycle, isOn] each time the link changed, the oldest one still in effect first
+            last: null,
+            initial: null, //how it starts, before the link has a past that old
+            state(isOn) {
+                isOn = !!isOn
+                const now = simulation.cycle
+                if (this.initial === null) this.initial = isOn
+                if (isOn !== this.last) {
+                    this.changes.push([now, isOn])
+                    this.last = isOn
+                }
+                while (this.changes.length > 1 && this.changes[1][0] <= now - cycles) this.changes.shift()
+                return this.changes[0][0] <= now - cycles ? this.changes[0][1] : this.initial
+            },
         }
     },
     vanish(x, y, width, height, isVertical = false) { //platform that shrinks away after the player touches it, then comes back
@@ -4165,6 +4265,370 @@ const level = {
                 }
             },
         }
+    },
+    oneWay(x, y, width, height = 20, angle = Math.PI / 2) { //platform the player, blocks, mobs, and power ups go through from behind and land on from the front, angle is the way its front faces, counterclockwise like boost, Math.PI / 2 is up, hold down on it to drop through, run query() and draw() in level.custom
+        //the player goes through by the platform taking cat.player out of its own mask, so each platform of a ladder lets the player through or not on its own
+        //blocks, mobs, and power ups going through get the platform's collision group, Matter skips collisions between two bodies in the same negative group, everything else still collides with them
+        const group = Matter.Body.nextGroup(true)
+        const center = { x: x + width / 2, y: y + height / 2 }
+        const platform = composite[composite.length] = Bodies.rectangle(center.x, center.y, width, height, {
+            angle: Math.PI / 2 - angle, //Matter turns clockwise, its front starts facing up
+            collisionFilter: {
+                group: group, //only bodies going through share it
+                category: cat.map,
+                mask: cat.player | cat.body | cat.powerUp | cat.mob //bullets go through both ways
+            },
+            isNonStick: true,
+            friction: 0.1,
+        });
+        Matter.Body.setStatic(platform, true);
+        Composite.add(engine.world, platform);
+        const front = { x: Math.cos(angle), y: -Math.sin(angle) } //out of the side things land on
+        const face = height / 2 //how far the front is from the center
+        const depth = who => { //how far a body's nearest and farthest points are in front of the center
+            let min = Infinity, max = -Infinity
+            const v = who.vertices
+            for (let i = 0; i < v.length; i++) {
+                const d = (v[i].x - center.x) * front.x + (v[i].y - center.y) * front.y
+                if (d < min) min = d
+                if (d > max) max = d
+            }
+            return { min, max }
+        }
+        const passing = new Set() //bodies going through right now
+        const reach = 40 //how far around the platform to look, so things coming toward it get through before they hit it
+        const region = { min: { x: platform.bounds.min.x - reach, y: platform.bounds.min.y - reach }, max: { x: platform.bounds.max.x + reach, y: platform.bounds.max.y + reach } }
+        const pass = who => {
+            passing.add(who)
+            if (who === player) {
+                platform.collisionFilter.mask &= ~cat.player
+            } else {
+                who.collisionFilter.group = group
+            }
+        }
+        const stopPassing = who => {
+            passing.delete(who)
+            if (who === player) {
+                platform.collisionFilter.mask |= cat.player
+            } else if (who.collisionFilter.group === group) {
+                who.collisionFilter.group = 0
+            }
+        }
+        const toward = who => who.velocity.x * front.x + who.velocity.y * front.y //moving out its front
+        let dropCycle = 0 //the player dropped through until this cycle
+        const seenCycle = new WeakMap() //the last cycle each body was near it
+        return {
+            platform,
+            query() {
+                //what each body near it should do: all of it behind the front and touching, it goes through, it can't be standing on it, like a head poking up into the next platform of a ladder
+                //partly in front, it keeps going through if it was, until it's all the way in front, or it lands, decided when it first comes near, landing sinks in a little over a few cycles
+                const seen = new Set()
+                const decide = who => {
+                    seen.add(who)
+                    const isNew = seenCycle.get(who) !== simulation.cycle - 1
+                    seenCycle.set(who, simulation.cycle)
+                    if (who !== player && who.collisionFilter.group !== group) passing.delete(who) //something else, like another platform, changed its group
+                    const d = depth(who)
+                    let isThrough
+                    if (who === player && dropCycle > simulation.cycle) {
+                        isThrough = true
+                    } else if (d.max <= face + 1) {
+                        const margin = 5 + who.speed //touching, or will be next cycle
+                        isThrough = who.bounds.min.x < platform.bounds.max.x + margin && who.bounds.max.x > platform.bounds.min.x - margin && who.bounds.min.y < platform.bounds.max.y + margin && who.bounds.max.y > platform.bounds.min.y - margin
+                    } else if (passing.has(who)) {
+                        isThrough = d.min <= face - 1
+                    } else {
+                        isThrough = isNew && d.min - toward(who) < face - 10 //it was behind the front last cycle, it came through fast
+                    }
+                    if (isThrough) pass(who)
+                    else stopPassing(who)
+                }
+                if (Matter.Bounds.overlaps(player.bounds, region)) {
+                    if (input.down && m.onGround && m.standingOn === platform && !passing.has(player)) dropCycle = simulation.cycle + 15
+                    decide(player)
+                }
+                const lists = [body, mob, powerUp]
+                for (let i = 0; i < lists.length; i++) {
+                    const near = Matter.Query.region(lists[i], region)
+                    for (let j = 0; j < near.length; j++) decide(near[j])
+                }
+                for (const who of passing) if (!seen.has(who)) stopPassing(who) //out of reach
+            },
+            draw() {
+                ctx.save()
+                ctx.translate(center.x, center.y)
+                ctx.rotate(platform.angle)
+                ctx.fillStyle = "rgba(68,68,68,0.45)"
+                ctx.fillRect(-width / 2, -height / 2, width, height)
+                ctx.fillStyle = color.map
+                ctx.fillRect(-width / 2, -height / 2, width, Math.min(5, height)) //the side things land on
+                ctx.restore()
+            },
+            remove() { //puts back the collision group of anything still going through
+                for (const who of passing) stopPassing(who)
+            },
+        }
+    },
+    gravityZone(x, y, width, height, gravity = 0) { //gravity is times normal inside, 0 floats, negative falls up, it works on the player, blocks, and power ups, run do() in level.custom
+        const zone = { min: { x: x, y: y }, max: { x: x + width, y: y + height } }
+        const add = (who, scale) => { who.force.y += (gravity - 1) * who.mass * simulation.g * scale }
+        return {
+            min: zone.min,
+            max: zone.max,
+            gravity,
+            isOn: true,
+            do(isOn = true) { //isOn false turns it off, for a button or toggle
+                this.isOn = isOn
+                if (!isOn) return
+                if (Matter.Bounds.overlaps(player.bounds, zone)) add(player, 1)
+                if (!m.isTimeDilated) { //simulation.gravity() skips blocks and power ups while time is stopped
+                    const blocks = Matter.Query.region(body, zone)
+                    for (let i = 0; i < blocks.length; i++) if (!blocks[i].isStatic) add(blocks[i], 1)
+                    const ups = Matter.Query.region(powerUp, zone)
+                    for (let i = 0; i < ups.length; i++) add(ups[i], 1)
+                }
+            },
+            draw() {
+                ctx.fillStyle = gravity < 0 ? "rgba(255,90,0,0.06)" : "rgba(120,0,255,0.06)"
+                ctx.fillRect(x, y, width, height)
+                if (gravity === 1 || !this.isOn) return
+                //chevrons drifting the way things fall, faster with stronger gravity, none move at 0
+                const direction = gravity < 0 ? -1 : 1
+                const speed = gravity === 0 ? 0 : 0.4 + 0.6 * Math.min(3, Math.abs(gravity))
+                const gap = 120
+                const offset = (simulation.cycle * speed) % gap
+                ctx.beginPath()
+                for (let cx = x + gap / 2; cx < x + width; cx += gap) {
+                    for (let row = -1; row < height / gap + 1; row++) {
+                        const cy = direction > 0 ? y + row * gap + offset : y + height - row * gap - offset
+                        if (cy < y + 10 || cy > y + height - 10) continue
+                        if (gravity === 0) { //floating, a small ring
+                            ctx.moveTo(cx + 6, cy)
+                            ctx.arc(cx, cy, 6, 0, 2 * Math.PI)
+                        } else {
+                            ctx.moveTo(cx - 10, cy - 6 * direction)
+                            ctx.lineTo(cx, cy + 4 * direction)
+                            ctx.lineTo(cx + 10, cy - 6 * direction)
+                        }
+                    }
+                }
+                ctx.strokeStyle = gravity < 0 ? "rgba(255,90,0,0.25)" : "rgba(120,0,255,0.2)"
+                ctx.lineWidth = 2
+                ctx.stroke()
+            },
+        }
+    },
+    breakable(x, y, width, height, strength = 150) { //glass the player stands on, it cracks and shatters from fast blocks and bullets hitting it, strength is about how much momentum, run query() in level.custom
+        //it's not in the map, so lasers and mobs can see through it
+        const glass = composite[composite.length] = Bodies.rectangle(x + width / 2, y + height / 2, width, height, {
+            collisionFilter: {
+                category: cat.map,
+                mask: cat.player | cat.body | cat.bullet | cat.powerUp | cat.mob | cat.mobBullet
+            },
+            isNonStick: true,
+            friction: 0.1,
+        });
+        Matter.Body.setStatic(glass, true);
+        Composite.add(engine.world, glass);
+        const hitCycle = new WeakMap() //each body only hits once every 20 cycles, a block resting on it doesn't keep hitting
+        const reach = 6
+        let seed = Math.abs(Math.round(x * 7 + y * 13)) //cracks are the same every time
+        const random = () => (seed = (seed * 16807) % 2147483647) / 2147483647
+        const cracks = [] //each a line of points from a spot where it was hit
+        const crack = (from, damage) => { //a few lines out from where it was hit, longer for harder hits, up to 60 lines so a strong pane under a nail gun doesn't get slow to draw
+            if (cracks.length > 60) return
+            const lines = 1 + Math.min(3, Math.floor(damage * 4))
+            for (let i = 0; i < lines; i++) {
+                const angle = random() * 2 * Math.PI
+                const points = [{ x: from.x, y: from.y }]
+                let px = from.x, py = from.y
+                const steps = 2 + Math.floor(random() * 3)
+                for (let j = 0; j < steps; j++) {
+                    const a = angle + (random() - 0.5)
+                    const length = 10 + random() * 30 * (0.5 + damage)
+                    px = Math.max(x, Math.min(x + width, px + length * Math.cos(a)))
+                    py = Math.max(y, Math.min(y + height, py + length * Math.sin(a)))
+                    points.push({ x: px, y: py })
+                }
+                cracks.push(points)
+            }
+        }
+        return {
+            glass,
+            health: 1,
+            isBroken: false,
+            hit(who, minSpeed, isBullet) {
+                if (who.speed < minSpeed || (hitCycle.get(who) || -Infinity) > simulation.cycle) return
+                hitCycle.set(who, simulation.cycle + 20)
+                const momentum = who.mass * who.speed
+                const damage = (isBullet ? 3 * Math.sqrt(momentum) : momentum) / strength //bullets' masses are all over the place, the square root keeps a shotgun from being 15 times a nail gun
+                this.health -= damage
+                const where = { x: Math.max(x, Math.min(x + width, who.position.x)), y: Math.max(y, Math.min(y + height, who.position.y)) }
+                crack(where, damage)
+                if (this.health <= 0) this.shatter()
+            },
+            shatter() {
+                this.isBroken = true
+                Matter.Composite.remove(engine.world, glass)
+                const index = composite.indexOf(glass)
+                if (index > -1) composite.splice(index, 1)
+                const count = Math.min(40, 6 + Math.floor(width * height / 2500))
+                for (let i = 0; i < count; i++) { //shards
+                    simulation.drawList.push({
+                        x: x + Math.random() * width,
+                        y: y + Math.random() * height,
+                        radius: 3 + 9 * Math.random(),
+                        color: "rgba(180,220,255,0.7)",
+                        time: 10 + Math.floor(20 * Math.random())
+                    });
+                }
+            },
+            query() {
+                if (this.isBroken) return
+                const region = { min: { x: glass.bounds.min.x - reach, y: glass.bounds.min.y - reach }, max: { x: glass.bounds.max.x + reach, y: glass.bounds.max.y + reach } }
+                const bullets = Matter.Query.region(bullet, region)
+                for (let i = 0; i < bullets.length && !this.isBroken; i++) this.hit(bullets[i], 3, true)
+                const blocks = Matter.Query.region(body, region)
+                for (let i = 0; i < blocks.length && !this.isBroken; i++) if (!blocks[i].isStatic) this.hit(blocks[i], 12, false)
+            },
+            draw() {
+                if (this.isBroken) return
+                ctx.fillStyle = "rgba(190,225,255,0.45)"
+                ctx.fillRect(x, y, width, height)
+                ctx.beginPath()
+                ctx.moveTo(x + 0.2 * width, y + 0.15 * height) //a shine
+                ctx.lineTo(x + 0.08 * width, y + 0.45 * height)
+                for (const points of cracks) {
+                    ctx.moveTo(points[0].x, points[0].y)
+                    for (let i = 1; i < points.length; i++) ctx.lineTo(points[i].x, points[i].y)
+                }
+                ctx.strokeStyle = "rgba(255,255,255,0.8)"
+                ctx.lineWidth = 2
+                ctx.stroke()
+                ctx.strokeStyle = "rgba(110,150,190,0.9)"
+                ctx.lineWidth = 2
+                ctx.strokeRect(x, y, width, height)
+            },
+        }
+    },
+    dispenser(x, y, size = 50, period = 180, max = 3, angle = -Math.PI / 2, speed = 0) { //makes a block at x, y every period cycles, until max of its blocks are in the level, angle is the way they come out, counterclockwise like boost, -Math.PI / 2 is down, speed launches them, run query() and draw() in level.custom, it isn't solid, blocks come out over it
+        const blocks = [] //its blocks still in the level
+        const half = size / 2
+        const turn = -angle - Math.PI / 2 //clockwise, the chute is drawn opening down, then turned to face angle
+        let count = period //cycles until the next block
+        return {
+            blocks,
+            query(isOn = true) { //isOn false stops it, for a button or toggle
+                for (let i = blocks.length - 1; i > -1; i--) if (!body.includes(blocks[i])) blocks.splice(i, 1) //fizzled, destroyed, or eaten by tech
+                if (!isOn || blocks.length >= max || m.isTimeDilated) return
+                count--
+                if (count > 0) return
+                const spot = { min: { x: x - half, y: y - half }, max: { x: x + half, y: y + half } }
+                if (Matter.Query.region(body, spot).length || Matter.Query.region(mob, spot).length || Matter.Bounds.overlaps(player.bounds, spot)) { //wait for the spot to clear
+                    count = 10
+                    return
+                }
+                count = period
+                spawn.bodyRect(x - half, y - half, size, size)
+                const who = body[body.length - 1]
+                Matter.Body.setAngle(who, turn) //lined up with the chute
+                if (speed) Matter.Body.setVelocity(who, { x: speed * Math.cos(angle), y: -speed * Math.sin(angle) })
+                blocks.push(who)
+            },
+            draw() { //a mount that isn't solid: a back plate, dashed sides open the way blocks go, the plate's bar is the time until the next one, and the next block fades in where it will show up
+                const r = half + 10
+                const progress = blocks.length >= max ? 1 : 1 - Math.max(0, count) / period
+                ctx.save()
+                ctx.translate(x, y)
+                ctx.rotate(turn) //+y is the way blocks come out
+                ctx.fillStyle = "rgba(0,150,140,0.07)"
+                ctx.fillRect(-r, -r, 2 * r, 2 * r)
+                ctx.beginPath()
+                ctx.moveTo(-r, r)
+                ctx.lineTo(-r, -r)
+                ctx.lineTo(r, -r)
+                ctx.lineTo(r, r)
+                ctx.setLineDash([8, 6])
+                ctx.strokeStyle = "rgba(0,150,140,0.6)"
+                ctx.lineWidth = 2
+                ctx.stroke()
+                ctx.setLineDash([])
+                ctx.fillStyle = "rgba(0,150,140,0.45)"
+                ctx.fillRect(-r, -r - 10, 2 * r, 10) //the back plate, against a wall
+                ctx.fillStyle = blocks.length >= max ? "rgba(255,255,255,0.35)" : "rgb(0,230,200)"
+                ctx.fillRect(-r + 4, -r - 7, (2 * r - 8) * progress, 4)
+                ctx.fillRect(-r - 2, r - 2, 6, 4) //the corners of its mouth
+                ctx.fillRect(r - 4, r - 2, 6, 4)
+                if (blocks.length < max && progress > 0.5) { //the next block fades in
+                    ctx.strokeStyle = `rgba(0,150,140,${(progress - 0.5) * 1.2})`
+                    ctx.lineWidth = 2
+                    ctx.strokeRect(-half, -half, size, size)
+                }
+                ctx.restore()
+            },
+            remove() { //its blocks go with it, for the editor
+                for (const who of blocks) {
+                    const index = body.indexOf(who)
+                    if (index > -1) body.splice(index, 1)
+                    Matter.Composite.remove(engine.world, who)
+                    if (who === m.holdingTarget) m.drop()
+                }
+                blocks.length = 0
+            },
+        }
+    },
+    nest(x, y, name = "random", period = 300, max = 4, radius = 60) { //a mob that doesn't move and makes other mobs while it sees the player, until max of them are alive, name is a spawn mob name or "random" for one of the level's mob types
+        mobs.spawn(x, y, 6, radius, "rgb(150,40,120)");
+        const me = mob[mob.length - 1];
+        me.stroke = "transparent"
+        me.damageReduction = 0.25 //tougher than a normal mob
+        me.frictionAir = 1
+        me.leaveBody = false
+        me.memory = 240
+        me.seePlayerFreq = 20
+        me.children = []
+        me.nestCount = Math.floor(period / 2) //the first one comes sooner
+        me.nestPeriod = period
+        const anchor = { x, y }
+        me.makeChild = function () {
+            const names = name === "random" ? spawn.pickList : [name]
+            const pick = names[Math.floor(Math.random() * names.length)]
+            if (typeof spawn[pick] !== "function") return
+            const angle = 2 * Math.PI * Math.random()
+            const count = mob.length
+            spawn[pick](x + (radius + 20) * Math.cos(angle), y + (radius + 20) * Math.sin(angle))
+            if (mob.length === count) return //it didn't make one, don't adopt some other mob
+            const child = mob[mob.length - 1]
+            child.isDropPowerUp = false //no farming power ups from a nest
+            child.leaveBody = false
+            Matter.Body.setVelocity(child, { x: 8 * Math.cos(angle), y: 8 * Math.sin(angle) })
+            this.children.push(child)
+            simulation.drawList.push({ x: child.position.x, y: child.position.y, radius: 40, color: "rgba(150,40,120,0.3)", time: 12 });
+        }
+        me.do = function () {
+            Matter.Body.setPosition(this, anchor) //it stays put
+            Matter.Body.setVelocity(this, { x: 0, y: 0 })
+            Matter.Body.setAngularVelocity(this, 0.005)
+            this.seePlayerByDistOrLOS()
+            this.checkStatus()
+            if (!this.alive) return
+            if (this.seePlayer.recall) this.healthBar1()
+            for (let i = this.children.length - 1; i > -1; i--) if (!this.children[i].alive) this.children.splice(i, 1)
+            if (this.seePlayer.recall && this.children.length < max) {
+                this.nestCount--
+                if (this.nestCount < 1) {
+                    this.nestCount = this.nestPeriod
+                    this.makeChild()
+                }
+            }
+            //a glow that swells before the next mob, drawn after the mob, so it's over its body
+            const grow = this.children.length < max ? 1 - Math.max(0, this.nestCount) / this.nestPeriod : 0
+            ctx.beginPath()
+            ctx.arc(this.position.x, this.position.y, radius * (0.25 + 0.4 * grow), 0, 2 * Math.PI)
+            ctx.fillStyle = `rgba(255,120,220,${0.25 + 0.5 * grow})`
+            ctx.fill()
+        };
+        return me
     },
     isHazardRise: false,
     hazard(x, y, width, height, damage = 0.0025) {

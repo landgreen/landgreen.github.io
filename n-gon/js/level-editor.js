@@ -19,6 +19,8 @@ Object.assign(levelEditor, {
     debugDraw: new Set(), //simulation menu's draw toggles, like "wireframe" and "bounds"
     grid: 25, //snap size, hold alt to place freely
     isGridShown: true,
+    isSmartSnap: true, //edges and middles snap to other elements' edges and middles, the status bar's snap button, remembered
+    snapReach: 8, //screen pixels, how close an edge has to be to snap
     isFree: false, //alt is held
     drag: null, //{ kind: "move" | "handle" | "draw" | "box" | "pan", ... } while the left or middle mouse button is held
     hoverId: null,
@@ -59,6 +61,7 @@ Object.assign(levelEditor, {
     pendingImport: null, //{ text, data } a pasted level waiting on the import warning, data is null without a level editor line, see confirmImport()
     picking: null, //{ id, key, isLink } while picking an element by clicking it, for a ref prop, or isLink to link it to button id
     preview: null, //{ owner, key, value } while a color picker is open, value is the color to put back before the change is saved
+    scrub: null, //{ input, key, owner, panel, prop, x, start, isScrubbing, startStep } dragging a number field or its name left or right, see scrubStart()
     clipboard: [],
     history: { steps: [], index: 0 }, //{ label, json } of the level after each change, steps[index] is now, later steps were undone
     historyLimit: 200,
@@ -100,6 +103,7 @@ Object.assign(levelEditor, {
         const grid = Number(levelEditor.recall("levelEditorGrid", 25))
         if (Number.isFinite(grid) && grid >= 1) levelEditor.grid = Math.round(grid)
         levelEditor.isGridShown = levelEditor.recall("levelEditorGridShown", true) !== false
+        levelEditor.isSmartSnap = levelEditor.recall("levelEditorSmartSnap", true) !== false
         levelEditor.isActive = true
         await simulation.startGame() //the first level start calls levelEditor.startLevel() instead of loading initial
         if (simulation.onTitlePage) levelEditor.isActive = false //startGame failed
@@ -441,6 +445,80 @@ Object.assign(levelEditor, {
     snapPoint(point) {
         return { x: levelEditor.snap(point.x), y: levelEditor.snap(point.y) }
     },
+    viewBounds() { //the part of the level on screen, in map units
+        const x = (0 - canvas.width2) / simulation.zoom + canvas.width2 - m.transX
+        const y = (0 - canvas.height2) / simulation.zoom + canvas.height2 - m.transY
+        return { x, y, width: canvas.width / simulation.zoom, height: canvas.height / simulation.zoom }
+    },
+    snapTargets(drag) { //the edges and middles a drag can snap to, worked out once a drag, snappable pieces on screen but what's dragged, so far off pieces don't add guides
+        if (!drag.snapTargets) {
+            const view = levelEditor.viewBounds()
+            const skip = new Set(drag.kind === "move" ? drag.originals.map(el => el.id) : drag.id !== undefined ? [drag.id] : [])
+            const targets = { x: [], y: [] }
+            for (const el of levelEditor.data.elements) {
+                if (skip.has(el.id) || !levelElements.isSnappable(el) || levelEditor.isHidden(el)) continue
+                const b = levelElements.bounds(el)
+                if (b.x > view.x + view.width || b.y > view.y + view.height || b.x + b.width < view.x || b.y + b.height < view.y) continue
+                for (const x of [b.x, b.x + b.width / 2, b.x + b.width]) targets.x.push({ value: x, from: b.y, to: b.y + b.height })
+                for (const y of [b.y, b.y + b.height / 2, b.y + b.height]) targets.y.push({ value: y, from: b.x, to: b.x + b.width })
+            }
+            drag.snapTargets = targets
+        }
+        return drag.snapTargets
+    },
+    nearestSnap(values, targets) { //how far to shift so one of values lands on the closest target, or null when none are in reach
+        let best = null
+        const reach = levelEditor.px(levelEditor.snapReach)
+        for (const value of values) {
+            for (const target of targets) {
+                const offset = target.value - value
+                if (Math.abs(offset) <= reach && (best === null || Math.abs(offset) < Math.abs(best))) best = offset
+            }
+        }
+        return best
+    },
+    isSnapping(drag) { //drawing a map or block, the ruler, or dragging only snappable pieces, mobs and power ups stay on the grid
+        if (!levelEditor.isSmartSnap || levelEditor.isFree || !drag) return false
+        if (drag.kind === "draw" || drag.kind === "measure") return true
+        const dragged = drag.kind === "move" ? drag.originals : [levelData.find(levelEditor.data, drag.id)]
+        return dragged.every(el => el && levelElements.isSnappable(el))
+    },
+    smartPoint(point, drag) { //a point snapped to the nearest edge or middle in reach, each axis on its own, the grid if there's none
+        const snapped = levelEditor.snapPoint(point)
+        if (!levelEditor.isSnapping(drag)) return snapped
+        const targets = levelEditor.snapTargets(drag)
+        const dx = levelEditor.nearestSnap([point.x], targets.x)
+        const dy = levelEditor.nearestSnap([point.y], targets.y)
+        return { x: dx === null ? snapped.x : point.x + dx, y: dy === null ? snapped.y : point.y + dy }
+    },
+    smartMove(drag, point) { //how far a move drag moves, the grid, then shifted so the selection's edges or middle land on another's
+        let dx = levelEditor.snap(point.x - drag.start.x)
+        let dy = levelEditor.snap(point.y - drag.start.y)
+        if (!levelEditor.isSnapping(drag)) return { dx, dy }
+        const targets = levelEditor.snapTargets(drag)
+        const b = levelElements.unionBounds(drag.originals)
+        const rawX = point.x - drag.start.x
+        const rawY = point.y - drag.start.y
+        const sx = levelEditor.nearestSnap([b.x + rawX, b.x + b.width / 2 + rawX, b.x + b.width + rawX], targets.x)
+        const sy = levelEditor.nearestSnap([b.y + rawY, b.y + b.height / 2 + rawY, b.y + b.height + rawY], targets.y)
+        if (sx !== null) dx = rawX + sx
+        if (sy !== null) dy = rawY + sy
+        return { dx, dy }
+    },
+    snapGuides(drag, b) { //lines along the edges and middles of b that line up with another element's, from one to the other
+        if (!levelEditor.isSnapping(drag)) return []
+        const targets = levelEditor.snapTargets(drag)
+        const lines = []
+        const along = (values, list, axis, from, to) => {
+            for (const value of new Set(values)) { //a point's edges and middle are the same line
+                const hits = list.filter(target => Math.abs(target.value - value) < 0.01)
+                if (hits.length) lines.push({ axis, value, from: Math.min(from, ...hits.map(t => t.from)), to: Math.max(to, ...hits.map(t => t.to)) })
+            }
+        }
+        along([b.x, b.x + b.width / 2, b.x + b.width], targets.x, "x", b.y, b.y + b.height)
+        along([b.y, b.y + b.height / 2, b.y + b.height], targets.y, "y", b.x, b.x + b.width)
+        return lines
+    },
     viewCenter() {
         return { x: m.pos.x + levelEditor.pan.x, y: m.pos.y + levelEditor.pan.y }
     },
@@ -614,9 +692,9 @@ Object.assign(levelEditor, {
             return
         }
         if (tool === "measure") { //a ruler from here to where it's let go, with how far the player can jump from here
-            const start = levelEditor.snapPoint(point)
-            levelEditor.measure = { start, end: start }
             levelEditor.drag = { ...drag, kind: "measure" }
+            const start = levelEditor.smartPoint(point, levelEditor.drag)
+            levelEditor.measure = { start, end: start }
             return
         }
         if (tool !== "select" && !isOnSelection) { //drawing, a click without dragging selects instead
@@ -721,8 +799,8 @@ Object.assign(levelEditor, {
         levelEditor.zoom(simulation.zoomScale * (event.deltaY > 0 ? 1.1 : 1 / 1.1))
     },
     dragRect(drag, isSnapped = true) { //rect between where the drag started and the mouse
-        const a = isSnapped ? levelEditor.snapPoint(drag.start) : drag.start
-        const b = isSnapped ? levelEditor.snapPoint(levelEditor.mouse()) : levelEditor.mouse()
+        const a = isSnapped ? levelEditor.smartPoint(drag.start, drag) : drag.start
+        const b = isSnapped ? levelEditor.smartPoint(levelEditor.mouse(), drag) : levelEditor.mouse()
         const min = isSnapped && !levelEditor.isFree ? levelEditor.grid : 1
         const x = Math.min(a.x, b.x)
         const y = Math.min(a.y, b.y)
@@ -737,11 +815,10 @@ Object.assign(levelEditor, {
         }
         if (drag.kind === "handle") {
             const el = levelData.copy(drag.original)
-            levelElements.dragHandle(el, drag.handle, levelEditor.snapPoint(point), levelEditor.isFree ? 1 : levelEditor.grid)
+            levelElements.dragHandle(el, drag.handle, levelEditor.smartPoint(point, drag), levelEditor.isFree ? 1 : levelEditor.grid)
             return [el]
         }
-        const dx = levelEditor.snap(point.x - drag.start.x)
-        const dy = levelEditor.snap(point.y - drag.start.y)
+        const { dx, dy } = levelEditor.smartMove(drag, point)
         return drag.originals.map(original => {
             const el = levelData.copy(original)
             levelElements.move(el, dx, dy, drag.originals.length > 1) //moving one portal end leaves the other, moving several moves them whole
@@ -751,7 +828,7 @@ Object.assign(levelEditor, {
 
     vertexPreview(drag) { //the shape's world points with the dragged vertex at the mouse, and why it can't be made
         const points = drag.points.map(p => ({ x: p.x, y: p.y }))
-        points[drag.index] = levelEditor.snapPoint(levelEditor.mouse())
+        points[drag.index] = levelEditor.smartPoint(levelEditor.mouse(), drag)
         return { points, error: levelElements.checkPoints(points, levelData.find(levelEditor.data, drag.id)) }
     },
     vertexDragCopy(drag) { //a copy of the shape as it would be after a vertex or curve handle drag, to outline with its curves
@@ -978,6 +1055,13 @@ Object.assign(levelEditor, {
                 levelEditor.renderStatus()
             },
         },
+        smartSnap: {
+            label: "snap maps, blocks, and platforms to each other's edges and middles, hold alt to place freely", run() {
+                levelEditor.isSmartSnap = !levelEditor.isSmartSnap
+                levelEditor.remember("levelEditorSmartSnap", levelEditor.isSmartSnap)
+                levelEditor.renderStatus()
+            },
+        },
         grid: {
             label: "grid lines", run() {
                 levelEditor.isGridShown = !levelEditor.isGridShown
@@ -1052,7 +1136,7 @@ Object.assign(levelEditor, {
             },
         },
         test: { //start restarts the level at the spawn with blocks back in place, and mobs and power ups if the box is checked, stop restarts it without them
-            label: "quick test: back to the enter with blocks where they started, mobs and power ups if checked, again to stop", run() {
+            label: "quick test: back to the entrance with blocks where they started, mobs and power ups if checked, again to stop", run() {
                 levelEditor.isTesting = !levelEditor.isTesting || levelEditor.isFullTest
                 levelEditor.isFullTest = false
                 levelEditor.renderLeft()
@@ -1629,7 +1713,7 @@ Object.assign(levelEditor, {
         openFile: { //the import panel, a file instead of pasting, then it imports
             label: "load a level from a .js or .txt file", run: () => document.getElementById("level-editor-import-file").click(),
         },
-        newLevel: { label: "a new level with ground, an enter, and an exit", run: () => levelEditor.setData(levelData.blank(levelData.freeName("untitled"))) },
+        newLevel: { label: "a new level with ground, an entrance, and an exit", run: () => levelEditor.setData(levelData.blank(levelData.freeName("untitled"))) },
         duplicateLevel: { //a copy of this level to experiment on, it opens the copy
             label: "fork, a copy of this level under a new name, then edit the copy", run() {
                 levelEditor.flush()
@@ -1777,6 +1861,7 @@ Object.assign(levelEditor, {
         guide: "rgba(106,102,152,0.6)", //lavender, cyan is only for selected
         grid: "rgba(90,85,150,0.1)", //lavender gray lines, like the panels' on
         axis: "rgba(106,102,152,0.45)",
+        snap: "rgba(214,40,140,0.85)", //smart snap guides, magenta so they don't look like the selection
         fix: "#c62a2a", //the analysis' colors, the same as --le-fix, --le-warn, and --le-ok in style.css
         warn: "#c26a00",
         ok: "#2f8a55",
@@ -1842,7 +1927,8 @@ Object.assign(levelEditor, {
             const made = levelEditor.creation(palette.command, palette.arg, point)
             if (made) for (const el of made.elements) levelEditor.outline(el, levelEditor.colors.select, 2, [6, 4], "rgba(0,170,255,0.15)")
         }
-        if (drag && drag.kind === "measure") levelEditor.measure.end = levelEditor.snapPoint(point)
+        if (drag && drag.kind === "measure") levelEditor.measure.end = levelEditor.smartPoint(point, drag)
+        if (drag) levelEditor.drawSnapGuides(drag)
         if (levelEditor.measure) levelEditor.drawMeasure(levelEditor.measure)
         if (levelEditor.isMouseOnCanvas) levelEditor.drawLabel(point)
         if (hover && !drag && levelEditor.problems.has(hover.id)) levelEditor.drawTip(point, levelEditor.problems.get(hover.id))
@@ -2060,10 +2146,9 @@ Object.assign(levelEditor, {
     drawGrid() {
         let step = levelEditor.grid
         while (step * simulation.zoom < 10) step *= 4 //lines at least 10 pixels apart
-        const left = (0 - canvas.width2) / simulation.zoom + canvas.width2 - m.transX
-        const top = (0 - canvas.height2) / simulation.zoom + canvas.height2 - m.transY
-        const right = left + canvas.width / simulation.zoom
-        const bottom = top + canvas.height / simulation.zoom
+        const { x: left, y: top, width, height } = levelEditor.viewBounds()
+        const right = left + width
+        const bottom = top + height
         ctx.beginPath()
         for (let x = Math.ceil(left / step) * step; x < right; x += step) {
             ctx.moveTo(x, top)
@@ -2148,6 +2233,32 @@ Object.assign(levelEditor, {
         ctx.strokeRect(rect.x, rect.y, rect.width, rect.height)
         ctx.setLineDash([])
     },
+    drawSnapGuides(drag) { //what the drag lined up with, see snapGuides()
+        let b
+        if (drag.kind === "move" || (drag.kind === "handle" && drag.handle !== "rotate")) b = levelElements.unionBounds(levelEditor.dragPreview(drag))
+        else if (drag.kind === "draw") b = levelEditor.dragRect(drag)
+        else if (drag.kind === "vertex") b = { ...levelEditor.vertexPreview(drag).points[drag.index], width: 0, height: 0 }
+        else if (drag.kind === "measure") b = { ...levelEditor.measure.end, width: 0, height: 0 }
+        else return
+        const lines = levelEditor.snapGuides(drag, b)
+        if (!lines.length) return
+        const pad = levelEditor.px(12) //a little past both ends
+        ctx.beginPath()
+        for (const line of lines) {
+            if (line.axis === "x") {
+                ctx.moveTo(line.value, line.from - pad)
+                ctx.lineTo(line.value, line.to + pad)
+            } else {
+                ctx.moveTo(line.from - pad, line.value)
+                ctx.lineTo(line.to + pad, line.value)
+            }
+        }
+        ctx.lineWidth = levelEditor.px(1)
+        ctx.strokeStyle = levelEditor.colors.snap
+        ctx.setLineDash([levelEditor.px(4), levelEditor.px(3)])
+        ctx.stroke()
+        ctx.setLineDash([])
+    },
     drawLabel(point) { //snapped position by the mouse, and the size of a rect being drawn
         const drag = levelEditor.drag
         let text
@@ -2155,14 +2266,14 @@ Object.assign(levelEditor, {
             const rect = levelEditor.dragRect(drag)
             text = `${rect.width} × ${rect.height}`
         } else if (drag && drag.kind === "vertex") {
-            const p = levelEditor.snapPoint(point)
+            const p = levelEditor.smartPoint(point, drag)
             text = `${levelEditor.formatValue(p.x)}, ${levelEditor.formatValue(p.y)}`
         } else if (drag && drag.kind === "handle" && drag.handle === "rotate") {
             text = `${levelEditor.dragTurn(drag)}°`
         } else if (drag && (drag.kind === "move" || drag.kind === "handle")) {
             const el = levelEditor.dragPreview(drag)[0]
             const f = levelEditor.formatValue
-            const p = levelEditor.snapPoint(point)
+            const p = levelEditor.smartPoint(point, drag)
             text = el.width !== undefined && !el.vertices ? `${f(el.x)}, ${f(el.y)}  ${f(el.width)} × ${f(el.height)}` : drag.kind === "handle" ? `${f(p.x)}, ${f(p.y)}` : `${f(el.x)}, ${f(el.y)}`
         } else { //where the mouse is shows in the status bar
             return
@@ -2190,7 +2301,7 @@ Object.assign(levelEditor, {
             title: "import/export",
             render: () => `<div class="le-load" data-load-local></div>
                 <div class="le-grid le-sixths le-gap-above le-flush-x">${levelEditor.button("newLevel", "new", "", false, undefined, { className: "le-third" })}${levelEditor.button("importLevel", "import", "", false, undefined, { className: "le-third" })}${levelEditor.button("code", "export", "", false, undefined, { className: "le-third" })}${levelEditor.button("duplicateLevel", "fork", "", false, undefined, { className: "le-half" })}${levelEditor.button("pool", levelEditor.isInPool() ? "in level pool" : "add to level pool", "", levelEditor.isInPool(), undefined, { className: "le-half" })}</div>
-                <a class="le-button le-site-link le-flush-x" href="https://whyisthisnotavalable.github.io/n-vote/" target="_blank" rel="noopener" title="n-vote, a fan site for n-gon maps: upload your export, download other players' maps, and rate them. import a download here to play it, maps are javascript, so only run ones you trust"><span>n-vote</span><span class="le-site-note">upload, download, rate maps</span></a>
+                <a class="le-button le-site-link le-flush-x" href="https://whyisthisnotavalable.github.io/n-vote/" target="_blank" rel="noopener" title="n-vote, a fan site for n-gon maps: upload your export, download other players' maps, and rate them. import a download here to play it, maps are javascript, so only run ones you trust"><span class="site-link-name">n-vote</span><span class="le-site-note">upload, download, rate maps</span></a>
                 <div class="le-load" data-load-written></div>`, //the local levels, then new, import, the pool, and export, then the fan site for sharing levels, then the written levels, filled in when it opens, see renderLoadList()
         },
         {
@@ -2384,8 +2495,8 @@ Object.assign(levelEditor, {
     },
     elementGroups() { //the add menu's level elements by kind, each a titled part of the list, types not listed go in the last, drawings have the drawing buttons instead
         const groups = [
-            { title: "elements", names: ["boost", "mover", "transport", "elevator", "door", "vanish", "spinner", "wind", "portal", "slime", "laser", "fizzler"] },
-            { title: "triggers", names: ["button", "toggle", "zone", "timer", "keyhole", "key"] },
+            { title: "elements", names: ["laser", "slime", "boost", "mover", "transport", "elevator", "door", "oneWay", "spinner", "vanish", "portal", "fizzler", "wind", "gravityZone", "dispenser"] }, //common ones first, then platforms, portal and fizzler together, the rarely used last
+            { title: "triggers", names: ["button", "toggle", "zone", "timer", "keyhole", "key", "scale", "mobClear"] },
         ]
         const listed = new Set(groups.flatMap(group => group.names).concat(levelEditor.drawButtons.map(([, arg]) => arg.split(":")[0])))
         groups[groups.length - 1].names.push(...levelElements.groups.element.filter(name => !listed.has(name) && !levelElements.types[name].isAddedAs))
@@ -2415,12 +2526,12 @@ Object.assign(levelEditor, {
             ${type.names.map(name => `<option value="${name}" title="${levelEditor.escape(type.tips[name] || "")}">${levelEditor.orb(name)}<span>${name}</span></option>`).join("")}
         </select>`
     },
-    mobList() { //a random group, then every mob and boss by tier with its picture, picking one adds it, an option's data-arg is its whole add command
+    mobList() { //a random group and a nest, then every mob and boss by tier with its picture, picking one adds it, an option's data-arg is its whole add command
         const tiers = spawn.tier.map((names, i) => [`tier ${i}`, names]).concat(spawn.bossTier.map((names, i) => [`tier ${i} bosses`, names])).filter(([, names]) => names.length)
         const icons = levelEditor.mobIcons || {}
         return `<select class="le-list le-rich-list le-two-col le-flush-x" data-add="namedMob" title="${levelEditor.escape(levelElements.types.namedMob.tip)}">
             <option value="">mobs</option>
-            <optgroup label="random"><legend>random</legend><option value="group" data-arg="mobGroup" title="${levelEditor.escape(levelElements.types.mobGroup.tip)}">${levelEditor.mobIcon("group", [{ fill: "rgb(255,80,160)", x: -14, y: 4, r: 9, sides: 5 }, { fill: "rgb(255,80,80)", x: 8, y: -6, r: 10, sides: 4 }, { fill: "rgb(255,120,80)", x: 10, y: 10, r: 7, sides: 3 }])}<span>group</span></option></optgroup>
+            <optgroup label="random"><legend>random</legend><option value="group" data-arg="mobGroup" title="${levelEditor.escape(levelElements.types.mobGroup.tip)}">${levelEditor.mobIcon("group", [{ fill: "rgb(255,80,160)", x: -14, y: 4, r: 9, sides: 5 }, { fill: "rgb(255,80,80)", x: 8, y: -6, r: 10, sides: 4 }, { fill: "rgb(255,120,80)", x: 10, y: 10, r: 7, sides: 3 }])}<span>group</span></option><option value="nest" data-arg="nest" title="${levelEditor.escape(levelElements.types.nest.tip)}">${levelEditor.elementIcon("nest")}<span>nest</span></option></optgroup>
             ${tiers.map(([label, names]) => `<optgroup label="${label}"><legend>${label}</legend>${names.map(name => `<option value="${name}" title="${name}">${icons[name] || ""}<span>${name}</span></option>`).join("")}</optgroup>`).join("")}
         </select>`
     },
@@ -2461,7 +2572,7 @@ Object.assign(levelEditor, {
         levelEditor.renderStatus()
     },
     renderStatus() { //the bar along the bottom, like VS Code's: grid, zoom, tools, and the mouse, then on the right the analysis, history, and tab hide
-        document.getElementById("level-editor-status").innerHTML = `<span class="le-status-item" title="snap size, hold alt to place freely"><input class="le-number" data-setting="grid" value="${levelEditor.grid}" spellcheck="false">${levelEditor.button("grid", "grid", "", levelEditor.isGridShown)}</span>
+        document.getElementById("level-editor-status").innerHTML = `<span class="le-status-item" title="snap size, hold alt to place freely"><input class="le-number" data-setting="grid" value="${levelEditor.grid}" spellcheck="false"><span class="le-segment">${levelEditor.button("grid", "grid", "", levelEditor.isGridShown)}${levelEditor.button("smartSnap", "snap", "", levelEditor.isSmartSnap)}</span></span>
             <span class="le-status-item" title="the editor's zoom, the wheel zooms too">${levelEditor.button("levelZoom", levelEditor.statusIcon("zoom"), "", false, undefined, { className: "le-icon-button" })}<input class="le-number" data-setting="zoom" value="${Math.round(levelEditor.zoomScale)}" spellcheck="false">${levelEditor.button("fit", "fit")}</span>
             <span class="le-status-item">${levelEditor.keyCap("ghost")}<span class="le-segment le-tool-icons">${levelEditor.button("ghost", levelEditor.statusIcon("ghost"), "", levelEditor.isCamera, undefined, { disabled: levelEditor.isFullTest })}</span></span>
             <span class="le-status-item">${levelEditor.keyCap("tool")}<span class="le-segment le-tool-icons">${levelEditor.tools.map(tool => levelEditor.button("tool", levelEditor.toolIcon(tool), tool, levelEditor.tool === tool, levelEditor.toolTips[tool] || tool)).join("")}</span></span>
@@ -2507,7 +2618,7 @@ Object.assign(levelEditor, {
         }
         return { elements: [el], label: `add ${preset ? `${preset} ` : ""}` }
     },
-    fixSpot(typeName) { //where an analysis fix puts what it adds: on top of a map piece, as far from the enter as written levels keep it, and apart from others like it
+    fixSpot(typeName) { //where an analysis fix puts what it adds: on top of a map piece, as far from the entrance as written levels keep it, and apart from others like it
         const data = levelEditor.data
         const context = levelAnalysis.context(data, {})
         const norms = levelAnalysis.norms
@@ -2772,7 +2883,8 @@ Object.assign(levelEditor, {
     },
     propKey(owner, prop) { //its name, the mouse over it shows what it does
         const tip = levelElements.tipOf(owner === levelEditor.data ? "level" : owner.type, prop)
-        return `<span class="color-var"${tip ? ` title="${levelEditor.escape(tip)}"` : ""}>${prop.key}</span><span class="color-symbol">:</span>`
+        const scrub = prop.kind === "number" ? " le-scrub" : "" //drag it left or right to change the number
+        return `<span class="color-var${scrub}"${tip ? ` title="${levelEditor.escape(tip)}"` : ""}>${prop.key}</span><span class="color-symbol">:</span>`
     },
     propsCode(owners, props, isWrapped = true) { //their props as fields, wrapped in { } unless the caller adds more inside, like an element's vertices
         const fields = props.map(prop => levelEditor.fieldFor(owners, prop)).join("")
@@ -3159,6 +3271,56 @@ Object.assign(levelEditor, {
         input.value = levelEditor.formatValue(Number(((Number.isFinite(value) ? value : 0) + step).toFixed(6)))
         levelEditor.setProp(input)
     },
+    scrubStart(event) { //mouse down on a number field or its name, dragging left or right changes it, a click on the field still types
+        const target = event.target
+        const input = target.matches("input.le-value") ? target : target.matches(".le-scrub") ? target.parentElement.querySelector("input.le-value") : null
+        if (!input || event.button !== 0) return
+        const prop = levelEditor.findProp(input.dataset.key, input.dataset.owner === "many" ? levelEditor.selected()[0] : levelEditor.ownerOf(input))
+        if (!prop || prop.kind !== "number") return
+        if (target !== input) event.preventDefault() //the name doesn't select its text
+        const value = Number(input.value)
+        levelEditor.scrub = {
+            input, prop, x: event.clientX, isScrubbing: false,
+            key: input.dataset.key, owner: input.dataset.owner || "", panel: input.closest("#level-editor-left, #level-editor-right"),
+            start: input.value.trim() !== "" && Number.isFinite(value) ? value : 0, //mixed starts at 0, like the arrow keys
+            startStep: levelEditor.history.steps[levelEditor.history.index],
+        }
+    },
+    scrubMove(event) {
+        const scrub = levelEditor.scrub
+        if (!scrub) return
+        const moved = event.clientX - scrub.x
+        if (!scrub.isScrubbing) {
+            if (Math.abs(moved) < 4) return //a click, or a small wobble while clicking into the field
+            scrub.isScrubbing = true
+            if (document.activeElement && document.activeElement !== document.body) document.activeElement.blur() //finishes typing, the field shows the dragged value
+            document.body.classList.add("le-scrubbing")
+        }
+        if (!scrub.input.isConnected) { //the inspector redrew, the same field is a new input
+            scrub.input = [...scrub.panel.querySelectorAll("input.le-value")].find(input => input.dataset.key === scrub.key && (input.dataset.owner || "") === scrub.owner)
+            if (!scrub.input) return levelEditor.scrubEnd()
+        }
+        const step = scrub.prop.isGrid ? Math.max(1, levelEditor.grid) : scrub.prop.step || 1
+        const steps = Math.round(moved / (scrub.prop.isGrid ? 8 : 3)) * (event.shiftKey ? 10 : 1) //grid steps are big, so they take more pixels, shift is 10×
+        const text = levelEditor.formatValue(Number((scrub.start + steps * step).toFixed(6)))
+        if (text === scrub.input.value) return
+        scrub.input.value = text
+        scrub.input.style.width = levelEditor.fieldWidth(text)
+        levelEditor.setProp(scrub.input)
+    },
+    scrubEnd() { //one undo step for the whole drag, named for where it ended up
+        const scrub = levelEditor.scrub
+        levelEditor.scrub = null
+        if (!scrub || !scrub.isScrubbing) return
+        document.body.classList.remove("le-scrubbing")
+        const history = levelEditor.history
+        const from = history.steps.indexOf(scrub.startStep) //gone if the history limit dropped it, then the steps stay
+        if (from < 0 || history.index <= from) return
+        const isBack = history.steps[history.index].json === scrub.startStep.json //dragged back to where it started
+        history.steps.splice(from + 1, history.index - from - (isBack ? 0 : 1))
+        history.index = isBack ? from : from + 1
+        levelEditor.updateHistoryButtons()
+    },
 })
 
 //*********************************************************************
@@ -3185,6 +3347,8 @@ Object.assign(levelEditor, {
     })
     document.documentElement.addEventListener("mouseleave", () => { levelEditor.isMouseOnCanvas = false })
     window.addEventListener("mouseup", levelEditor.mouseUp)
+    window.addEventListener("mousemove", event => levelEditor.scrubMove(event))
+    window.addEventListener("mouseup", () => levelEditor.scrubEnd())
     window.addEventListener("keydown", levelEditor.keyDown, true) //capture, so it runs before the game's keys, which were added first
     window.addEventListener("keyup", event => {
         levelEditor.isFree = event.altKey
@@ -3373,6 +3537,7 @@ Object.assign(levelEditor, {
         })
     })
     for (const panel of [left, right]) { //fields are in both panels, the level properties are in the inspector with nothing selected
+        panel.addEventListener("mousedown", levelEditor.scrubStart)
         panel.addEventListener("input", event => {
             if (event.target.matches("[data-explore-search]")) { //lists only what matches, as it's typed
                 levelEditor.exploreSearch = event.target.value

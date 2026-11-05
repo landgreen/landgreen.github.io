@@ -1,3 +1,12 @@
+level editor: delay - anything linked to a button, toggle, or other trigger has a delay, it follows the trigger that many cycles late
+level editor: mob clear - a trigger that's on once the mobs in its box, the whole level, or the bosses are dead, for arena rooms
+level editor: scale - an amber button that's on while enough weight sits on it, a gauge on its base fills as you add weight, stacks of blocks count
+level editor: nest - in the mobs list, a mob that stays put and makes mobs while it sees you, its mobs don't drop power ups
+level editor: dispenser - a wall mount that makes a block every few seconds, up to a max, snaps onto walls, aim it any direction and launch them, waits while its spot is blocked, link it to a button to drop on demand
+level editor: gravity - a zone with its own gravity, 0 floats, negative falls up, link it to flip it on and off, it can be invisible
+level editor: one way - a platform you jump up through and land on, turn it to any angle, hold down to drop through, blocks and mobs pass through it too
+level editor: drag a number or its name in the info box left or right to change it, shift for faster
+level editor: smart snap - maps, blocks, platforms, doors, buttons, and keys snap to each other's edges and middles with guide lines, the snap button turns it off, alt places freely
 n-vote - a link to the fan site for uploading, downloading, and rating maps, in the level pool and the level editor's import/export
 level editor: elevators can be linked to triggers, while off they finish their trip and wait at the bottom
 level editor: ghost (G) - the player hides and WASD flies the view anywhere through walls, G again drops the player there, replaces the velocity drawing
@@ -13,6 +22,8 @@ level editor: log - buttons, toggles, keyholes, zones, timers, and the level its
 level editor: author - the level's info box has an author, the level says its name and who made it in the in-game console when it loads
 
 bug fixes
+  buttons: no more thin line between a button's base and the floor under it
+  bosses that pin themselves in place, and mobs losing their links or shields, no longer leave invisible constraints behind for the rest of the run
   labs: thick outer walls, fast things can't slip out of the map anymore
   level editor: constraints no longer happen while editing, like spawn wimps sending wimps after you
   level editor: pausing hides the editor's menus, they used to stick out from under the pause menu
@@ -25,65 +36,6 @@ bug fixes
 
 
 *********************************************************** TODO *****************************************************
-
-
-
-
-Theme directions
-A. Blueprint (my pick for the base). It's a construction tool, so lean into drafting paper. The pause menu's blue-gray #e2e9ec is already that paper color. Make the selection cyan the editor's one accent and use it for on buttons, selected explorer rows, focused inputs, the current history step and active tools. Then the panels and the map use the same color for "selected." The canvas grid could become faint blue graph lines, with the axis drawn in the accent.
-
-B. Color by element type, using the game's own colors. This one communicates best. Each category gets a thin colored stripe on its explorer group, inspector header and add-menu section:
-
-map: #444
-bodies: block gray
-mobs: damage red #f03
-heal: #0b7
-ammo: #356
-tech: purple 253
-fields: cyan 193
-guns: blue 218
-code: a neutral ink
-Players already know these colors from the experiment menu, so this ties it to the rest of the game without copying it. It also works alongside A.
-
-C. Status bar color shows the mode. VS Code does this: the status bar turns orange while debugging. Pale paper while editing, green while quick test or test export is running, red when there are problems to fix. You'd always know what state you're in at a glance.
-
-Smaller fixes, whichever direction you pick
-Primary buttons: quick test and test export get a filled style instead of only a colored icon.
-Delete: red text or border on hover.
-On state: a cyan tint with a cyan border instead of #666, which reads as heavy and is close to disabled.
-Menu headers: a little more weight, an icon, or a thin accent rule under an open one.
-Labels: #777 at 13px is faint. Go a bit darker, or make the labels smaller and darker.
-CSS variables first: --le-accent, --le-ink, --le-line, --le-error, --le-warn and the code colors. Then trying a theme means changing about ten values, not a hundred.
-Code colors
-The main change I'd make is in how colors are assigned, not which colors. Right now the keys carry the strongest color. Keys are the most common token and the least interesting one, which is why it looks purple everywhere. Better:
-
-token	idea
-keys	near-black slate ink, maybe medium weight
-: , [ ]	faded gray, nearly invisible
-numbers	deep cyan-blue (the field color, darkened)
-strings	warm amber or brown (the explode orange #d60, darkened)
-true / false / null	rose red
-keywords	bold ink or deep teal
-calls	the gun blue
-comments	gray italic
-This also helps people understand the panel: the values are the editable part, so they're what lights up. And it's one palette for the inspector, the JS view and the code panel.
-
-If you'd rather borrow an existing palette:
-
-Solarized Light: calm, warm, slightly cream.
-Xcode's default light: plain keys, red strings, blue numbers, pink bold keywords. Very clean.
-Gruvbox Light: earthy and muted.
-I'd go with the game-derived one above, since its colors already mean something in n-gon.
-
-I can make a quick side-by-side mockup with a sample inspector block and code snippet in two or three palettes before we change anything.
-
-
-
-
-
-
-
-
 
 
 add alternator-like swing code to other situations

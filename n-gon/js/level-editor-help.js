@@ -5,10 +5,10 @@ Object.assign(levelEditor, {
     help: [ //the help menu, a guide from a blank level to a submitted one, each [title, html] folds on its own
         ["start here", `
             <p>You don't need to write any JavaScript to make a level. The editor writes it for you and saves your changes in this browser as you go.</p>
-            <p><b>Map</b> pieces are solid ground and walls that stay in place. <b>Blocks</b> can move and be pushed around. Every level also has an <b>enter</b>, where the player starts, and an <b>exit</b>.</p>
+            <p><b>Map</b> pieces are solid ground and walls that stay in place. <b>Blocks</b> can move and be pushed around. Every level also has an <b>entrance</b>, where the player starts, and an <b>exit</b>.</p>
             <ol>
                 <li>Draw the ground and walls with the <b>map</b> tool.</li>
-                <li>Select and drag <b>enter</b> and <b>exit</b> into place.</li>
+                <li>Select and drag <b>entrance</b> and <b>exit</b> into place.</li>
                 <li>Open <b>add</b> to place <b>mob</b> spots, a <b>boss</b>, and a <b>starting</b> power up.</li>
                 <li>Press <b>▶ quick test</b> in <b>simulation</b> to play. Press <b>■ stop</b> to return to editing.</li>
                 <li>Click the issues count in the bottom bar to check for problems. When you're ready to share, use <b>export</b> in <b>import/export</b>.</li>
@@ -36,9 +36,9 @@ Object.assign(levelEditor, {
         ["a good level", `
             <p>These are starting points based on the game's existing levels, not strict rules.</p>
             <ul>
-                <li>Give the player a clear route from the enter, through a few rooms or climbs, to the exit. Existing levels keep the exit at least 450 units from the enter.</li>
+                <li>Give the player a clear route from the entrance, through a few rooms or climbs, to the exit. Existing levels keep the exit at least 450 units from the entrance.</li>
                 <li>Drag with the <b>measure</b> tool from where the player stands to check a jump. Green means it should be reachable. A normal jump reaches about 390 units up or 570 across at full speed; test the jump yourself too.</li>
-                <li>Put the <b>boss</b> at least 1400 units from the enter. Place the <b>starting</b> power up away from the enter too, so players explore to find it.</li>
+                <li>Put the <b>boss</b> at least 1400 units from the entrance. Place the <b>starting</b> power up away from the entrance too, so players explore to find it.</li>
                 <li>Spread 15 to 20 <b>mob</b> spots around the level. These are possible spawn locations: the game uses some of them, with more mobs later in a run.</li>
                 <li>Aim for 2 to 12 heal and ammo power ups in total. <b>Random</b> places a heal or ammo, and <b>debris</b> scatters small blocks and power ups.</li>
                 <li>Keep it light: aim for fewer than about 100 map pieces and 50 blocks. Fewer, larger pieces usually run better than many small ones.</li>
@@ -48,7 +48,7 @@ Object.assign(levelEditor, {
             </ul>`],
         ["testing", `
             <ul>
-                <li><b>▶ quick test</b> returns the player to the enter and puts blocks back where they started. Turn on <b>mobs</b> to include mobs and power ups in the test, and <b>invincible</b> to explore without taking damage.</li>
+                <li><b>▶ quick test</b> returns the player to the entrance and puts blocks back where they started. Turn on <b>mobs</b> to include mobs and power ups in the test, and <b>invincible</b> to explore without taking damage.</li>
                 <li><b>level</b> sets how far into a run you're testing. Try 1 and 10 to see how the fights change. At 0, random mobs don't spawn.</li>
                 <li><b>▶ test export</b> runs the code that <b>export</b> produces, with the normal game camera and mouse controls. It always includes mobs and power ups. You don't need to know JavaScript to use it; try it before sharing your level.</li>
                 <li><b>Time</b> slows the game so you can watch something closely. Test export ignores it, and grays out the settings it doesn't use.</li>
