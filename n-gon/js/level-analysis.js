@@ -21,6 +21,7 @@ const levelAnalysis = {
         blocks: [50, 100], //blocks and debris, standard levels have up to 38, ace has 236
         blockVertices: 400, //blocks with many vertices collide slowly
         most: { boost: 7, mover: 12, elevator: 3, vanish: 16, spinner: 12, wind: 8, slime: 3, laser: 12, fill: 32 }, //the most in one standard level, a note past double, wind costs about 30 µs a frame each, 10 times the others, elements a frame catches too many
+        drawingParts: [1500, 4000], //about how many shapes the draw list's elements draw a frame, each costs little, so a level has to pile them up
         frameMs: [0.35, 0.5], //elements' custom and top layers, standard levels take under 0.31 ms a frame
         bodies: 250, //physics bodies the elements make, standard levels have up to 122 with their mobs
     },
@@ -410,6 +411,8 @@ levelAnalysis.check("elements", c => {
     const linked = new Set(c.data.elements.flatMap(el => [el.link, el.orLink]).filter(id => id !== null && id !== undefined))
     const idle = c.data.elements.filter(el => levelElements.linkSources.includes(el.type) && !linked.has(el.id) && !String(el.log ?? "").trim() && !el.edited)
     if (idle.length) lines.push(line("note", "does nothing", idle.length, `${levelElements.summary(idle[0])} has nothing linked, no log, and no edited code`, idle))
+    const unwired = c.data.elements.filter(el => levelElements.types[el.type]?.isGate && [el.link, el.orLink].filter(Boolean).length < levelElements.gateOf(el).needs)
+    if (unwired.length) lines.push(line("note", "gate inputs", unwired.length, `${levelElements.summary(unwired[0])} needs ${levelElements.gateOf(unwired[0]).needs === 1 ? "an input" : "2 inputs"}, link triggers to it`, unwired))
     if (c.spawn) { //the player's middle, head, feet, and sides at the entrance
         const body = [[0, 0], [0, -30], [0, 30], [-20, 0], [20, 0]].map(([dx, dy]) => ({ x: c.spawn.x + dx, y: c.spawn.y + dy }))
         const hazards = c.of("slime").filter(el => el.damage > 0).concat(c.of("laser").filter(el => el.damage > 0), c.of("wind"))
@@ -459,6 +462,15 @@ levelAnalysis.check("performance", c => {
         const count = c.of(type).length
         if (count > 2 * most) lines.push(line("note", type, count, `standard levels have up to ${most}`))
     }
+    const drawings = c.data.elements.filter(el => levelElements.decorations[el.type])
+    const costs = {} //each type's total
+    for (const el of drawings) costs[el.type] = (costs[el.type] || 0) + (levelElements.decorations[el.type].parts?.(el) ?? 1)
+    const parts = Object.values(costs).reduce((sum, cost) => sum + cost, 0)
+    const partsStatus = grade(parts, c.norms.drawingParts)
+    if (partsStatus !== "ok") {
+        const costliest = Object.entries(costs).sort((a, b) => b[1] - a[1]).slice(0, 3).map(([type]) => type).join(", ")
+        lines.push(line(partsStatus, "drawings", `${Math.round(parts)} shapes`, `drawn each frame when they're on screen, for looks only, most from ${costliest}, smaller boxes or fewer cost less`, drawings))
+    } else if (drawings.length) lines.push(line("ok", "drawings", `${Math.round(parts)} shapes`))
     if (c.live) {
         const [slow, slower] = c.norms.frameMs
         const ms = c.live.ms

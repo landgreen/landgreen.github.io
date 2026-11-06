@@ -3313,13 +3313,85 @@ body.level-editor.le-invincible #level-editor-left {
     border-bottom-width: 0;
 }
 
-/* level element, mob by name, and power up by name stack in one part above + code */
-.le-add-part>.le-list {
-    margin-top: 0;
+/* the add menu's element, power up, and mob buttons, the open one's list is under them, and load more levels */
+.le-load-group>summary { /* the size of the buttons above it, not a menu title */
+    margin: 0;
+    padding: 2px 7px;
+    font-size: 1em;
+    background-color: #fff;
 }
 
-.le-list+.le-list {
-    border-top: none;
+.le-load-group>summary:hover {
+    background-color: var(--le-hover);
+}
+
+.le-load-group[open]>summary { /* tinted like an on button, so it shows it's open and where each list starts */
+    border-bottom: 1px solid var(--le-ink);
+    background-color: var(--le-on);
+    color: var(--le-on-ink);
+}
+
+.le-load-group[open]>summary:hover {
+    background-color: var(--le-on-hover);
+}
+
+.le-add-list .le-load-header {
+    margin: 0;
+    padding: 3px 7px 1px;
+}
+
+.le-grid .le-button.le-add-tab {
+    padding-left: 4px;
+    text-align: left;
+}
+
+/* an arrow like a menu title's, right while closed and down while open */
+.le-add-tab::before {
+    content: "";
+    display: inline-block;
+    margin-right: 5px;
+    border-style: solid;
+    border-color: transparent;
+    border-left-color: currentColor;
+    border-width: 4.5px 0 4.5px 8px;
+}
+
+.le-add-tab.le-on::before {
+    border-color: transparent;
+    border-top-color: currentColor;
+    border-width: 8px 4.5px 0;
+    vertical-align: 1px;
+}
+
+.le-add-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    border-left-width: 0;
+    border-right-width: 0;
+    border-top-width: 1px;
+}
+
+.le-add-list>.le-add-grid:last-child {
+    border-bottom-width: 0;
+}
+
+.le-add-list>.le-add-grid:first-child { /* the list's line is its top line */
+    border-top-width: 0;
+}
+
+.le-grid .le-button.le-add-item {
+    display: flex;
+    align-items: center;
+    gap: 2px;
+    min-height: 20px;
+    padding: 1px 4px;
+    font-size: 11px;
+    text-align: left;
+}
+
+.le-add-item span:last-child {
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 /* export, the local levels, and import, apart from each other */
@@ -3327,9 +3399,25 @@ body.level-editor.le-invincible #level-editor-left {
     margin-top: 14px;
 }
 
-.le-load-group summary { /* the size of the buttons above it, not a menu title */
-    margin: 5px 0 -2px;
-    font-size: 1em;
+/* load more levels, edge to edge under n-vote like the add menu's lists, the bottom of import/export */
+.le-details:has(.le-load-group) {
+    overflow: hidden;
+}
+
+.le-load:has(>.le-load-group) {
+    margin-top: 0;
+}
+
+.le-load-group {
+    margin-bottom: calc(-1 * var(--le-pad));
+}
+
+.le-load-group>summary {
+    margin: 0 calc(-1 * var(--le-pad));
+}
+
+.le-load-group>.le-load-grid:last-child {
+    border-bottom-width: 0;
 }
 
 /* the help menu's guide */
@@ -3454,14 +3542,9 @@ body.level-editor.le-invincible #level-editor-left {
 
 .le-flush-x.le-grid,
 .le-flush-x.le-shapes,
-.le-flush-x.le-list,
 .le-flush-x .le-grid {
     border-left-width: 0;
     border-right-width: 0;
-}
-
-.le-flush-x.le-list {
-    width: calc(100% + 2 * var(--le-pad));
 }
 
 .le-list:not(.le-rich-list) {
@@ -3484,13 +3567,6 @@ body.level-editor.le-invincible #level-editor-left {
 
 .le-flush-bottom>.le-grid:last-child { /* rows inside, like the inspector's action rows, the outline is the last one's bottom line */
     border-bottom-width: 0;
-}
-
-/* a list right under its buttons joins them */
-.le-grid+.le-list,
-.le-shapes+.le-list {
-    margin-top: 0;
-    border-top: none;
 }
 
 .le-orb {
@@ -3605,46 +3681,6 @@ body.level-editor.le-invincible #level-editor-left {
     max-height: 60vh;
 }
 
-/* the add menu's lists in two columns, each group's title (its legend) across both, smaller names, a long one is cut off */
-/* options right in the list, like power up by name, make the columns themselves, the first "pick one" option and groups go across */
-.le-two-col::picker(select) {
-    width: 320px;
-}
-
-.le-two-col::picker(select):popover-open { /* only while open, a display here would show it closed too */
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    align-content: start;
-}
-
-.le-two-col option[value=""],
-.le-two-col optgroup {
-    grid-column: 1 / -1;
-}
-
-.le-two-col optgroup {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-}
-
-.le-two-col legend {
-    grid-column: 1 / -1;
-    padding: 3px 4px 1px;
-    font-weight: bold;
-}
-
-.le-two-col option {
-    min-width: 0;
-    font-size: 11px;
-}
-
-.le-two-col option span {
-    min-width: 0;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-}
-
 .le-mob-icon {
     flex: none;
     display: block;
@@ -3664,9 +3700,35 @@ body.level-editor.le-invincible #level-editor-left {
     grid-template-columns: repeat(7, 1fr);
 }
 
-/* the drawing row under them: fill, draw path, exit fill, text */
+/* button, scale, toggle at the top of the info box, tighter so they fit next to a long id */
+.le-segment.le-tight .le-button {
+    padding-left: 3px;
+    padding-right: 3px;
+}
+
+/* the row above the list buttons: the last four picked from the lists, it starts as fill, draw path, exit fill, and text */
 .le-shapes.le-draws {
     grid-template-columns: repeat(4, 1fr);
+}
+
+.le-shapes.le-draws+.le-grid { /* joins the list buttons under it */
+    margin-top: 0;
+    border-top: none;
+}
+
+.le-button.le-recent-add {
+    min-width: 0;
+    overflow: hidden;
+}
+
+.le-recent-add .le-mob-icon,
+.le-recent-add .le-orb {
+    margin: 0;
+}
+
+.le-recent-name {
+    font-size: 9px;
+    white-space: nowrap;
 }
 
 .le-shapes+.le-shapes {
@@ -3749,7 +3811,7 @@ body.level-editor.le-invincible #level-editor-left {
     gap: 1px;
     border: 1px solid var(--le-rule-light);
     background-color: var(--le-rule-light);
-    max-height: 98px; /* the last 7 steps, about 12.8px each with 1px gaps, scroll for more */
+    max-height: 137px; /* the last 10 steps, about 12.8px each with 1px gaps, scroll for more */
     overflow-y: auto;
     scrollbar-width: thin;
 }

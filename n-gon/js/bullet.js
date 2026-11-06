@@ -9123,6 +9123,7 @@ const b = {
             },
             CDcount: 0,
             fire360Longitudinal() {
+                if (this.waveFireCD >= m.cycle) return //pressing fire calls this directly, so clicking can't beat the fire rate
                 const timeSlow = m.isTimeDilated ? 2 : 1
                 const s = Math.floor(timeSlow * (m.crouch ? 10 : 15) * b.fireCDscale)
                 if (tech.amplitudeCount) {
@@ -9145,6 +9146,7 @@ const b = {
                 this.autoFire();
             },
             fireLongitudinal() {
+                if (this.waveFireCD >= m.cycle) return //pressing fire calls this directly, so clicking can't beat the fire rate
                 const timeSlow = m.isTimeDilated ? 2 : 1
                 this.waveFireCD = m.cycle + Math.floor(timeSlow * (m.crouch ? 10 : 15) * b.fireCDscale); // cool down
 

@@ -56,11 +56,11 @@ Object.assign(levelEditor, {
                 <li>Play all the way to the exit, and try falling off the edges. The exit won't take you to another level while you're in the editor.</li>
             </ul>`],
         ["buttons and moving parts", `
-            <p>Open <b>add → level elements</b> for boosts, conveyors, elevators, portals, hazards, controls, and decorations.</p>
-            <p>A <b>button</b>, <b>toggle</b>, <b>zone</b>, <b>timer</b>, or <b>keyhole</b> can control other objects. A button responds to weight, a toggle is a lever, a zone detects something inside it, a timer switches on and off, and a keyhole needs a matching key.</p>
+            <p>Open the <b>element</b> and <b>trigger</b> lists in <b>add</b> for boosts, conveyors, elevators, portals, hazards, controls, and decorations.</p>
+            <p>A <b>button</b>, <b>toggle</b>, <b>zone</b>, <b>keyhole</b>, or <b>logic</b> timer can control other objects. A button responds to weight, a toggle is a lever, a zone detects something inside it, a timer switches on and off, and a keyhole needs a matching key.</p>
             <p>Select a control, press <b>link</b>, then click the object you want it to control. For example, a linked <b>door</b> opens while the button is pressed. Press esc to stop linking.</p>
             <p>A block's <b>constraint</b> can pin it to a point in the level, or set its <b>anchor</b> to another block to tie the two together, like a chain or a pendulum.</p>
-            <p>Link two controls to the same object and either can turn it on. Link one control to another and both must be on. For example, link a zone to a timer, then the timer to a laser, to make the laser pulse only while something is in the zone.</p>`],
+            <p>Link two controls to the same object and either can turn it on. Link one control to another and both must be on. For example, link a zone to a logic timer, then the timer to a laser, to make the laser pulse only while something is in the zone.</p>`],
         ["code", `
             <p>Code is optional. For behavior the editor's tools can't make, <b>+ code</b> at the bottom of the level's info box (click empty space) lets you add your own JavaScript.</p>
             <p>To explore how existing levels work, open one from <b>load more levels</b> in <b>import/export</b>. This makes a local copy, so you can experiment without changing the original.</p>

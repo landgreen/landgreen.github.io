@@ -1,3 +1,15 @@
+level editor: carry player - a checkbox on blocks with a force, on to start, the player standing on the block moves along with it
+level editor: blocks can have a force, steady or a back and forth wave, at any angle and strength, on a constraint they swing
+level editor: drawings can link to a button, zone, or other trigger, and only show while it's on
+level editor: laser - pick its color, and an arc look that's electricity and hits a little wider
+level editor: draw - drip is back, and customizable wires, fan, gear, vent, piston, belt, beacon, panel, pipe, truss, grate, stripes, rain, snow, sparks, steam, waves, grass, and vines, the analysis warns when a level draws too much
+level editor: mobs and bosses can link to a button, zone, or other trigger to spawn when it turns on, without one they spawn when the level starts
+level editor: collides - movers, vanishes, transports, elevators, spinners, doors, and the blocks dispensers make can pick what they bump into, like maps and blocks
+level editor: button, scale, and toggle are one entry in level elements, the top of its info box switches between them
+level editor: logic - and, or, not, and timer in triggers, link buttons and other triggers to it, then link it to what they should run, the top of its info box switches between them, older levels' timers still work
+level editor: element, power up, mob, trigger, draw, and boss buttons in the add menu open one list of buttons at a time, leave it open and drag from it onto the level
+tech: collider - merges happen half as often and cost 3 or 4 small power ups, up to 3 small power ups swap flavors instead
+level editor: recently used - the 4 buttons above the add menu's lists fill up in turn with what you pick from the lists and stay in place
 level editor: delay - anything linked to a button, toggle, or other trigger has a delay, it follows the trigger that many cycles late
 level editor: mob clear - a trigger that's on once the mobs in its box, the whole level, or the bosses are dead, for arena rooms
 level editor: scale - an amber button that's on while enough weight sits on it, a gauge on its base fills as you add weight, stacks of blocks count
@@ -22,6 +34,12 @@ level editor: log - buttons, toggles, keyholes, zones, timers, and the level its
 level editor: author - the level's info box has an author, the level says its name and who made it in the in-game console when it loads
 
 bug fixes
+  wave: spam clicking fire can't beat the fire rate anymore
+  research: a level with no mobs when it loads puts its research by the exit, it used to give none
+  level editor: linking a third trigger to something that has two is refused, it no longer replaces the first link
+  collider: pulls 10 random power ups to the mob and only those collide, power ups across the map used to merge without moving
+  collider: metastability duplicates can't collide anymore, they used to turn into normal power ups that don't explode
+  deflecting: heavy mobs in standing wave's field no longer launch you at huge speeds or get dragged along with you
   buttons: no more thin line between a button's base and the floor under it
   bosses that pin themselves in place, and mobs losing their links or shields, no longer leave invisible constraints behind for the rest of the run
   labs: thick outer walls, fast things can't slip out of the map anymore

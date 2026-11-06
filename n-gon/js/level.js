@@ -4084,6 +4084,408 @@ const level = {
             }
         }
     },
+    decorationWrap(value, size) { //value % size, always from 0 to size, a negative speed moves it the other way instead of out of its box
+        return ((value % size) + size) % size
+    },
+    decorationRandom(i) { //the same number from 0 to 1 for the same i, so a decoration needs no saved particles and stays put
+        const s = Math.sin(i * 12.9898) * 43758.5453
+        return s - Math.floor(s)
+    },
+    decorationKinds: { //what level.decoration() can draw, each is (d, t), d is { x, y, width, height, color }, t is cycles times its speed, counts are capped so a big one stays cheap
+        rain(d, t) {
+            const rnd = level.decorationRandom
+            const count = Math.min(250, Math.ceil(d.width * d.height / 2200))
+            const fall = d.height + 40
+            ctx.strokeStyle = d.color
+            ctx.lineWidth = 2.5
+            ctx.beginPath()
+            for (let i = 0; i < count; i++) {
+                const top = d.y + level.decorationWrap(rnd(i + 0.5) * fall + t * (14 + 8 * rnd(i + 0.3)), fall) - 40
+                const x = d.x + rnd(i) * d.width
+                ctx.moveTo(x, Math.max(d.y, top))
+                ctx.lineTo(x, Math.max(d.y, Math.min(d.y + d.height, top + 30)))
+            }
+            ctx.stroke()
+        },
+        snow(d, t) {
+            const rnd = level.decorationRandom
+            const count = Math.min(250, Math.ceil(d.width * d.height / 3000))
+            ctx.fillStyle = d.color
+            ctx.beginPath()
+            for (let i = 0; i < count; i++) {
+                const x = d.x + level.decorationWrap(rnd(i) * d.width + 18 * Math.sin(t * 0.02 + i), d.width)
+                const y = d.y + level.decorationWrap(rnd(i + 0.5) * d.height + t * (0.7 + rnd(i + 0.3)), d.height)
+                const radius = 3 + 4 * rnd(i + 0.7)
+                ctx.moveTo(x + radius, y)
+                ctx.arc(x, y, radius, 0, 2 * Math.PI)
+            }
+            ctx.fill()
+        },
+        sparks(d, t) { //rising from the bottom and fading
+            const rnd = level.decorationRandom
+            const count = Math.min(90, Math.ceil(d.width / 5))
+            ctx.fillStyle = d.color
+            ctx.beginPath()
+            for (let i = 0; i < count; i++) { //one fill for all of them, they shrink away instead of each fading
+                const life = level.decorationWrap(t * 0.007 * (0.6 + rnd(i + 0.2)) + rnd(i), 1)
+                const size = 9 * (1 - life) + 0.5
+                ctx.rect(d.x + rnd(i + 0.1) * d.width + 24 * life * Math.sin(life * 7 + i), d.y + d.height - life * d.height, size, size)
+            }
+            ctx.fill()
+        },
+        steam(d, t) { //puffs that rise, grow, and fade
+            const count = Math.min(14, Math.ceil(d.height / 35))
+            ctx.fillStyle = d.color
+            for (let i = 0; i < count; i++) {
+                const life = level.decorationWrap(t * 0.004 + i / count, 1)
+                ctx.globalAlpha = 1 - life
+                ctx.beginPath()
+                ctx.arc(d.x + d.width / 2 + d.width * 0.25 * life * Math.sin(life * 5 + i), d.y + d.height - life * (d.height - d.width * 0.3) - d.width * 0.1, d.width * (0.1 + 0.2 * life), 0, 2 * Math.PI)
+                ctx.fill()
+            }
+        },
+        vent(d) { //a frame with slats across it
+            if (!d.path) {
+                d.path = new Path2D()
+                const count = Math.max(2, Math.min(16, Math.round(d.height / 24)))
+                for (let i = 0; i < count; i++) d.path.rect(d.x + 8, d.y + (i + 0.3) * d.height / count, d.width - 16, 0.42 * d.height / count)
+            }
+            ctx.fillStyle = "rgba(0,0,0,0.1)"
+            ctx.fillRect(d.x, d.y, d.width, d.height)
+            ctx.fillStyle = d.color
+            ctx.fill(d.path)
+            ctx.strokeStyle = d.color
+            ctx.lineWidth = 4
+            ctx.strokeRect(d.x, d.y, d.width, d.height)
+        },
+        truss(d) { //a steel girder along its longer side
+            if (!d.path) {
+                d.path = new Path2D()
+                const isAcross = d.width >= d.height
+                const length = isAcross ? d.width : d.height
+                const thick = isAcross ? d.height : d.width
+                const point = (along, across) => isAcross ? [d.x + along, d.y + across] : [d.x + across, d.y + along]
+                const line = (a, b) => {
+                    d.path.moveTo(...point(...a))
+                    d.path.lineTo(...point(...b))
+                }
+                const count = Math.max(1, Math.min(40, Math.round(length / Math.max(thick, 10))))
+                const bay = length / count
+                line([0, 0], [length, 0])
+                line([0, thick], [length, thick])
+                for (let i = 0; i <= count; i++) line([i * bay, 0], [i * bay, thick])
+                for (let i = 0; i < count; i++) line(i % 2 ? [i * bay, thick] : [i * bay, 0], i % 2 ? [(i + 1) * bay, 0] : [(i + 1) * bay, thick])
+            }
+            ctx.strokeStyle = d.color
+            ctx.lineWidth = 4
+            ctx.stroke(d.path)
+        },
+        piston(d, t) { //a rod pumping up and down out of a cylinder at the bottom
+            const middle = d.x + d.width / 2
+            const cylinder = d.height * 0.4
+            const travel = d.height * 0.3 * (0.5 + 0.5 * Math.sin(t * 0.06))
+            const headY = d.y + travel
+            ctx.fillStyle = d.color
+            ctx.beginPath() //one fill, so see through parts don't get darker where they overlap
+            ctx.rect(middle - d.width * 0.1, headY, d.width * 0.2, d.y + d.height - cylinder - headY) //the rod
+            ctx.rect(d.x + d.width * 0.1, headY - 4, d.width * 0.8, Math.max(8, d.height * 0.08)) //its head
+            ctx.rect(d.x + d.width * 0.2, d.y + d.height - cylinder, d.width * 0.6, cylinder) //the cylinder
+            ctx.rect(d.x, d.y + d.height - 10, d.width, 10) //its base
+            ctx.fill()
+            ctx.fillStyle = "rgba(255,255,255,0.1)"
+            ctx.fillRect(d.x + d.width * 0.28, d.y + d.height - cylinder, d.width * 0.08, cylinder - 10) //a shine
+        },
+        belt(d, t) { //a drive belt on a big pulley and a small one, the small one spins faster
+            const big = Math.min(d.height / 2, d.width * 0.3)
+            const small = big * 0.6
+            const y = d.y + d.height / 2
+            const left = d.x + big
+            const right = d.x + d.width - small
+            const lean = Math.asin((big - small) / (right - left)) //the belt's straight parts touch each pulley where it's perpendicular to the radius
+            const top = lean - Math.PI / 2
+            const travel = t * 1.6 //how far the belt has moved
+            ctx.fillStyle = d.color
+            ctx.beginPath()
+            for (const [x, radius] of [[left, big], [right, small]]) { //one fill, each pulley with a hub and lightening holes cut out
+                ctx.moveTo(x + radius, y)
+                ctx.arc(x, y, radius, 0, 2 * Math.PI)
+                ctx.moveTo(x + radius * 0.14, y)
+                ctx.arc(x, y, radius * 0.14, 0, 2 * Math.PI)
+                for (let i = 0; i < 4; i++) {
+                    const angle = travel / radius + i * Math.PI / 2
+                    const holeX = x + radius * 0.56 * Math.cos(angle)
+                    const holeY = y + radius * 0.56 * Math.sin(angle)
+                    ctx.moveTo(holeX + radius * 0.16, holeY)
+                    ctx.arc(holeX, holeY, radius * 0.16, 0, 2 * Math.PI)
+                }
+            }
+            ctx.fill("evenodd")
+            ctx.beginPath()
+            ctx.arc(right, y, small, top, -top)
+            ctx.arc(left, y, big, -top, 2 * Math.PI + top)
+            ctx.closePath()
+            ctx.strokeStyle = d.color
+            ctx.lineWidth = Math.max(2, big * 0.09)
+            ctx.stroke() //the belt
+            ctx.lineWidth = Math.max(1, big * 0.04)
+            ctx.setLineDash([2, 8]) //its teeth
+            ctx.lineDashOffset = -travel
+            ctx.stroke()
+            ctx.setLineDash([])
+        },
+        waves(d, t) { //three see through layers of water
+            const step = Math.max(15, d.width / 150)
+            ctx.fillStyle = d.color
+            ctx.globalAlpha = 0.45
+            for (let layer = 0; layer < 3; layer++) {
+                const top = d.y + 10 + layer * Math.min(30, d.height / 4)
+                ctx.beginPath()
+                ctx.moveTo(d.x, d.y + d.height)
+                for (let x = 0; x <= d.width + step; x += step) {
+                    const at = Math.min(x, d.width)
+                    ctx.lineTo(d.x + at, top + 7 * Math.sin(at * 0.015 + t * 0.03 * (layer % 2 ? -1 : 1) + layer * 2))
+                }
+                ctx.lineTo(d.x + d.width, d.y + d.height)
+                ctx.fill()
+            }
+        },
+        fan(d, t) {
+            const radius = Math.min(d.width, d.height) / 2
+            const x = d.x + d.width / 2
+            const y = d.y + d.height / 2
+            const turn = t * 0.12
+            ctx.fillStyle = d.color
+            ctx.beginPath()
+            for (let i = 0; i < 5; i++) {
+                const angle = turn + i * 2 * Math.PI / 5
+                ctx.moveTo(x, y)
+                ctx.ellipse(x + 0.52 * radius * Math.cos(angle), y + 0.52 * radius * Math.sin(angle), 0.42 * radius, 0.16 * radius, angle, 0, 2 * Math.PI)
+            }
+            ctx.moveTo(x + 0.14 * radius, y)
+            ctx.arc(x, y, 0.14 * radius, 0, 2 * Math.PI)
+            ctx.fill()
+            ctx.strokeStyle = d.color
+            ctx.lineWidth = Math.max(2, 0.06 * radius)
+            ctx.beginPath()
+            ctx.arc(x, y, radius * 0.97, 0, 2 * Math.PI)
+            ctx.stroke()
+        },
+        gear(d, t) {
+            const radius = Math.min(d.width, d.height) / 2
+            const x = d.x + d.width / 2
+            const y = d.y + d.height / 2
+            const teeth = 12
+            ctx.fillStyle = d.color
+            ctx.beginPath()
+            for (let i = 0; i < teeth * 4; i++) { //each tooth is up, across, down, and across
+                const angle = t * 0.012 + i * Math.PI / (teeth * 2)
+                const at = i % 4 < 2 ? radius : radius * 0.78
+                ctx.lineTo(x + at * Math.cos(angle), y + at * Math.sin(angle))
+            }
+            ctx.closePath()
+            ctx.moveTo(x + radius * 0.3, y)
+            ctx.arc(x, y, radius * 0.3, 0, 2 * Math.PI, true) //the hole, the other way around
+            ctx.fill()
+        },
+        beacon(d, t) { //a warning light that pulses, its glow is see through circles, not a shadow
+            const radius = Math.min(d.width, d.height) / 2
+            const x = d.x + d.width / 2
+            const y = d.y + d.height / 2
+            const pulse = 0.5 + 0.5 * Math.sin(t * 0.08)
+            ctx.fillStyle = d.color
+            ctx.globalAlpha = 0.12 * pulse
+            ctx.beginPath()
+            ctx.arc(x, y, radius, 0, 2 * Math.PI)
+            ctx.fill()
+            ctx.globalAlpha = 0.25 * pulse
+            ctx.beginPath()
+            ctx.arc(x, y, radius * 0.62, 0, 2 * Math.PI)
+            ctx.fill()
+            ctx.globalAlpha = 0.35 + 0.65 * pulse
+            ctx.beginPath()
+            ctx.arc(x, y, radius * 0.28, 0, 2 * Math.PI)
+            ctx.fill()
+        },
+        panel(d, t) { //a computer's blinking lights
+            const rnd = level.decorationRandom
+            const columns = Math.max(1, Math.min(20, Math.floor(d.width / 24)))
+            const rows = Math.max(1, Math.min(14, Math.floor(d.height / 24)))
+            ctx.fillStyle = "rgba(0,0,0,0.12)"
+            ctx.fillRect(d.x, d.y, d.width, d.height)
+            ctx.fillStyle = d.color
+            for (const isLit of [true, false]) { //one fill each for on and off
+                ctx.globalAlpha = isLit ? 1 : 0.15
+                ctx.beginPath()
+                for (let i = 0; i < columns * rows; i++) {
+                    const isOn = rnd(i * 7.1 + Math.floor(t / (20 + 90 * rnd(i)))) > 0.5
+                    if (isOn === isLit) ctx.rect(d.x + (i % columns + 0.5) * d.width / columns - 4, d.y + (Math.floor(i / columns) + 0.5) * d.height / rows - 4, 8, 8)
+                }
+                ctx.fill()
+            }
+        },
+        grate(d) { //diagonal mesh in a frame
+            if (!d.path) {
+                d.path = new Path2D() //a path that crosses itself is slow to stroke, so each direction is its own
+                d.path2 = new Path2D()
+                const gap = Math.max(28, (d.width + d.height) / 40) //a wider mesh in a giant box, not thousands of lines
+                for (let at = gap; at < d.width + d.height; at += gap) { //each line stops at the edges, so nothing needs clipping
+                    const startDown = Math.max(0, at - d.width)
+                    const endAcross = Math.max(0, at - d.height)
+                    d.path.moveTo(d.x + at - startDown, d.y + startDown)
+                    d.path.lineTo(d.x + endAcross, d.y + at - endAcross)
+                    d.path2.moveTo(d.x + d.width - at + startDown, d.y + startDown)
+                    d.path2.lineTo(d.x + d.width - endAcross, d.y + at - endAcross)
+                }
+            }
+            ctx.strokeStyle = d.color
+            ctx.lineWidth = 2
+            ctx.stroke(d.path)
+            ctx.stroke(d.path2)
+            ctx.lineWidth = 6
+            ctx.strokeRect(d.x, d.y, d.width, d.height)
+        },
+        stripes(d) { //hazard stripes
+            if (!d.path) {
+                d.path = new Path2D()
+                const size = Math.max(40, (d.width + d.height) / 120) //wider stripes in a giant box, not thousands of them
+                for (let at = -d.height; at < d.width; at += 2 * size) {
+                    d.path.moveTo(d.x + at, d.y + d.height)
+                    d.path.lineTo(d.x + at + size, d.y + d.height)
+                    d.path.lineTo(d.x + at + size + d.height, d.y)
+                    d.path.lineTo(d.x + at + d.height, d.y)
+                    d.path.closePath()
+                }
+            }
+            ctx.beginPath()
+            ctx.rect(d.x, d.y, d.width, d.height)
+            ctx.clip()
+            ctx.fillStyle = "rgba(0,0,0,0.12)"
+            ctx.fillRect(d.x, d.y, d.width, d.height)
+            ctx.fillStyle = d.color
+            ctx.fill(d.path)
+        },
+        pipe(d) { //along its longer side, with joints
+            const isAcross = d.width >= d.height
+            const length = isAcross ? d.width : d.height
+            const thick = isAcross ? d.height : d.width
+            ctx.fillStyle = d.color
+            ctx.fillRect(d.x, d.y, d.width, d.height)
+            ctx.fillStyle = "rgba(255,255,255,0.1)" //a shine along it
+            if (isAcross) ctx.fillRect(d.x, d.y + thick * 0.2, d.width, thick * 0.18)
+            else ctx.fillRect(d.x + thick * 0.2, d.y, thick * 0.18, d.height)
+            ctx.fillStyle = "rgba(0,0,0,0.08)"
+            const count = Math.max(1, Math.round(length / 200))
+            for (let i = 0; i <= count; i++) {
+                const at = (length - 14) * i / count
+                if (isAcross) ctx.fillRect(d.x + at, d.y - 3, 14, d.height + 6)
+                else ctx.fillRect(d.x - 3, d.y + at, d.width + 6, 14)
+            }
+        },
+        wires(d, t) { //hanging from its top corners, height is how far they sag, if it doesn't move it keeps one path
+            const { count = 3, thickness = 2.5, spread = 7, droop = 0.2, sway = 3, tilt = 0, clamps = false } = d.options
+            const wires = Math.max(1, Math.min(12, Math.round(count)))
+            const isStill = !sway || !d.speed
+            const write = (path, time) => {
+                for (let i = 0; i < wires; i++) {
+                    const swing = sway * Math.sin(time * 0.02 + i * 2)
+                    const y = d.y + i * spread
+                    path.moveTo(d.x, y)
+                    path.quadraticCurveTo(d.x + d.width / 2 + swing * 3, y + tilt / 2 + 2 * d.height * Math.max(0, 1 - i * droop) + swing, d.x + d.width, y + tilt)
+                }
+                if (clamps) { //a bracket holding each end
+                    const height = (wires - 1) * spread + 12
+                    path.rect(d.x - 6, d.y - 6, 12, height)
+                    path.rect(d.x + d.width - 6, d.y + tilt - 6, 12, height)
+                }
+            }
+            ctx.strokeStyle = d.color
+            ctx.lineWidth = thickness
+            if (isStill) {
+                if (!d.path) {
+                    d.path = new Path2D()
+                    write(d.path, 0)
+                }
+                ctx.stroke(d.path)
+            } else {
+                ctx.beginPath()
+                write(ctx, t)
+                ctx.stroke()
+            }
+        },
+        grass(d, t) { //blades swaying from the bottom
+            const rnd = level.decorationRandom
+            const count = Math.min(220, Math.ceil(d.width / 6))
+            ctx.strokeStyle = d.color
+            ctx.lineWidth = 2
+            ctx.beginPath()
+            for (let i = 0; i < count; i++) {
+                const x = d.x + (i + rnd(i)) * d.width / count
+                const height = Math.min(150, d.height) * (0.4 + 0.6 * rnd(i + 0.5)) //long blades are slow to paint, a taller box doesn't make them longer
+                const sway = 0.3 * height * (rnd(i + 0.2) - 0.5) + 5 * Math.sin(t * 0.03 + x * 0.02)
+                ctx.moveTo(x, d.y + d.height)
+                ctx.quadraticCurveTo(x, d.y + d.height - height * 0.6, x + sway, d.y + d.height - height)
+            }
+            ctx.stroke()
+        },
+        vines(d, t) { //hanging from the top, with leaves
+            const rnd = level.decorationRandom
+            const count = Math.max(1, Math.min(14, Math.round(d.width / 50)))
+            ctx.strokeStyle = d.color
+            ctx.fillStyle = d.color
+            ctx.lineWidth = 2.5
+            for (let i = 0; i < count; i++) {
+                const x = d.x + (i + 0.5) * d.width / count
+                const length = d.height * (0.45 + 0.55 * rnd(i + 0.3))
+                const place = at => ({ x: x + at * at * 14 * Math.sin(t * 0.02 + i) + 6 * Math.sin(at * 7 + i), y: d.y + at * length })
+                ctx.beginPath()
+                ctx.moveTo(x, d.y)
+                for (let step = 1; step <= 10; step++) {
+                    const { x: px, y: py } = place(step / 10)
+                    ctx.lineTo(px, py)
+                }
+                ctx.stroke()
+                ctx.beginPath()
+                for (let step = 1; step <= 5; step++) {
+                    const { x: px, y: py } = place(step / 5)
+                    const side = step % 2 ? 7 : -7
+                    ctx.moveTo(px + side + 6, py)
+                    ctx.ellipse(px + side, py, 6, 3.5, side > 0 ? 0.5 : -0.5, 0, 2 * Math.PI)
+                }
+                ctx.fill()
+            }
+        },
+    },
+    decoration(kind, x, y, width, height, color, speed = 1, options = {}) { //something only drawn, for looks, call draw() in level.custom to go under the player or level.customTopLayer to go over, see level.decorationKinds
+        const d = { x, y, width, height, color, speed, options } //what it can keep between frames goes on here, like a path
+        const drawKind = Object.hasOwn(level.decorationKinds, kind) ? level.decorationKinds[kind] : () => { }
+        return {
+            draw() {
+                const view = ctx.getTransform() //skip it while it's off screen, what it draws past its box counts too, like tilted wires
+                const pad = 50 + view.a * (Math.abs(options.tilt || 0) + (options.spread || 0) * (options.count || 0))
+                if (!view.b && !view.c && (view.a * (x + width) + view.e < -pad || view.a * x + view.e > canvas.width + pad || view.d * (y + height) + view.f < -pad || view.d * y + view.f > canvas.height + pad)) return
+                ctx.save()
+                ctx.setLineDash([])
+                drawKind(d, simulation.cycle * speed)
+                ctx.restore()
+            },
+        }
+    },
+    pushBody(who, strength = 1, angle = 0, period = 0, isCarrying = false) { //call do() each cycle in level.custom, strength 1 is as strong as gravity for any size of body, angle is radians counterclockwise, 0 is right, with a period it's a sine wave that goes both ways, on a constraint it swings, isCarrying moves the player standing on it along with it
+        const x = Math.cos(angle)
+        const y = -Math.sin(angle)
+        return {
+            do() {
+                if (isCarrying && m.onGround && m.standingOn === who) {
+                    m.moverX = who.velocity.x //helps sync leg movements
+                    m.Vx = player.velocity.x - who.velocity.x //adds blocks velocity to player
+                }
+                if (m.isTimeDilated) return
+                const push = strength * who.mass * simulation.g * (period ? Math.sin(2 * Math.PI * simulation.cycle / period) : 1)
+                who.force.x += x * push
+                who.force.y += y * push
+            },
+        }
+    },
     //consider switching coordinate system to starting and ending points to make angled wind easier
     wind(x, y, width, height, velocity = { x: 10, y: 0 }, isFloat = false) {
         return {
@@ -4141,18 +4543,50 @@ const level = {
             position: p1,
             look: p2,
             color: color,
+            isArc: false, //set it for electricity instead of a beam, it hits a little wider, see hitsPlayer()
+            arcHitWidth: 24, //a beam is one thin ray
+            hitsPlayer(best) {
+                if (best.who === playerBody || best.who === playerHead) return true
+                if (!this.isArc || m.isCloak) return false
+                return Matter.Query.rayAny([player], this.position, best.dist2 === Infinity ? this.look : best, this.arcHitWidth) //only tests the player, a beam's vertexCollision() tests every body
+            },
+            hitSpot(best) { //where the damage shows, an arc can touch the player without its middle hitting
+                return best.who === playerBody || best.who === playerHead ? best : player.position
+            },
+            drawArc(end) { //jumps around its line every frame, about as wide as a beam, a see through stroke then a thin one, not a shadow
+                const dx = end.x - this.position.x
+                const dy = end.y - this.position.y
+                const length = Math.hypot(dx, dy)
+                if (!length) return
+                const segments = Math.max(2, Math.min(24, Math.round(length / 28)))
+                ctx.beginPath()
+                ctx.moveTo(this.position.x, this.position.y)
+                for (let i = 1; i < segments; i++) {
+                    const jump = (Math.random() - 0.5) * 16 / length
+                    ctx.lineTo(this.position.x + dx * i / segments - dy * jump, this.position.y + dy * i / segments + dx * jump)
+                }
+                ctx.lineTo(end.x, end.y)
+                ctx.strokeStyle = this.color
+                ctx.globalAlpha = 0.3
+                ctx.lineWidth = 7
+                ctx.stroke()
+                ctx.globalAlpha = 1
+                ctx.lineWidth = 2.5
+                ctx.stroke()
+            },
             query() {
                 if (!m.isTimeDilated) {
                     let best = { x: null, y: null, dist2: Infinity, who: null, v1: null, v2: null }
                     best = vertexCollision(this.position, this.look, m.isCloak ? [map, body] : [map, body, [playerBody, playerHead]]);
                     // hitting player
-                    if ((best.who === playerBody || best.who === playerHead) && m.immuneCycle < m.cycle) {
+                    if (m.immuneCycle < m.cycle && this.hitsPlayer(best)) {
+                        const spot = this.hitSpot(best)
                         m.immuneCycle = m.cycle + m.collisionImmuneCycles + 60; //player is immune to damage for an extra second
                         const dmg = damage * spawn.dmgToPlayerByLevelsCleared();
                         m.takeDamage(dmg);
                         simulation.drawList.push({ //add dmg to draw queue
-                            x: best.x,
-                            y: best.y,
+                            x: spot.x,
+                            y: spot.y,
                             radius: dmg * 1500,
                             color: "rgba(255,0,0,0.5)",
                             time: 20
@@ -4160,6 +4594,10 @@ const level = {
                     }
                     //draw
                     if (best.dist2 === Infinity) best = this.look;
+                    if (this.isArc) {
+                        this.drawArc(best)
+                        return
+                    }
                     ctx.beginPath();
                     ctx.moveTo(this.position.x, this.position.y);
                     ctx.lineTo(best.x, best.y);
@@ -4178,8 +4616,9 @@ const level = {
                     let best = { x: null, y: null, dist2: Infinity, who: null, v1: null, v2: null }
                     best = vertexCollision(this.position, this.look, m.isCloak ? [map, body] : [map, body, [playerBody, playerHead]]);
 
+                    let isFiring = false
                     if (this.countDown === 0) {
-                        if ((best.who === playerBody || best.who === playerHead)) this.countDown = this.countTotal // hitting player
+                        if (this.hitsPlayer(best)) this.countDown = this.countTotal // hitting player
                         ctx.strokeStyle = `rgba(255,255,255,0.4)`;
                         ctx.lineWidth = 8 + 3 * Math.sin(simulation.cycle * 0.3);
                     } else if (this.countDown > this.countDelay) {
@@ -4188,13 +4627,15 @@ const level = {
                         this.countDown--
                     } else {
                         this.countDown--
-                        if ((best.who === playerBody || best.who === playerHead) && m.immuneCycle < m.cycle) { // hitting player
+                        isFiring = true
+                        if (m.immuneCycle < m.cycle && this.hitsPlayer(best)) { // hitting player
+                            const spot = this.hitSpot(best)
                             m.immuneCycle = m.cycle + m.collisionImmuneCycles + 60; //player is immune to damage for an extra second
                             const dmg = damage * spawn.dmgToPlayerByLevelsCleared()
                             m.takeDamage(dmg);
                             simulation.drawList.push({ //add dmg to draw queue
-                                x: best.x,
-                                y: best.y,
+                                x: spot.x,
+                                y: spot.y,
                                 radius: dmg * 1500,
                                 color: "rgba(255,0,0,0.5)",
                                 time: 20
@@ -4206,6 +4647,11 @@ const level = {
                     }
                     //draw
                     if (best.dist2 === Infinity) best = this.look;
+                    if (isFiring && this.isArc) {
+                        ctx.setLineDash([]);
+                        this.drawArc(best)
+                        return
+                    }
                     ctx.beginPath();
                     ctx.moveTo(this.position.x, this.position.y);
                     ctx.lineTo(best.x, best.y);
@@ -4531,6 +4977,7 @@ const level = {
                 count = period
                 spawn.bodyRect(x - half, y - half, size, size)
                 const who = body[body.length - 1]
+                if (this.collisionMask !== undefined) who.collisionFilter.mask = this.collisionMask //set this to change what its blocks bump into
                 Matter.Body.setAngle(who, turn) //lined up with the chute
                 if (speed) Matter.Body.setVelocity(who, { x: speed * Math.cos(angle), y: -speed * Math.sin(angle) })
                 blocks.push(who)
@@ -7607,7 +8054,6 @@ const level = {
                 ctx.fillRect(-775, -1100, 985, 350);
             };
             // }
-            powerUps.addResearchToLevel() //needs to run after mobs are spawned
         },
         chute() {
             level.announceMobTypes()

@@ -38,6 +38,10 @@ const levelData = {
         data.nextId = Math.max(isId(Number(data.nextId)) ? Number(data.nextId) : 1, ...data.elements.map(el => isId(el.id) ? el.id + 1 : 1))
         for (const el of data.elements) {
             if (el.type === "decor") el.type = "fill" //its old name
+            if (el.type === "timer") { //it's one of logic's gates now, its link and orLink are its inputs
+                el.type = "logic"
+                el.gate = "timer"
+            }
             if (el.type === "bezier") levelData.bezierToPath(el) //the path's curves do it now
             if (!isId(el.id)) el.id = data.nextId++
             levelElements.fillDefaults(el)
@@ -49,7 +53,6 @@ const levelData = {
             if (el.layer === "back" || el.layer === "front") el.layer = el.layer === "back" ? "under player" : "over player" //their old names
             if (el.edited) levelData.normalizeEdited(el)
         }
-        if (data.elements.some(el => el.type === "drip")) levelData.dripsToCode(data) //drip isn't an element anymore
         for (const type of levelElements.groups.core) { //every level needs a spawn and an exit, unless its code sets them, like a written level that picks a layout
             if (!data.elements.some(el => el.type === type) && !levelData.hasCode(data)) levelData.add(data, levelElements.create(type))
         }
@@ -63,17 +66,6 @@ const levelData = {
         if (!isName(edited.name)) delete edited.name
         const names = edited.names && typeof edited.names === "object" ? edited.names : {}
         edited.names = Object.fromEntries(Object.entries(names).filter(([id, name]) => /^[1-9]\d*$/.test(id) && isName(name)))
-    },
-    dripsToCode(data) { //older saves' drips, each one's lines go in the level code so it still drips
-        const parts = data.levelCode.trim() ? levelData.sectionsOf(data.levelCode) : { setup: [], custom: [], top: [] }
-        for (const el of data.elements.filter(el => el.type === "drip")) {
-            const name = `drip${el.id}`
-            const y = Number(el.y) || 0
-            parts.setup.push(`const ${name} = level.drip(${levelElements.args(Number(el.x) || 0, y, y + (Number(el.length) || 600), Number(el.period) || 100, String(el.color || "hsla(160, 100%, 35%, 0.5)"))}); //was a drip element`)
-            parts.custom.push(`${name}.draw();`)
-        }
-        data.levelCode = levelData.sectionsText(parts)
-        data.elements = data.elements.filter(el => el.type !== "drip")
     },
     add(data, el) {
         el.id = data.nextId++
@@ -157,7 +149,7 @@ const levelData = {
         }
         const has = text => levelData.codeHas(data, text) //what the level's code already does itself
         if (levelData.isSpawning && data.elements.some(el => el.type === "mobSpot")) spawn.randomMobFromArray(data.mobVeto) //mob spots, level.start() empties the list
-        if (levelData.isSpawning && data.elements.some(el => levelElements.groups.mob.includes(el.type)) && !has("addResearchToLevel")) powerUps.addResearchToLevel() //like written levels, after the mobs spawn
+        if (levelData.isSpawning && levelData.addsResearch(data)) powerUps.addResearchToLevel() //like written levels, after the mobs spawn
         if (levelData.isSpawning && !has("announceText")) { //like written levels, the run's constraint below the entrance and the new mob types
             const text = levelData.constraintText(data)
             level.announceText(text.x, text.y, true)
@@ -435,18 +427,21 @@ const levelData = {
         return { x: spawn.x + data.constraintTextX, y: spawn.y + data.constraintTextY }
     },
     onError: null, //called when an element or the level's code throws while running, the editor recounts its issues
-    linkState(el, depth = 0) { //true while the button, toggle, zone, or timer el is linked to is on, false while off, null without one
+    linkInputs(el, depth = 0) { //[link, orLink]: true while that trigger is on, false while off, null without one
         const sourceState = id => {
             const from = levelData.find(levelData.data, id)
             const runtime = from && levelElements.isLinkSource(from) && levelData.runtimes.get(from.id)
             if (!runtime) return null
-            const own = runtime.linkOn ? runtime.linkOn() : levelElements.types[from.type].linkOn(from, runtime) //edited code's own check, see buildEdited()
+            const own = runtime.linkOn ? runtime.linkOn() : levelElements.types[from.type].linkOn(from, runtime, depth) //edited code's own check, see buildEdited()
+            if (levelElements.types[from.type].isGate) return own //its links are its inputs, not also on
             const above = depth < 8 ? levelData.linkState(from, depth + 1) : null //a link source linked to another is only on while both are, like a timer that only runs while a button is down
             return above === false ? false : own
         }
-        const a = el.link ? sourceState(el.link) : null
-        const b = el.orLink ? sourceState(el.orLink) : null //linked to two, it's on while either is
-        const state = a === null ? b : b === null ? a : a || b
+        return [el.link ? sourceState(el.link) : null, el.orLink ? sourceState(el.orLink) : null]
+    },
+    linkState(el, depth = 0) { //true while what el is linked to is on, false while off, null without one
+        const [a, b] = levelData.linkInputs(el, depth)
+        const state = a === null ? b : b === null ? a : a || b //linked to two, it's on while either is
         if (depth || state === null || !(el.delay > 0)) return state
         const runtime = levelData.runtimes.get(el.id) //its delay follows the link late, kept on its runtime so a rebuild starts it over
         if (!runtime) return state
@@ -671,7 +666,7 @@ const levelData = {
         const codeText = levelData.codeText(data)
         for (const el of data.elements) {
             const type = levelElements.types[el.type]
-            if (!type || !type.code || type.codeAll || type.isCode) continue
+            if (!type || !type.code || levelData.isTogether(el) || type.isCode) continue
             let name
             do { //not a name the level's code already uses
                 counts[el.type] = (counts[el.type] || 0) + 1
@@ -680,18 +675,19 @@ const levelData = {
             names.set(el.id, name)
         }
         const referenced = new Set(data.elements.flatMap(el => levelElements.refKeys(el).map(key => el[key])).filter(id => names.has(id)))
+        const codeOf = (id, depth) => {
+            const from = levelData.find(data, id)
+            if (!from || !levelElements.isLinkSource(from)) return null
+            const own = levelElements.types[from.type].linkCode(from, names.get(from.id), context, depth)
+            if (levelElements.types[from.type].isGate) return own //its links are its inputs, not also on
+            const above = depth < 8 ? sourceCode(from, depth + 1) : null
+            if (!above) return own
+            const on = `${own.on} && ${above.on.includes("||") ? `(${above.on})` : above.on}`
+            return { on, off: `!(${on})` }
+        }
         const sourceCode = (el, depth) => { //{ on, off } for what el is linked to, a link source's own link has to be on too, and its orLink is either one
-            const codeOf = id => {
-                const from = levelData.find(data, id)
-                if (!from || !levelElements.isLinkSource(from)) return null
-                const own = levelElements.types[from.type].linkCode(from, names.get(from.id))
-                const above = depth < 8 ? sourceCode(from, depth + 1) : null
-                if (!above) return own
-                const on = `${own.on} && ${above.on.includes("||") ? `(${above.on})` : above.on}`
-                return { on, off: `!(${on})` }
-            }
-            const a = el.link ? codeOf(el.link) : null
-            const b = el.orLink ? codeOf(el.orLink) : null
+            const a = el.link ? codeOf(el.link, depth) : null
+            const b = el.orLink ? codeOf(el.orLink, depth) : null
             if (!a || !b) return a || b
             const on = `${a.on} || ${b.on}`
             return { on, off: `!(${on})` }
@@ -700,7 +696,8 @@ const levelData = {
             data,
             nameOf: id => names.get(id),
             isReferenced: id => referenced.has(id),
-            link(el) { //javascript for when el is on and off, from its button, toggle, zone, or timer, and what that's linked to
+            inputs: (el, depth) => depth < 8 ? [el.link, el.orLink].map(id => id ? codeOf(id, depth) : null).filter(Boolean).map(code => code.on) : [], //a gate's inputs, each one's on, depth stops gates linked in a loop
+            link(el) { //javascript for when el is on and off, from the trigger it's linked to, and what that's linked to
                 let code = sourceCode(el, 0)
                 if (!code) return null
                 if (el.delay > 0) { //exportElement() declares its delay
@@ -712,6 +709,10 @@ const levelData = {
         }
         return { names, context }
     },
+    addsResearch(data) { //a level with mobs gets a research power up, unless its code already adds one, so a puzzle level or a copy of reactor doesn't
+        return data.elements.some(el => levelElements.groups.mob.includes(el.type)) && !levelData.codeHas(data, "addResearchToLevel")
+    },
+    isTogether: el => !!levelElements.types[el.type]?.codeAll && !el.link && !el.orLink, //written with the others of its type, like mob spots in one list, a linked one spawns on its own
     exportElement(el, name, context) { //one element's generated lines, including its control links
         const type = levelElements.types[el.type]
         const lines = levelData.typeCode(el, name, context)
@@ -725,7 +726,7 @@ const levelData = {
         if (!type) return "//unknown type"
         if (type.isCode) return el.code
         const { names, context } = levelData.codeNames(data)
-        const lines = type.codeAll ? { setup: type.codeAll(data.elements.filter(other => other.type === el.type), data), custom: [], top: [] } : levelData.exportElement(el, names.get(el.id), context)
+        const lines = levelData.isTogether(el) ? { setup: type.codeAll(data.elements.filter(other => other.type === el.type && levelData.isTogether(other)), data), custom: [], top: [] } : levelData.exportElement(el, names.get(el.id), context)
         return levelData.sectionsText(lines)
     },
     code(data) {
@@ -737,7 +738,7 @@ const levelData = {
         if (levelData.hasCode(data)) return levelData.codeInOrder(data, names, context)
         for (const el of data.elements) {
             const type = levelElements.types[el.type]
-            if (type && type.codeAll) {
+            if (type && levelData.isTogether(el)) {
                 if (!together.has(type)) together.set(type, [])
                 together.get(type).push(el)
                 continue
@@ -785,7 +786,7 @@ const levelData = {
                 ...(groups.constraint || []),
                 ...(groups.mob || []),
                 ...(groups.powerUp || []),
-                ...(groups.mob ? ["powerUps.addResearchToLevel() //needs to run after mobs are spawned"] : []),
+                ...(levelData.addsResearch(data) ? ["powerUps.addResearchToLevel() //needs to run after mobs are spawned"] : []),
                 ...levelData.exportLevelCode(data),
                 `${levelData.dataMark}${JSON.stringify(data).replace(/\u2028/g, "\\u2028").replace(/\u2029/g, "\\u2029")}`, //import level reads this back
             ]),
@@ -822,8 +823,8 @@ const levelData = {
                 lines.push(...el.code.split("\n"))
                 continue
             }
-            if (type.codeAll) { //all of them where the first one is
-                if (!together.has(type)) lines.push(...type.codeAll(data.elements.filter(other => other.type === el.type), data))
+            if (levelData.isTogether(el)) { //all of them where the first one is
+                if (!together.has(type)) lines.push(...type.codeAll(data.elements.filter(other => other.type === el.type && levelData.isTogether(other)), data))
                 together.add(type)
                 continue
             }
@@ -838,7 +839,6 @@ const levelData = {
         const text = levelData.constraintText(data)
         const indent = list => list.map(line => "    " + line)
         const name = levelData.functionName(data.name)
-        const hasMobs = data.elements.some(el => levelElements.groups.mob.includes(el.type))
         return [
             `${name}() { //made in the level editor, paste it into level.maps in js/level.js and add "${name}" to level.playableLevels`,
             ...indent([
@@ -855,7 +855,7 @@ const levelData = {
                 ...(data.fall === "sky" ? [`level.fallMode = "start";`] : []),
                 `simulation.fallHeight = ${levelData.fallHeight(data)}`,
                 ...(has("announceText") ? [] : [`level.announceText(${levelElements.args(text.x, text.y)}, true)`, "level.announceMobTypes()"]),
-                ...(hasMobs && !has("addResearchToLevel") ? ["powerUps.addResearchToLevel() //needs to run after mobs are spawned"] : []),
+                ...(levelData.addsResearch(data) ? ["powerUps.addResearchToLevel() //needs to run after mobs are spawned"] : []),
                 ...(custom.length || top.length ? [
                     "const customFromCode = level.custom",
                     "const customTopLayerFromCode = level.customTopLayer",
