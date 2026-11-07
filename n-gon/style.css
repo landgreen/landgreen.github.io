@@ -2756,8 +2756,18 @@ body.level-editor #text-log {
 }
 
 /* the simulation menu's seed, to the right of level */
-.le-seed-label {
-    margin-left: 10px;
+/* the simulation menu's level and seed, level on the left and seed on the right, with a gap above the buttons */
+.le-test-settings {
+    justify-content: space-between;
+    margin-bottom: 7px;
+}
+
+.le-test-settings>.le-row+.le-row {
+    margin-top: 0;
+}
+
+.le-test-settings [data-setting="testSeed"] {
+    width: 52px; /* fits random */
 }
 
 /* cut, copy, and paste's keys under the inspector's delete */
@@ -2798,11 +2808,6 @@ body.level-editor #text-log {
 /* settings test export ignores, grayed out while it runs */
 .le-inactive {
     opacity: 0.45;
-}
-
-/* quick test and test export at the top of the simulation menu */
-.le-run {
-    margin-bottom: 6px;
 }
 
 /* quick test and test export are the main buttons, a little taller and bigger */
@@ -2909,11 +2914,6 @@ body.level-editor #text-log {
 }
 
 /* the settings while edited code runs instead */
-.le-overridden {
-    opacity: 0.45;
-    pointer-events: none;
-}
-
 .le-js-view { /* the bottom of the inspector, out to its edges, a slightly darker region with no lines */
     margin: 8px -6px -6px;
     padding: 6px 8px;
@@ -3462,6 +3462,11 @@ body.level-editor.le-invincible #level-editor-left {
 
 .le-grid.le-two {
     grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+/* the simulation menu's time row, stop time a third, the four speeds share the rest */
+.le-grid.le-time {
+    grid-template-columns: minmax(0, 2fr) repeat(4, minmax(0, 1fr));
 }
 
 /* export/import's buttons, new, import, and export a third each, fork and add to level pool a half */
@@ -4127,6 +4132,7 @@ body.level-editor #level-editor-code:not(.le-open) {
 }
 
 .le-panel-colors {
+    isolation: isolate;
     position: absolute;
     inset: 0;
     overflow: hidden;
@@ -4141,74 +4147,14 @@ body.level-editor #level-editor-code:not(.le-open) {
 }
 
 /* an element's or the level's code: runs once, level.custom, and level.customTopLayer stacked like a sandwich, drag the lines between them, a folded part is a strip with its name */
-.le-parts {
-    display: flex;
-    flex-direction: column;
-    height: min(70vh, 700px);
-    margin-top: 6px;
-}
-
-.le-part {
-    display: flex;
-    flex: 0 1 0;
-    flex-direction: column;
-    min-height: 0;
-    overflow: hidden;
-}
-
-.le-part.le-folded {
-    flex: 0 0 auto;
-}
-
-.le-part-name {
-    padding: 2px 6px;
-    overflow: hidden;
-    border: none;
-    border-radius: 4px 4px 0 0;
-    background-color: var(--le-paper); /* the left panel's paper */
-    color: var(--le-ink);
-    font: inherit;
-    font-size: 12px;
-    text-align: left;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    cursor: pointer;
-}
-
-.le-part.le-folded .le-part-name {
-    border-radius: 4px;
-}
-
-.le-part-box {
-    position: relative;
-    flex: 1;
-    min-height: 0;
-}
-
-.le-part.le-folded .le-part-box {
-    display: none;
-}
-
-#level-editor-code .le-part-box textarea,
-#level-editor-code .le-part-box .le-panel-colors {
-    height: 100%;
-    border-radius: 0 0 4px 4px;
-}
-
-.le-part-line {
-    flex: 0 0 9px;
-    background: linear-gradient(to bottom, transparent 4px, var(--le-rule) 4px, var(--le-rule) 5px, transparent 5px);
-    cursor: row-resize;
-}
-
-.le-part-line:hover,
-.le-part-line.le-dragging {
-    background: linear-gradient(to bottom, transparent 3px, var(--le-soft) 3px, var(--le-soft) 6px, transparent 6px);
-}
-
-body.le-part-dragging {
-    cursor: row-resize;
-    user-select: none;
+/* the lines the code panel opened for, behind the text */
+.le-code-focus {
+    position: absolute;
+    left: 0;
+    width: 10000px;
+    background-color: var(--le-text-select);
+    opacity: 0.35;
+    z-index: -1;
 }
 
 .le-report {

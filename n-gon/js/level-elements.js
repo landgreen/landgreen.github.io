@@ -6,6 +6,7 @@ const levelElements = {
     types: {},
     groups: { core: [], shape: [], element: [], constraint: [], mob: [], powerUp: [], code: [] }, //type names in the order they were defined, element, mob, and powerUp are the editor's add menus
     buildOrder: ["core", "shape", "element", "constraint", "mob", "powerUp", "code"], //mobs and power ups go in after the map they stand on, like in written levels, constraints after what they hold, a level with code builds in its list order instead
+    maxPowerUpCount: 1000, //per editor element, also enforced when loading local level data
 
     //*********************************************************************
     // properties, shown and edited in the editor's inspector
@@ -1107,6 +1108,91 @@ levelElements.define("laser", {
     },
 })
 
+levelElements.sawRoute = (el, data) => { //{ points, isLoop, start, at }, the buzzsaw's path as short straight lines, and how far along and where it's closest to x, y, that's where it starts, with no path it stays at x, y
+    const path = el.path && data ? levelData.find(data, el.path) : null
+    if (!path || path.type !== "path") return { points: [[el.x, el.y]], isLoop: false, start: 0, at: { x: el.x, y: el.y } }
+    const outline = levelElements.pathOutline(path)
+    const route = path.closed ? [...outline, outline[0]] : outline
+    let along = 0
+    let best = { start: 0, at: route[0], distance: Infinity }
+    for (let i = 0; i < route.length - 1; i++) {
+        const a = route[i]
+        const b = route[i + 1]
+        const dx = b.x - a.x
+        const dy = b.y - a.y
+        const length = Math.hypot(dx, dy)
+        const t = Math.max(0, Math.min(1, ((el.x - a.x) * dx + (el.y - a.y) * dy) / (length * length || 1)))
+        const at = { x: a.x + t * dx, y: a.y + t * dy }
+        const distance = Math.hypot(el.x - at.x, el.y - at.y)
+        if (distance < best.distance) best = { start: along + t * length, at, distance }
+        along += length
+    }
+    return { points: outline.map(p => [p.x, p.y]), isLoop: !!path.closed, start: best.start, at: best.at }
+}
+levelElements.define("buzzsaw", { //level.buzzsaw
+    tip: "spinning blade that hurts the player, give it a path to travel: draw one with its path's draw button, or pick a draw path you've made, it goes back and forth along it, around and around on a closed path, without one it stays put, linked it only runs while on",
+    group: "element",
+    handlesLink: true, //off it stops where it is, it doesn't disappear
+    writesLink: true, //its code() uses context.link
+    rebuildWithRefs: true, //it follows the path as it was when it was built
+    outlivesRefs: true, //deleting its path leaves it where it is, a constraint goes with its block
+    defaults: () => ({ x: 0, y: -200, radius: 40, path: null, speed: 4, damage: 0.1, spin: 0.25, look: "blade" }),
+    props: [
+        ...levelElements.position(),
+        levelElements.prop.number("radius", { isGrid: true, min: 5 }),
+        levelElements.prop.ref("path", ["path"], {
+            write(el, id) { //goes to the closest spot on the new path, so it's where it'll start
+                el.path = id
+                const { at } = levelElements.sawRoute(el, levelData.data)
+                el.x = Math.round(at.x)
+                el.y = Math.round(at.y)
+            },
+        }),
+        levelElements.prop.number("speed", { step: 1, min: 0 }),
+        levelElements.prop.number("damage", { step: 0.01, min: 0 }),
+        levelElements.prop.number("spin", { step: 0.05 }),
+        levelElements.prop.select("look", Object.keys(level.buzzsawLooks)),
+    ],
+    bounds: el => ({ x: el.x - el.radius, y: el.y - el.radius, width: 2 * el.radius, height: 2 * el.radius }),
+    contains: (el, p) => Math.hypot(p.x - el.x, p.y - el.y) <= el.radius,
+    handles: el => [{ id: "radius", x: el.x + el.radius, y: el.y }],
+    dragHandle(el, id, point) { el.radius = Math.max(5, Math.round(Math.hypot(point.x - el.x, point.y - el.y))) },
+    overlay(el) { //where it starts, it's moving along its path while editing, and a line to the path if it's been dragged off
+        const { at } = levelElements.sawRoute(el, levelData.data)
+        ctx.beginPath()
+        ctx.arc(at.x, at.y, el.radius, 0, 2 * Math.PI)
+        if (Math.hypot(el.x - at.x, el.y - at.y) > 1) {
+            ctx.moveTo(el.x + el.radius, el.y)
+            ctx.arc(el.x, el.y, el.radius, 0, 2 * Math.PI)
+            ctx.moveTo(el.x, el.y)
+            ctx.lineTo(at.x, at.y)
+        }
+        ctx.stroke()
+    },
+    build(el) {
+        const { points, isLoop, start } = levelElements.sawRoute(el, levelData.data)
+        const saw = level.buzzsaw(points, el.radius, el.speed, el.damage, el.spin, isLoop, start, el.look)
+        return {
+            containsPoint: point => Math.hypot(point.x - saw.position.x, point.y - saw.position.y) <= el.radius, //clicking the moving blade selects it
+            custom() { saw.query(levelData.linkOn(el) !== false) },
+            top() { saw.draw() },
+        }
+    },
+    code(el, name, context) {
+        const link = context && context.link(el)
+        const route = levelElements.sawRoute(el, context ? context.data : levelData.data)
+        const round = n => Math.round(n * 10) / 10
+        const args = [el.radius, el.speed, el.damage, el.spin, route.isLoop, round(route.start), el.look || "blade"]
+        const defaults = [40, 4, 0.1, 0.25, false, 0, "blade"]
+        while (args.length && args[args.length - 1] === defaults[args.length - 1]) args.pop() //leave out what's the default
+        return {
+            setup: [`const ${name} = level.buzzsaw(${JSON.stringify(route.points.map(p => p.map(round)))}${args.length ? `, ${levelElements.args(...args)}` : ""});`],
+            custom: [`${name}.query(${link ? link.on : ""});`],
+            top: [`${name}.draw();`],
+        }
+    },
+})
+
 levelElements.define("fizzler", { //level.fizzler
     tip: "line that deletes blocks that cross it, not immutable or unholdable ones, drag either end",
     group: "element",
@@ -1467,16 +1553,24 @@ levelElements.zoneWho = { //what a zone notices, and the same as javascript
     any: { list: () => [player].concat(body, mob), code: "[player].concat(body, mob)" },
 }
 levelElements.define("zone", { //a trigger, a link source that's on while the player is inside, only the editor draws it, a box, or with circle a circle around x, y
-    tip: "invisible box or circle, linked doors open and linked elements run while the player (or a block or mob) is inside, stays on once something has been in",
+    tip: "invisible box or circle, linked doors open and linked elements run while the player (or a block or mob) is inside, stays on once something has been in, check effects to push, slow, hurt, or drain what's inside",
     group: "element",
     isBackground: true, //it's often big, lock it so the mouse goes through
-    defaults: () => ({ x: 0, y: -400, width: 400, height: 400, radius: 200, circle: false, who: "player", on: "inside" }),
+    defaults: () => ({ x: 0, y: -400, width: 400, height: 400, radius: 200, circle: false, who: "player", on: "inside", effects: false, force: 0, forceAngle: 90, drag: 0, damage: 0, energy: 0, affects: "player body bullet powerUp mob", visible: true }),
     props: [
         ...levelElements.rect().map(prop => prop.key === "width" || prop.key === "height" ? { ...prop, isShown: el => !el.circle } : prop),
         levelElements.prop.number("radius", { isGrid: true, min: 1, isShown: el => !!el.circle }),
         levelElements.prop.bool("circle", { write: (el, value) => levelElements.types.zone.setCircle(el, value) }),
         levelElements.prop.select("who", Object.keys(levelElements.zoneWho)),
         levelElements.prop.select("on", ["inside", "stays on"]), //stays on once it's been entered
+        levelElements.prop.bool("effects", { tip: "does things to what's inside: pushes, slows, hurts, or drains energy, level.effectZone()" }), //off keeps the settings
+        levelElements.prop.number("force", { step: 0.1, tip: "how hard it pushes what's inside, 1 is as strong as gravity for any size, negative pushes the other way", isShown: el => el.effects }),
+        levelElements.prop.number("forceAngle", { step: 15, tip: "the way it pushes in degrees, 0 is right, 90 is up", isShown: el => el.effects && el.force !== 0 }),
+        levelElements.prop.number("drag", { step: 0.01, min: 0, max: 1, tip: "air friction, the share of speed lost each frame, 0.02 is thick air, 0.1 is mud, 1 stops everything", isShown: el => el.effects }),
+        levelElements.prop.number("damage", { step: 0.05, min: 0, tip: "damage each second to the player and mobs inside, 0.1 is a tenth of the player's health, it goes up with levels cleared like other hazards", isShown: el => el.effects }),
+        levelElements.prop.number("energy", { step: 0.1, tip: "energy drained from the player each second, 1 is a full bar, negative charges it up to max", isShown: el => el.effects }),
+        levelElements.prop.mask("affects", { names: ["player", "body", "mob", "bullet", "powerUp"], tip: "what the effects happen to, damage only hurts the player and mobs, energy is only the player's", isShown: el => el.effects }),
+        levelElements.prop.bool("visible", { tip: "players see a tint, red for damage, blue for draining, green for charging, and arrows the way it pushes, the editor always draws it", isShown: el => el.effects }),
     ],
     setCircle(el, isCircle) { //a box becomes the circle in its middle, as big as the box on average, and back to the box around the circle, x, y is a circle's center
         if (!!el.circle === !!isCircle) return
@@ -1519,29 +1613,51 @@ levelElements.define("zone", { //a trigger, a link source that's on while the pl
     },
     linkOn: (el, runtime) => runtime.zone ? runtime.zone.isOn : null,
     linkCode: (el, name) => ({ on: `${name}.isOn`, off: `!${name}.isOn` }),
+    affectsText: el => levelElements.collision.toggle(el.affects, "map", false).split(" ").filter(name => ["player", "body", "bullet", "powerUp", "mob"].includes(name)).join(" "), //only names it knows, it's written into code
+    hasEffects: el => !!el.effects && (el.force !== 0 || el.drag > 0 || el.damage > 0 || el.energy !== 0) && !!levelElements.types.zone.affectsText(el),
+    effectOptions(el) { //level.effectZone()'s options, only what isn't its default
+        const options = {}
+        if (el.force !== 0) {
+            options.force = el.force
+            if (el.forceAngle !== 90) options.angle = el.forceAngle
+        }
+        for (const key of ["drag", "damage", "energy"]) if (el[key] !== 0) options[key] = el[key]
+        const affects = levelElements.types.zone.affectsText(el)
+        if (affects !== "player body bullet powerUp mob") options.who = affects
+        return options
+    },
     build(el) {
         const who = levelElements.zoneWho[el.who] || levelElements.zoneWho.player
-        if (el.circle) { //a body is in once its center is
-            const zone = { isOn: false, x: el.x, y: el.y, radius: el.radius }
-            return {
-                zone,
-                custom() { if (el.on !== "stays on" || !zone.isOn) zone.isOn = who.list().some(body => Vector.magnitude(Vector.sub(body.position, zone)) < zone.radius) },
-            }
-        }
-        const zone = { isOn: false, min: { x: el.x, y: el.y }, max: { x: el.x + el.width, y: el.y + el.height } }
+        const type = levelElements.types.zone
+        const zone = el.circle ? { isOn: false, x: el.x, y: el.y, radius: el.radius } : { isOn: false, min: { x: el.x, y: el.y }, max: { x: el.x + el.width, y: el.y + el.height } }
+        const check = el.circle ? () => who.list().some(body => Vector.magnitude(Vector.sub(body.position, zone)) < zone.radius) : () => Matter.Query.region(who.list(), zone).length > 0 //a circle has a body in once its center is
+        const options = type.hasEffects(el) ? type.effectOptions(el) : null
+        const effects = options && level.effectZone(zone, { ...options, angle: (options.angle ?? 90) * Math.PI / 180 })
         return {
             zone,
-            custom() { if (el.on !== "stays on" || !zone.isOn) zone.isOn = Matter.Query.region(who.list(), zone).length > 0 },
+            custom() {
+                if (el.on !== "stays on" || !zone.isOn) zone.isOn = check()
+                if (!effects) return
+                effects.do(levelData.linkState(el) !== false) //a zone linked to a trigger only does its effects while that's on
+                if (el.visible) effects.draw()
+            },
         }
     },
-    code(el, name) {
+    code(el, name, context) {
         const who = levelElements.zoneWho[el.who] || levelElements.zoneWho.player
+        const type = levelElements.types.zone
         const check = el.circle ? `${name}.isOn = ${who.code}.some(body => Vector.magnitude(Vector.sub(body.position, ${name})) < ${name}.radius);` : `${name}.isOn = Matter.Query.region(${who.code}, ${name}).length > 0;`
-        const setup = el.circle ? `const ${name} = { isOn: false, x: ${levelElements.args(el.x)}, y: ${levelElements.args(el.y)}, radius: ${levelElements.args(el.radius)} }; //trigger zone, a circle` : `const ${name} = { isOn: false, min: { x: ${levelElements.args(el.x)}, y: ${levelElements.args(el.y)} }, max: { x: ${levelElements.args(el.x + el.width)}, y: ${levelElements.args(el.y + el.height)} } }; //trigger zone`
-        return {
-            setup: [setup],
-            custom: [el.on === "stays on" ? `if (!${name}.isOn) ${check} //stays on once it's been entered` : check],
+        const setup = [el.circle ? `const ${name} = { isOn: false, x: ${levelElements.args(el.x)}, y: ${levelElements.args(el.y)}, radius: ${levelElements.args(el.radius)} }; //trigger zone, a circle` : `const ${name} = { isOn: false, min: { x: ${levelElements.args(el.x)}, y: ${levelElements.args(el.y)} }, max: { x: ${levelElements.args(el.x + el.width)}, y: ${levelElements.args(el.y + el.height)} } }; //trigger zone`]
+        const custom = [el.on === "stays on" ? `if (!${name}.isOn) ${check} //stays on once it's been entered` : check]
+        if (type.hasEffects(el)) {
+            const options = type.effectOptions(el)
+            const fields = Object.entries(options).map(([key, value]) => key === "angle" ? `angle: ${levelElements.args(value)} * Math.PI / 180` : key === "who" ? `who: "${value}"` : `${key}: ${levelElements.args(value)}`)
+            setup.push(`const ${name}Effects = level.effectZone(${name}${fields.length ? `, { ${fields.join(", ")} }` : ""});`)
+            const link = (el.link || el.orLink) && context && context.link(el)
+            custom.push(`${name}Effects.do(${link ? link.on : ""});`)
+            if (el.visible) custom.push(`${name}Effects.draw();`)
         }
+        return { setup, custom }
     },
 })
 
@@ -1857,7 +1973,7 @@ levelElements.linkable = name => { //a link prop, so a button or toggle can turn
     type.defaults = () => ({ ...defaults(), link: null, orLink: null, runs: "while on" })
     type.props.push(levelElements.prop.ref("link", levelElements.linkSources), levelElements.orLinkProp(), levelElements.runsProp())
 }
-for (const name of ["boost", "mover", "transport", "elevator", "laser", "wind", "slime", "fizzler", "spinner", "gravityZone", "dispenser"]) levelElements.linkable(name)
+for (const name of ["boost", "mover", "transport", "elevator", "laser", "buzzsaw", "wind", "slime", "fizzler", "spinner", "gravityZone", "dispenser"]) levelElements.linkable(name)
 for (const name of levelElements.linkSources) { //a link source linked to another is only on while both are, set with the other one's link button, the row only shows once it's set
     const type = levelElements.types[name]
     const defaults = type.defaults
@@ -2793,7 +2909,10 @@ levelElements.define("powerUp", {
     props: [
         ...levelElements.position(),
         { key: "name", kind: "select", get options() { return levelElements.types.powerUp.names } },
-        levelElements.prop.number("count", { step: 1, min: 1 }),
+        levelElements.prop.number("count", {
+            step: 1, min: 1, tip: `how many, up to ${levelElements.maxPowerUpCount} per element`,
+            write(el, value) { el.count = Math.max(1, Math.min(levelElements.maxPowerUpCount, Math.round(value))) },
+        }),
     ],
     bounds: el => ({ x: el.x - 25, y: el.y - 25, width: 50, height: 50 }),
     summary: el => `${el.name}(${levelElements.args(el.x, el.y)})${el.count > 1 ? ` × ${el.count}` : ""}`,
@@ -2913,6 +3032,7 @@ levelElements.typeTips = {
     zone: { on: "on while something's inside, or for good once something has been", circle: "a circle around x, y instead of a box, something is inside once its center is", radius: "game units, from x, y" },
     boost: { launchHeight: "about how high it throws the player, game units" },
     transport: { distance: "how far it slides from its start, game units" },
+    buzzsaw: { radius: "how big it is, game units", path: "the path it travels along, draw makes a new one and links it, pick links a draw path you've made, it goes back and forth, or around and around if it's closed, it starts at the closest spot to x, y, null stays put", speed: "game units a cycle, 0 stays put", spin: "how fast it turns, radians a cycle, negative turns it the other way", look: "how it's drawn, it hurts the same in every look" },
     door: { distance: "how far up it slides to open, game units", speed: "how fast it opens and closes" },
     elevator: { travel: "how far up it goes, game units", force: "how hard it pushes, more is faster", onTouch: "only moves while the player stands on it" },
     vanish: { vertical: "shrinks sideways instead of down" },
@@ -2966,11 +3086,12 @@ levelElements.level = {
         levelElements.prop.color("blockColor"),
         levelElements.prop.number("gravity", { step: 0.1, min: 0.1 }), //times normal gravity, for the player, blocks, and power ups, mobs have their own
         levelElements.prop.select("fall", ["spawn", "sky"]), //falling off the bottom sends the player back to the spawn, or keeps them falling from the sky above it
+        levelElements.prop.bool("lineOfSight", { label: "line of sight", tip: "only what the player can see is drawn, like subway, it shows in quick test and test export, not while editing" }),
         levelElements.prop.number("constraintTextX", { isGrid: true }), //where the run's constraint shows, from the spawn, level.announceText()
         levelElements.prop.number("constraintTextY", { isGrid: true }),
         levelElements.prop.veto("mobVeto", levelElements.vetoTiers.mob, "mob", { isShown: data => data.elements.some(el => el.type === "mobSpot") }), //each mob spot shows it too
     ],
-    defaults: () => ({ zoom: 2000, background: "#dcdcde", mapColor: "#444", blockColor: "rgba(140,140,140,0.85)", gravity: 1, fall: "spawn", constraintTextX: 0, constraintTextY: 75, mobVeto: [] }), //what written levels use most, and the level properties default button
+    defaults: () => ({ zoom: 2000, background: "#dcdcde", mapColor: "#444", blockColor: "rgba(140,140,140,0.85)", gravity: 1, fall: "spawn", lineOfSight: false, constraintTextX: 0, constraintTextY: 75, mobVeto: [] }), //what written levels use most, and the level properties default button
 }
 
 //*********************************************************************

@@ -172,6 +172,7 @@ Object.assign(levelEditor, {
         elevator: `<rect x="6" y="12" width="14" height="3" fill="#586370"/><path d="M13 11V3M10 5.5L13 2L16 5.5" fill="none" stroke="#444" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>`,
         vanish: `<rect x="3" y="7" width="20" height="4" fill="rgba(88,99,112,0.3)" stroke="#586370" stroke-dasharray="2 1.5"/>`,
         spinner: `<rect x="5" y="7" width="17" height="3" fill="#999" stroke="#444" stroke-width="0.8" transform="rotate(-22 13.5 8.5)"/><circle cx="13.5" cy="8.5" r="1.5" fill="#444"/><path d="M4.5 8A8 7 0 0 1 12 1.5" fill="none" stroke="#444" stroke-width="1.1"/><path d="M12 1.5L9.4 0.5M12 1.5L9.9 3.3" stroke="#444" stroke-width="1.1" stroke-linecap="round"/>`,
+        buzzsaw: `<path d="M13 .5L13.8 2.6L18.3 2.7L17.7 4.7L20.5 8L18.6 9L18.3 13.3L16.3 12.6L13 15.5L12.2 13.4L7.7 13.3L8.3 11.3L5.5 8L7.4 7L7.7 2.7L9.7 3.4Z" fill="#555" stroke="#000" stroke-width="0.8" stroke-linejoin="round"/>`,
         wind: `<path d="M2 4H15A2.5 2.5 0 1 0 12.5 1.5M2 8H21A2.5 2.5 0 1 1 18.5 10.5M4 12H13" fill="none" stroke="#69c" stroke-width="1.5" stroke-linecap="round"/>`,
         portal: `<ellipse cx="5" cy="8" rx="2" ry="6" fill="none" stroke="hsl(197,100%,50%)" stroke-width="2"/><ellipse cx="21" cy="8" rx="2" ry="6" fill="none" stroke="hsl(29,100%,50%)" stroke-width="2"/><path d="M8 8H18" stroke="#999" stroke-width="1" stroke-dasharray="1.5 1.5"/>`,
         slime: `<path d="M2 7Q6 5 10 7T18 7T24 7V15H2Z" fill="hsla(160,100%,35%,0.65)"/>`,

@@ -493,6 +493,13 @@ const powerUps = {
                     return console.error(error)
                 }
             }
+            if (name && level.localMaps[name]) { //a local level with code needs its code program, see levelData.loadProgram()
+                try {
+                    await levelData.loadProgram()
+                } catch (error) {
+                    return console.error(error)
+                }
+            }
             if (name) level.levels[level.onLevel + 1] = name
             powerUps.warp.exit()
             level.nextLevel();
@@ -1955,7 +1962,8 @@ const powerUps = {
 
         //count big power ups and small power ups
 
-        let options = [powerUps.healGiveMaxEnergy ? "Casimir" : "heal", "research"]
+        const options = [powerUps.healGiveMaxEnergy ? "Casimir" : "heal"]
+        if (!tech.isSuperDeterminism) options.push("research")
         if (!tech.isBoostReplaceAmmo) options.push("ammo")
         if (m.coupling || tech.isBoostReplaceAmmo) options.push("coupling")
         if (tech.isBoostPowerUps || tech.isBoostReplaceAmmo) options.push("boost")
@@ -1970,8 +1978,8 @@ const powerUps = {
                 powerUp.splice(smallIndexes[j], 1);
             }
 
-            options = ["tech", "tech", "tech", "gun", "gun", "field"]
-            const name = options[Math.floor(Math.random() * options.length)]
+            const bigOptions = ["tech", "tech", "tech", "gun", "gun", "field"]
+            const name = bigOptions[Math.floor(Math.random() * bigOptions.length)]
             if (tech.isGUT && (name === "gun" || name === "field")) {
                 powerUps.spawn(where.x, where.y, name, false)
             } else {

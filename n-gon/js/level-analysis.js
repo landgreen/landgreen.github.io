@@ -24,6 +24,7 @@ const levelAnalysis = {
         drawingParts: [1500, 4000], //about how many shapes the draw list's elements draw a frame, each costs little, so a level has to pile them up
         frameMs: [0.35, 0.5], //elements' custom and top layers, standard levels take under 0.31 ms a frame
         bodies: 250, //physics bodies the elements make, standard levels have up to 122 with their mobs
+        powerUpPile: [150, 12], //power ups within this distance of one spot, and how many before they lag, they overlap and push apart every frame
     },
     debrisPowerUp: 0.15, //chance each debris is a heal or ammo, see spawn.debris()
     checks: [],
@@ -125,6 +126,52 @@ const levelAnalysis = {
             }
         }
         return found
+    },
+    powerUpPile(context) { //find one pile to warn about, with the elements in it
+        const [reach, most] = context.norms.powerUpPile
+        const cellSize = reach / 2 //everyone in the same cell is within reach of each other
+        const cells = new Map()
+        const key = (i, j) => `${i},${j}`
+        let crowded
+        let total = 0
+        const add = (x, y, el) => {
+            if (!Number.isFinite(x) || !Number.isFinite(y)) return
+            const i = Math.floor(x / cellSize)
+            const j = Math.floor(y / cellSize)
+            const k = key(i, j)
+            if (!cells.has(k)) cells.set(k, [])
+            const cell = cells.get(k)
+            cell.push({ x, y, i, j, el })
+            if (!crowded && cell.length > most) crowded = cell[0]
+            total++
+        }
+        for (const el of context.of("powerUp")) {
+            const count = Math.min(el.count, levelElements.maxPowerUpCount)
+            for (let i = 0; i < count; i++) add(el.x + 25 * i, el.y, el) //match powerUp.build()
+        }
+        for (const el of context.of("randomPowerUp").concat(context.of("startingPowerUps"))) add(el.x, el.y, el)
+        if (total <= most) return null
+
+        const reachSquared = reach * reach
+        const pileAt = p => {
+            const near = []
+            for (let di = -2; di <= 2; di++) {
+                for (let dj = -2; dj <= 2; dj++) {
+                    const cell = cells.get(key(p.i + di, p.j + dj))
+                    if (!cell) continue
+                    for (const q of cell) if ((q.x - p.x) ** 2 + (q.y - p.y) ** 2 <= reachSquared) near.push(q.el)
+                }
+            }
+            return near.length > most ? { count: near.length, x: p.x, y: p.y, elements: [...new Set(near)] } : null
+        }
+        if (crowded) return pileAt(crowded) //one scan of a dense pile instead of comparing all its pairs
+        for (const cell of cells.values()) {
+            for (const point of cell) {
+                const pile = pileAt(point)
+                if (pile) return pile
+            }
+        }
+        return null
     },
     area(points) { //of an outline, shoelace
         let sum = 0
@@ -481,5 +528,7 @@ levelAnalysis.check("performance", c => {
         lines.push(line(status, "elements a frame", `${ms.toFixed(2)} ms`, status === "ok" ? "" : `standard levels take under 0.31 ms, slowest: ${slowest.map(([type, typeMs]) => `${type} ${typeMs.toFixed(2)}`).join(", ")}`))
         if (c.live.bodies > c.norms.bodies) lines.push(line("warn", "physics bodies", c.live.bodies, `standard levels have up to 122, with mobs`))
     }
+    const pile = levelAnalysis.powerUpPile(c)
+    if (pile) lines.push(line("warn", "piled power ups", pile.count, `around ${levelAnalysis.at(pile.x, pile.y)}, power ups on top of each other push apart every frame, that slows the physics engine and drops the frame rate, spread them out`, pile.elements))
     return lines
 })

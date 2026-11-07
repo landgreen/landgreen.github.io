@@ -2555,6 +2555,7 @@ function cycle() {
                 level.start();
                 consoleMirror.showTitleLogs()
             }
+            if (simulation.extraCycles) simulation.timeSkip(simulation.extraCycles)
             simulation.loop();
         } catch (error) {
             consoleMirror.showError(error)
