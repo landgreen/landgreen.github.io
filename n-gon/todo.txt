@@ -1,3 +1,4 @@
+level editor: import saves a new local level and keeps the level you were editing
 level editor: carry player - a checkbox on blocks with a force, on to start, the player standing on the block moves along with it
 level editor: blocks can have a force, steady or a back and forth wave, at any angle and strength, on a constraint they swing
 level editor: drawings can link to a button, zone, or other trigger, and only show while it's on

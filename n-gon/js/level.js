@@ -382,7 +382,7 @@ const level = {
     load(name) {
         const mapCollection = [level.maps, level.localMaps, moreLevels].find(maps => typeof maps[name] === "function")
         if (!mapCollection) throw new Error(`unknown level: ${name}`)
-        const map = mapCollection === moreLevels && level.communityLevels.includes(name) ? levelData.communityLevel(name) : mapCollection[name] //community levels can read saves and settings but not change them
+        const map = mapCollection === moreLevels && level.communityLevels.includes(name) ? levelCode.communityLevel(name) : mapCollection[name] //community levels can read saves and settings but not change them
         map.call(level)
     },
     newLevelOrPhase() { //runs on each new level but also on final boss phases
@@ -4712,15 +4712,40 @@ const level = {
             },
         }
     },
+    oneWaySurfaces: new Map(), //only populated by oneWay(), no body collision filters are changed
+    watchOneWay(platform, passing) {
+        const surfaces = level.oneWaySurfaces
+        surfaces.set(platform, passing)
+        if (surfaces.size !== 1) return
+        const update = pairs => {
+            for (const pair of pairs) {
+                const a = pair.bodyA.parent, b = pair.bodyB.parent
+                const fromA = surfaces.get(a), fromB = surfaces.get(b)
+                if (!fromA && !fromB) continue
+                pair.isSensor = pair.bodyA.isSensor || pair.bodyB.isSensor || !!(fromA?.has(b) || fromB?.has(a))
+            }
+        }
+        const start = event => update(event.pairs) //new pairs, before Matter resolves them
+        const before = () => {
+            const present = new Set(composite)
+            for (const surface of surfaces.keys()) if (!present.has(surface)) surfaces.delete(surface)
+            if (!surfaces.size) { //clearMap removed the last platform, ordinary levels keep no listener
+                Matter.Events.off(engine, "beforeUpdate", before)
+                Matter.Events.off(engine, "collisionStart", start)
+                return
+            }
+            update(engine.pairs.list) //ongoing pairs, before the next physics step
+        }
+        Matter.Events.on(engine, "collisionStart", start)
+        Matter.Events.on(engine, "beforeUpdate", before)
+    },
     oneWay(x, y, width, height = 20, angle = Math.PI / 2) { //platform the player, blocks, mobs, and power ups go through from behind and land on from the front, angle is the way its front faces, counterclockwise like boost, Math.PI / 2 is up, hold down on it to drop through, run query() and draw() in level.custom
         //the player goes through by the platform taking cat.player out of its own mask, so each platform of a ladder lets the player through or not on its own
-        //blocks, mobs, and power ups going through get the platform's collision group, Matter skips collisions between two bodies in the same negative group, everything else still collides with them
-        const group = Matter.Body.nextGroup(true)
+        //blocks, mobs, and power ups pass through only this platform via per-pair sensors, so overlapping platforms and original collision groups stay independent
         const center = { x: x + width / 2, y: y + height / 2 }
         const platform = composite[composite.length] = Bodies.rectangle(center.x, center.y, width, height, {
             angle: Math.PI / 2 - angle, //Matter turns clockwise, its front starts facing up
             collisionFilter: {
-                group: group, //only bodies going through share it
                 category: cat.map,
                 mask: cat.player | cat.body | cat.powerUp | cat.mob //bullets go through both ways
             },
@@ -4742,22 +4767,19 @@ const level = {
             return { min, max }
         }
         const passing = new Set() //bodies going through right now
+        level.watchOneWay(platform, passing)
         const reach = 40 //how far around the platform to look, so things coming toward it get through before they hit it
         const region = { min: { x: platform.bounds.min.x - reach, y: platform.bounds.min.y - reach }, max: { x: platform.bounds.max.x + reach, y: platform.bounds.max.y + reach } }
         const pass = who => {
             passing.add(who)
             if (who === player) {
                 platform.collisionFilter.mask &= ~cat.player
-            } else {
-                who.collisionFilter.group = group
             }
         }
         const stopPassing = who => {
             passing.delete(who)
             if (who === player) {
                 platform.collisionFilter.mask |= cat.player
-            } else if (who.collisionFilter.group === group) {
-                who.collisionFilter.group = 0
             }
         }
         const toward = who => who.velocity.x * front.x + who.velocity.y * front.y //moving out its front
@@ -4773,7 +4795,6 @@ const level = {
                     seen.add(who)
                     const isNew = seenCycle.get(who) !== simulation.cycle - 1
                     seenCycle.set(who, simulation.cycle)
-                    if (who !== player && who.collisionFilter.group !== group) passing.delete(who) //something else, like another platform, changed its group
                     const d = depth(who)
                     let isThrough
                     if (who === player && dropCycle > simulation.cycle) {
@@ -4810,7 +4831,7 @@ const level = {
                 ctx.fillRect(-width / 2, -height / 2, width, Math.min(5, height)) //the side things land on
                 ctx.restore()
             },
-            remove() { //puts back the collision group of anything still going through
+            remove() { //the next physics step retires the removed platform and its watcher
                 for (const who of passing) stopPassing(who)
             },
         }

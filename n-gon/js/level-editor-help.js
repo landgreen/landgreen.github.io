@@ -69,7 +69,7 @@ Object.assign(levelEditor, {
             <ul>
                 <li>Your levels are saved in this browser. Use <b>export</b>, then <b>download</b> to save a backup file, or <b>copy</b> to share the text. If the bottom bar ever says <b>not saved</b>, export a backup right away.</li>
                 <li>Keep the whole export, including its final <code>//level editor:</code> line. That line lets <b>import</b> restore all the editable objects.</li>
-                <li><b>Import</b> replaces the level you're editing, paste the text or use <b>open file</b>. Use <b>new</b> or <b>fork</b> first if you want to keep the current level as well. <b>Fork</b> is also an easy way to experiment on a copy.</li>
+                <li><b>Import</b> saves a new local level, paste the text or use <b>open file</b>. Your current level is kept, and an imported name already in use gets a number added. <b>Fork</b> is also an easy way to experiment on a copy.</li>
                 <li><b>Add to level pool</b> includes the level in your own runs. It doesn't publish it.</li>
                 <li>Before submitting, play from start to finish with mobs on and try <b>test export</b>. Resolve the <b>fix</b> items in the issues list and review any warnings.</li>
                 <li>To suggest your level for the game, open an issue on <a href="https://github.com/landgreen/n-gon/issues" target="_blank" rel="noopener">github.com/landgreen/n-gon</a> titled <i>New community map: your level's name</i> and paste the full export into it.</li>

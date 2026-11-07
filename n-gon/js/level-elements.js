@@ -1886,7 +1886,7 @@ for (const name of levelElements.linkSources) { //a link source linked to anothe
         const lines = code(el, varName, context)
         if (!String(el.log).trim()) return lines
         const own = type.linkCode(el, varName, context).on
-        const above = !type.isGate && context && el.link ? context.link(el) : null //a gate's links are its inputs
+        const above = !type.isGate && context && (el.link || el.orLink) ? context.link(el) : null //a gate's links are its inputs
         const on = above ? `${own} && ${above.on.includes("||") ? `(${above.on})` : above.on}` : own
         return {
             ...lines,
