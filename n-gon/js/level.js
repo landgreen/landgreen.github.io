@@ -4466,15 +4466,11 @@ const level = {
             },
         }
     },
-    pushBody(who, strength = 1, angle = 0, period = 0, isCarrying = false) { //call do() each cycle in level.custom, strength 1 is as strong as gravity for any size of body, angle is radians counterclockwise, 0 is right, with a period it's a sine wave that goes both ways, on a constraint it swings, isCarrying moves the player standing on it along with it
+    pushBody(who, strength = 1, angle = 0, period = 0) { //call do() each cycle in level.custom, strength 1 is as strong as gravity for any size of body, angle is radians counterclockwise, 0 is right, with a period it's a sine wave that goes both ways, on a constraint it swings, a heavy enough block carries the player standing on it, see m.carryOnBlock()
         const x = Math.cos(angle)
         const y = -Math.sin(angle)
         return {
             do() {
-                if (isCarrying && m.onGround && m.standingOn === who) {
-                    m.moverX = who.velocity.x //helps sync leg movements
-                    m.Vx = player.velocity.x - who.velocity.x //adds blocks velocity to player
-                }
                 if (m.isTimeDilated) return
                 const push = strength * who.mass * simulation.g * (period ? Math.sin(2 * Math.PI * simulation.cycle / period) : 1)
                 who.force.x += x * push
@@ -9320,15 +9316,6 @@ const level = {
                 level.exit.drawAndCheck();
                 level.enter.draw();
 
-                //give player some horizontal traction and proper leg animation on specific moving blocks
-                if (m.onGround) {
-                    for (let i = 0; i < blocks.length; i++) {
-                        if (m.standingOn === blocks[i]) {
-                            m.moverX = blocks[i].velocity.x //helps sync leg movements
-                            m.Vx = player.velocity.x - blocks[i].velocity.x //adds blocks velocity to player
-                        }
-                    }
-                }
                 ctx.beginPath();
                 for (let i = 0, len = blocks.length; i < len; i++) {
                     let vertices = blocks[i].vertices;
@@ -9391,7 +9378,7 @@ const level = {
             });
             blockCycle = 180;
             const blocks = []
-            blocks.push(body[body.length - 1]) //saved to blocks array to give player traction in level.custom
+            blocks.push(body[body.length - 1])
             blocks[0].isNotHoldable = true
             //apply heavy damping for just a second on spawn to prevent crazy shakes
 
@@ -12937,11 +12924,6 @@ const level = {
                         hangingConstraints[i].length = hangingConstraintStartLengths[i] + (hangingConstraintMinLengths[i] - hangingConstraintStartLengths[i]) * smoothProgress
                     }
                 }
-                //give the player horizontal traction and keep leg animation synced on the suspended body
-                if (m.onGround && m.standingOn === hangingBody) {
-                    m.moverX = hangingBody.velocity.x
-                    m.Vx = player.velocity.x - hangingBody.velocity.x
-                }
                 for (let i = 0; i < buttons.length; i++) {
                     if (hazardState === "cooldown") {
                         buttons[i].isUp = false
@@ -13571,15 +13553,6 @@ const level = {
 
                 }
 
-                //give player some horizontal traction and proper leg animation on specific moving blocks
-                if (m.onGround) {
-                    for (let i = 0; i < blocks.length; i++) {
-                        if (m.standingOn === blocks[i]) {
-                            m.moverX = blocks[i].velocity.x //helps sync leg movements
-                            m.Vx = player.velocity.x - blocks[i].velocity.x //adds blocks velocity to player
-                        }
-                    }
-                }
                 ctx.beginPath();
                 ctx.moveTo(constraint1.pointA.x, constraint1.pointA.y);
                 ctx.lineTo(constraint1.bodyB.position.x + constraint1.pointB.x, constraint1.bodyB.position.y + constraint1.pointB.y);
@@ -15306,15 +15279,6 @@ const level = {
 
                 for (let i = 0; i < boosts.length; i++) boosts[i].query();
 
-                //give player some horizontal traction and proper leg animation on specific moving blocks
-                if (m.onGround) {
-                    for (let i = 0; i < blocks.length; i++) {
-                        if (m.standingOn === blocks[i]) {
-                            m.moverX = blocks[i].velocity.x //helps sync leg movements
-                            m.Vx = player.velocity.x - blocks[i].velocity.x //adds blocks velocity to player
-                        }
-                    }
-                }
                 ctx.beginPath();
                 for (let i = 0, len = blocks.length; i < len; i++) {
                     let vertices = blocks[i].vertices;
@@ -15478,7 +15442,7 @@ const level = {
                 frictionAir: 0.2,
                 isNotHoldable: true,
             });
-            blocks.push(body[body.length - 1]) //saved to blocks array to give player traction in level.custom
+            blocks.push(body[body.length - 1])
             blocks[0].isNotHoldable = true
             //apply heavy damping for just a second on spawn to prevent crazy shakes
 

@@ -187,7 +187,8 @@ const m = {
         m.pos.y = playerBody.position.y - m.yOff;
         if (player.scale !== 1) m.pos.y += m.yOff * (1 - player.scale)// adjusts m.pos due to the new scale for drawing and for other various m.pos.y uses 
 
-        m.Vx = player.velocity.x;
+        m.Vx = player.velocity.x - m.carryX;
+        m.carryX = 0
         m.Vy = player.velocity.y;
 
         //tracks the last 10s of player information
@@ -309,7 +310,17 @@ const m = {
         });
     },
     moverX: 0, //used to tell the player about moving platform x velocity
+    carryX: 0, //x velocity from the block the player is standing on, taken off m.Vx in m.move() so the legs don't walk in place
+    carryOnBlock() { //moving blocks carry the player standing on them, fading in from no carry at mass 1 to full carry at mass 3, lighter blocks slide easily, so walking on one drags it along, which carries the player faster, which drags it more
+        const who = m.standingOn && m.standingOn.parent //a concave block is made of parts, the parent has the velocity
+        if (m.moverX !== 0 || !who || who.isStatic || who.isMover || who === m.holdingTarget || !body.includes(who)) return //a mover or transport already set m.moverX, or not a loose block
+        const carry = Math.max(0, Math.min(1, (who.mass - 1) / 2))
+        if (carry === 0) return
+        m.moverX = carry * who.velocity.x
+        m.carryX = m.moverX
+    },
     groundControl() {
+        m.carryOnBlock()
         const moveX = player.velocity.x - m.moverX //account for mover platforms
         //check for crouch or jump
         if (m.crouch) {

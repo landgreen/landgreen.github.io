@@ -607,7 +607,7 @@ levelElements.define("block", {
     isSnappable: true,
     group: "shape",
     color: "rgba(140,140,140,0.85)",
-    defaults: () => ({ x: 0, y: 0, width: 50, height: 50, density: 0.001, friction: 0.05, frictionStatic: 0.5, frictionAir: 0.001, restitution: 0, velocityX: 0, velocityY: 0, hasForce: false, force: 0.5, forceAngle: 0, forceMode: "steady", forcePeriod: 120, carryPlayer: true, holdable: true, noSpin: false, immutable: false, collides: levelElements.collision.defaults.block, chance: 1 }),
+    defaults: () => ({ x: 0, y: 0, width: 50, height: 50, density: 0.001, friction: 0.05, frictionStatic: 0.5, frictionAir: 0.001, restitution: 0, velocityX: 0, velocityY: 0, hasForce: false, force: 0.5, forceAngle: 0, forceMode: "steady", forcePeriod: 120, holdable: true, noSpin: false, immutable: false, collides: levelElements.collision.defaults.block, chance: 1 }),
     props: [
         ...levelElements.rect(),
         levelElements.prop.number("density", { step: 0.0005, min: 0.00001 }),
@@ -627,7 +627,6 @@ levelElements.define("block", {
         levelElements.prop.number("forceAngle", { step: 15, tip: "the way it pushes in degrees, 0 is right, 90 is up", isShown: el => el.hasForce }),
         levelElements.prop.select("forceMode", ["steady", "wave"], { tip: "steady always pushes, wave pushes back and forth, on a constraint it swings", isShown: el => el.hasForce }),
         levelElements.prop.number("forcePeriod", { step: 10, min: 2, tip: "frames for one push there and back, 60 is a second, on a constraint a period near how long it takes to swing builds up the biggest swing", isShown: el => el.hasForce && el.forceMode === "wave" }),
-        levelElements.prop.bool("carryPlayer", { label: "carry player", tip: "the player standing on it moves along with it", isShown: el => el.hasForce }),
         levelElements.prop.bool("holdable"), //false is isNotHoldable, the field can't pick it up
         levelElements.prop.bool("noSpin"), //inertia Infinity, it slides but never turns
         levelElements.prop.bool("immutable"), //isImmutable, like a key, tech can't destroy, split, grow, or freeze it, and falling out of the level brings it back instead of removing it
@@ -680,7 +679,7 @@ levelElements.define("block", {
         Composite.add(engine.world, who)
         who.classType = "body"
         if (!el.hasForce) return
-        const push = level.pushBody(who, el.force, el.forceAngle * Math.PI / 180, el.forceMode === "wave" ? el.forcePeriod : 0, el.carryPlayer)
+        const push = level.pushBody(who, el.force, el.forceAngle * Math.PI / 180, el.forceMode === "wave" ? el.forcePeriod : 0)
         return { custom() { push.do() } }
     },
     code(el, name, context) { //spawn.bodyRect's properties default to { friction: 0.05, frictionAir: 0.001 }, spawn.bodyVertex has no defaults
@@ -698,11 +697,9 @@ levelElements.define("block", {
         if (!levelElements.collision.isDefault(el)) setup.push(`body[body.length - 1].collisionFilter.mask = ${levelElements.collision.code(el.collides)};`)
         const forceName = `${name}Force`
         const hasChance = el.chance < 1 && !isHeld
-        if (el.hasForce) { //angle in radians, written as degrees like a laser's, the period only for a wave, and carrying the player after it
-            const isWave = el.forceMode === "wave"
-            const period = isWave || el.carryPlayer ? `, ${isWave ? levelElements.args(el.forcePeriod) : 0}` : ""
-            const carry = el.carryPlayer ? ", true" : ""
-            setup.push(`${hasChance ? "" : "const "}${forceName} = level.pushBody(body[body.length - 1], ${levelElements.args(el.force)}, ${levelElements.args(el.forceAngle)} * Math.PI / 180${period}${carry});`)
+        if (el.hasForce) { //angle in radians, written as degrees like a laser's, the period only for a wave
+            const period = el.forceMode === "wave" ? `, ${levelElements.args(el.forcePeriod)}` : ""
+            setup.push(`${hasChance ? "" : "const "}${forceName} = level.pushBody(body[body.length - 1], ${levelElements.args(el.force)}, ${levelElements.args(el.forceAngle)} * Math.PI / 180${period});`)
         }
         const force = el.hasForce ? { custom: [`${hasChance ? `if (${forceName}) ` : ""}${forceName}.do();`] } : {}
         if (isHeld) setup.push(`const ${name} = body[body.length - 1];`)

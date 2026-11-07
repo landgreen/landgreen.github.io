@@ -51,6 +51,7 @@ const levelData = {
                 el.gate = "timer"
             }
             if (el.type === "bezier") levelData.bezierToPath(el) //the path's curves do it now
+            if (el.type === "block") delete el.carryPlayer //every heavy enough block carries the player now, see m.carryOnBlock()
             if (!isId(el.id)) el.id = data.nextId++
             levelElements.fillDefaults(el)
             for (const key of levelElements.refKeys(el)) if (!isId(el[key])) el[key] = null

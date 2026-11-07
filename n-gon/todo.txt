@@ -1,5 +1,9 @@
 
 
+moving blocks carry you along when you stand on them,
+  except very light blocks
+
+
 bug fixes
 
 
