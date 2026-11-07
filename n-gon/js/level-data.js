@@ -961,7 +961,7 @@ levelData.loadScripts = files => Promise.all(files.filter(src => !levelData.load
 })))
 levelData.programFiles = ["lib/level-parser.js", "js/level-program.js"]
 levelData.programPromise = null
-levelData.isProgramLoaded = () => typeof levelData.codeLines === "function" //js/level-program.js adds it
+levelData.isProgramLoaded = () => typeof levelParser === "function" && typeof levelData.codeLines === "function" //lib/level-parser.js and js/level-program.js add them, both, so a retry after the parser failed to download loads it again
 levelData.loadProgram = () => {
     if (levelData.isProgramLoaded()) return Promise.resolve()
     if (!levelData.programPromise) {
