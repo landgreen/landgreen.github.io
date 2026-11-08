@@ -1027,11 +1027,11 @@ Object.assign(levelEditor, {
         if (draw.forId) levelEditor.renderRight()
         if (points.length < (isClosed ? 3 : 2)) return
         const type = levelElements.types.path
-        const el = levelElements.create("path", { closed: isClosed, handles: handles.some(Boolean) ? handles : [], ...type.styles[isClosed ? "closed" : "open"] })
-        levelElements.setPoints(el, points)
         const owner = draw.forId && levelData.find(levelEditor.data, draw.forId)
+        const prop = owner && levelEditor.findProp(draw.forKey, owner)
+        const el = levelElements.create("path", { closed: isClosed, handles: handles.some(Boolean) ? handles : [], ...type.styles[isClosed ? "closed" : "open"], ...prop?.pathStyle }) //a ref prop's pathStyle, like a train's thin black track
+        levelElements.setPoints(el, points)
         if (owner && levelElements.isRefTo(owner, draw.forKey, el)) { //drawn for a ref prop, like a buzzsaw's path, it's linked in the same undo step
-            const prop = levelEditor.findProp(draw.forKey, owner)
             levelEditor.edit(`draw ${levelEditor.describe([el])} for ${levelEditor.describe([owner])}`, data => {
                 levelData.add(data, el)
                 if (prop?.write) prop.write(owner, el.id)
@@ -2781,7 +2781,7 @@ Object.assign(levelEditor, {
         const groups = [
             { title: "draw", names: ["fill", "path", "text", "drip", ...Object.keys(levelElements.decorations)] }, //exit fill comes with fill, it's a named preset
             { title: "triggers", names: ["button", "logic", "keyhole", "zone", "key", "mobClear"] }, //two columns, left is button, keyhole, key, right is logic, zone, mob clear
-            { title: "elements", names: ["laser", "slime", "buzzsaw", "boost", "mover", "transport", "elevator", "door", "oneWay", "spinner", "vanish", "portal", "fizzler", "wind", "gravityZone", "dispenser"] }, //common ones first, then platforms, portal and fizzler together, the rarely used last
+            { title: "elements", names: ["laser", "slime", "buzzsaw", "boost", "mover", "transport", "elevator", "train", "door", "oneWay", "spinner", "vanish", "portal", "fizzler", "wind", "gravityZone", "dispenser"] }, //common ones first, then platforms, portal and fizzler together, the rarely used last
         ]
         const listed = new Set(groups.flatMap(group => group.names))
         groups[groups.length - 1].names.push(...levelElements.groups.element.filter(name => !listed.has(name) && !levelElements.types[name].isAddedAs))

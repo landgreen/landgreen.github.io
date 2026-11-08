@@ -1,10 +1,17 @@
+level editor: while an add list is open, the other list tabs fade
 
 
+tech: Meissner effect - simpler description for ray, 1.6x perfect diamagnetism length
+level editor: train - a platform that rides along a draw path, the player can ride it around loops and hills
+level editor: elevators have a down speed setting for how fast they come back down
+level editor: elevators have a smooth stop setting, they slow down at the top instead of flinging you
 moving blocks carry you along when you stand on them,
   except very light blocks
 
 
 bug fixes
+  you no longer bounce or float off elevators and blocks that are moving down while you walk on them
+  landing after jumping off a mover no longer gives you a small push in the mover's direction
 
 
 

@@ -30,7 +30,7 @@ const levelElements = {
     //*********************************************************************
     collision: {
         names: ["player", "map", "body", "bullet", "powerUp", "mob", "mobBullet", "mobShield"], //cat.phased is past 32 bits, Matter's masks can't hold it
-        category: { map: "map", block: "body", mover: "map", vanish: "map", transport: "body", elevator: "body", spinner: "body", door: "body", dispenser: "body" },
+        category: { map: "map", block: "body", mover: "map", vanish: "map", transport: "body", elevator: "body", train: "body", spinner: "body", door: "body", dispenser: "body" },
         defaults: { //the mask each type gets in level.addToWorld(), spawn.bodyRect(), and its level.* helper
             map: "player map body bullet powerUp mob mobBullet",
             block: "player map body bullet mob mobBullet",
@@ -38,6 +38,7 @@ const levelElements = {
             vanish: "player body bullet powerUp mob mobBullet",
             transport: "player body bullet powerUp mob mobBullet",
             elevator: "player body bullet mob mobBullet",
+            train: "player body bullet mob mobBullet",
             spinner: "player body bullet powerUp mob mobBullet",
             door: "player body bullet powerUp mob mobBullet",
             dispenser: "player map body bullet mob mobBullet", //the blocks it makes, like spawn.bodyRect()
@@ -823,15 +824,20 @@ levelElements.define("elevator", {
     group: "element",
     handlesLink: true, //while off it finishes its trip and waits at the bottom, without move() it would fall through the map
     writesLink: true, //its code() uses context.link
-    defaults: () => ({ x: 0, y: -25, width: 200, height: 25, travel: 500, force: 0.003, onTouch: false }),
+    defaults: () => ({ x: 0, y: -25, width: 200, height: 25, travel: 500, force: 0.003, downSpeed: 3.4, smoothStop: false, onTouch: false }),
     props: [
         ...levelElements.rect(),
         levelElements.prop.number("travel", { isGrid: true, min: 0 }), //how far up it goes
         levelElements.prop.number("force", { step: 0.0005, min: 0 }),
+        levelElements.prop.number("downSpeed", { step: 0.5, min: 1 }),
+        levelElements.prop.bool("smoothStop", { label: "smooth stop" }),
         levelElements.prop.bool("onTouch"),
     ],
+    friction(el) { //level.elevator's air friction on the way down, falling with gravity it settles at about downSpeed, 3.4 is the written levels' default of 0.2
+        return { up: 0.01, down: Math.round(0.68 / Math.max(1, el.downSpeed) * 10000) / 10000 }
+    },
     build(el) {
-        const elevator = level.elevator(el.x, el.y, el.width, el.height, el.y - el.travel, el.force)
+        const elevator = level.elevator(el.x, el.y, el.width, el.height, el.y - el.travel, el.force, levelElements.types.elevator.friction(el), false, el.smoothStop)
         return {
             custom() {
                 const isOn = levelData.linkOn(el) !== false
@@ -849,7 +855,7 @@ levelElements.define("elevator", {
     code(el, name, context) {
         const link = context && context.link(el)
         return {
-            setup: [`const ${name} = level.elevator(${levelElements.args(el.x, el.y, el.width, el.height, el.y - el.travel, el.force)});`],
+            setup: [`const ${name} = level.elevator(${levelElements.args(el.x, el.y, el.width, el.height, el.y - el.travel, el.force)}${el.downSpeed === 3.4 && !el.smoothStop ? "" : `, { up: 0.01, down: ${levelElements.args(levelElements.types.elevator.friction(el).down)} }`}${el.smoothStop ? ", false, true" : ""});`],
             custom: [`${name}.${el.onTouch ? "moveOnTouch" : "move"}(${link ? link.on : ""});`],
         }
     },
@@ -1185,6 +1191,70 @@ levelElements.define("buzzsaw", { //level.buzzsaw
         return {
             setup: [`const ${name} = level.buzzsaw(${JSON.stringify(route.points.map(p => p.map(round)))}${args.length ? `, ${levelElements.args(...args)}` : ""});`],
             custom: [`${name}.query(${link ? link.on : ""});`],
+            top: [`${name}.draw();`],
+        }
+    },
+})
+
+levelElements.define("train", { //level.train
+    tip: "platform the player can ride along a path: draw one with its path's draw button, or pick a draw path you've made, it goes back and forth along it, around and around on a closed path, it goes through the map, linked it only runs while on",
+    group: "element",
+    handlesLink: true, //off it stops where it is and floats there
+    writesLink: true, //its code() uses context.link
+    rebuildWithRefs: true, //it follows the path as it was when it was built
+    outlivesRefs: true, //deleting its path leaves it where it is
+    defaults: () => ({ x: 0, y: -200, width: 200, height: 25, path: null, speed: 4 }),
+    props: [
+        ...levelElements.position(), //its middle, on the path
+        levelElements.prop.number("width", { isGrid: true, min: 10 }),
+        levelElements.prop.number("height", { isGrid: true, min: 10 }),
+        levelElements.prop.ref("path", ["path"], {
+            pathStyle: { fill: "none", stroke: "#000", lineWidth: 3 }, //a path drawn with its draw button is a thin black track
+            write(el, id) { //goes to the closest spot on the new path, so it's where it'll start
+                el.path = id
+                const { at } = levelElements.sawRoute(el, levelData.data)
+                el.x = Math.round(at.x)
+                el.y = Math.round(at.y)
+            },
+        }),
+        levelElements.prop.number("speed", { step: 1, min: 0 }),
+    ],
+    bounds: el => ({ x: el.x - el.width / 2, y: el.y - el.height / 2, width: el.width, height: el.height }),
+    handles: el => [{ id: "size", x: el.x + el.width / 2, y: el.y + el.height / 2 }],
+    dragHandle(el, id, point) { //the corner, it stays centered on its spot
+        el.width = Math.max(10, Math.round(2 * Math.abs(point.x - el.x)))
+        el.height = Math.max(10, Math.round(2 * Math.abs(point.y - el.y)))
+    },
+    overlay(el) { //where it starts, it's moving along its path while editing, and a line to the path if it's been dragged off
+        const { at } = levelElements.sawRoute(el, levelData.data)
+        ctx.beginPath()
+        ctx.rect(at.x - el.width / 2, at.y - el.height / 2, el.width, el.height)
+        if (Math.hypot(el.x - at.x, el.y - at.y) > 1) {
+            ctx.rect(el.x - el.width / 2, el.y - el.height / 2, el.width, el.height)
+            ctx.moveTo(el.x, el.y)
+            ctx.lineTo(at.x, at.y)
+        }
+        ctx.stroke()
+    },
+    build(el) {
+        const { points, isLoop, start } = levelElements.sawRoute(el, levelData.data)
+        const train = level.train(points, el.width, el.height, el.speed, isLoop, start)
+        return {
+            containsPoint: point => Matter.Bounds.contains(train.bounds, point), //clicking the moving train selects it
+            custom() { train.move(levelData.linkOn(el) !== false) },
+            top() { train.draw() },
+        }
+    },
+    code(el, name, context) {
+        const link = context && context.link(el)
+        const route = levelElements.sawRoute(el, context ? context.data : levelData.data)
+        const round = n => Math.round(n * 10) / 10
+        const args = [el.width, el.height, el.speed, route.isLoop, round(route.start)]
+        const defaults = [200, 25, 4, false, 0]
+        while (args.length && args[args.length - 1] === defaults[args.length - 1]) args.pop() //leave out what's the default
+        return {
+            setup: [`const ${name} = level.train(${JSON.stringify(route.points.map(p => p.map(round)))}${args.length ? `, ${levelElements.args(...args)}` : ""});`],
+            custom: [`${name}.move(${link ? link.on : ""});`],
             top: [`${name}.draw();`],
         }
     },
@@ -1934,7 +2004,7 @@ levelElements.define("door", {
     },
 })
 
-for (const name of ["mover", "transport", "elevator", "vanish", "spinner", "door"]) { //what it bumps into, like a map's or block's, the wrappers only touch one that isn't the default, so the rest build and export the same as written levels
+for (const name of ["mover", "transport", "elevator", "train", "vanish", "spinner", "door"]) { //what it bumps into, like a map's or block's, the wrappers only touch one that isn't the default, so the rest build and export the same as written levels
     const type = levelElements.types[name]
     const defaults = type.defaults
     const isInMap = name === "mover" //a map's mask is set by level.addToWorld(), so it needs collisionMask
@@ -1970,7 +2040,7 @@ levelElements.linkable = name => { //a link prop, so a button or toggle can turn
     type.defaults = () => ({ ...defaults(), link: null, orLink: null, runs: "while on" })
     type.props.push(levelElements.prop.ref("link", levelElements.linkSources), levelElements.orLinkProp(), levelElements.runsProp())
 }
-for (const name of ["boost", "mover", "transport", "elevator", "laser", "buzzsaw", "wind", "slime", "fizzler", "spinner", "gravityZone", "dispenser"]) levelElements.linkable(name)
+for (const name of ["boost", "mover", "transport", "elevator", "train", "laser", "buzzsaw", "wind", "slime", "fizzler", "spinner", "gravityZone", "dispenser"]) levelElements.linkable(name)
 for (const name of levelElements.linkSources) { //a link source linked to another is only on while both are, set with the other one's link button, the row only shows once it's set
     const type = levelElements.types[name]
     const defaults = type.defaults
@@ -3030,8 +3100,9 @@ levelElements.typeTips = {
     boost: { launchHeight: "about how high it throws the player, game units" },
     transport: { distance: "how far it slides from its start, game units" },
     buzzsaw: { radius: "how big it is, game units", path: "the path it travels along, draw makes a new one and links it, pick links a draw path you've made, it goes back and forth, or around and around if it's closed, it starts at the closest spot to x, y, null stays put", speed: "game units a cycle, 0 stays put", spin: "how fast it turns, radians a cycle, negative turns it the other way", look: "how it's drawn, it hurts the same in every look" },
+    train: { width: "game units, its middle rides on the path", height: "game units", path: "the path it rides along, draw makes a new one and links it, pick links a draw path you've made, it goes back and forth, or around and around if it's closed, it starts at the closest spot to x, y, null stays put", speed: "game units a cycle, 0 stays put" },
     door: { distance: "how far up it slides to open, game units", speed: "how fast it opens and closes" },
-    elevator: { travel: "how far up it goes, game units", force: "how hard it pushes, more is faster", onTouch: "only moves while the player stands on it" },
+    elevator: { travel: "how far up it goes, game units", force: "how hard it pushes up, more is faster", downSpeed: "about how fast it comes back down, game units each frame", smoothStop: "slows down to stop at the top, off it stops hard and flings the player up", onTouch: "only moves while the player stands on it" },
     vanish: { vertical: "shrinks sideways instead of down" },
     spinner: { spin: "how fast it's turning when the level starts, radians a frame", motor: "keeps it turning, negative turns the other way, its link turns the motor on and off", frictionAir: "slows its turning too, so a motor tops out sooner" },
     wind: { vx: "push to the right a frame, negative pushes left", vy: "push down a frame, negative pushes up", float: "cancels gravity inside it" },

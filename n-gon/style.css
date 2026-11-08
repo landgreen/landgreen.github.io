@@ -3363,6 +3363,11 @@ body.level-editor.le-invincible #level-editor-left {
     vertical-align: 1px;
 }
 
+/* while one list is open the other tabs fade so the open one stands out, hovering one brings it back */
+.le-grid:has(> .le-add-tab.le-on)>.le-add-tab:not(.le-on):not(:hover) {
+    color: var(--le-faint);
+}
+
 .le-add-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
     border-left-width: 0;

@@ -2613,7 +2613,7 @@ const level = {
             return who
         }
     },
-    elevator(x, y, width, height, maxHeight, force = 0.003, friction = { up: 0.01, down: 0.2 }, isAtTop = false) {
+    elevator(x, y, width, height, maxHeight, force = 0.003, friction = { up: 0.01, down: 0.2 }, isAtTop = false, isSmoothStop = false) { //isSmoothStop slows down to stop at the top, instead of a hard stop that flings the player up
         x += width / 2
         y += height / 2
         maxHeight += height / 2
@@ -2633,11 +2633,19 @@ const level = {
             holdX: x,
             travel(isAutoRestart) { //rise to the top, then fall back down, and rise again if isAutoRestart
                 if (this.isUp) { //moving up still with high air friction
-                    this.force.y -= force * this.mass //hard force propels up, even with high friction
-                    if (this.position.y < maxHeight) { //switch to down mode
+                    const left = this.position.y - maxHeight //how far it still has to rise
+                    //smooth stop: the fastest it can go and still stop at the top, slowing down at most 60% as hard as gravity pulls, so the player stays on
+                    const brake = isSmoothStop ? Math.min(left, Math.sqrt(2 * 0.6 * simulation.g * simulation.delta * simulation.delta * Math.max(0, left))) : Infinity
+                    if (-this.velocity.y >= brake) {
+                        this.force.y -= simulation.g * this.mass //undo gravity, it follows the brake speed
+                        Matter.Body.setVelocity(this, { x: 0, y: -brake });
+                    } else {
+                        this.force.y -= force * this.mass //hard force propels up, even with high friction
+                    }
+                    if (this.position.y < maxHeight || (isSmoothStop && left < 1)) { //switch to down mode
                         this.isUp = false
                         this.frictionAir = friction.down
-                        //adds a hard jerk at the top of vertical motion because it's fun
+                        //adds a hard jerk at the top of vertical motion because it's fun, unless isSmoothStop, then it's already stopped
                         Matter.Body.setPosition(this, { x: this.holdX, y: maxHeight });
                         Matter.Body.setVelocity(this, { x: 0, y: 0 });
                     }
@@ -5050,22 +5058,16 @@ const level = {
             ctx.fill()
         },
     },
-    buzzsaw(points, radius = 40, speed = 4, damage = 0.1, spin = 0.25, isLoop = false, start = 0, look = "blade") { //a spinning blade that rides back and forth along points, [[x, y], ...], or around and around with isLoop, one point stays put, start is how far along it starts, look is one of level.buzzsawLooks, run query() in level.custom and draw() in level.customTopLayer, the map draws over it so it can come out of a wall
+    pathFollower(points, isLoop = false, start = 0) { //a spot that rides back and forth along points, [[x, y], ...], or around and around with isLoop, one point stays put, start is how far along it starts, travel(speed) moves it, for level.buzzsaw and level.train
         const route = isLoop && points.length > 2 ? [...points, points[0]] : points
         const lengths = [0] //how far along the route each point is
         for (let i = 1; i < route.length; i++) lengths.push(lengths[i - 1] + Math.hypot(route[i][0] - route[i - 1][0], route[i][1] - route[i - 1][1]))
         const total = lengths[lengths.length - 1]
         let segment = 0 //the part of the route it's on, it only moves a little each cycle
-        const shapes = {} //Path2Ds its look made, made the first time it's drawn
-        const drawLook = level.buzzsawLooks[look] || level.buzzsawLooks.blade
-        const saw = {
+        const follower = {
             position: { x: route[0][0], y: route[0][1] },
-            radius,
-            isOn: true,
-            angle: 0,
-            shape(key, make) { return shapes[key] || (shapes[key] = make()) },
             along: 0, //how far along the route it is
-            direction: 1, //-1 on its way back, its spin turns around with it
+            direction: 1, //-1 on its way back
             moveTo(along) {
                 this.along = along
                 while (segment < route.length - 2 && lengths[segment + 1] < along) segment++
@@ -5075,7 +5077,7 @@ const level = {
                 this.position.x = route[segment][0] + t * (route[next][0] - route[segment][0])
                 this.position.y = route[segment][1] + t * (route[next][1] - route[segment][1])
             },
-            travel() {
+            travel(speed) {
                 if (!total) return
                 let along = this.along + this.direction * speed
                 if (isLoop) {
@@ -5089,6 +5091,22 @@ const level = {
                 }
                 this.moveTo(along)
             },
+        }
+        follower.moveTo(Math.max(0, Math.min(total, start)))
+        return follower
+    },
+    buzzsaw(points, radius = 40, speed = 4, damage = 0.1, spin = 0.25, isLoop = false, start = 0, look = "blade") { //a spinning blade that rides back and forth along points, [[x, y], ...], or around and around with isLoop, one point stays put, start is how far along it starts, look is one of level.buzzsawLooks, run query() in level.custom and draw() in level.customTopLayer, the map draws over it so it can come out of a wall
+        const follower = level.pathFollower(points, isLoop, start)
+        const shapes = {} //Path2Ds its look made, made the first time it's drawn
+        const drawLook = level.buzzsawLooks[look] || level.buzzsawLooks.blade
+        const saw = {
+            position: follower.position,
+            radius,
+            isOn: true,
+            angle: 0,
+            shape(key, make) { return shapes[key] || (shapes[key] = make()) },
+            get direction() { return follower.direction }, //-1 on its way back, its spin turns around with it
+            travel() { follower.travel(speed) },
             hitsPlayer() { //the player's body or head is inside or within reach of its middle, a little short of its teeth so a graze doesn't count
                 const reach = 0.9 * radius
                 const { x, y } = this.position
@@ -5131,8 +5149,53 @@ const level = {
                 ctx.restore()
             },
         }
-        saw.moveTo(Math.max(0, Math.min(total, start)))
         return saw
+    },
+    train(points, width = 200, height = 25, speed = 4, isLoop = false, start = 0) { //a platform the player can ride along points, [[x, y], ...], its middle on the path, back and forth, or around and around with isLoop, run move() in level.custom and draw() in level.customTopLayer
+        //it's a very heavy block steered by its velocity, so it moves in the physics step along with the player standing on it, they stay right on its top, and m.carryOnBlock() carries them, it goes through the map, and counts as part of the level like a door, so ramming mobs doesn't do block damage
+        //moving a static body in level.custom instead puts it where it'll be after the player's physics, so it's drawn a step ahead of them, floating or sinking as far as it moved
+        const follower = level.pathFollower(points, isLoop, start)
+        const who = body[body.length] = Bodies.rectangle(follower.position.x, follower.position.y, width, height, {
+            collisionFilter: {
+                category: cat.body,
+                mask: cat.player | cat.body | cat.bullet | cat.mob | cat.mobBullet
+            },
+            inertia: Infinity, //stays level
+            isNotHoldable: true,
+            isImmutable: true, //tech can't destroy, split, grow, or freeze it
+            friction: 1,
+            frictionStatic: 1,
+            restitution: 0,
+            frictionAir: 0,
+            isOn: true,
+            move(isOn = true) { //isOn false stops it where it is, for a button or toggle
+                this.isOn = isOn
+                this.force.y -= this.mass * simulation.g //it floats, undoing simulation.gravity()
+                if (m.isTimeDilated) return Matter.Body.setVelocity(this, { x: 0, y: 0 })
+                const before = { x: follower.position.x, y: follower.position.y }
+                if (isOn) follower.travel(speed)
+                const goal = Vector.add(Vector.sub(follower.position, before), Vector.mult(Vector.sub(before, this.position), 0.2)) //where the path goes next, catching up if it fell behind or something pushed it
+                //it never speeds up downward faster than 60% of gravity, so the player riding it doesn't float off going over a top or into a drop, then it catches up
+                const mostDown = 0.6 * simulation.g * simulation.delta * simulation.delta
+                if (goal.y - this.velocity.y > mostDown) goal.y = this.velocity.y + mostDown
+                Matter.Body.setVelocity(this, goal) //the next physics step moves it
+            },
+            draw() { //the hub in its middle, where it grabs the path
+                const radius = Math.max(3, Math.min(10, height / 2 - 3))
+                ctx.beginPath()
+                ctx.arc(this.position.x, this.position.y, radius, 0, 2 * Math.PI)
+                ctx.fillStyle = "#333"
+                ctx.fill()
+                ctx.beginPath()
+                ctx.arc(this.position.x, this.position.y, radius * 0.4, 0, 2 * Math.PI)
+                ctx.fillStyle = this.isOn ? "#999" : "#555"
+                ctx.fill()
+            },
+        })
+        Matter.Body.setDensity(who, 0.05) //so heavy the player, blocks, and mobs barely push it
+        Composite.add(engine.world, who)
+        who.classType = "map" //still collides like a block, but counts as part of the level like a door, so it doesn't do block damage when it rams mobs
+        return who
     },
     gravityZone(x, y, width, height, gravity = 0) { //gravity is times normal inside, 0 floats, negative falls up, it works on the player, blocks, and power ups, run do() in level.custom
         const zone = { min: { x: x, y: y }, max: { x: x + width, y: y + height } }
