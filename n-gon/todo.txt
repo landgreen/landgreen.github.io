@@ -1,23 +1,46 @@
-level editor: while an add list is open, the other list tabs fade
+level editor
+  spinner has vertices like a block, so it can be any shape, not just a rect
+  the code buttons say edit code, revert code is just revert, the level's default button is next to edit code
+  maps, blocks, paths, and lasers have an angle in the info box, type one to turn it to that angle
+  rotate and flip buttons share one row, map and block buttons moved down next to vertices, no more 45° button
+  dispenser has a width and height instead of one size, so its blocks don't have to be squares, drag its corner handle to resize
+  issues has a reach check, it warns about an exit, power ups, or keys no normal jump from the entrance gets to
+  issues has a clear check, it says if you've reached the exit in test export since your last change, and your time
+  some issues have a fix button, move mobs and power ups onto the ground, lift blocks out of the map, delete stacked copies
+  saved versions in the history menu, one when a level opens and every 10 minutes, or name your own, click one to go back to it
+  back up all saves every local level to one file, import it to get them back
+  a button, toggle, zone, or logic can be held on or off from its info box, with a light over each trigger and what it runs
+  minimap at the top of the level info box, click it to go there
+  deleting a local level you never changed doesn't ask first
+  imported levels have every setting type checked, so a level's data can't sneak code into its export
+  while an add list is open, the other list tabs fade
+  train - a platform that rides along a draw path, the player can ride it around loops and hills
+  elevators have a down speed setting for how fast they come back down
+  elevators have a smooth stop setting, they slow down at the top instead of flinging you
 
 
 tech: Meissner effect - simpler description for ray, 1.6x perfect diamagnetism length
-level editor: train - a platform that rides along a draw path, the player can ride it around loops and hills
-level editor: elevators have a down speed setting for how fast they come back down
-level editor: elevators have a smooth stop setting, they slow down at the top instead of flinging you
 moving blocks carry you along when you stand on them,
   except very light blocks
 
 
 bug fixes
+  stepping across a floor seam no longer briefly puts you in the air
+  movement keys no longer stick when you switch windows
+  the aim no longer jumps to a mirrored spot at the start of each level until you move the mouse
   you no longer bounce or float off elevators and blocks that are moving down while you walk on them
   landing after jumping off a mover no longer gives you a small push in the mover's direction
+  checkpoint messages show missing guns and tech as plain text
+  checkpoints tell you which maps to restore before continuing
+  community maps that draw blocks their own way no longer change how blocks look on the levels after them
 
 
 
 
 *********************************************************** TODO *****************************************************
 
+
+boss - based on a "stentor"  single celled ciliate
 
 add alternator-like swing code to other situations
   every 3 swings make one with a much bigger range?

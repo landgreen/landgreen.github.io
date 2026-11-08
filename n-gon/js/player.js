@@ -314,9 +314,9 @@ const m = {
     carryX: 0, //x velocity from the block the player is standing on, taken off m.Vx in m.move() so the legs don't walk in place
     carriedBy: null, //the block carrying the player last cycle, and its x velocity under their feet then
     carriedVx: 0,
-    carryOnBlock() { //moving blocks carry the player standing on them, fading in from no carry at mass 1 to full carry at mass 3, lighter blocks slide easily, so walking on one drags it along, which carries the player faster, which drags it more
+    carryOnBlock() { //moving blocks carry the player standing on them, fading in from no carry at mass 5 to full carry at mass 8, lighter blocks slide easily, so walking on one drags it along, which carries the player faster, which drags it more
         const who = m.standingOn && m.standingOn.parent //a concave block is made of parts, the parent has the velocity
-        const carry = m.moverX !== 0 || !who || who.isStatic || who.isMover || who === m.holdingTarget || !body.includes(who) ? 0 : Math.max(0, Math.min(1, (who.mass - 1) / 2)) //0 when a mover or transport already set m.moverX, or it's not a loose block
+        const carry = m.moverX !== 0 || !who || who.isStatic || who.isMover || who === m.holdingTarget || !body.includes(who) || !m.isRidingOn(m.standingOn) ? 0 : Math.max(0, Math.min(1, (who.mass - 5) / 3)) //0 when a mover or transport already set m.moverX, or it's not a loose block the player is riding
         if (carry === 0) {
             m.carriedBy = null
             return
@@ -330,6 +330,14 @@ const m = {
         if (m.carriedBy === who) Matter.Body.setVelocity(player, { x: player.velocity.x + m.moverX - m.carriedVx, y: player.velocity.y })
         m.carriedBy = who
         m.carriedVx = m.moverX
+    },
+    isRidingOn(part) { //the player is carried by a block only when their walking isn't what moves it, otherwise its speed adds to theirs, so they push it faster, and it carries them faster
+        const hit = Matter.Collision.collides(playerBody, part)
+        if (!hit) return false
+        const facing = hit.bodyA === playerBody ? hit.normal : Vector.neg(hit.normal) //which way the surface under them faces, Matter's normal points toward bodyA
+        if (-facing.y < 0.7) return false //steeper than 45°, they're touching its side, like walking into a small triangle
+        const walking = input.right && !input.left ? 1 : input.left && !input.right ? -1 : 0
+        return facing.x * walking > -0.1 //walking up its slope pushes it ahead of them, like surfing a wedge, more than about 6° counts
     },
     groundControl() {
         m.carryOnBlock()

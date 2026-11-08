@@ -1278,6 +1278,7 @@ const level = {
     disableExit: false,
     nextLevel() {
         let countMax
+        if (levelEditor.isActive) return levelEditor.reachedExit() //the exit doesn't leave while editing, in test export reaching it clears the level
         if (!level.disableExit) {
             level.levelsCleared++;
             level.onLevel++; //cycles map to next level
@@ -2449,9 +2450,13 @@ const level = {
         return constraint
     },
     rotor(x, y, width, height, density = 0.001, angle = 0, frictionAir = 0.001, angularVelocity = 0, rotationForce = 0.0005) {
-        x += width / 2
-        y += height / 2
-        const who = body[body.length] = Bodies.rectangle(x, y, width, height, {
+        return level.pinRotor(Bodies.rectangle(x + width / 2, y + height / 2, width, height, level.rotorOptions(frictionAir, rotationForce)), density, angle, angularVelocity)
+    },
+    rotorVertex(x, y, vector, density = 0.001, angle = 0, frictionAir = 0.001, angularVelocity = 0, rotationForce = 0.0005) { //like rotor, but any convex shape, vector is like spawn.mapVertex's "x y  x y  x y", x, y is its center of area, where it's pinned
+        return level.pinRotor(Matter.Bodies.fromVertices(x, y, Vertices.fromPath(vector), level.rotorOptions(frictionAir, rotationForce)), density, angle, angularVelocity)
+    },
+    rotorOptions(frictionAir, rotationForce) { //for rotor and rotorVertex
+        return {
             isRotor: true,
             collisionFilter: {
                 category: cat.body,
@@ -2463,7 +2468,10 @@ const level = {
             frictionStatic: 1,
             restitution: 0,
             rotationForce: rotationForce,
-        });
+        }
+    },
+    pinRotor(who, density, angle, angularVelocity) { //adds a rotor's body to the level, pinned where it is, so it only turns
+        body[body.length] = who
         Matter.Body.setAngle(who, angle)
         Matter.Body.setAngularVelocity(who, angularVelocity);
 
@@ -5423,10 +5431,12 @@ const level = {
             },
         }
     },
-    dispenser(x, y, size = 50, period = 180, max = 3, angle = -Math.PI / 2, speed = 0) { //makes a block at x, y every period cycles, until max of its blocks are in the level, angle is the way they come out, counterclockwise like boost, -Math.PI / 2 is down, speed launches them, run query() and draw() in level.custom, it isn't solid, blocks come out over it
+    dispenser(x, y, width = 50, height = 50, period = 180, max = 3, angle = -Math.PI / 2, speed = 0) { //makes a width × height block at x, y every period cycles, until max of its blocks are in the level, width is across the chute and height is along it, angle is the way they come out, counterclockwise like boost, -Math.PI / 2 is down, speed launches them, run query() and draw() in level.custom, it isn't solid, blocks come out over it
         const blocks = [] //its blocks still in the level
-        const half = size / 2
+        const halfW = width / 2
+        const halfH = height / 2
         const turn = -angle - Math.PI / 2 //clockwise, the chute is drawn opening down, then turned to face angle
+        const reach = { x: Math.abs(Math.cos(turn)) * halfW + Math.abs(Math.sin(turn)) * halfH, y: Math.abs(Math.sin(turn)) * halfW + Math.abs(Math.cos(turn)) * halfH } //half the turned block's bounds
         let count = period //cycles until the next block
         return {
             blocks,
@@ -5435,13 +5445,13 @@ const level = {
                 if (!isOn || blocks.length >= max || m.isTimeDilated) return
                 count--
                 if (count > 0) return
-                const spot = { min: { x: x - half, y: y - half }, max: { x: x + half, y: y + half } }
+                const spot = { min: { x: x - reach.x, y: y - reach.y }, max: { x: x + reach.x, y: y + reach.y } }
                 if (Matter.Query.region(body, spot).length || Matter.Query.region(mob, spot).length || Matter.Bounds.overlaps(player.bounds, spot)) { //wait for the spot to clear
                     count = 10
                     return
                 }
                 count = period
-                spawn.bodyRect(x - half, y - half, size, size)
+                spawn.bodyRect(x - halfW, y - halfH, width, height)
                 const who = body[body.length - 1]
                 if (this.collisionMask !== undefined) who.collisionFilter.mask = this.collisionMask //set this to change what its blocks bump into
                 Matter.Body.setAngle(who, turn) //lined up with the chute
@@ -5449,33 +5459,34 @@ const level = {
                 blocks.push(who)
             },
             draw() { //a mount that isn't solid: a back plate, dashed sides open the way blocks go, the plate's bar is the time until the next one, and the next block fades in where it will show up
-                const r = half + 10
+                const rx = halfW + 10 //across the chute
+                const ry = halfH + 10 //along it
                 const progress = blocks.length >= max ? 1 : 1 - Math.max(0, count) / period
                 ctx.save()
                 ctx.translate(x, y)
                 ctx.rotate(turn) //+y is the way blocks come out
                 ctx.fillStyle = "rgba(0,150,140,0.07)"
-                ctx.fillRect(-r, -r, 2 * r, 2 * r)
+                ctx.fillRect(-rx, -ry, 2 * rx, 2 * ry)
                 ctx.beginPath()
-                ctx.moveTo(-r, r)
-                ctx.lineTo(-r, -r)
-                ctx.lineTo(r, -r)
-                ctx.lineTo(r, r)
+                ctx.moveTo(-rx, ry)
+                ctx.lineTo(-rx, -ry)
+                ctx.lineTo(rx, -ry)
+                ctx.lineTo(rx, ry)
                 ctx.setLineDash([8, 6])
                 ctx.strokeStyle = "rgba(0,150,140,0.6)"
                 ctx.lineWidth = 2
                 ctx.stroke()
                 ctx.setLineDash([])
                 ctx.fillStyle = "rgba(0,150,140,0.45)"
-                ctx.fillRect(-r, -r - 10, 2 * r, 10) //the back plate, against a wall
+                ctx.fillRect(-rx, -ry - 10, 2 * rx, 10) //the back plate, against a wall
                 ctx.fillStyle = blocks.length >= max ? "rgba(255,255,255,0.35)" : "rgb(0,230,200)"
-                ctx.fillRect(-r + 4, -r - 7, (2 * r - 8) * progress, 4)
-                ctx.fillRect(-r - 2, r - 2, 6, 4) //the corners of its mouth
-                ctx.fillRect(r - 4, r - 2, 6, 4)
+                ctx.fillRect(-rx + 4, -ry - 7, (2 * rx - 8) * progress, 4)
+                ctx.fillRect(-rx - 2, ry - 2, 6, 4) //the corners of its mouth
+                ctx.fillRect(rx - 4, ry - 2, 6, 4)
                 if (blocks.length < max && progress > 0.5) { //the next block fades in
                     ctx.strokeStyle = `rgba(0,150,140,${(progress - 0.5) * 1.2})`
                     ctx.lineWidth = 2
-                    ctx.strokeRect(-half, -half, size, size)
+                    ctx.strokeRect(-halfW, -halfH, width, height)
                 }
                 ctx.restore()
             },
