@@ -1,4 +1,7 @@
 level editor
+  left mouse always selects, right mouse or ctrl drag draws, C switches map or block
+    no more tool cycling, the ruler is a button, right click a vertex to remove it
+  history opens in the info box instead of popping up over the status bar
   spinner has vertices like a block, so it can be any shape, not just a rect
   the code buttons say edit code, revert code is just revert, the level's default button is next to edit code
   maps, blocks, paths, and lasers have an angle in the info box, type one to turn it to that angle

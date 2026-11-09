@@ -2505,6 +2505,8 @@ the panels show while body has .level-editor, the HUD it replaces is hidden */
     --le-on-hover: #bdbbd1;
     --le-on-ink: #2a2840;
     --le-on-bar: #6a6698; /* the edge on the selected row */
+    --le-on-status: #b9b7d0; /* --le-on on the gray status bar, a little deeper so it reads as the same lavender as on the white panels */
+    --le-on-status-hover: #adabc6;
     --le-label: #6a6973;
     /* the grays, darkest to lightest */
     --le-soft: #555; /* secondary text, like the analysis' values */
@@ -2564,9 +2566,9 @@ body.level-editor .le-panel {
     box-sizing: border-box;
     zoom: 1.2; /* bigger, easier to read, it's 31px tall */
     height: 26px;
-    padding: 0 10px;
+    padding: 0 0 0 10px; /* history on the right is flush with the window's edge */
     align-items: center;
-    gap: 42px; /* the mouse, grid, zoom, and tools on the left, issues, history, and tab hide on the right */
+    gap: 42px; /* tab hide, grid, zoom, tools, and the mouse on the left, issues and history on the right */
     border-top: 1px solid var(--le-ink);
     background-color: var(--le-paper);
     color: #000;
@@ -2680,11 +2682,33 @@ body.level-editor .le-status {
     border-bottom: none;
 }
 
+/* icon buttons joined to text buttons, ghost after fit and the ruler after snap, the icon centered like in .le-tool-icons */
+.le-status-item>.le-segment>[data-command="ghost"],
+.le-status-item>.le-segment>[data-command="ruler"] {
+    display: flex;
+    align-items: center;
+    padding-left: 6px;
+    padding-right: 6px;
+}
+
 .le-status-item>.le-tool-icons>.le-button,
 .le-status-item>.le-history-box>[data-command="undo"],
 .le-status-item>.le-history-box>[data-command="redo"] {
     padding-left: 6px;
     padding-right: 6px;
+}
+
+/* the right mouse button, only a picture of what draws, the button next to it is what it draws */
+.le-mouse-icon {
+    display: flex;
+    align-items: center;
+    padding: 0 2px;
+}
+
+.le-draw-mouse {
+    display: block;
+    height: 16px;
+    width: auto;
 }
 
 /* the drawings grow with the buttons, the same width kept from their viewBox */
@@ -2709,7 +2733,7 @@ body.level-editor .le-status {
     font-family: monospace;
 }
 
-/* tab hide, on the far right, clicking it hides the panels too */
+/* tab hide, on the far left, clicking it hides the panels too */
 .le-status-tab {
     flex: none;
     padding: 0;
@@ -2938,7 +2962,7 @@ body.level-editor.le-panels-hidden .le-status {
     display: none;
     position: absolute;
     z-index: 2;
-    right: 10px;
+    left: 10px; /* where tab hide was in the status bar */
     bottom: 10px;
     padding: 2px 8px;
     border-radius: 4px;
@@ -2955,8 +2979,7 @@ body.level-editor.le-panels-hidden .le-hint {
 /* the pause menu covers the left and right panels, so they hide while it's open, see build.pauseGrid() */
 body.level-editor.pause-open .le-panel,
 body.level-editor.pause-open .le-status,
-body.level-editor.pause-open .le-hint,
-body.level-editor.pause-open .le-history-pop {
+body.level-editor.pause-open .le-hint {
     display: none;
 }
 
@@ -3047,27 +3070,6 @@ body.level-editor.pause-open .le-history-pop {
 
 .le-explore-group[open] {
     margin-bottom: 3px;
-}
-
-/* undo, redo, and history at the right end of the status bar, the history list pops up over them */
-.le-history-pop {
-    position: absolute;
-    z-index: 4;
-    right: 10px;
-    bottom: 38px;
-    width: 300px;
-    zoom: 1.1;
-    background-color: var(--card-color);
-    box-shadow: 0 2px 6px var(--le-shadow), 0 1px 2px var(--le-shadow);
-}
-
-.le-history-pop[hidden] {
-    display: none;
-}
-
-body:not(.level-editor) .le-history-pop,
-body.level-editor.le-panels-hidden .le-history-pop {
-    display: none;
 }
 
 .le-status .le-history-box {
@@ -3241,6 +3243,14 @@ body.level-editor.le-invincible #level-editor-left {
 
 .le-tool-icons .le-button.le-on {
     background-color: var(--le-on);
+}
+
+/* the status bar is gray, not white, so its on buttons get a deeper lavender to look the same */
+.le-status .le-button.le-on {
+    background-color: var(--le-on-status);
+}
+.le-status .le-button.le-on:hover {
+    background-color: var(--le-on-status-hover);
 }
 
 .le-tool-icon {
@@ -3805,67 +3815,6 @@ body.level-editor.le-invincible #level-editor-left {
     align-items: baseline;
 }
 
-/* history menu, a list of every change, click one to rewind to it */
-.le-history {
-    display: flex;
-    flex-direction: column;
-    gap: 1px;
-    border: 1px solid var(--le-rule-light);
-    background-color: var(--le-rule-light);
-    max-height: 137px; /* the last 10 steps, about 12.8px each with 1px gaps, scroll for more */
-    overflow-y: auto;
-    scrollbar-width: thin;
-}
-
-/* long steps wrap, so the details at the end show */
-.le-step {
-    flex: none;
-    text-align: left;
-    font-family: monospace;
-    font-size: 8px;
-    overflow-wrap: anywhere;
-    border: none;
-}
-
-/* the current step, the next one undo takes away, lavender gray like on */
-.le-button.le-step.le-on {
-    background-color: var(--le-on);
-    color: var(--le-on-ink);
-}
-
-.le-step.le-undone {
-    color: var(--le-off);
-}
-
-/* the history menu's saved versions, under this session's steps, they stay after the editor closes, automatic ones are faded */
-.le-versions-head {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 4px 4px 3px 6px;
-    font-size: 9px;
-}
-
-.le-version-name {
-    flex: 1;
-    min-width: 0;
-    margin: 0 4px;
-    padding: 1px 4px;
-    font-family: monospace;
-    font-size: 9px;
-    border: 1px solid var(--le-rule-light);
-    border-radius: 3px;
-}
-
-.le-versions-head .le-button {
-    font-size: 9px;
-    padding: 1px 6px;
-}
-
-.le-versions {
-    max-height: 96px;
-}
-
 .le-storage {
     font-size: 11px;
     color: var(--le-faint);
@@ -4234,7 +4183,34 @@ body.level-editor #level-editor-code:not(.le-open) {
     color: var(--le-faint);
 }
 
-.le-analysis-line {
+/* history in the inspector, see inspectHistory(), its lines are like the analysis' */
+.le-history-lines {
+    margin-top: 2px;
+}
+
+/* this session's steps scroll on their own, so saved versions stay close */
+.le-history-steps {
+    max-height: 40vh;
+    overflow-y: auto;
+    scrollbar-width: thin;
+}
+
+.le-history-line.le-undone {
+    color: var(--le-off);
+}
+
+.le-version-name {
+    flex: 1;
+    min-width: 0;
+    padding: 1px 4px;
+    font-family: monospace;
+    font-size: 11px;
+    border: 1px solid var(--le-rule-light);
+    border-radius: 3px;
+}
+
+.le-analysis-line,
+.le-history-line {
     display: block;
     width: 100%;
     box-sizing: border-box;
@@ -4248,15 +4224,18 @@ body.level-editor #level-editor-code:not(.le-open) {
     line-height: 1.35;
 }
 
-button.le-analysis-line {
+button.le-analysis-line,
+button.le-history-line {
     cursor: pointer;
 }
 
-button.le-analysis-line:hover {
+button.le-analysis-line:hover,
+button.le-history-line:hover {
     background-color: var(--le-hover);
 }
 
-.le-analysis-line.le-current {
+.le-analysis-line.le-current,
+.le-history-line.le-current {
     background-color: var(--le-on);
     color: var(--le-on-ink);
 }

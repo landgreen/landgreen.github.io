@@ -262,15 +262,16 @@ Object.assign(levelEditor, {
         const row = document.querySelector("#level-editor-left .le-draws")
         if (row) row.innerHTML = levelEditor.recentAddsHtml()
     },
-    toolIcon(tool) { //tiny drawings for the status bar's draw tools, simple enough to read from far away
+    toolIcon(tool) { //tiny drawings for the status bar's mouse, what the right button draws, and the ruler, simple enough to read from far away
         const icons = {
-            select: `<rect x="4.5" y="0.5" width="8" height="13" rx="4" fill="#fff" stroke="#333"/><path d="M4.5 5.5 H12.5 M8.5 0.5 V5.5" stroke="#333"/><path d="M8.5 0.5 A4 4 0 0 0 4.5 4.5 V5.5 H8.5 Z" fill="#0cf"/>`,
             map: `<rect x="1.5" y="2" width="14" height="10" fill="${color.map}"/>`,
             block: `<rect x="2.5" y="2.5" width="12" height="9" fill="${color.block}" stroke="${color.blockS}" stroke-width="1.5"/>`,
-            measure: `<rect x="0.5" y="3.5" width="16" height="7" fill="#fd4" stroke="#333"/><path d="M4.5 3.5 V6.5 M8.5 3.5 V7.5 M12.5 3.5 V6.5" stroke="#333"/>`,
-            pan: `<path d="M8.5 1 L6.5 3 M8.5 1 L10.5 3 M8.5 13 L6.5 11 M8.5 13 L10.5 11 M2 7 L4 5 M2 7 L4 9 M15 7 L13 5 M15 7 L13 9 M8.5 1 V13 M2 7 H15" fill="none" stroke="#333" stroke-width="1.3" stroke-linecap="round"/>`,
+            measure: `<rect x="0.5" y="3.5" width="16" height="7" fill="#e6e1c8" stroke="#333"/><path d="M4.5 3.5 V6.5 M8.5 3.5 V7.5 M12.5 3.5 V6.5" stroke="#333"/>`,
         }
         return `<svg class="le-tool-icon" viewBox="0 0 17 14" width="17" height="14" aria-label="${tool}">${icons[tool]}</svg>`
+    },
+    drawMouseIcon() { //the status bar's mouse, its right button lit, the right button or ctrl drag draws, its tooltip says so
+        return `<svg class="le-draw-mouse" viewBox="0 0 11 16" width="11" height="16" aria-label="right mouse or ctrl"><rect x="0.7" y="0.8" width="9.6" height="14.4" rx="4.8" fill="#fff"/><path d="M5.5 0.8 A4.8 4.8 0 0 1 10.3 5.6 V6.8 H5.5 Z" fill="#0cf"/><rect x="0.7" y="0.8" width="9.6" height="14.4" rx="4.8" fill="none" stroke="#333"/><path d="M0.7 6.8 H10.3 M5.5 0.8 V6.8" stroke="#333"/></svg>`
     },
     arrowIcon(name) { //undo curls back to the left, redo is it mirrored, in the text color so disabled grays them
         const flip = name === "redo" ? ` transform="matrix(-1 0 0 1 16 0)"` : ""
