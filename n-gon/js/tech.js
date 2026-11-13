@@ -13131,7 +13131,7 @@ const tech = {
             let menu = ''
             if (this.count && !build.isExperimentSelection) { //only changes while paused
                 const isLocked = !simulation.paused || simulation.isChoosing
-                menu = `<br><label onclick="event.stopPropagation()" style="${isLocked ? "opacity:0.5;" : "cursor:pointer;"}"><input type="checkbox" onchange="tech.inputHTML.autopilot(this)" ${tech.isAutopilotChoose ? "checked" : ""} ${isLocked ? "disabled" : ""}> it makes <strong>power up</strong> choices</label>`
+                menu = `<br><label onclick="event.stopPropagation()" style="${isLocked ? "opacity:0.5;" : "cursor:pointer;"}"><input type="checkbox" onchange="tech.inputHTML.autopilot(this)" ${tech.isAutopilotChoose ? "checked" : ""} ${isLocked ? "disabled" : ""}> <strong>n-gon</strong> <strong class='color-choice' data-help='choice'><span>ch</span><span>oo</span><span>ses</span></strong> ${powerUps.orb.tech()} ${powerUps.orb.field()} ${powerUps.orb.gun()} for you</label>`
             }
             return `<strong>n-gon</strong> plays for you${menu}`
         },
@@ -13144,6 +13144,7 @@ const tech = {
         effect() {
             autopilot.set(true)
             tech.isAutopilotChoose = true
+            simulation.inGameConsole(`<span class='color-var'>autopilot</span>.toggle()<em> //turn autopilot on or off</em>`, 360) //teaches the console command, quiet while a save loads
         },
         remove() {
             tech.isAutopilotChoose = false
