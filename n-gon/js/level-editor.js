@@ -10,7 +10,7 @@ Object.assign(levelEditor, {
     isActive: false,
     data: null, //the level being edited, the same object as levelData.data
     selection: [], //element ids
-    drawType: "map", //what the right mouse button (or ctrl drag) draws, "map" or "block", C or the status bar's picture switches it, the left button always selects
+    drawType: "map", //what the right mouse button (or ctrl drag) and the add menu's shapes make, "map" or "block", C or the add menu's C button switches it, the left button always selects
     isMeasuring: false, //the status bar's ruler button, the next left drag draws the ruler, then it's off again
     measure: null, //{ start, end } the ruler, it stays until the next one or esc
     timeScale: 1, //simulation menu, under 1 lowers the frame cap, over 1 takes extra game steps a frame, see applyTimeScale()
@@ -38,6 +38,8 @@ Object.assign(levelEditor, {
     isFullTest: false, //JS test plays the level's export JS like a run, with the panels still open, editing anything goes back to editing
     clearRun: null, //this test export's try at the exit, see reachedExit()
     isTestSpawning: true, //the simulation menu's mobs button, mobs and power ups spawn while testing, never while editing so it isn't a fight
+    isTestGuns: false, //give every gun at the start of test export
+    savedLoadout: null, //the guns and ammo to put back after an armed test
     testLevel: 5, //level.levelsCleared while editing, for mob types, difficulty, and damage, at 0 random mobs don't spawn
     vertex: null, //{ id, active, error } while editing a map or block's vertices, active is the clicked vertex, error is why typed vertices didn't work
     pathDraw: null, //{ points, handles, forId, forKey } while drawing a path, see the drawPath command, forId is the element whose ref prop forKey gets the path when it's done (drawRef)
@@ -101,6 +103,7 @@ Object.assign(levelEditor, {
         levelEditor.reset(data, !recent)
         levelEditor.isInvincible = levelEditor.recall("levelEditorInvincible", true) !== false //on unless it was turned off
         levelEditor.isTestSpawning = levelEditor.recall("levelEditorMobs", true) !== false
+        levelEditor.isTestGuns = levelEditor.recall("levelEditorGuns", false) === true
         const addTab = levelEditor.recall("levelEditorAddTab", "")
         levelEditor.addTab = levelEditor.addTabs.some(([name]) => name === addTab) ? addTab : ""
         const recentAdds = levelEditor.recall("levelEditorRecentAdd", null)
@@ -157,6 +160,7 @@ Object.assign(levelEditor, {
     },
     startLevel() { //called by level.start() in place of level.load()
         const data = levelEditor.data
+        levelEditor.restoreLoadout()
         level.levels = [data.name]
         level.onLevel = 0
         simulation.isCheating = true //editing isn't a run, so it doesn't count, store tech, or show the training choice at the exit
@@ -208,7 +212,7 @@ Object.assign(levelEditor, {
         levelEditor.keptPlayer = null
         levelEditor.loadMobPictures() //once, for the mobs list's pictures
         level.disableExit = true //the exit charges, but doesn't leave
-        levelEditor.clearRun = levelEditor.isFullTest ? { hash: levelEditor.clearHash(data), cycles: 0, deaths: 0, isAssisted: false, usedInvincibility: levelEditor.isInvincible } : null
+        levelEditor.clearRun = levelEditor.isFullTest ? { hash: levelEditor.clearHash(data), cycles: 0, deaths: 0, isAssisted: false, usedInvincibility: levelEditor.isInvincible, usedGuns: !!levelEditor.savedLoadout } : null
         simulation.removeEphemera("levelEditor", true)
         simulation.ephemera.push({ name: "levelEditor", do() { if (!simulation.isTimeSkipping) levelEditor.frame() } }) //2× time's extra steps aren't drawn
         document.body.classList.add("level-editor")
@@ -218,6 +222,7 @@ Object.assign(levelEditor, {
     },
     close() { //also called by simulation.splashReturn()
         if (!levelEditor.isActive) return
+        levelEditor.restoreLoadout()
         levelEditor.flush()
         clearTimeout(levelEditor.problemTimer)
         levelEditor.setCamera(false, false)
@@ -248,12 +253,41 @@ Object.assign(levelEditor, {
         simulation.clearNow = true
     },
     fullTestSession: null,
+    restoreLoadout() {
+        const saved = levelEditor.savedLoadout
+        if (!saved) return
+        levelEditor.savedLoadout = null
+        b.inventory = saved.inventory
+        b.inventoryGun = saved.inventoryGun
+        b.activeGun = b.inventory[b.inventoryGun] ?? null
+        b.guns.forEach((gun, i) => {
+            gun.have = b.inventory.includes(i)
+            gun.ammo = saved.ammo[i]
+        })
+        b.guns[9].railAmmoRemainder = saved.railAmmoRemainder
+        simulation.makeGunHUD()
+        simulation.switchGun()
+    },
     startFullTest(data) { //guard only the editor's test session, exported levels keep their ordinary callbacks
         levelData.unbuildAll()
         levelData.isEditor = false
         simulation.camera = levelEditor.gameCamera
         m.look = m.lookDefault
         simulation.isAutoZoom = levelEditor.gameAutoZoom //the export's simulation.zoomTransition() works, like a run
+        if (simulation.testing) {
+            simulation.testing = false
+            simulation.loop = simulation.normalLoop
+            if (simulation.isConstructionMode) document.getElementById("construct").style.display = "none"
+        }
+        if (levelEditor.isTestGuns) {
+            levelEditor.savedLoadout = {
+                inventory: b.inventory.slice(),
+                inventoryGun: b.inventoryGun,
+                ammo: b.guns.map(gun => gun.ammo),
+                railAmmoRemainder: b.guns[9].railAmmoRemainder,
+            }
+            b.giveGuns("all", 1000) //same loadout as G in testing mode
+        }
         const session = levelEditor.fullTestSession = { stopped: false, effects: new Set(simulation.ephemera) }
         const isCurrent = () => levelEditor.isFullTest && levelEditor.fullTestSession === session && !session.stopped
         const fail = error => {
@@ -346,7 +380,7 @@ Object.assign(levelEditor, {
         if (levelEditor.clearHash(levelEditor.data) !== run.hash) return //it changed during the try
         const seconds = Math.round(run.cycles / 6) / 10
         const usedInvincibility = run.usedInvincibility || levelEditor.isInvincible
-        const isClean = !usedInvincibility && !run.isAssisted
+        const isClean = !usedInvincibility && !run.isAssisted && !run.usedGuns
         const clears = levelEditor.clears()
         for (const name of Object.keys(clears)) if (!levelData.store.has(name)) delete clears[name] //deleted and renamed levels
         const old = clears[levelEditor.data.name]
@@ -358,7 +392,8 @@ Object.assign(levelEditor, {
             deaths: Math.min(same.deaths, run.deaths),
         }
         levelEditor.remember("levelEditorClears", clears)
-        simulation.inGameConsole(`<em>//cleared in ${seconds} s${isClean ? "" : usedInvincibility ? ", invincible" : ", teleported"}${run.deaths ? `, ${run.deaths} death${run.deaths === 1 ? "" : "s"}` : ""}</em>`)
+        const assists = [usedInvincibility && "invincible", run.isAssisted && "teleported", run.usedGuns && "test guns"].filter(Boolean)
+        simulation.inGameConsole(`<em>//cleared in ${seconds} s${assists.map(assist => `, ${assist}`).join("")}${run.deaths ? `, ${run.deaths} death${run.deaths === 1 ? "" : "s"}` : ""}</em>`)
         if (levelEditor.isAnalysisShown) levelEditor.renderRight()
     },
     clearLine() { //the top of the issues, has the level been played to the exit in test export since its last change
@@ -368,7 +403,7 @@ Object.assign(levelEditor, {
         const body = (status, label, value, text) => `<span class="le-analysis-status">${status}</span> <span class="le-analysis-label">${escape(label)}</span>${value ? ` <span class="le-analysis-value">${escape(value)}</span>` : ""}<span class="le-analysis-text">${escape(text)}</span>`
         const test = `<span class="le-analysis-add">▶ test export</span>`
         if (isCurrent && clear.cleanSeconds !== null) return `<div class="le-analysis-line le-ok">${body("ok", "cleared", `${clear.cleanSeconds} s`, `reached the exit in test export${clear.deaths ? "" : " without dying"}, nothing changed since`)}</div>`
-        if (isCurrent) return `<button class="le-analysis-line le-note" data-command="fullTest" title="play it to the exit with invincible off and no teleports">${body("note", "cleared", `${clear.seconds} s`, "with invincible on or a teleport, play it through without them for a clean clear")}${test}</button>`
+        if (isCurrent) return `<button class="le-analysis-line le-note" data-command="fullTest" title="play it to the exit with invincible and guns off and no teleports">${body("note", "cleared", `${clear.seconds} s`, "assisted clear, play through with invincible and guns off and no teleports for a clean clear")}${test}</button>`
         return `<button class="le-analysis-line le-warn" data-command="fullTest" title="play the export and reach the exit">${body("warn", "not cleared", "", clear ? "changed since it was cleared, reach the exit in test export again" : "reach the exit in test export, like a maker game won't share a level its maker hasn't beaten")}${test}</button>`
     },
     toSpawn() {
@@ -1348,9 +1383,12 @@ Object.assign(levelEditor, {
         },
         //view, tools, and testing
         drawType: {
-            label: "right mouse or ctrl drag draws a map or a block, click to switch", keys: ["c"], run(type) { //no type switches to the other one
+            label: "switch between map and block, for the shapes and right mouse or ctrl drag drawing", keys: ["c"], run(type) { //no type switches to the other one
                 levelEditor.drawType = type || (levelEditor.drawType === "map" ? "block" : "map")
-                levelEditor.renderStatus()
+                for (const button of document.querySelectorAll('#level-editor-left .le-shape[data-command="preset"]')) { //the shapes redraw as solid maps or outlined blocks
+                    button.innerHTML = levelEditor.shapeIcon(button.dataset.arg)
+                    button.title = levelEditor.shapeTip(button.dataset.arg)
+                }
             },
         },
         ruler: {
@@ -1393,6 +1431,14 @@ Object.assign(levelEditor, {
                 levelEditor.isTestSpawning = !levelEditor.isTestSpawning
                 levelEditor.remember("levelEditorMobs", levelEditor.isTestSpawning)
                 if (levelEditor.isTesting) levelEditor.restart()
+                levelEditor.renderLeft()
+            },
+        },
+        testGuns: {
+            label: "guns", run() {
+                levelEditor.isTestGuns = !levelEditor.isTestGuns
+                levelEditor.remember("levelEditorGuns", levelEditor.isTestGuns)
+                if (levelEditor.isFullTest) levelEditor.restart()
                 levelEditor.renderLeft()
             },
         },
@@ -2218,6 +2264,10 @@ Object.assign(levelEditor, {
         levelEditor.isFree = event.altKey
         levelEditor.isFast = event.shiftKey
         if (!levelEditor.isActive || simulation.paused || levelEditor.isTyping(event.target)) return
+        if (levelEditor.isFullTest && event.code === input.key.testing) { //test export needs the normal game loop
+            event.stopImmediatePropagation()
+            return
+        }
         const combo = levelEditor.keyCombo(event)
         if (!combo.includes("mod+") && Object.values(input.key).includes(event.code)) return //a key the player set for the game, like jump, stays a game key
         for (const name of Object.keys(levelEditor.commands)) {
@@ -2794,7 +2844,7 @@ Object.assign(levelEditor, {
                 <span class="le-row"><span class="le-label">seed</span><input class="le-number" aria-label="test seed" data-setting="testSeed" value="${levelEditor.escape(levelEditor.testSeed)}" placeholder="random" spellcheck="false" title="the same seed starts each test the same: mob types, which spots get mobs, bosses, power ups, and debris, what mobs do after is still random, empty is random"></span></div>
             <div class="le-grid le-two le-run le-flush-x">${levelEditor.button("test", levelEditor.isTesting ? `${stop} stop` : `${play} quick test`, "", levelEditor.isTesting)}${levelEditor.button("fullTest", isExport ? `${stop} stop` : `${play} test export`, "", isExport)}</div>
             <div class="le-grid le-time le-flush-x">${levelEditor.button("timeStop", "stop time", "", levelEditor.isTimeStopped, `everything but the player freezes, you can still edit, a speed starts it again${exportNote}`, { disabled: isExport })}${[0.1, 0.5, 1, 2].map(scale => levelEditor.button("timeScale", `${scale}×`, scale, !levelEditor.isTimeStopped && levelEditor.timeScale === scale, `game speed${exportNote}`, { disabled: isExport })).join("")}</div>
-            <div class="le-grid le-two le-flush-x">${levelEditor.button("invincible", "invincible", "", levelEditor.isInvincible, "the player takes no damage, in both tests too, the health bars hide")}${levelEditor.button("testSpawning", "mobs", "", levelEditor.isTestSpawning || isExport, `quick test spawns mobs and power ups${isExport ? ", test export always does" : ""}`, { disabled: isExport })}</div>
+            <div class="le-grid le-flush-x">${levelEditor.button("invincible", "invincible", "", levelEditor.isInvincible, "the player takes no damage, in both tests too, the health bars hide")}${levelEditor.button("testGuns", "guns", "", levelEditor.isTestGuns, "start test export with every gun and full ammo, changing this restarts the test")}${levelEditor.button("testSpawning", "mobs", "", levelEditor.isTestSpawning || isExport, `quick test spawns mobs and power ups${isExport ? ", test export always does" : ""}`, { disabled: isExport })}</div>
             <div class="le-grid le-flush-x le-flush-bottom">${levelEditor.button("mouseLook", "mouse look", "", levelEditor.isMouseLook, `the camera leans toward the mouse right away, no smoothing${exportNote}`, { disabled: isExport })}${levelEditor.debugLayers.map(([name, tip]) => levelEditor.button("debugDraw", name, name, levelEditor.debugDraw.has(name), tip + exportNote, { disabled: isExport })).join("")}</div>`
             },
         },
@@ -2804,7 +2854,7 @@ Object.assign(levelEditor, {
             render: () => { //spots, a boss, and a 2nd boss are all a level needs for mobs, and starting, random, and debris for power ups, they show the power ups they can be
                 const main = { startingPowerUps: ["gun", "tech", "ammo", "heal"], randomPowerUp: ["heal", "ammo"], debris: ["block", "heal", "ammo"] }
                 return `<div class="le-add-part">
-                        <div class="le-shapes le-flush-x">${levelElements.presets.map(preset => levelEditor.button("preset", levelEditor.svgIcon(levelEditor.shapeIcons[preset.name] || "", "currentColor"), preset.name, false, `${preset.name}, as map, or block when the right button draws blocks`, { className: "le-shape" })).join("")}</div>
+                        <div class="le-shapes le-flush-x">${levelElements.presets.map((preset, i) => (i === 6 ? levelEditor.button("drawType", levelEditor.keyCap("drawType"), "", false, levelEditor.tip("drawType"), { className: "le-shape le-draw-type" }) : "") + levelEditor.button("preset", levelEditor.shapeIcon(preset.name), preset.name, false, levelEditor.shapeTip(preset.name), { className: "le-shape" })).join("")}</div>
                     </div>
                     <div class="le-add-part">
                         <div class="le-grid le-tall le-flush-x">${["mobSpot", "boss", "secondaryBoss"].map(name => levelEditor.addButton(name, `${levelElements.types[name].label}<br>${levelEditor.mobExamplesHtml(name)}`)).join("")}</div>
@@ -3175,12 +3225,11 @@ Object.assign(levelEditor, {
         if (document.querySelector('#level-editor-left [data-section="load"]').open) levelEditor.renderLoadList()
         levelEditor.renderStatus()
     },
-    renderStatus() { //the bar along the bottom, like VS Code's: tab hide, grid, snap, and the ruler, zoom, fit, and ghost, what the right mouse button draws, and the mouse, then on the right the analysis and history, flush with the window's edge
+    renderStatus() { //the bar along the bottom, like VS Code's: tab hide, grid, snap, and the ruler, zoom, fit, and ghost, and the mouse, then on the right the analysis and history, flush with the window's edge
         document.getElementById("level-editor-status").innerHTML = `<button class="le-status-item le-status-tab" data-command="panels" title="${levelEditor.escape(levelEditor.tip("panels"))}">${levelEditor.keyCap("panels")} hide</button>
             <span class="le-status-item" title="snap size, hold alt to place freely"><input class="le-number" aria-label="grid size" data-setting="grid" value="${levelEditor.grid}" spellcheck="false"><span class="le-segment">${levelEditor.button("grid", "grid", "", levelEditor.isGridShown)}${levelEditor.button("smartSnap", "snap", "", levelEditor.isSmartSnap)}${levelEditor.button("ruler", levelEditor.toolIcon("measure"), "", levelEditor.isMeasuring)}</span></span>
             <span class="le-status-item">${levelEditor.button("levelZoom", levelEditor.statusIcon("zoom"), "", false, undefined, { className: "le-icon-button" })}<input class="le-number" aria-label="editor zoom" data-setting="zoom" value="${Math.round(levelEditor.zoomScale)}" spellcheck="false" title="the editor's zoom, the wheel zooms too"><span class="le-segment">${levelEditor.button("fit", "fit")}${levelEditor.button("ghost", levelEditor.statusIcon("ghost"), "", levelEditor.isCamera, undefined, { disabled: levelEditor.isFullTest })}</span>${levelEditor.keyCap("ghost")}</span>
-            <span class="le-status-item"><span class="le-mouse-icon" title="right mouse or ctrl drag draws, a click selects">${levelEditor.drawMouseIcon()}</span><span class="le-segment le-tool-icons">${levelEditor.button("drawType", levelEditor.toolIcon(levelEditor.drawType), "", false, `right mouse or ctrl drag draws a ${levelEditor.drawType}, click or ${levelEditor.keyText("c")} to switch`)}</span>${levelEditor.keyCap("drawType")}</span>
-            <span class="le-status-mouse" data-status-mouse title="where the mouse is, snapped to the grid"></span>
+            <span class="le-status-mouse" data-status-mouse title="where the mouse is"></span>
             <span class="le-status-item le-status-right">
                 <button class="le-button le-status-unsaved" data-command="code" data-status-unsaved${levelData.store.isFailing ? "" : " hidden"} title="the browser wouldn't save the level, storage is full or blocked, export it and copy it somewhere safe">not saved, export a backup</button>
                 <button class="le-button le-status-problems${levelEditor.problemIsFix ? " le-status-fix" : ""}" data-command="analyze" data-status-problems title="${levelEditor.escape(levelEditor.tip("analyze"))}">${levelEditor.problemText}</button>
@@ -3322,12 +3371,12 @@ Object.assign(levelEditor, {
     updatePanels() { //tab hides the panels, a hint says how to get them back, invincible hides the health bars and the left panel moves up
         document.body.classList.toggle("le-panels-hidden", levelEditor.isActive && levelEditor.isPanelsHidden)
         document.body.classList.toggle("le-invincible", levelEditor.isActive && levelEditor.isInvincible)
+        document.body.classList.toggle("le-export-guns", levelEditor.isActive && levelEditor.isFullTest && levelEditor.isPanelsHidden)
         const hint = document.getElementById("level-editor-hint")
         if (hint) hint.innerHTML = `${levelEditor.isFullTest ? "test export · " : ""}${levelEditor.keyCap("panels")} show`
     },
     updateStatusMouse(point) { //each frame, only touches the page when it changes
-        const p = levelEditor.snapPoint(point)
-        const text = levelEditor.isMouseOnCanvas ? `${levelEditor.formatValue(p.x)}, ${levelEditor.formatValue(p.y)}` : ""
+        const text = levelEditor.isMouseOnCanvas ? `${Math.round(point.x)}, ${Math.round(point.y)}` : ""
         if (text === levelEditor.statusMouse) return
         levelEditor.statusMouse = text
         const span = document.querySelector("#level-editor-status [data-status-mouse]")

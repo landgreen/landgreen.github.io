@@ -176,6 +176,12 @@ summary {
     background-color: #eee;
 }
 
+/* a toggle that's on, like experiment mode's show all, the experiment background gray */
+.SVG-button.is-on,
+.SVG-button.is-on:hover {
+    background-color: var(--build-bg-color);
+}
+
 .SVG-button-splash {
     border: 2px #333 solid;
     border-radius: 8px;
@@ -341,6 +347,12 @@ body.has-autosave.has-level-editor #start-button {
     background-color: var(--hover-card-color);
 }
 
+/* the power up choice the autopilot is about to pick, darker than a hover so it stands out */
+.choose-grid-module.autopilot-hover,
+.autopilot-hover .card-text {
+    background-color: #c5c5d3;
+}
+
 .choose-grid-module[onclick],
 .experiment-grid-module[onclick],
 .cancel-card[onclick],
@@ -465,6 +477,34 @@ body.has-autosave.has-level-editor #start-button {
     background-color: var(--card-color);
 }
 
+/* the pause menu's sort bar is one line, the search box fills what's left */
+#pause-grid-right .sort {
+    display: flex;
+    align-items: center;
+    column-gap: 4px;
+}
+
+#pause-sort-input {
+    flex: 1;
+    min-width: 0;
+}
+
+/* the experiment sort bar wraps like text, the search box stretches to the end of its row */
+.experiment-start-box .sort {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    column-gap: 6px;
+    row-gap: 4px;
+    padding-top: 4px;
+    padding-bottom: 4px;
+}
+
+#sort-input {
+    flex: 1 1 5em;
+    min-width: 0;
+}
+
 .sort-button {
     border: 1px #333 solid;
     border-radius: 0.4em;
@@ -492,6 +532,9 @@ body.has-autosave.has-level-editor #start-button {
     display: none;
     grid-template-columns: repeat(auto-fit, 384px);
     grid-auto-flow: row;
+    /* always cover the whole screen, a short search would show the paused game behind it */
+    min-height: 100vh;
+    align-content: start;
     /* grid-auto-rows: minmax(auto, auto); */
     position: relative;
     /* bottom: 0px; */
@@ -515,7 +558,24 @@ body.has-autosave.has-level-editor #start-button {
     overflow: hidden;
 }
 
-.experiment-grid-hide {
+/* off screen tech cards skip layout, paint, and animation until they scroll close,
+   the placeholder is a tech card's usual height (.card-text min-height + 1em), auto remembers
+   each card's real size after it's drawn once, the media queries below match their min-height,
+   not with sideways descriptions, its rotated text overflows the card and would get clipped */
+body:not(.sideways-descriptions) .experiment-grid-module[id^="tech-"] {
+    content-visibility: auto;
+    contain-intrinsic-block-size: auto calc(88px + 1em);
+}
+
+/* show all is off, tech you can't take yet and JUNK tech you haven't picked are hidden */
+#experiment-grid.hide-unavailable .experiment-grid-disabled,
+#experiment-grid.hide-unavailable .experiment-junk:not(.build-tech-selected) {
+    display: none;
+}
+
+/* tech that doesn't match the experiment or pause menu search, the ids beat .card-background's display: flex */
+#experiment-grid .search-filtered,
+#pause-grid-right .search-filtered {
     display: none;
 }
 
@@ -672,6 +732,10 @@ body.has-autosave.has-level-editor #start-button {
     .card-text {
         min-height: 75px;
     }
+
+    body:not(.sideways-descriptions) .experiment-grid-module[id^="tech-"] {
+        contain-intrinsic-block-size: auto calc(75px + 1em);
+    }
 }
 
 /* (min-width: 30em) and (max-width: 80em) */
@@ -704,6 +768,10 @@ body.has-autosave.has-level-editor #start-button {
 
     .card-text {
         min-height: 64px;
+    }
+
+    body:not(.sideways-descriptions) .experiment-grid-module[id^="tech-"] {
+        contain-intrinsic-block-size: auto calc(64px + 1em);
     }
 }
 
@@ -1453,7 +1521,6 @@ button [data-help] {
     display: inline-block;
     animation: bounce 3s infinite;
     transform-origin: bottom;
-    color: #555;
 }
 
 .color-choice span:nth-child(1) {
@@ -1475,7 +1542,6 @@ button [data-help] {
 
     15% {
         transform: translateY(-2px);
-        color: #aaa;
     }
 
     30% {
@@ -1541,23 +1607,20 @@ button [data-help] {
 
 .color-cloaked {
     letter-spacing: 2px;
-    animation: cloak 6s linear infinite alternate;
-    color: rgba(0, 0, 0, 0);
+    animation: cloak 9s linear infinite;
+    color: #000;
 }
 
+/* opacity only, so it runs on the GPU, 5s solid, 1s fade out, 2s hidden, 1s fade in */
 @keyframes cloak {
-    0% {
-        text-shadow: 0px 0px 0px #000;
-        opacity: 1;
-    }
-
-    50% {
-        text-shadow: 0px 0px 0px #000;
-        opacity: 1;
-    }
-
+    0%,
+    55.556%,
     100% {
-        text-shadow: 0px 0px 15px #000;
+        opacity: 1;
+    }
+
+    66.667%,
+    88.889% {
         opacity: 0;
     }
 }
@@ -1886,20 +1949,32 @@ button [data-help] {
 }
 
 .alt {
-    animation: alt 8s linear infinite alternate;
+    position: relative;
+    white-space: nowrap;
     font-weight: 400;
     letter-spacing: 1px;
 }
 
+/* a copy of the word drifts under it, moved with transform so it runs on the GPU
+   instead of repainting a text-shadow every frame, needs data-text with the same words */
+.alt::before {
+    content: attr(data-text);
+    position: absolute;
+    left: 0;
+    top: 0;
+    line-height: normal;
+    pointer-events: none;
+    animation: alt 8s linear infinite alternate;
+}
+
 @keyframes alt {
     0% {
-        text-shadow: 3px 0px 0px;
+        transform: translateX(3px);
     }
 
     100% {
-        text-shadow: -3px 0px 0px;
+        transform: translateX(-3px);
     }
-
 }
 
 /* localization drop down, a details element because select options can't show orbs */
@@ -2581,33 +2656,40 @@ body.level-editor .le-status {
     display: flex;
 }
 
-/* smaller screens shrink the status bar, each step starts about when the mouse readout is squeezed out at the size before it */
-@media (max-width: 1320px) {
+/* smaller screens shrink the status bar, each step starts just before the size before it would squeeze out the mouse's x, y,
+   measured with a long x, y (-12345, -12345) and issues count (12 fix · 12 warn), the gaps close up first, then the text shrinks */
+@media (max-width: 1199px) {
+    .le-status {
+        gap: 18px; /* needs 1035px */
+    }
+}
+
+@media (max-width: 1049px) {
     .le-status {
         zoom: 1;
-        gap: 30px;
+        gap: 20px; /* needs 877px */
     }
 }
 
-@media (max-width: 1020px) {
+@media (max-width: 889px) {
     .le-status {
         zoom: 0.9;
-        gap: 18px;
-        padding: 0 6px;
+        gap: 16px; /* needs 759px */
+        padding-left: 6px;
     }
 }
 
-@media (max-width: 840px) {
+@media (max-width: 774px) {
     .le-status {
         zoom: 0.8;
-        gap: 12px;
+        gap: 12px; /* needs 660px */
     }
 }
 
-@media (max-width: 710px) {
+@media (max-width: 674px) {
     .le-status {
         zoom: 0.7;
-        gap: 10px;
+        gap: 10px; /* needs 573px */
     }
 }
 
@@ -2682,7 +2764,7 @@ body.level-editor .le-status {
     border-bottom: none;
 }
 
-/* icon buttons joined to text buttons, ghost after fit and the ruler after snap, the icon centered like in .le-tool-icons */
+/* icon buttons joined to text buttons, ghost after fit and the ruler after snap, the icon centered */
 .le-status-item>.le-segment>[data-command="ghost"],
 .le-status-item>.le-segment>[data-command="ruler"] {
     display: flex;
@@ -2691,24 +2773,10 @@ body.level-editor .le-status {
     padding-right: 6px;
 }
 
-.le-status-item>.le-tool-icons>.le-button,
 .le-status-item>.le-history-box>[data-command="undo"],
 .le-status-item>.le-history-box>[data-command="redo"] {
     padding-left: 6px;
     padding-right: 6px;
-}
-
-/* the right mouse button, only a picture of what draws, the button next to it is what it draws */
-.le-mouse-icon {
-    display: flex;
-    align-items: center;
-    padding: 0 2px;
-}
-
-.le-draw-mouse {
-    display: block;
-    height: 16px;
-    width: auto;
 }
 
 /* the drawings grow with the buttons, the same width kept from their viewBox */
@@ -3076,7 +3144,7 @@ body.level-editor.pause-open .le-hint {
     flex: none;
 }
 
-body.level-editor #guns,
+body.level-editor:not(.le-export-guns) #guns,
 body.level-editor #field,
 body.level-editor #right-HUD,
 body.level-editor #right-HUD-constraint {
@@ -3227,22 +3295,11 @@ body.level-editor.le-invincible #level-editor-left {
     stroke: var(--le-fix);
 }
 
-/* the status bar's draw tools are tiny drawings, the one in use needs a light on so the dark map still shows */
-.le-tool-icons .le-button {
-    display: flex;
-    align-items: center;
-    padding: 2px 5px;
-}
-
 .le-history-box [data-command="undo"],
 .le-history-box [data-command="redo"] {
     display: flex;
     align-items: center;
     padding: 2px 5px;
-}
-
-.le-tool-icons .le-button.le-on {
-    background-color: var(--le-on);
 }
 
 /* the status bar is gray, not white, so its on buttons get a deeper lavender to look the same */
