@@ -787,6 +787,23 @@ const autopilot = {
         const under = autopilot.surfaceAt(node.x, node.y, 2, 2 * autopilot.cell)
         return under && under.y > node.y + 4 ? under.y : node.y //floors found by the grid are 0 to 4 below the real surface
     },
+    isUphillWalk(from, to) { //a continuous incline can span multiple grid rows without a step
+        if (from.elevator || to.elevator) return false
+        const tolerance = autopilot.cell
+        const slope = autopilot.surfaceAt(to.x, to.y, 8, tolerance)
+        if (!slope) return false
+        const { edge, y } = slope
+        const dir = Math.sign(to.x - from.x)
+        const grade = (edge.y1 - edge.y2) * dir / (edge.x2 - edge.x1)
+        if (grade <= 0 || grade > 1.05) return false
+        const startX = Math.max(edge.x1, Math.min(edge.x2, from.x))
+        const startY = autopilot.edgeY(edge, startX)
+        if (Math.abs(startY - from.y) > tolerance) return false
+        if (Math.abs(startX - from.x) < 0.5) return true
+        const before = autopilot.surfaceAt(from.x, from.y, 8, tolerance)
+        const meets = autopilot.surfaceAt(startX - dir, startY, 4, 4, edge)
+        return !!before && before.edge === meets?.edge
+    },
     isLipTakeoff: true, //plan jumps off the exact top of a corner, false to compare in tools/autopilot-test.js
     lipDrop: 0.3, //a surface going down steeper than this, about 17 degrees, is where flat ground ends, running off it leaves the ground
     lipFor(x, feet, dir) { //where the ground the feet are on ends going dir, a drop or a steep slope down, { x, y, isBehind }, or null if it doesn't end within 400
@@ -1430,11 +1447,14 @@ const autopilot = {
         const from = autopilot.nodes[edge.from], to = autopilot.nodes[edge.to]
         return `${from.cx},${from.cy},${to.cx},${to.cy},${edge.type},${edge.dir},${edge.steer || 0},${(edge.most || 0).toFixed(3)},${edge.isRun ? 1 : 0},${edge.coyote || 0},${edge.delay || 0},${edge.hold || 0},${edge.blockJumps || 0},${edge.isMomentum ? 1 : 0},${edge.turnY ?? ""}`
     },
+    similarJumpHold(a, b) {
+        return Math.abs((a.hold ?? 60) - (b.hold ?? 60)) < 4
+    },
     sameManeuver(a, b) {
         if (a.type !== b.type || a.dir !== b.dir) return false
         if (a.type === autopilot.FALL && a.steer !== b.steer) return false
         //Keep distinct takeoffs available, even when they go to the same platform.
-        if (!!a.isRun !== !!b.isRun || !!a.coyote !== !!b.coyote || !!a.hold !== !!b.hold || !!a.delay !== !!b.delay || !!a.isMomentum !== !!b.isMomentum || a.turnY !== b.turnY || a.blockJumps !== b.blockJumps) return false
+        if (!!a.isRun !== !!b.isRun || !!a.coyote !== !!b.coyote || !autopilot.similarJumpHold(a, b) || !!a.delay !== !!b.delay || !!a.isMomentum !== !!b.isMomentum || a.turnY !== b.turnY || a.blockJumps !== b.blockJumps) return false
         const from = autopilot.nodes[a.from], otherFrom = autopilot.nodes[b.from]
         const to = autopilot.nodes[a.to], otherTo = autopilot.nodes[b.to]
         return Math.abs(from.x - otherFrom.x) <= 50 && Math.abs(from.y - otherFrom.y) <= 25 &&
@@ -1443,11 +1463,19 @@ const autopilot = {
     retryCost(edge) {
         const cycle = simulation.cycle
         for (const attempt of autopilot.recentFailures) {
-            if (cycle < attempt.until && autopilot.sameManeuver(edge, attempt.edge)) return 360
+            if (cycle >= attempt.until) continue
+            if (autopilot.sameManeuver(edge, attempt.edge)) return 360
+            //Changing steering or choosing a nearby graph node won't make the same short hold reach higher.
+            if (!attempt.isTooLow || edge.type !== autopilot.JUMP || edge.isElevatorTransfer ||
+                (edge.hold ?? 60) >= attempt.edge.hold + 4) continue
+            const from = autopilot.nodes[edge.from], to = autopilot.nodes[edge.to]
+            const previousFrom = autopilot.nodes[attempt.edge.from], previousTo = autopilot.nodes[attempt.edge.to]
+            if (Math.abs(from.x - previousFrom.x) <= 50 && Math.abs(from.y - previousFrom.y) <= 25 &&
+                Math.abs(to.x - previousTo.x) <= 75 && Math.abs(to.y - previousTo.y) <= 30) return 360
         }
         return 0
     },
-    addFail(edge, count = 1) {
+    addFail(edge, count = 1, isTooLow = false) {
         const key = autopilot.edgeKey(edge)
         edge.fail = Math.max(edge.fail || 0, autopilot.failed.get(key) || 0) + count
         autopilot.failed.set(key, edge.fail)
@@ -1456,7 +1484,8 @@ const autopilot = {
             if (other !== edge && autopilot.edgeKey(other) === key) other.fail = edge.fail
         }
         const recent = autopilot.recentFailures.filter(attempt => simulation.cycle < attempt.until && !autopilot.sameManeuver(edge, attempt.edge))
-        recent.push({ edge, until: simulation.cycle + 300 })
+        const shortHold = isTooLow && edge.hold < 56 && !edge.isElevatorTransfer && !edge.blockJumps
+        recent.push({ edge, until: simulation.cycle + 300, isTooLow: shortHold })
         autopilot.recentFailures = recent.slice(-8)
         autopilot.commit = autopilot.backUp = null
         autopilot.window.key = ""
@@ -3162,7 +3191,7 @@ const autopilot = {
         }
         const landing = autopilot.flight
         const landingTarget = nodes[landing?.to]
-        if (autopilot.isLandingSpan && landing?.isJumped && landingTarget && !landingTarget.dead && !landingTarget.elevator && mc - landing.mStart >= 10 &&
+        if (autopilot.isLandingSpan && landing?.isJumped && player.velocity.y >= -1 && landingTarget && !landingTarget.dead && !landingTarget.elevator && mc - landing.mStart >= 10 &&
             (m.onGround || (landing.slopeLandingUntil && mc - m.lastOnGroundCycle <= 4))) {
             const support = m.standingOn?.parent || m.standingOn
             const uphill = support && autopilot.landingUphill(x, feet, landingTarget, support)
@@ -3175,7 +3204,7 @@ const autopilot = {
                 }
             }
         }
-        if (!m.onGround || (autopilot.flight && mc - autopilot.flight.mStart < 10)) return autopilot.fly(feet, go) //the feet stay on the ground for a few cycles after a jump
+        if (!m.onGround || (landing && (mc - landing.mStart < 10 || landing.isJumped && player.velocity.y < -1))) return autopilot.fly(feet, go) //slope contact can persist briefly during takeoff
         //on the ground
         if (autopilot.flight) { //just landed
             const flight = autopilot.flight
@@ -3197,8 +3226,10 @@ const autopilot = {
                 }
                 if (flight.takeoff) flight.takeoff.isGood = isGood
                 if (edge.type === autopilot.JUMP && autopilot.recoverLoadedJump(flight, isGood)) return
-                if (!isGood && autopilot.dist && !(autopilot.dist[autopilot.cur] < autopilot.dist[edge.from])) {
-                    autopilot.addFail(edge)
+                const madeProgress = autopilot.dist && autopilot.dist[autopilot.cur] < autopilot.dist[edge.from]
+                const cameUpShort = edge.type === autopilot.JUMP && !to.elevator && flight.apexY > to.y + 8
+                if (!isGood && (cameUpShort || (autopilot.dist && !madeProgress))) {
+                    autopilot.addFail(edge, 1, cameUpShort)
                     return
                 }
             }
@@ -3433,7 +3464,7 @@ const autopilot = {
         //so it keeps its running speed instead of slowing down to line up, jumps from farther off without that check land worse and look early
         const spotOf = e => e.takeoffX !== undefined ? e.takeoffX : nodes[e.from].x //where the planned jump leaves the ground
         const offTakeoff = ahead ? Math.abs(spotOf(ahead) - x) : Infinity
-        const isNearTakeoff = ahead?.type === autopilot.JUMP && !nodes[ahead.to].elevator && Math.abs(nodes[ahead.from].y - feet) < 30 &&
+        const isNearTakeoff = ahead?.type === autopilot.JUMP && !autopilot.retryCost(ahead) && !nodes[ahead.to].elevator && Math.abs(nodes[ahead.from].y - feet) < 30 &&
             (offTakeoff < 30 || (offTakeoff < 120 && Math.abs(vx) > 2 && autopilot.isMomentumJump && autopilot.canJumpFromHere(ahead, feet, 0, true)))
         if (isNearTakeoff && !ahead.coyote && autopilot.isJumpWindow && canJump && !riding && autopilot.canJumpFromHere(ahead, feet, 0, true)) { //still lands if the player is a little off, or a little faster or slower, a jump that just makes it in the simulation comes up short
             //the jump works from here, but jump in the middle of the stretch it works from, not at its first cycle, so it isn't early
@@ -3472,7 +3503,7 @@ const autopilot = {
         if (edge.type === autopilot.WALK) {
             autopilot.why = "walking"
             go(edge.dir)
-            if (from.y - to.y > 16 && canJump && (to.x - x) * edge.dir < 30 + 3 * Math.abs(vx)) { //a step up taller than the slanted foot rides over, hop it without slowing down
+            if (from.y - to.y > 16 && canJump && (to.x - x) * edge.dir < 30 + 3 * Math.abs(vx) && !autopilot.isUphillWalk(from, to)) { //hop a discrete step
                 input.up = true
                 autopilot.why = "hopping a step"
                 autopilot.pending = { edge, mcycle: mc, isJump: false } //in the air it keeps walking, see fly()
@@ -3494,7 +3525,7 @@ const autopilot = {
         if (edge.type === autopilot.JUMP) {
             const toSpot = spotOf(edge) - x //the arc was simulated from here, the middle of the node or the top of a corner
             const past = -toSpot * edge.dir //how far past the takeoff spot, in the jump's direction
-            const press = (fitted = autopilot.fitJumpHeight(edge, feet)) => {
+            const press = fitted => {
                 input.up = true
                 edge = fitted
                 if (!edge.delay && edge.turnY === undefined) go(edge.blockJumps ? edge.steer : edge.dir)
@@ -3504,7 +3535,9 @@ const autopilot = {
             if (edge.isRun && Math.abs(toSpot) < 80) autopilot.commitTo(edge) //a run-up, switching plans mid run backs it up again, standing jumps are better off taking the spot it slid to
             if (edge.isRun) {
                 if (vx * edge.dir > 5.5 && past + vx * edge.dir > -4) { //reaches the spot this cycle
-                    if (canJump) press()
+                    const fitted = canJump && autopilot.fitJumpHeight(edge, feet)
+                    if (fitted) press(fitted)
+                    else if (canJump && autopilot.retryCost(edge)) return autopilot.recoverMovement(feet, edge)
                     else go(edge.dir)
                 } else if (past > -20 && vx * edge.dir < 3) {
                     if (canJump && autopilot.keepMomentum(edge, feet, go)) return
@@ -3596,21 +3629,27 @@ const autopilot = {
         const apex = autopilot.p.jump ** 2 / (2 * autopilot.p.gravity)
         return !!autopilot.grid && autopilot.isBoxSolidExact(Math.min(x, x + dir * reach) - halfWidth, feet - apex - height, Math.max(x, x + dir * reach) + halfWidth, feet - height)
     },
-    fitJumpHeight(edge, feet) { //the same landing can need a different hold at the player's actual takeoff speed
+    fitJumpHeight(edge, feet) { //the same landing can need a different hold from the live takeoff or after a miss
         const { p, nodes, dist } = autopilot
         const x = player.position.x, vx = player.velocity.x
-        if (edge.delay || edge.blockJumps || (edge.turnY === undefined && !autopilot.jumpHasCeiling(x, feet, edge.dir))) return edge
+        const retry = autopilot.retryCost(edge)
+        if (edge.delay || edge.blockJumps || nodes[edge.to].elevator) return edge
+        if (!retry && edge.turnY === undefined && !autopilot.jumpHasCeiling(x, feet, edge.dir)) return edge
         const size = autopilot.size()
         const target = nodes[edge.to]
-        let best = edge.turnY === undefined ? edge : null, bestScore = Infinity
-        for (const hold of new Set([edge.hold, 6, 8, 10, 11, 12, 14, 16, 18, 20, undefined])) {
+        let best = !retry && edge.turnY === undefined ? edge : null, bestScore = Infinity
+        const holds = retry ? [6, 10, 14, 18, 22, 28, 34, undefined] : [edge.hold, 6, 8, 10, 11, 12, 14, 16, 18, 20, undefined]
+        for (const hold of new Set(holds)) {
+            if (retry && autopilot.similarJumpHold({ hold }, edge)) continue
             const hit = autopilot.arc(x, feet, vx, -p.jump, edge.steer, edge.most, true, size, 0, true, hold, 0, edge.turnY)
             if (!hit || hit.isWet || !Number.isFinite(dist[hit.node])) continue
-            if (dist[hit.node] > dist[edge.to] + 30 || Math.abs(nodes[hit.node].y - target.y) > 40 || (edge.turnY !== undefined && nodes[hit.node].cover >= 1000)) continue
+            const land = nodes[hit.node]
+            if (dist[hit.node] > dist[edge.to] + 30 || Math.abs(land.y - target.y) > 40 || (edge.turnY !== undefined && land.cover >= 1000)) continue
+            if (land.y < feet - 35 && hit.apexY > land.y - 8) continue //allow for slight differences between the arc and real takeoff
             if (!autopilot.boardingReady({ to: hit.node, travelFrames: hit.cycles, landingVy: hit.vy }, x)) continue
-            const candidate = { ...edge, to: hit.node, hold }
-            if ((hold !== edge.hold || hit.node !== edge.to) && autopilot.retryCost(candidate)) continue
-            const landing = autopilot.surfaceAt(hit.x, nodes[hit.node].y)
+            const candidate = { ...edge, to: hit.node, hold, travelFrames: hit.cycles, landingVy: hit.vy, hazardPath: hit.hazardPath }
+            if (autopilot.retryCost(candidate)) continue
+            const landing = autopilot.surfaceAt(hit.x, land.y)
             const slope = landing ? Math.abs((landing.edge.y2 - landing.edge.y1) / (landing.edge.x2 - landing.edge.x1)) : 0
             const score = hit.cycles + dist[hit.node] + autopilot.landingRisk(hit.node, edge.dir) + 0.15 * (feet - hit.apexY) + 0.2 * Math.abs(hit.x - target.x) + (slope > autopilot.lipDrop ? 60 : 0) + (hit.ceilingHit ? 45 : 0)
             if (score < bestScore) {
@@ -3662,6 +3701,11 @@ const autopilot = {
         const vx = player.velocity.x
         const x = player.position.x + vx * frames
         if (frames && !autopilot.isBoxSolid(x - 18, feet + 1, x + 18, feet + 6)) return null //not on the ground by then
+        const tryLonger = autopilot.recentFailures.some(attempt => {
+            if (!attempt.isTooLow || simulation.cycle >= attempt.until) return false
+            const from = nodes[attempt.edge.from]
+            return Math.abs(x - from.x) <= 50 && Math.abs(feet - from.y) <= 40
+        })
         let best = null, bestValue = planned ? planned.cost + dist[planned.to] + 15 : here - 20 + frames
         const validLanding = hit => {
             if (!hit || hit.isWet || nodes[hit.node].elevator || !(dist[hit.node] < Infinity)) return false
@@ -3674,6 +3718,9 @@ const autopilot = {
             const tries = steer ? [{ most: p.limit }, { most: p.limit * 0.4 }] : [{ most: 0 }]
             if (steer && autopilot.jumpHasCeiling(x, feet, steer)) {
                 for (const hold of [8, 11, 14, 17, 20]) tries.push({ most: p.limit, hold })
+            }
+            if (steer && tryLonger) {
+                for (const hold of [24, 32]) tries.push({ most: p.limit, hold })
             }
             if (planned && steer === planned.steer) tries.push(planned)
             for (const { most, hold, delay, blockJumps, turnY } of tries) {
@@ -3722,9 +3769,12 @@ const autopilot = {
             flight.lastVy = autopilot.lastV.y
         }
         const isJustJumped = mc - m.buttonCD_jump < 3
-        const isTooFast = Math.abs(vx) > 12 || vy < -28 //faster than a jump, a boost under the jump
         const isPlannedLaunch = isJustJumped && (m.buttonCD_jump === flight.blockJumpAt || m.buttonCD_jump === flight.lastBlockJump ||
             (flight.edge?.isElevatorTransfer && m.buttonCD_jump === flight.mStart))
+        const jumpSpeed = flight.edge?.type === autopilot.JUMP ? autopilot.p.jump : 0
+        const inheritedRise = Math.min(10, Math.max(0, -(m.standingOn?.velocity?.y ?? 0)))
+        const isTooFast = Math.abs(vx) > Math.max(12, autopilot.p.run + 2, autopilot.p.limit + 2) ||
+            vy < -Math.max(28, jumpSpeed + inheritedRise + 2) //faster than the player's current jump, a boost under the jump
         if (Math.hypot(vx - flight.lastVx, vy - flight.lastVy) > 15 && (!isJustJumped || (isTooFast && !isPlannedLaunch))) { //thrown by a boost, or knocked by something, fly by simulating from here
             const below = autopilot.nodeBelow(x, feet - 40, 2) //the boost it came from, for remembering misses
             flight.from = below >= 0 && nodes[below].isBoost ? below : autopilot.cur
@@ -3755,8 +3805,10 @@ const autopilot = {
             flight.apexY = Math.min(flight.apexY ?? feet, feet)
             //hold jump through the rise and the hang at the top, like the arc, letting go early cuts the jump short
             //but not when landing, holding jump then would jump again
+            const age = mc - m.buttonCD_jump
             const isLanding = vy > 0 && autopilot.isBoxSolid(x - 14, feet + 1, x + 14, feet + vy + 6)
-            input.up = mc - m.buttonCD_jump < Math.min(60, flight.edge.hold || 60) && vy < m.apexSpeed && !isLanding //a short hop lets go early
+            const isCatchingLedge = age > 20 && vy >= -m.apexSpeed - autopilot.p.gravity && vy < m.apexSpeed && autopilot.jumpContactAhead(x + vx, feet, vy)
+            input.up = age < Math.min(60, flight.edge.hold ?? 60) && vy < m.apexSpeed && !isLanding && !isCatchingLedge
             if (flight.edge.blockJumps && autopilot.doBlockJump(flight, go, isLanding)) return
         }
         if ((!flight.edge || flight.isLaunched) && cycle >= (flight.replanAt || 0) && autopilot.dist) { //no plan for this flight, or a boost's drift, find the best landing from here, again every few cycles
@@ -3801,6 +3853,14 @@ const autopilot = {
         } else if (edge) { //push like the arc did, after its delay
             if (edge.steer && vx * edge.steer < edge.most && (!edge.delay || mc - flight.mStart >= edge.delay)) go(edge.steer)
         }
+    },
+    jumpContactAhead(x, feet, vy) { //the wide ground sensor can catch a ledge before the middle of the foot lands
+        const reach = 18 * (player.scale || 1)
+        for (const dx of [0, -reach, reach]) {
+            const contact = autopilot.surfaceAt(x + dx, feet + vy, 3, 5)
+            if (contact && Math.abs(contact.edge.y2 - contact.edge.y1) < 0.5 * (contact.edge.x2 - contact.edge.x1)) return true
+        }
+        return false
     },
     doBlockJump(flight, go, isLanding) {
         const mc = m.cycle, edge = flight.edge
