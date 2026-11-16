@@ -428,10 +428,16 @@ const level = {
                 simulation.inGameConsole(`${(rate * 100).toFixed(0)}<span class='color-symbol'>%</span> <span class='color-m'>interest</span> on <span class='color-r'>research</span> <span class='color-symbol'>=</span> ${r > 20 ? r + powerUps.orb.research(1) : powerUps.orb.research(r)}`)
                 powerUps.spawnDelay("research", r, 4);
             }
+            const smallRate = rate * 5 / 18 //each 18% stack gives 5% on coupling and qubits
             if (m.coupling > 0 && rate > 0) {
-                const c = Math.ceil(rate * m.coupling / 3)
+                const c = Math.ceil(smallRate * m.coupling)
                 powerUps.spawnDelay("coupling", c, 4);
-                simulation.inGameConsole(`${(rate * 100 / 3).toFixed(0)}<span class='color-symbol'>%</span> <span class='color-m'>interest</span> on <span class='color-coupling'>coupling</span> <span class='color-symbol'>=</span> ${c > 20 ? c + powerUps.orb.coupling(1) : powerUps.orb.coupling(c)}`)
+                simulation.inGameConsole(`${(smallRate * 100).toFixed(0)}<span class='color-symbol'>%</span> <span class='color-m'>interest</span> on <span class='color-coupling'>coupling</span> <span class='color-symbol'>=</span> ${c > 20 ? c + powerUps.orb.coupling(1) : powerUps.orb.coupling(c)}`)
+            }
+            if (powerUps.qubit.count > 0 && rate > 0) {
+                const q = Math.ceil(smallRate * powerUps.qubit.count)
+                powerUps.spawnDelay("qubit", q, 4);
+                simulation.inGameConsole(`${(smallRate * 100).toFixed(0)}<span class='color-symbol'>%</span> <span class='color-m'>interest</span> on qubits <span class='color-symbol'>=</span> ${q > 20 ? q + powerUps.orb.qubit(1) : powerUps.orb.qubit(q)}`)
             }
 
             // let ammoSum = 0
@@ -6580,7 +6586,7 @@ const level = {
             // spawn.mapRect(level.exit.x, level.exit.y + 25, 100, 100); //exit bump
             simulation.zoomScale = 1000 //1400 is normal
             level.defaultZoom = 1600
-            simulation.zoomTransition(level.defaultZoom, 1)
+            simulation.zoomTransition(level.defaultZoom)
             document.body.style.backgroundColor = "#e1e1e1";
 
             // spawn.mapRect(-2750, -2800, 2600, 4600); //left wall

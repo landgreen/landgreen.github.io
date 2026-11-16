@@ -479,7 +479,7 @@ const simulation = {
         simulation.zoomScale = zoomScale
         simulation.zoom = canvas.height / zoomScale; //sets starting zoom scale
     },
-    zoomTransition(newZoomScale, step = 2) {
+    zoomTransition(newZoomScale) {
         //old version
         // if (simulation.isAutoZoom) {
         //     const isBigger = (newZoomScale - simulation.zoomScale > 0) ? true : false;

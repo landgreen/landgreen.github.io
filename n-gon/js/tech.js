@@ -524,9 +524,8 @@ const tech = {
             if (newSkin) tech.giveTech(newSkin.name)
             m.energy = energy
             if (!tech.isEnergyHealth) {
-                if (wasEnergyHealth) { //leaving mass-energy equivalence converts energy back into health
-                    m.health = Math.max(Math.min(m.maxHealth, energy), 0.1)
-                    m.energy = Math.max(0, energy - m.health)
+                if (wasEnergyHealth) { //leaving mass-energy equivalence returns the health you had when you took it
+                    m.health = Math.max(Math.min(m.maxHealth, tech.massEnergyHealth || 0), 0.1)
                 } else {
                     m.health = Math.min(m.maxHealth, health)
                 }
@@ -883,6 +882,7 @@ const tech = {
         },
         requires: "not piezoelectricity, CPT, annihilation, quantum Zeno effect, quenching",
         effect() {
+            tech.massEnergyHealth = m.health //restored when leaving, so swapping skins can't turn energy into health
             m.health = 0
             document.getElementById("health").style.display = "none"
             document.getElementById("health-bg").style.display = "none"
@@ -901,7 +901,7 @@ const tech = {
                     document.getElementById("health-bg").style.display = "inline"
                 }
                 document.getElementById("dmg").style.backgroundColor = "#f67";
-                m.health = Math.max(Math.min(m.maxHealth, m.energy), 0.1);
+                m.health = Math.max(Math.min(m.maxHealth, tech.massEnergyHealth || 0), 0.1);
                 simulation.mobDmgColor = "rgba(255,0,0,0.7)"
                 m.displayHealth();
                 m.lastCalculatedDefense = 0 //this triggers a redraw of the defense bar
@@ -1449,7 +1449,7 @@ const tech = {
     {
         name: "recursion",
         descriptionFunction() {
-            return `the next ${powerUps.orb.instant()} you choose that can <strong>stack</strong><br>is given <strong>3</strong> times${this.count && tech.isRecursion ? `<em style ="float: right;">(waiting)</em>` : ""}`
+            return `the next ${powerUps.orb.tech()} you <strong class='color-choice' data-help='choice'><span>ch</span><span>oo</span><span>se</span></strong> that can <strong>stack</strong><br>is given <strong>3</strong> times${this.count && tech.isRecursion ? `<em style ="float: right;">(waiting)</em>` : ""}`
         },
         maxCount: 1,
         count: 0,
@@ -1470,7 +1470,7 @@ const tech = {
     {
         name: "instanton",
         descriptionFunction() {
-            return `${powerUps.orb.tech()} have <strong>+2</strong> <strong class='color-choice' data-help='choice'><span>ch</span><span>oi</span><span>ces</span></strong><br>that are only ${powerUps.orb.instant()} instant tech`
+            return `${powerUps.orb.tech()} have <strong>+2</strong> ${powerUps.orb.instant()} <strong class='color-choice' data-help='choice'><span>ch</span><span>oi</span><span>ces</span></strong>`
         },
         maxCount: 1,
         count: 0,
@@ -4816,9 +4816,12 @@ const tech = {
     {
         name: "interest",
         descriptionFunction() {
-            const r = Math.ceil(this.rate * powerUps.research.count)
-            const c = Math.ceil(this.rate * m.coupling)
-            return `at the start of each <strong>level</strong> <em style ="float: right;">(get ${r} ${powerUps.orb.research(1)}, ${(Math.ceil(c / 3)).toFixed(0)} ${powerUps.orb.coupling(1)})</em><br>spawn <strong>${(100 * this.rate).toFixed(0)}%</strong> of your ${powerUps.orb.research(1)} and <strong>${(100 * this.rate / 3).toFixed(0)}%</strong> of your ${powerUps.orb.coupling(1)}`
+            const rate = this.rate
+            const smallRate = rate * 5 / 18 //each 18% stack gives 5% on coupling and qubits, see level.js
+            const r = Math.ceil(rate * powerUps.research.count)
+            const c = Math.ceil(smallRate * m.coupling)
+            const q = Math.ceil(smallRate * powerUps.qubit.count)
+            return `at the start of each <strong>level</strong> <em style ="float: right;">(get ${r} ${powerUps.orb.research(1)}, ${c} ${powerUps.orb.coupling(1)}, ${q} ${powerUps.orb.qubit(1)})</em><br>spawn <strong>${(100 * this.rate).toFixed(0)}%</strong> of your ${powerUps.orb.research(1)} and <strong>${(100 * this.rate * 5 / 18).toFixed(0)}%</strong> of your ${powerUps.orb.coupling(1)} ${powerUps.orb.qubit(1)}`
         },
         maxCount: 9,
         count: 0,

@@ -2,6 +2,11 @@ tech: instanton - tech power ups have +2 choices that are only instant tech
 tech: recursion - the next tech you choose that can stack is given 3 times
 exit: half of level exits have a mirror that feeds back into itself
 level editor: autopilot button for test export
+interest: also spawns 5% of your qubits, coupling interest is 5%
+
+bug fixes
+  leaving mass-energy equivalence returns the health you had when you took it
+    swapping skins with optimization no longer turns energy into health
 
 autopilot - some minor improvements in traversal, but it's still JUNK tech
 
