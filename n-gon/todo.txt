@@ -1,28 +1,17 @@
-autopilot: tries jumping at its current speed before slowing down to line up
+tech: instanton - tech power ups have +2 choices that are only instant tech
+tech: recursion - the next tech you choose that can stack is given 3 times
+exit: half of level exits have a mirror that feeds back into itself
+level editor: autopilot button for test export
+
+autopilot - some minor improvements in traversal, but it's still JUNK tech
 
 
 
 
 *********************************************************** TODO *****************************************************
 
-settings
-  autopilot (beta) - the player moves, fights, grabs power ups, and exits on their own
-    holding a movement key takes over
-
-
-autopilot  autopilot.toggle(true)
-make this into JUNK or keep in settings?
-is there level specific information? (not yet)
-  should we add checkpoints?
-  after a 3rd attempt on retrying the same path randomize something?
-    jump arc, jump height, follow through, landing spot, push blocks, choose new objective (new power ups, mob, button, exit), use field
-try to avoid lasers, slime, hazards?
-
-
-
-
-
 boss - based on a "stentor"  single celled ciliate
+
 
 add alternator-like swing code to other situations
   every 3 swings make one with a much bigger range?
