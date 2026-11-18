@@ -1885,7 +1885,7 @@ levelElements.define("scale", { //level.scale, shaped like a button, a pad that'
 
 levelElements.waitingMobs = (el, data) => data.elements.filter(other => { //the linked mobs a mob clear counts, it can't be clear until they've spawned
     if (levelElements.types[other.type]?.group !== "mob" || (!other.link && !other.orLink) || other.edited) return false
-    const isBoss = other.type === "boss" || other.type === "secondaryBoss" || (other.type === "namedMob" && typeof spawn !== "undefined" && spawn.bossTier.flat().includes(other.name))
+    const isBoss = other.type === "boss" || other.type === "secondaryBoss" || (other.type === "namedMob" && levelElements.bossNames().includes(other.name))
     if (el.who === "bosses") return isBoss
     if (el.who === "level") return true
     return [[other.x, other.y], ...(other.spots || [])].some(([x, y]) => x >= el.x && x <= el.x + el.width && y >= el.y && y <= el.y + el.height)
@@ -2773,7 +2773,21 @@ levelElements.define("constraint", {
     defaults: () => ({ x: 0, y: -300, anchor: null, body: null, bx: 0, by: 0, stiffness: 1, damping: 0, length: 200 }),
     props: [
         ...levelElements.position(), //pointA, in the level, on the anchor block if it has one
-        levelElements.prop.ref("anchor", ["block"], { tip: "pick a block to tie this one to, the circle end moves with it, null pins it to the level" }), //bodyA
+        levelElements.prop.ref("anchor", ["block"], {
+            tip: "pick a block to tie this one to, its circle end goes to that block's center, null pins it to the level",
+            write(el, id) { //a new anchor moves the circle end to its center and the length to how far apart the ends are where the blocks start, so the level starts at rest, Matter's constraints shake when tied far from a block's center
+                const anchor = id && id !== el.anchor && levelData.find(levelData.data, id)
+                el.anchor = id
+                if (!anchor) return
+                const c = levelElements.center(anchor)
+                el.x = c.x
+                el.y = c.y
+                const target = el.body && levelData.find(levelData.data, el.body)
+                if (!target) return
+                const end = levelElements.center(target)
+                el.length = Math.round(Math.hypot(end.x + el.bx - c.x, end.y + el.by - c.y))
+            },
+        }), //bodyA
         levelElements.prop.ref("body", ["block"]), //bodyB
         levelElements.prop.number("bx", { isGrid: true }), //pointB, from the block's center
         levelElements.prop.number("by", { isGrid: true }),
@@ -2946,7 +2960,12 @@ levelElements.define("nest", { //level.nest
         return { setup: [`level.nest(${levelElements.args(el.x, el.y, el.name, ...extra)});`] }
     },
 })
-levelElements.mobNames = () => typeof spawn === "undefined" ? ["starter"] : [...new Set([...spawn.tier.flat(), ...spawn.bossTier.flat()])] //every mob and boss by tier, spawn.js isn't loaded in the unit tests
+levelElements.mobNames = () => typeof spawn === "undefined" ? ["starter"] : [...new Set([...spawn.tier.flat(), ...levelElements.bossNames()])] //every mob and boss by tier, spawn.js isn't loaded in the unit tests
+levelElements.bossNames = () => typeof spawn === "undefined" ? [] : [...spawn.bossTier.flat(), ...(spawn.levelBossList || [])] //every boss by tier, then the ones made for one level
+levelElements.namedMobCalls = { //mobs that don't spawn with (x, y): their args, and their args as code
+    myriapodsBoss: (x, y) => [[[{ x: x - 190, y }]], `[{ x: ${levelElements.args(x - 190)}, y: ${levelElements.args(y)} }]`], //its worms grow right from each spot, so it starts left of the marker
+}
+levelElements.spawnNamedMob = (name, x, y) => spawn[name](...(levelElements.namedMobCalls[name] ? levelElements.namedMobCalls[name](x, y)[0] : [x, y]))
 levelElements.define("namedMob", { //one mob picked by name, for levels that want a specific mob
     ...levelElements.mobType("namedMob", "mob by name", 40, "rgba(255,40,40,0.35)", false),
     tip: "one mob picked by name, it always spawns",
@@ -2959,9 +2978,9 @@ levelElements.define("namedMob", { //one mob picked by name, for levels that wan
     overlay: el => levelElements.marker(el, 40, "rgba(255,40,40,0.35)", el.name),
     summary: el => `${el.name}(${levelElements.args(el.x, el.y)})`,
     build(el, options) {
-        if (options.isSpawning && levelElements.mobNames().includes(el.name) && typeof spawn[el.name] === "function") spawn[el.name](el.x, el.y)
+        if (options.isSpawning && levelElements.mobNames().includes(el.name) && typeof spawn[el.name] === "function") levelElements.spawnNamedMob(el.name, el.x, el.y)
     },
-    code: el => ({ setup: levelElements.mobNames().includes(el.name) ? [`spawn[${JSON.stringify(el.name)}](${levelElements.args(el.x, el.y)});`] : [] }),
+    code: el => ({ setup: levelElements.mobNames().includes(el.name) ? [`spawn[${JSON.stringify(el.name)}](${levelElements.namedMobCalls[el.name] ? levelElements.namedMobCalls[el.name](el.x, el.y)[1] : levelElements.args(el.x, el.y)});`] : [] }),
 })
 levelElements.bossType = (spawnName, label, radius, fill, fontSize) => ({ //a boss spawns at its spot or one of its other spots, picked at random each time the level loads, fontSize for a long label
     ...levelElements.mobType(spawnName, label, radius, fill, false),

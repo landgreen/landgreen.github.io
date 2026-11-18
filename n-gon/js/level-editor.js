@@ -3209,11 +3209,13 @@ Object.assign(levelEditor, {
         return levelEditor.addGroup("", type.names.map(name => levelEditor.addItem("add", `powerUp:${name}`, levelEditor.orb(name), name, type.tips[name] || name)))
     },
     namedMobGroups(tiers) { //a titled part for each tier that has any, with their pictures
-        const icons = levelEditor.mobIcons || {}
-        return tiers.map((names, i) => names.length ? levelEditor.addGroup(`tier ${i}`, names.map(name => levelEditor.addItem("add", `namedMob:${name}`, icons[name] || "", name, name))) : "").join("")
+        return tiers.map((names, i) => names.length ? levelEditor.addGroup(`tier ${i}`, names.map(levelEditor.namedMobItem)) : "").join("")
     },
-    bossList() { //every boss by tier
-        return levelEditor.namedMobGroups(spawn.bossTier)
+    namedMobItem(name) {
+        return levelEditor.addItem("add", `namedMob:${name}`, (levelEditor.mobIcons || {})[name] || "", name, name)
+    },
+    bossList() { //every boss by tier, then the ones made for one level
+        return levelEditor.namedMobGroups(spawn.bossTier) + levelEditor.addGroup("level", spawn.levelBossList.map(levelEditor.namedMobItem))
     },
     mobList() { //a random group and a nest, then every mob by tier
         const random = ["mobGroup", "nest"].map(name => levelEditor.addItem("add", name, levelEditor.elementIcon(name), levelElements.types[name].label, levelElements.types[name].tip))

@@ -68,7 +68,7 @@ Object.assign(levelEditor, {
             const spawned = { mob: mob.length, powerUp: powerUp.length }
             const ephemera = new Set(simulation.ephemera)
             try {
-                spawn[name](0, -100000)
+                levelElements.spawnNamedMob(name, 0, -100000)
                 const made = levelData.made(start)
                 const shapes = mob.slice(spawned.mob).filter(who => !who.shield).map(who => ({
                     points: who.vertices.map(v => [round(v.x), round(v.y + 100000)]),
@@ -91,7 +91,8 @@ Object.assign(levelEditor, {
         laser: { lasers: 1 }, laserLayer: { lasers: 1 }, beamer: { lasers: 1 }, focuser: { lasers: 1 }, quadLaser: { lasers: 4 }, pentaLaserBoss: { lasers: 5 },
         laserTargetingBoss: { lasers: 1 }, laserBombingBoss: { lasers: 1 }, laserLayerBoss: { lasers: 1 },
         slasher: { sword: true }, slasher2: { sword: true }, slasher3: { sword: true }, slasher4: { sword: true }, slasher5: { sword: true }, slicer: { sword: true }, slicer5: { sword: true }, slashBoss: { sword: true },
-        sniper: { sight: true }, sucker: { hole: true }, bigSucker: { hole: true },
+        sniper: { sight: true }, sucker: { hole: true }, bigSucker: { hole: true }, suckerBoss: { hole: true },
+        laserBoss: { lasers: 3 }, laserScanBoss: { lasers: 2 },
         powerUpBoss: { nodeOrbs: true }, powerUpBossBaby: { nodeOrbs: true }, //it carries a power up at each corner
         mayflyBoss: { //its swarm of cells doesn't fit, so a cartoon mayfly: wings, a pink head, a white body that thins out, and long tail threads
             icon: `<svg class="le-mob-icon" width="26" height="16" viewBox="0 0 26 16" aria-hidden="true">

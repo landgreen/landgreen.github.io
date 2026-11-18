@@ -36,6 +36,7 @@ const spawn = {
         //finalBoss is T5
     ],
     // tier-n bosses: suckerBoss, laserBoss, tetherBoss, bounceBoss, sprayBoss, mineBoss, hopMotherBoss, trainBoss, trainBoss2    //these need a particular level to work so they scale with level.levelsCleared
+    levelBossList: ["suckerBoss", "laserBoss", "tetherBoss", "tetherBoss4", "hopMotherBoss", "myriapodsBoss", "sprayBoss", "bounceBoss", "mineBoss", "laserScanBoss", "timeBoss"], //bosses made for one level, never random, the level editor's boss list has them, trainBoss, trainBoss2, flockBossChaos, and finalBoss need their own level's map
     bossTierIndex: [0, 0, 0, 0, 0], //tracks which boss just spawned to avoid duplicates in random bosses
     randomBossList: [
         // "orbitalBoss", "historyBoss", "shooterBoss", "cellBossCulture", "bomberBoss", "spiderBoss", "launcherBoss", "laserTargetingBoss",
@@ -12774,7 +12775,7 @@ const spawn = {
         //     this.attraction();
         // };
     },
-    tetherBoss(x, y, constraint, radius = 90) {
+    tetherBoss(x, y, constraint = { x: x, y: y - 500 }, radius = 90) { //constraint is where its tether is pinned, above it if not given
         // constrained mob boss for the towers level
         // often has a ring of mobs around it
         mobs.spawn(x, y, 8, radius, "rgb(0,60,80)");
@@ -12846,7 +12847,7 @@ const spawn = {
             }
         };
     },
-    tetherBoss4(x, y, constraint, radius = 90) {
+    tetherBoss4(x, y, constraint = { x: x, y: y - 500 }, radius = 90) { //constraint is where its tether is pinned, above it if not given
         // constrained mob boss for the towers level
         // often has a ring of mobs around it
         mobs.spawn(x, y, 8, radius, "rgb(0,60,80)");
