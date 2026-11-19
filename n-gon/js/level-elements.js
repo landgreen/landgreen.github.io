@@ -3282,7 +3282,7 @@ levelElements.level = {
         levelElements.prop.color("blockColor"),
         levelElements.prop.number("gravity", { step: 0.1, min: 0.1 }), //times normal gravity, for the player, blocks, and power ups, mobs have their own
         levelElements.prop.select("fall", ["spawn", "sky"]), //falling off the bottom sends the player back to the spawn, or keeps them falling from the sky above it
-        levelElements.prop.bool("lineOfSight", { label: "line of sight", tip: "only what the player can see is drawn, like subway, it shows in quick test and test export, not while editing" }),
+        levelElements.prop.bool("lineOfSight", { label: "line of sight", tip: "only what the player can see is drawn, like subway, it shows in quick test and full test, not while editing" }),
         levelElements.prop.number("constraintTextX", { isGrid: true }), //where the run's constraint shows, from the spawn, level.announceText()
         levelElements.prop.number("constraintTextY", { isGrid: true }),
         levelElements.prop.veto("mobVeto", levelElements.vetoTiers.mob, "mob", { isShown: data => data.elements.some(el => el.type === "mobSpot") }), //each mob spot shows it too

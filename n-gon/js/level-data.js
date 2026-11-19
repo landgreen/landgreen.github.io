@@ -511,7 +511,7 @@ const levelData = {
         color.block = data.blockColor
         simulation.g = simulation.gDefault * data.gravity
         level.fallMode = data.fall === "sky" ? "start" : ""
-        const isSight = data.lineOfSight && (!levelEditor.isActive || levelEditor.isTesting || levelEditor.isFullTest) //while editing it would hide the level, so only quick test and test export show it
+        const isSight = data.lineOfSight && (!levelEditor.isActive || levelEditor.isTesting || levelEditor.isFullTest) //while editing it would hide the level, so only quick test and full test show it
         if (isSight && simulation.draw.drawMapPath !== simulation.draw.drawMapSightLevel) {
             simulation.draw.drawMapPath = simulation.draw.drawMapSightLevel
             simulation.draw.lineOfSightPrecalculation() //circleLoS would also catch up by itself, see simulation.sight.updateMapGrid()

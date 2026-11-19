@@ -28,8 +28,8 @@ const level = {
         if (levelEditor.isActive) { //every level start while the level editor is open is its level, see js/level-editor.js
             levelEditor.startLevel()
         } else if (level.levelsCleared === 0) { //this code only runs on the first level
-            // if (false) {
-            if (true) {
+            if (false) {
+            // if (true) {
                 level.load(simulation.isTraining ? "walk" : "initial") //normal starting level **************************************************
             } else { //testing setup
                 // simulation.enableConstructMode()  //used to build maps in testing mode
@@ -47,7 +47,8 @@ const level = {
                 // m.couplingChange(100)
                 //1 standing wave  2 perfect diamagnetism  3 negative mass  4 molecular assembler  5 plasma torch 
                 // 6 time dilation  7 metamaterial cloaking  8 pilot wave  9 wormhole 10 grappling hook 11 portal
-                m.setField(2)
+                m.setField(4)
+                tech.giveTech("molecular machine")
                 // simulation.molecularMode = 4;
                 // m.energy = m.maxEnergy = 10
                 // m.damageDone *= 0.1//20
@@ -1291,7 +1292,7 @@ const level = {
     disableExit: false,
     nextLevel() {
         let countMax
-        if (levelEditor.isActive) return levelEditor.reachedExit() //the exit doesn't leave while editing, in test export reaching it clears the level
+        if (levelEditor.isActive) return levelEditor.reachedExit() //the exit doesn't leave while editing, in full test reaching it clears the level
         if (!level.disableExit) {
             level.levelsCleared++;
             level.onLevel++; //cycles map to next level
@@ -3176,7 +3177,7 @@ const level = {
     },
     cleared(x, y, width, height, who = "box", staysOn = true) { //a trigger that's on once no mobs are left, who is "box" for mobs in the box, "level" for every mob, or "bosses", run query() in level.custom
         const box = { min: { x: x, y: y }, max: { x: x + width, y: y + height } }
-        const counts = target => target.alive && !target.shield && !target.isMobBullet && target.collisionFilter.category !== cat.mobBullet && (who !== "bosses" || target.isBoss)
+        const counts = target => target.alive && !target.shield && !target.isMobBullet && target.collisionFilter.category !== cat.mobBullet && !target.isZombie && target.collisionFilter.mask !== 0 && (who !== "bosses" || target.isBoss) //not shields, bullets, your zombies, or mobs that can't touch anything, like dark matter, WIMPs, and hallucinations
         return {
             isOn: false,
             query() {

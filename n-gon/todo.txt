@@ -1,14 +1,20 @@
+tech: molecular machine - molecular assembler prints random bullets for 0.5x energy cost
+level editor: selecting several things shows a close up of them, click it to fit them in view
 
 
 
 
 bug fixes
+  mob clear ignores dark matter, WIMPs, hallucinations, and your zombies
   outlier no longer makes hovering needles grow forever
+  dying while passing through ray's line no longer slows the next run's crouch checks
 
 *********************************************************** TODO *****************************************************
 
 
-
+consider using moving ellipsis as a mob effect
+  in to show narrow suck like stentor
+  out to show push?
 
 add alternator-like swing code to other situations
   every 3 swings make one with a much bigger range?

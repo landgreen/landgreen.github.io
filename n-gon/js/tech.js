@@ -11896,6 +11896,27 @@ const tech = {
         }
     },
     {
+        name: "molecular machine",
+        description: `molecular assembler <strong class='color-print'>prints</strong> randomly<br>at <strong>0.5x</strong> <strong class='energy' data-help='energy'>energy</strong> cost`,
+        isFieldTech: true,
+        maxCount: 1,
+        count: 0,
+        frequency: 2,
+        frequencyDefault: 2,
+        allowed() {
+            return m.fieldMode === 4
+        },
+        requires: "molecular assembler",
+        effect() {
+            tech.isMolecularMachine = true
+            simulation.molecularMode = 5 //random mode, so tech that need one bullet type no longer show up
+        },
+        remove() {
+            tech.isMolecularMachine = false
+            if (simulation.molecularMode === 5) simulation.molecularMode = Math.floor(5 * Math.random())
+        }
+    },
+    {
         name: "electric generator",
         descriptionFunction() {
             const infoText = this.count ? `<em style ="float: right;">(+${Math.round(tech.deflectEnergy * 100)} energy)</em>` : ""

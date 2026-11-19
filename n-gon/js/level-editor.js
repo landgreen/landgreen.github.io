@@ -36,11 +36,11 @@ Object.assign(levelEditor, {
     isFast: false, //shift is held, the camera flies faster
     isInvincible: true, //simulation menu, the player takes no damage while editing and testing, see m.takeDamage(), remembered in localStorage
     isFullTest: false, //JS test plays the level's export JS like a run, with the panels still open, editing anything goes back to editing
-    clearRun: null, //this test export's try at the exit, see reachedExit()
+    clearRun: null, //this full test's try at the exit, see reachedExit()
     isTestSpawning: true, //the simulation menu's mobs button, mobs and power ups spawn while testing, never while editing so it isn't a fight
-    isTestGuns: false, //give every gun at the start of test export
+    isTestGuns: true, //give every gun at the start of full test, always on now that its button is commented out
     savedLoadout: null, //the guns and ammo to put back after an armed test
-    savedAutopilot: null, //the on and draft settings to restore after using the test export button
+    savedAutopilot: null, //the on and draft settings to restore after using the full test button
     testLevel: 5, //level.levelsCleared while editing, for mob types, difficulty, and damage, at 0 random mobs don't spawn
     vertex: null, //{ id, active, error } while editing a map or block's vertices, active is the clicked vertex, error is why typed vertices didn't work
     pathDraw: null, //{ points, handles, forId, forKey } while drawing a path, see the drawPath command, forId is the element whose ref prop forKey gets the path when it's done (drawRef)
@@ -72,7 +72,7 @@ Object.assign(levelEditor, {
     pan: { x: 0, y: 0 }, //camera offset from the player
     zoomScale: 1400, //simulation.zoomScale to use when the level restarts, data.zoom is for runs
     gameCamera: null, //simulation.camera while the editor replaces it
-    gameAutoZoom: true, //simulation.isAutoZoom before the editor turned it off, test export uses it so the level's zoom works like in a run
+    gameAutoZoom: true, //simulation.isAutoZoom before the editor turned it off, full test uses it so the level's zoom works like in a run
     saveTimer: null,
     inspected: "", //what the inspector is showing, so it only redraws when that changes
     inspectedRows: "", //which props it shows, see shownRows()
@@ -105,7 +105,7 @@ Object.assign(levelEditor, {
         levelEditor.reset(data, !recent)
         levelEditor.isInvincible = levelEditor.recall("levelEditorInvincible", true) !== false //on unless it was turned off
         levelEditor.isTestSpawning = levelEditor.recall("levelEditorMobs", true) !== false
-        levelEditor.isTestGuns = levelEditor.recall("levelEditorGuns", false) === true
+        // levelEditor.isTestGuns = levelEditor.recall("levelEditorGuns", false) === true //off with the guns button, full test always gives every gun
         const addTab = levelEditor.recall("levelEditorAddTab", "")
         levelEditor.addTab = levelEditor.addTabs.some(([name]) => name === addTab) ? addTab : ""
         const recentAdds = levelEditor.recall("levelEditorRecentAdd", null)
@@ -203,7 +203,7 @@ Object.assign(levelEditor, {
                     Matter.Body.setVelocity(player, { x: kept.vx, y: kept.vy })
                     m.resetHistory()
                 }
-                simulation.removeEphemera("zoom", true) //a test export's zoom that hadn't finished
+                simulation.removeEphemera("zoom", true) //a full test's zoom that hadn't finished
                 simulation.setZoom(levelEditor.zoomScale)
                 simulation.camera = levelEditor.camera
                 m.look = levelEditor.look
@@ -250,7 +250,7 @@ Object.assign(levelEditor, {
     keptPlayer: null, //where the player was before a restart an edit made, startLevel() puts them back
     restart(isKeepView = true, isKeepPlayer = false) { //clears and rebuilds the whole level, and puts the player at the spawn, or with isKeepPlayer where they are, for a level with code that runs again after an edit
         levelEditor.flush()
-        if (isKeepView && simulation.camera === levelEditor.camera) levelEditor.zoomScale = simulation.zoomScale //test export's zoom is the level's, the editor goes back to its own
+        if (isKeepView && simulation.camera === levelEditor.camera) levelEditor.zoomScale = simulation.zoomScale //full test's zoom is the level's, the editor goes back to its own
         levelEditor.keptPlayer = isKeepPlayer && !levelEditor.isFullTest && typeof player === "object" ? { x: player.position.x, y: player.position.y, vx: player.velocity.x, vy: player.velocity.y } : null
         levelEditor.drag = null
         simulation.clearNow = true
@@ -304,7 +304,7 @@ Object.assign(levelEditor, {
         const fail = error => {
             if (!isCurrent()) return
             session.stopped = true
-            simulation.inGameConsole(`<em>//test export stopped, ${levelEditor.escape(error.message)}</em>`)
+            simulation.inGameConsole(`<em>//full test stopped, ${levelEditor.escape(error.message)}</em>`)
             level.custom = level.customTopLayer = () => { }
             levelEditor.stopFullTest()
         }
@@ -386,7 +386,7 @@ Object.assign(levelEditor, {
         const clears = levelEditor.recall("levelEditorClears", {})
         return clears && typeof clears === "object" ? clears : {}
     },
-    reachedExit() { //level.nextLevel() while editing: the exit charged all the way, in test export that's a clear check, like a maker game won't share a level its maker hasn't beaten
+    reachedExit() { //level.nextLevel() while editing: the exit charged all the way, in full test that's a clear check, like a maker game won't share a level its maker hasn't beaten
         const run = levelEditor.clearRun
         if (!levelEditor.isFullTest || !run || run.isDone) return
         run.isDone = true
@@ -409,15 +409,15 @@ Object.assign(levelEditor, {
         simulation.inGameConsole(`<em>//cleared in ${seconds} s${assists.map(assist => `, ${assist}`).join("")}${run.deaths ? `, ${run.deaths} death${run.deaths === 1 ? "" : "s"}` : ""}</em>`)
         if (levelEditor.isAnalysisShown) levelEditor.renderRight()
     },
-    clearLine() { //the top of the issues, has the level been played to the exit in test export since its last change
+    clearLine() { //the top of the issues, has the level been played to the exit in full test since its last change
         const clear = levelEditor.clears()[levelEditor.data.name]
         const isCurrent = clear && clear.hash === levelEditor.clearHash(levelEditor.data)
         const escape = levelEditor.escape
         const body = (status, label, value, text) => `<span class="le-analysis-status">${status}</span> <span class="le-analysis-label">${escape(label)}</span>${value ? ` <span class="le-analysis-value">${escape(value)}</span>` : ""}<span class="le-analysis-text">${escape(text)}</span>`
-        const test = `<span class="le-analysis-add">▶ test export</span>`
-        if (isCurrent && clear.cleanSeconds !== null) return `<div class="le-analysis-line le-ok">${body("ok", "cleared", `${clear.cleanSeconds} s`, `reached the exit in test export${clear.deaths ? "" : " without dying"}, nothing changed since`)}</div>`
+        const test = `<span class="le-analysis-add">▶ test</span>`
+        if (isCurrent && clear.cleanSeconds !== null) return `<div class="le-analysis-line le-ok">${body("ok", "cleared", `${clear.cleanSeconds} s`, `reached the exit in full test${clear.deaths ? "" : " without dying"}, nothing changed since`)}</div>`
         if (isCurrent) return `<button class="le-analysis-line le-note" data-command="fullTest" title="play it to the exit with invincible, guns, and autopilot off and no teleports">${body("note", "cleared", `${clear.seconds} s`, "assisted clear, play through with invincible, guns, and autopilot off and no teleports for a clean clear")}${test}</button>`
-        return `<button class="le-analysis-line le-warn" data-command="fullTest" title="play the export and reach the exit">${body("warn", "not cleared", "", clear ? "changed since it was cleared, reach the exit in test export again" : "reach the exit in test export, like a maker game won't share a level its maker hasn't beaten")}${test}</button>`
+        return `<button class="le-analysis-line le-warn" data-command="fullTest" title="play the export and reach the exit">${body("warn", "not cleared", "", clear ? "changed since it was cleared, reach the exit in full test again" : "reach the exit in full test, like a maker game won't share a level its maker hasn't beaten")}${test}</button>`
     },
     toSpawn() {
         const where = levelEditor.data.elements.find(el => el.type === "spawn") || m.spawnPos //a level's code can set the spawn itself
@@ -1525,7 +1525,7 @@ Object.assign(levelEditor, {
             },
         },
         fullTest: { //the export JS, everything a run would do
-            label: "test export: plays the javascript export writes, exactly what the game would load, mobs and power ups always spawn, editing anything stops it", run() {
+            label: "full test: plays the javascript export writes, exactly what the game would load, mobs and power ups always spawn, editing anything stops it", run() {
                 if (levelEditor.isFullTest) return levelEditor.stopFullTest()
                 if (levelEditor.whole) { //what's typed is what gets tested
                     const error = levelEditor.applyWholeCode(document.querySelector("#level-editor-code textarea").value)
@@ -1557,7 +1557,7 @@ Object.assign(levelEditor, {
                 }
                 const code = document.getElementById("level-editor-code")
                 if (code.classList.contains("le-open")) return levelEditor.run("closeCode") //esc closes the javascript first
-                if (levelEditor.isFullTest) return levelEditor.run("fullTest") //then stops test export or quick test
+                if (levelEditor.isFullTest) return levelEditor.run("fullTest") //then stops full test or quick test
                 if (levelEditor.isTesting) return levelEditor.run("test")
                 if (levelEditor.picking) { //then stops picking
                     levelEditor.picking = null
@@ -1967,7 +1967,7 @@ Object.assign(levelEditor, {
                 levelEditor.renderRight()
             },
         },
-        forceLink: { //"4:on" holds link source 4 on, "4:auto" lets it go, not saved or undone, test export ignores it
+        forceLink: { //"4:on" holds link source 4 on, "4:auto" lets it go, not saved or undone, full test ignores it
             label: "hold it on or off while editing", run(arg) {
                 const [id, state] = String(arg).split(":")
                 if (state === "auto") levelData.forced.delete(Number(id))
@@ -2290,7 +2290,7 @@ Object.assign(levelEditor, {
         levelEditor.isFree = event.altKey
         levelEditor.isFast = event.shiftKey
         if (!levelEditor.isActive || simulation.paused || levelEditor.isTyping(event.target)) return
-        if (levelEditor.isFullTest && event.code === input.key.testing) { //test export needs the normal game loop
+        if (levelEditor.isFullTest && event.code === input.key.testing) { //full test needs the normal game loop
             event.stopImmediatePropagation()
             return
         }
@@ -2350,6 +2350,11 @@ Object.assign(levelEditor, {
             if (name !== levelEditor.data.name && levelData.store.has(name)) levelEditor.setData(levelData.store.get(name))
             return
         }
+        const list = document.querySelector('#level-editor-left [data-section="load-written"]') //the "levels" list closes after a pick, like a dropdown
+        if (list) list.open = false
+        const open = levelEditor.openSections()
+        open["load-written"] = false //now, the toggle event comes later than a redraw from setData()
+        levelEditor.remember("levelEditorSections", open)
         try {
             if (source === "more") await level.loadMoreLevels()
             levelEditor.flush()
@@ -2381,7 +2386,7 @@ Object.assign(levelEditor, {
     frame() {
         levelEditor.applyTimeScale()
         if (levelEditor.isFullTest && levelEditor.clearRun && !simulation.paused) {
-            levelEditor.clearRun.cycles++ //test export's time, it's always 1×
+            levelEditor.clearRun.cycles++ //full test's time, it's always 1×
             levelEditor.clearRun.usedAutopilot ||= autopilot.isOn
         }
         if (!levelEditor.isActive || levelEditor.isFullTest) return //JS test looks like a run
@@ -2451,14 +2456,15 @@ Object.assign(levelEditor, {
         if (hover && !drag && levelEditor.problems.has(hover.id)) levelEditor.drawTip(point, levelEditor.problems.get(hover.id))
         levelEditor.updateStatusMouse(point)
         levelEditor.drawMinimap()
+        levelEditor.drawSelectionMap()
     },
     //*********************************************************************
     // simulation menu, measure tool, and physics numbers
     //*********************************************************************
     debugLayers: [ //[name, tooltip], drawn over the level by drawDebug()
-        ["wireframe", "every body's outline, map, blocks, mobs, the player, power ups, and bullets"],
+        ["wireframe", "every body's outline, map, blocks, mobs, the player, power ups, and bullets, and every constraint, its two points and the line between them"],
         ["bounds", "each body's axis aligned bounding box, it stretches with velocity"],
-        ["constraints", "every Matter constraint, its two points and the line between them"],
+        // ["constraints", "every Matter constraint, its two points and the line between them"], //wireframe draws constraints now, see drawDebug()
         ["centers", "each body's center of mass and angle"],
         ["collisions", "contact points between bodies touching this frame"],
     ],
@@ -2526,7 +2532,7 @@ Object.assign(levelEditor, {
             ctx.strokeStyle = "rgba(0,0,0,0.7)"
             ctx.stroke()
         }
-        if (layers.has("constraints")) {
+        if (layers.has("wireframe")) { //constraints, the old constraints layer is part of wireframe now, it shows ones from code too
             ctx.beginPath()
             for (const c of Composite.allConstraints(engine.world)) {
                 const a = c.bodyA ? Vector.add(c.bodyA.position, c.pointA) : c.pointA
@@ -2848,34 +2854,31 @@ Object.assign(levelEditor, {
     //*********************************************************************
     sections: [ //{ id, title, isClosed, render() }, without a title it's always shown, with one it can be folded, isClosed starts it folded
         {
-            id: "top",
-            render: () => `<div class="le-row">
-                <span class="le-info" data-level-info>${levelEditor.infoText()}</span>
-            </div>`,
-        },
-        {
             id: "load",
-            title: "import/export",
+            title: "load",
+            note: () => levelEditor.storageText(), //how much of localStorage is used, on the right of its title
             render: () => `<div class="le-load" data-load-local></div>
-                <div class="le-grid le-sixths le-gap-above le-flush-x">${levelEditor.button("newLevel", "new", "", false, undefined, { className: "le-third" })}${levelEditor.button("importLevel", "import", "", false, undefined, { className: "le-third" })}${levelEditor.button("code", "export", "", false, undefined, { className: "le-third" })}${levelEditor.button("duplicateLevel", "fork", "", false, undefined, { className: "le-half" })}${levelEditor.button("backupAll", "back up all", "", false, undefined, { className: "le-half" })}${levelEditor.button("pool", levelEditor.isInPool() ? "in level pool" : "add to level pool", "", levelEditor.isInPool(), undefined, { className: "le-wide" })}</div>
-                <a class="le-button le-site-link le-flush-x" href="https://whyisthisnotavalable.github.io/n-vote/" target="_blank" rel="noopener" title="n-vote, a fan site for n-gon maps: upload your export, download other players' maps, and rate them. import a download here to play it, maps are javascript, so only run ones you trust"><span class="site-link-name">n-vote</span><span class="le-site-note">upload, download, rate maps</span></a>
-                <div class="le-load" data-load-written></div>`, //the local levels, then new, import, the pool, and export, then the fan site for sharing levels, then the written levels, filled in when it opens, see renderLoadList()
+                <div class="le-grid le-sixths le-flush-x">${levelEditor.button("newLevel", "new", "", false, undefined, { className: "le-third" })}${levelEditor.button("importLevel", "import", "", false, undefined, { className: "le-third" })}${levelEditor.button("code", "export", "", false, undefined, { className: "le-third" })}${levelEditor.button("duplicateLevel", "fork", "", false, undefined, { className: "le-third" })}${levelEditor.button("backupAll", "back up all", "", false, undefined, { className: "le-third" })}${levelEditor.button("pool", levelEditor.isInPool() ? "in level pool" : "+ level pool", "", levelEditor.isInPool(), undefined, { className: "le-third" })}</div>
+                <div class="le-load-bottom"><div class="le-load" data-load-written></div><a class="le-button le-site-link" href="https://whyisthisnotavalable.github.io/n-vote/" target="_blank" rel="noopener" title="n-vote, a fan site for n-gon maps: upload your export, download other players' maps, and rate them. import a download here to play it, maps are javascript, so only run ones you trust"><span class="site-link-name">n-vote</span><span class="le-site-note">upload, download</span></a></div>`, //the local levels, then new, import, the pool, and export, then the written levels, filled in when it opens, see renderLoadList(), with the fan site for sharing levels on the same row as its title
         },
         {
             id: "simulation",
             title: "simulation",
-            render: () => { //quick test plays the elements, test export plays the export javascript like a run, the settings it ignores are grayed out while it runs
+            render: () => { //quick test plays the elements, full test plays the export javascript like a run, the settings it ignores are grayed out while it runs
                 const isExport = levelEditor.isFullTest
-                const exportNote = isExport ? ", test export ignores this" : ""
+                const exportNote = isExport ? ", full test ignores this" : ""
                 const play = `<svg class="le-play" viewBox="0 0 12 12" aria-hidden="true"><polygon points="2.5,1.5 10.5,6 2.5,10.5"/></svg>` //green outlines, so it doesn't look like a menu's arrow
                 const stop = `<svg class="le-stop" viewBox="0 0 12 12" aria-hidden="true"><rect x="1.5" y="1.5" width="9" height="9"/></svg>` //as big as play
-                return `<div class="le-row le-test-settings"><span class="le-row"><span class="le-label">level</span><input class="le-number le-short" aria-label="test level" data-setting="testLevel" value="${levelEditor.testLevel}" spellcheck="false" title="how many levels into a run you're testing, it picks mob types and difficulty, at 0 random mobs don't spawn"></span>
+                //quick test, off for now, it may come back, it went under the top row:
+                //<div class="le-grid le-two le-run le-flush-x">${levelEditor.button("test", levelEditor.isTesting ? `${stop} stop` : `${play} quick test`, "", levelEditor.isTesting)}${levelEditor.button("fullTest", isExport ? `${stop} stop` : `${play} full test`, "", isExport)}</div>
+                //and guns, after invincible, full test always gives every gun now: ${levelEditor.button("testGuns", "guns", "", levelEditor.isTestGuns, "start full test with every gun and full ammo, changing this restarts the test")}
+                //and mobs, only quick test used it, the last button after guns: ${levelEditor.button("testSpawning", "mobs", "", levelEditor.isTestSpawning || isExport, `quick test spawns mobs and power ups${isExport ? ", full test always does" : ""}`, { disabled: isExport })}
+                return `<div class="le-row le-test-settings">${levelEditor.button("fullTest", isExport ? `${stop} stop` : `${play} test`, "", isExport, undefined, { className: "le-run" })}
+                <span class="le-row"><span class="le-label">lvl</span><input class="le-number le-short" aria-label="test level" data-setting="testLevel" value="${levelEditor.testLevel}" inputmode="numeric" maxlength="2" spellcheck="false" title="how many levels into a run you're testing, it picks mob types and difficulty, at 0 random mobs don't spawn"></span>
                 <span class="le-row"><span class="le-label">seed</span><input class="le-number" aria-label="test seed" data-setting="testSeed" value="${levelEditor.escape(levelEditor.testSeed)}" placeholder="random" spellcheck="false" title="the same seed starts each test the same: mob types, which spots get mobs, bosses, power ups, and debris, what mobs do after is still random, empty is random"></span></div>
-            <div class="le-grid le-two le-run le-flush-x">${levelEditor.button("test", levelEditor.isTesting ? `${stop} stop` : `${play} quick test`, "", levelEditor.isTesting)}${levelEditor.button("fullTest", isExport ? `${stop} stop` : `${play} test export`, "", isExport)}</div>
             ${isExport ? `<div class="le-grid le-one le-flush-x">${levelEditor.button("testAutopilot", "autopilot", "", autopilot.isRequested())}</div>` : ""}
             <div class="le-grid le-time le-flush-x">${levelEditor.button("timeStop", "stop time", "", levelEditor.isTimeStopped, `everything but the player freezes, you can still edit, a speed starts it again${exportNote}`, { disabled: isExport })}${[0.1, 0.5, 1, 2].map(scale => levelEditor.button("timeScale", `${scale}×`, scale, !levelEditor.isTimeStopped && levelEditor.timeScale === scale, `game speed${exportNote}`, { disabled: isExport })).join("")}</div>
-            <div class="le-grid le-flush-x">${levelEditor.button("invincible", "invincible", "", levelEditor.isInvincible, "the player takes no damage, in both tests too, the health bars hide")}${levelEditor.button("testGuns", "guns", "", levelEditor.isTestGuns, "start test export with every gun and full ammo, changing this restarts the test")}${levelEditor.button("testSpawning", "mobs", "", levelEditor.isTestSpawning || isExport, `quick test spawns mobs and power ups${isExport ? ", test export always does" : ""}`, { disabled: isExport })}</div>
-            <div class="le-grid le-flush-x le-flush-bottom">${levelEditor.button("mouseLook", "mouse look", "", levelEditor.isMouseLook, `the camera leans toward the mouse right away, no smoothing${exportNote}`, { disabled: isExport })}${levelEditor.debugLayers.map(([name, tip]) => levelEditor.button("debugDraw", name, name, levelEditor.debugDraw.has(name), tip + exportNote, { disabled: isExport })).join("")}</div>`
+            <div class="le-grid le-flush-x le-flush-bottom">${levelEditor.button("mouseLook", "mouse look", "", levelEditor.isMouseLook, `the camera leans toward the mouse right away, no smoothing${exportNote}`, { disabled: isExport })}${levelEditor.debugLayers.slice(0, 1).map(([name, tip]) => levelEditor.button("debugDraw", name, name, levelEditor.debugDraw.has(name), tip + exportNote, { disabled: isExport })).join("")}${levelEditor.button("invincible", "invincible", "", levelEditor.isInvincible, "the player takes no damage, in both tests too, the health bars hide")}${levelEditor.debugLayers.slice(1).map(([name, tip]) => levelEditor.button("debugDraw", name, name, levelEditor.debugDraw.has(name), tip + exportNote, { disabled: isExport })).join("")}</div>`
             },
         },
         {
@@ -3251,7 +3254,7 @@ Object.assign(levelEditor, {
     renderLeft() {
         const open = levelEditor.openSections()
         document.getElementById("level-editor-left").innerHTML = levelEditor.sections.map(section => section.title ?
-            `<details class="le-section" data-section="${section.id}"${open[section.id] ?? !section.isClosed ? " open" : ""}><summary>${section.title}</summary><div class="le-details">${section.render()}</div></details>` :
+            `<details class="le-section" data-section="${section.id}"${open[section.id] ?? !section.isClosed ? " open" : ""}><summary>${section.title}${section.note ? `<span class="le-summary-note" data-section-note>${section.note()}</span>` : ""}</summary><div class="le-details">${section.render()}</div></details>` :
             `<div class="le-section">${section.render()}</div>`).join("")
         levelEditor.updateHistoryButtons()
         if (document.querySelector('#level-editor-left [data-section="load"]').open) levelEditor.renderLoadList()
@@ -3405,7 +3408,7 @@ Object.assign(levelEditor, {
         document.body.classList.toggle("le-invincible", levelEditor.isActive && levelEditor.isInvincible)
         document.body.classList.toggle("le-export-guns", levelEditor.isActive && levelEditor.isFullTest && levelEditor.isPanelsHidden)
         const hint = document.getElementById("level-editor-hint")
-        if (hint) hint.innerHTML = `${levelEditor.isFullTest ? "test export · " : ""}${levelEditor.keyCap("panels")} show`
+        if (hint) hint.innerHTML = `${levelEditor.isFullTest ? "full test · " : ""}${levelEditor.keyCap("panels")} show`
     },
     updateStatusMouse(point) { //each frame, only touches the page when it changes
         const text = levelEditor.isMouseOnCanvas ? `${Math.round(point.x)}, ${Math.round(point.y)}` : ""
@@ -3438,13 +3441,7 @@ Object.assign(levelEditor, {
             if (levelEditor.isAnalysisShown) levelEditor.renderRight() //it's up to date as the level changes
         }, delay)
     },
-    infoText() { //the top of the left panel, which level this is
-        const count = levelEditor.data.elements.length
-        return `<span class="le-name">${levelEditor.escape(levelEditor.data.name)}</span> <span class="le-id">${count} element${count === 1 ? "" : "s"}</span>`
-    },
     updateHistoryButtons() {
-        const info = document.querySelector("#level-editor-left [data-level-info]")
-        if (info) info.innerHTML = levelEditor.infoText() //after any change, and renaming
         const history = levelEditor.history
         const undo = document.querySelector(`#level-editor-status [data-command="undo"]`)
         const redo = document.querySelector(`#level-editor-status [data-command="redo"]`)
@@ -3480,15 +3477,17 @@ Object.assign(levelEditor, {
     renderLoadList() {
         const current = levelEditor.data.name
         const open = levelEditor.openSections()
-        const group = (title, items, note = "") => items.length ? `<div class="le-label le-load-header">${title}${note}</div><div class="le-load-pairs">${items.join("")}</div>` : "" //local levels, each with its delete button, apart so the × is clearly its own
+        const pairs = items => items.length ? `<div class="le-load-pairs">${items.join("")}</div>` : "" //local levels, untitled, the storage used is on load's title, each with its delete button, apart so the × is clearly its own
         const titled = (title, items) => items.length ? `<div class="le-label le-load-header">${title}</div><div class="le-grid le-load-grid le-flush-x">${items.join("")}</div>` : ""
         levelEditor.flush() //so the level being edited counts
         const written = (source, names) => names.map(name => levelEditor.button("load", name, `${source}:${name}`))
         const hidden = ["template", "testing", "null"]
         document.querySelector("#level-editor-left [data-load-local]").innerHTML =
-            group("local", levelData.store.names().map(name => `<span class="le-pair">${levelEditor.button("load", name, `local:${name}`, name === current)}${levelEditor.button("deleteLevel", "×", name)}</span>`), levelEditor.storageText())
+            pairs(levelData.store.names().map(name => `<span class="le-pair">${levelEditor.button("load", name, `local:${name}`, name === current)}${levelEditor.button("deleteLevel", "×", name)}</span>`))
+        const note = document.querySelector('#level-editor-left [data-section="load"] [data-section-note]')
+        if (note) note.innerHTML = levelEditor.storageText()
         document.querySelector("#level-editor-left [data-load-written]").innerHTML =
-            `<details class="le-load-group" data-section="load-written"${open["load-written"] ? " open" : ""}><summary>load more levels</summary>${ //written levels fold away
+            `<details class="le-load-group" data-section="load-written"${open["load-written"] ? " open" : ""}><summary>levels</summary>${ //written levels fold away
                 titled("n-gon", written("written", Object.keys(level.maps).filter(name => !hidden.includes(name)))) +
                 titled("community", written("more", level.communityLevels)) +
                 titled("training", written("more", level.trainingLevels)) +
@@ -3848,6 +3847,7 @@ Object.assign(levelEditor, {
     },
     flipButtons(elements) { //code has none, many flip around their middle, one only if it has something to mirror
         if (elements.every(el => levelElements.isCode(el))) return ""
+        if (elements.every(el => el.type === "constraint")) return "" //nobody flips a constraint on its own, it still flips with others selected
         if (elements.length < 2 && !levelElements.canFlip(elements[0])) return ""
         return levelEditor.button("flip", "flip ↔", "x", false, "mirror left and right") + levelEditor.button("flip", "flip ↕", "y", false, "mirror up and down")
     },
@@ -3867,7 +3867,7 @@ Object.assign(levelEditor, {
     inspectMany(elements) {
         const isShapes = elements.every(el => levelElements.groups.shape.includes(el.type))
         const props = levelEditor.sharedProps(elements)
-        return `${levelEditor.hotkeys(elements.some(levelEditor.isCopyable), elements.some(el => !levelEditor.isSingleton(el)))}<div class="le-row"><span class="le-name">${elements.length} selected</span></div>
+        return `<canvas class="le-minimap" data-selection-map title="what's selected, click to fit it in the view"></canvas>${levelEditor.hotkeys(elements.some(levelEditor.isCopyable), elements.some(el => !levelEditor.isSingleton(el)))}<div class="le-row"><span class="le-name">${elements.length} selected</span></div>
             ${props.length ? levelEditor.propsCode(elements, props) : ""}
             ${levelEditor.actionRows(elements, [
                 levelEditor.alignButtons(),
@@ -4071,6 +4071,64 @@ Object.assign(levelEditor, {
         c.strokeRect(view.x, view.y, view.width, view.height)
         if (!levelEditor.isCamera) dot(m.pos.x, m.pos.y, levelEditor.colors.select, 3.5)
     },
+    drawSelectionMap() { //each frame while several are selected, a close up of them: the map and blocks around them faded, and their outlines in the selection's cyan
+        const canvas = document.querySelector("#level-editor-right [data-selection-map]")
+        if (!canvas) return
+        const width = canvas.clientWidth
+        const elements = levelEditor.selected()
+        if (!width || !elements.length) return
+        const b = levelElements.unionBounds(elements)
+        const pad = 0.12 * Math.max(b.width, b.height) + 40
+        const bounds = { x: b.x - pad, y: b.y - pad, width: b.width + 2 * pad, height: b.height + 2 * pad }
+        const height = Math.round(Math.max(50, Math.min(150, width * bounds.height / bounds.width)))
+        const scale = Math.min(width / bounds.width, height / bounds.height)
+        const dpr = window.devicePixelRatio || 1
+        const pixels = { width: Math.round(width * dpr), height: Math.round(height * dpr) }
+        if (canvas.width !== pixels.width || canvas.height !== pixels.height) {
+            Object.assign(canvas, pixels)
+            canvas.style.height = `${height}px`
+        }
+        const data = levelEditor.data
+        const c = canvas.getContext("2d")
+        c.setTransform(1, 0, 0, 1, 0, 0)
+        c.fillStyle = data.background
+        c.fillRect(0, 0, canvas.width, canvas.height)
+        const view = { min: { x: bounds.x - (width / scale - bounds.width) / 2, y: bounds.y - (height / scale - bounds.height) / 2 } } //what the canvas shows, wider than bounds on one side
+        view.max = { x: view.min.x + width / scale, y: view.min.y + height / scale }
+        c.setTransform(dpr * scale, 0, 0, dpr * scale, -dpr * view.min.x * scale, -dpr * view.min.y * scale)
+        const near = list => list.filter(who => Matter.Bounds.overlaps(who.bounds, view)) //only what's in the picture, so a big level costs the same as a small one
+        c.globalAlpha = 0.35 //the level faded, so what's selected stands out
+        c.beginPath()
+        levelEditor.traceBodies(c, near(map))
+        c.fillStyle = levelEditor.minimapColor(data.mapColor, "#444")
+        c.fill()
+        c.beginPath()
+        levelEditor.traceBodies(c, near(body).concat(near(composite)))
+        c.fillStyle = levelEditor.minimapColor(data.blockColor, "rgba(140,140,140,0.85)")
+        c.fill()
+        c.globalAlpha = 1
+        c.lineWidth = 1.5 / scale
+        c.lineJoin = "round"
+        for (const el of elements) { //like outline(), on this canvas
+            c.beginPath()
+            if (el.type === "laser") {
+                c.moveTo(el.x, el.y)
+                c.lineTo(el.x2, el.y2)
+            } else {
+                const points = levelElements.types[el.type]?.outlinePoints?.(el) || levelElements.points(el)
+                if (!points.length) continue
+                c.moveTo(points[0].x, points[0].y)
+                for (let i = 1; i < points.length; i++) c.lineTo(points[i].x, points[i].y)
+                if (!levelElements.isOpen(el)) c.closePath()
+            }
+            if (!levelElements.isOpen(el) && el.type !== "laser") {
+                c.fillStyle = "rgba(0,170,255,0.25)"
+                c.fill()
+            }
+            c.strokeStyle = levelEditor.colors.select
+            c.stroke()
+        }
+    },
     minimapTeleport(canvas, event) { //a click on the minimap, the player goes there, or up out of the map if that's in it
         const point = levelEditor.minimapPoint(canvas, event)
         const context = levelAnalysis.context(levelEditor.data, {})
@@ -4174,7 +4232,7 @@ Object.assign(levelEditor, {
                     }
                     data.name = value
                     level.levels = [value]
-                    levelEditor.updateHistoryButtons() //the name at the top
+                    document.title = "n-gon: " + level.levelAnnounce() //the browser tab, otherwise it waits for the next test
                     levelEditor.renderLoadList() //the local levels list
                 }
             }
@@ -4353,6 +4411,11 @@ Object.assign(levelEditor, {
             step.title = `${step.title}\n\n${levelEditor.stepDiff(Number(step.dataset.arg))}`
         }
     })
+    left.addEventListener("input", event => { //the test level is a number, letters and symbols don't go in
+        if (event.target.dataset.setting !== "testLevel") return
+        const digits = event.target.value.replace(/\D/g, "")
+        if (digits !== event.target.value) event.target.value = digits
+    })
     const onSettingChange = event => { //the left panel and the status bar, which has grid and zoom
         if (event.target.dataset.key) levelEditor.setProp(event.target)
         if (event.target.dataset.setting === "grid") {
@@ -4372,7 +4435,7 @@ Object.assign(levelEditor, {
         }
         if (event.target.dataset.setting === "testLevel") {
             const value = Number(event.target.value)
-            if (Number.isFinite(value) && value >= 0) {
+            if (event.target.value !== "" && Number.isFinite(value) && value >= 0) { //cleared goes back, not to 0
                 levelEditor.testLevel = Math.min(30, Math.round(value))
                 levelEditor.remember("levelEditorTestLevel", levelEditor.testLevel)
                 levelEditor.restart()
@@ -4384,6 +4447,9 @@ Object.assign(levelEditor, {
     left.addEventListener("change", onSettingChange)
     document.getElementById("level-editor-status").addEventListener("change", onSettingChange)
     const right = document.getElementById("level-editor-right")
+    right.addEventListener("mousedown", event => { //the selection's close up, click to fit them in the view
+        if (event.button === 0 && event.target.closest?.("[data-selection-map]")) levelEditor.run("fit")
+    })
     right.addEventListener("mousedown", event => { //the minimap, click to go there
         const canvas = event.target.closest?.("[data-minimap]")
         if (!canvas || event.button !== 0) return

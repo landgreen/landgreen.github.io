@@ -254,7 +254,7 @@ const m = {
         return Matter.Query.rayAny(m.playerMap(), m.pos, player.position) || m.mapDepth() > 15
     },
     playerMap() { //the map the player can touch, tech: ray's line left behind lets the player through from the eye's side
-        return m.isPassingRay ? map.filter(who => !who.isRay) : map
+        return tech.isRay && m.isPassingRay ? map.filter(who => !who.isRay) : map //tech.isRay, so a pass cut short by dying doesn't carry into the next run
     },
     lastUnstuckCycle: -1000,
     unstuck() { //move the player to the last spot in their history where they weren't in the map, or to the level start if it keeps happening
@@ -5664,14 +5664,15 @@ const m = {
         },
         {
             name: "molecular assembler",
-            modeName(tag = "strong") { //0 spores, 1 missiles, 2 ice IX, 3 drones, 4 needles
-                const open = [`<${tag} class='spore' data-help='spore' style='letter-spacing: 2px;'>spores`, `<${tag}>missiles`, `<${tag} class='color-s' data-help='slow'>ice IX`, `<${tag}>drones`, `<${tag}>needles`]
+            modeName(tag = "strong") { //0 spores, 1 missiles, 2 ice IX, 3 drones, 4 needles, 5 random (molecular machine)
+                const open = [`<${tag} class='spore' data-help='spore' style='letter-spacing: 2px;'>spores`, `<${tag}>missiles`, `<${tag} class='color-s' data-help='slow'>ice IX`, `<${tag}>drones`, `<${tag}>needles`, `<${tag}>random bullets`]
                 return `${open[simulation.molecularMode]}</${tag}>`
             },
             modeText() {
                 return this.modeName()
             },
             nextMode() {
+                if (tech.isMolecularMachine) return //molecular machine locks the random mode
                 simulation.molecularMode = (simulation.molecularMode + 1) % 5
             },
             descriptionFunction() {
@@ -5687,7 +5688,9 @@ const m = {
                     }
                 }
             },
+            costScale: 1, //molecular machine prints at 0.5x cost
             spend(drain) { //use energy to print, returns false if there isn't enough energy
+                drain *= this.costScale
                 if (m.energy > drain) {
                     m.energy -= drain
                     this.endoThermic(drain)
@@ -5696,9 +5699,18 @@ const m = {
                 return false
             },
             print() { //spend excess energy on the current molecular mode
+                if (simulation.molecularMode === 5) { //molecular machine, a random bullet type at half cost
+                    this.costScale = 0.5
+                    this.printMode(Math.floor(5 * Math.random()))
+                    this.costScale = 1
+                } else {
+                    this.printMode(simulation.molecularMode)
+                }
+            },
+            printMode(mode) {
                 const r = 30 * player.scale
                 const aim = { x: Math.cos(m.angle), y: Math.sin(m.angle) }
-                switch (simulation.molecularMode) {
+                switch (mode) {
                     case 0: //spores
                         if (tech.isSporeFlea) {
                             if (this.spend(0.2)) {

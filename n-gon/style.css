@@ -2863,13 +2863,15 @@ body.level-editor #text-log {
 }
 
 /* the explorer's search, it lists only what matches */
-.le-explore-search {
+.le-explore-search { /* flush with the menu's top and sides, the menu's outline is its top and side lines */
     box-sizing: border-box;
-    width: 100%;
-    margin-bottom: 6px;
-    padding: 2px 5px;
-    border: 1px solid var(--le-ink);
-    border-radius: 0;
+    display: block;
+    width: calc(100% + 2 * var(--le-pad));
+    margin: calc(-1 * var(--le-pad)) calc(-1 * var(--le-pad)) 6px;
+    padding: 4px var(--le-pad);
+    border: 0 solid var(--le-ink);
+    border-bottom-width: 1px;
+    border-radius: var(--le-inner-radius) var(--le-inner-radius) 0 0;
     font: inherit;
 }
 
@@ -2883,19 +2885,57 @@ body.level-editor #text-log {
     margin: 0 auto;
 }
 
-/* the simulation menu's seed, to the right of level */
-/* the simulation menu's level and seed, level on the left and seed on the right, with a gap above the buttons */
+/* the simulation menu's top row, lvl and seed on the left, test on the right,
+   test is flush with the menu's outline on the right and top and meets the buttons' line below */
 .le-test-settings {
-    justify-content: space-between;
-    margin-bottom: 7px;
+    flex-wrap: nowrap;
+    align-items: stretch;
+    gap: 0; /* lvl, seed, and test's auto margins share the free space evenly */
+    margin-top: calc(-1 * var(--le-pad));
+    margin-left: calc(-1 * var(--le-pad));
+    margin-right: calc(-1 * var(--le-pad)); /* as wide as the grids under it, so test's width can match their columns */
+    margin-bottom: 0;
+}
+
+.le-test-settings>.le-row {
+    flex-wrap: nowrap;
 }
 
 .le-test-settings>.le-row+.le-row {
     margin-top: 0;
 }
 
+.le-test-settings .le-label {
+    min-width: 0;
+}
+
+.le-test-settings>.le-button.le-run { /* the extra class so it wins over .le-button.le-run further down */
+    flex: none;
+    order: 1; /* on the right, lvl and seed are on the left, nearer the level */
+    margin-left: auto;
+    width: calc((100% - 2px) / 3 + 1px); /* a third, like the 3 column grids under it after their 2 gaps, +1 for its line in the gap left of 1× */
+    padding: 9px 2px; /* taller than the other buttons' 4px, easier to hit */
+    white-space: nowrap;
+    border-width: 0 0 0 1px; /* the menu's outline is its right and top, the grid below is its bottom */
+    border-top-right-radius: var(--le-inner-radius);
+}
+
+.le-test-settings>.le-row {
+    align-self: center;
+    margin-left: auto; /* the same space before lvl, between lvl and seed, and between seed and test */
+}
+
+.le-test-settings [data-setting="testLevel"] {
+    width: 16px; /* two digits */
+}
+
 .le-test-settings [data-setting="testSeed"] {
-    width: 52px; /* fits random */
+    width: 36px; /* fits random */
+    padding: 1px 3px;
+}
+
+.le-test-settings [data-setting="testSeed"]::placeholder {
+    font-size: 10px;
 }
 
 /* cut, copy, and paste's keys under the inspector's delete */
@@ -2933,13 +2973,14 @@ body.level-editor #text-log {
     transform: translateY(1px);
 }
 
-/* settings test export ignores, grayed out while it runs */
+/* settings full test ignores, grayed out while it runs */
 .le-inactive {
     opacity: 0.45;
 }
 
-/* quick test and test export are the main buttons, a little taller and bigger */
-.le-run .le-button {
+/* full test is the main button, a little taller and bigger, quick test was beside it */
+.le-run .le-button,
+.le-button.le-run {
     padding: 4px 2px;
     font-size: 1.08em;
 }
@@ -3312,7 +3353,7 @@ body.level-editor.le-invincible #level-editor-left {
     background-color: var(--le-on-hover);
 }
 
-/* quick test and test export's play is a green outline and stop a red one, the same size, unlike the menus' black arrows */
+/* quick test and full test's play is a green outline and stop a red one, the same size, unlike the menus' black arrows */
 .le-play,
 .le-stop {
     width: 0.8em;
@@ -3416,7 +3457,7 @@ body.level-editor.le-invincible #level-editor-left {
     border-bottom-width: 0;
 }
 
-/* the add menu's element, power up, and mob buttons, the open one's list is under them, and load more levels */
+/* the add menu's element, power up, and mob buttons, the open one's list is under them, and levels in load */
 .le-load-group>summary { /* the size of the buttons above it, not a menu title */
     margin: 0;
     padding: 2px 7px;
@@ -3507,7 +3548,7 @@ body.level-editor.le-invincible #level-editor-left {
     margin-top: 14px;
 }
 
-/* load more levels, edge to edge under n-vote like the add menu's lists, the bottom of import/export */
+/* levels, edge to edge like the add menu's lists, the bottom of load, n-vote is on its title's row */
 .le-details:has(.le-load-group) {
     overflow: hidden;
 }
@@ -3573,8 +3614,12 @@ body.level-editor.le-invincible #level-editor-left {
 }
 
 /* the simulation menu's time row, stop time a third, the four speeds share the rest */
-.le-grid.le-time {
-    grid-template-columns: minmax(0, 2fr) repeat(4, minmax(0, 1fr));
+.le-grid.le-time { /* six columns, stop time spans two, so each pair is a third with the gap inside it, lined up with the 3 column grids */
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+}
+
+.le-grid.le-time>[data-command="timeStop"] {
+    grid-column: span 2;
 }
 
 /* export/import's buttons, new, import, and export a third each, fork and add to level pool a half */
@@ -3792,14 +3837,6 @@ body.level-editor.le-invincible #level-editor-left {
     margin-right: 4px;
 }
 
-/* the level's name at the top of the left panel */
-.le-info {
-    min-width: 0;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-}
-
 /* preset shapes, each button is a little drawing of its shape */
 .le-shapes {
     grid-template-columns: repeat(7, 1fr);
@@ -3875,17 +3912,36 @@ body.level-editor.le-invincible #level-editor-left {
     margin-top: 4px;
 }
 
-/* the fan site for sharing levels, a wide button under fork and add to level pool, edge to edge like them, the name and a gray note */
+/* the bottom row of load: levels' title is the left third, the fan site for sharing levels the right two thirds, over the title's row so levels' lists still open full width under both */
+.le-load-bottom {
+    position: relative;
+}
+
+.le-load-bottom .le-load-group>summary {
+    box-sizing: border-box;
+    width: calc((100% + 2 * var(--le-pad) - 2px) / 3); /* a third like new and import above, after the grid's 2 gaps */
+    line-height: 1.35;
+}
+
 .le-site-link {
-    border-left-width: 0;
-    border-right-width: 0;
-    padding: 1px var(--le-pad); /* the text lines up with the panel's, not the edge */
+    position: absolute;
+    top: 0;
+    right: calc(-1 * var(--le-pad));
+    box-sizing: border-box;
+    width: calc((100% + 2 * var(--le-pad) - 2px) * 2 / 3 + 2px); /* the other two thirds and both gaps, its left line in the first gap */
+    height: calc(1.35em + 4px); /* as tall as levels' title */
+    border-width: 0 0 0 1px; /* the line between it and levels */
+    padding: 2px var(--le-pad);
     display: flex;
     justify-content: space-between;
     align-items: baseline;
     gap: 6px;
-    margin-top: -1px; /* shares the line under the buttons above */
     color: #000;
+}
+
+.le-load-bottom:has(.le-load-group[open]) .le-site-link {
+    height: calc(1.35em + 5px);
+    border-bottom-width: 1px; /* the line under levels' open title goes under it too */
 }
 
 .le-site-link>span {
@@ -3909,6 +3965,22 @@ body.level-editor.le-invincible #level-editor-left {
     align-items: baseline;
 }
 
+/* a note on the right of a menu's title, like load's storage used */
+.le-panel summary:has(>.le-summary-note) {
+    position: relative;
+}
+
+.le-section:not([open])>summary>.le-summary-note { /* only while its menu is open, it sits over the menu */
+    display: none;
+}
+
+.le-summary-note {
+    position: absolute; /* not a float, a float hangs below the title and squeezes the menu's box */
+    right: 10px;
+    bottom: calc(0.15em - 7px); /* lower than the title's line, just above the menu under it */
+    z-index: 1;
+}
+
 .le-storage {
     font-size: 11px;
     color: var(--le-faint);
@@ -3922,23 +3994,37 @@ body.level-editor.le-invincible #level-editor-left {
     grid-template-columns: repeat(2, minmax(0, 1fr));
 }
 
-/* a local level and its delete button */
+/* the local levels, one to a row with its delete button on the right, flush with the menu's top and sides and the buttons under them, rows share a line */
 .le-load-pairs {
     --le-line: var(--le-ink);
     display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 4px 8px;
+    grid-template-columns: minmax(0, 1fr);
+    margin: calc(-1 * var(--le-pad)) calc(-1 * var(--le-pad)) 0;
+    border-bottom: 1px solid var(--le-line);
+}
+
+.le-load:has(>.le-load-pairs) {
+    margin-top: 0;
+}
+
+.le-load:has(>.le-load-pairs)+.le-grid { /* a gap between the local levels and new, import, and export */
+    margin-top: 6px;
 }
 
 .le-pair {
     display: flex;
     min-width: 0;
-    border: 1px solid var(--le-line);
+    border: 0 solid var(--le-line);
+}
+
+.le-pair+.le-pair {
+    border-top-width: 1px; /* the line between rows, the menu's outline is the first row's top */
 }
 
 .le-pair .le-button {
     border: none;
     box-shadow: none;
+    padding: 2px 6px; /* as tall as the other grid buttons */
 }
 
 .le-pair .le-button:first-child {
@@ -3946,11 +4032,14 @@ body.level-editor.le-invincible #level-editor-left {
     min-width: 0;
     overflow: hidden;
     text-overflow: ellipsis;
+    white-space: nowrap;
+    text-align: left;
+    padding-left: var(--le-pad); /* the name lines up with the panel's text */
 }
 
 .le-pair .le-button:last-child {
     border-left: 1px solid var(--le-line);
-    padding: 1px 4px;
+    padding: 2px 5px;
 }
 
 /* inspector, written like code */
@@ -4378,6 +4467,11 @@ button.le-history-line:hover {
     border-radius: var(--le-inner-radius) var(--le-inner-radius) 0 0;
     border-bottom: 1px solid var(--le-rule-light);
     cursor: crosshair;
+}
+
+/* several selected, the close up of them at the top of the inspector, a click fits them in the view */
+.le-minimap[data-selection-map] {
+    cursor: zoom-in;
 }
 
 .le-analysis-repair:hover {
