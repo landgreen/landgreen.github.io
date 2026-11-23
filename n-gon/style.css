@@ -195,14 +195,14 @@ summary {
 
 #start-button {
     position: absolute;
-    bottom: 108px;
+    bottom: 160px;
     right: 4px;
     z-index: 12;
     /* top-left | top-right | bottom-right | bottom-left */
     /* border-radius: 8px 8px 0 0; */
 }
 
-#training-button {
+#community-button {
     position: absolute;
     bottom: 56px;
     right: 4px;
@@ -221,23 +221,17 @@ summary {
 #continue-button {
     display: none;
     position: absolute;
-    bottom: 56px;
+    bottom: 108px;
     right: 4px;
     z-index: 12;
 }
 
-/* an autosave adds continue above experiment and moves training and start up one slot */
-body.has-autosave #training-button {
-    bottom: 108px;
-}
-
+/* an autosave adds continue above community and moves editor and start up one slot */
 body.has-autosave #start-button {
-    bottom: 160px;
+    bottom: 212px;
 }
 
-/* local levels add the level editor right below start, and move start up one slot */
 #level-editor-splash-button {
-    display: none;
     position: absolute;
     bottom: 108px;
     right: 4px;
@@ -246,14 +240,6 @@ body.has-autosave #start-button {
 
 body.has-autosave #level-editor-splash-button {
     bottom: 160px;
-}
-
-body.has-level-editor #start-button {
-    bottom: 160px;
-}
-
-body.has-autosave.has-level-editor #start-button {
-    bottom: 212px;
 }
 
 
@@ -907,79 +893,39 @@ body:not(.sideways-descriptions) .experiment-grid-module[id^="tech-"] {
     max-width: 24rem;
 }
 
-/* level pool pop up, opened by the button at the bottom of settings, see levelPoolMenu in js/index.js
-levelPoolMenu.place() sets its position, width, and height */
-#level-pool {
-    inset: auto;
-    margin: 0;
-    box-sizing: border-box;
-    overflow-y: auto;
-    padding: 10px;
-    border: 2px #333 solid;
-    border-radius: 8px;
-    background-color: var(--card-color);
-    color: #000;
-    font-size: 0.825rem;
-    line-height: 130%;
+body:has(#level-pool:popover-open) #choose-grid:has(.training-picker) {
+    display: none;
 }
 
-.level-pool-button-open {
-    background-color: var(--hover-card-color);
-}
-
+.training-picker-title,
 .level-pool-header {
     display: flex;
-    align-items: baseline;
+    align-items: center;
+    justify-content: space-between;
     gap: 0.5em;
-    margin: 12px 0 4px;
-    font-size: 1.1em;
 }
 
-#level-pool>.level-pool-header:first-child {
-    margin-top: 0;
-}
-
-/* the fan site for sharing levels, next to the community title, see levelPoolMenu.render() */
-.level-pool-site-link {
-    margin-left: 0.75em;
+/* descriptions in the level menus */
+.level-pool-note {
     font-size: 0.8em;
     color: #888;
 }
 
-.level-pool-site-link:hover {
-    color: #08c;
-}
-
-/* the site's name in a link button, colored like a regular link */
-.site-link-name {
-    color: #08c;
-}
-
-.level-pool-button {
-    margin-left: auto;
-    font-size: 0.85em;
-    padding: 1px 7px;
-}
-
-.level-pool-button+.level-pool-button {
-    margin-left: 0;
-}
-
-/* the thumbnails button while thumbnails are on */
-.level-pool-button-on,
-.level-pool-button-on:hover {
-    background-color: #666;
-    color: #fff;
-}
-
-/* about the size of the words in settings */
 .level-route {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    margin-bottom: 8px;
+}
+
+.level-route-order {
     display: flex;
     flex-wrap: wrap;
     align-items: center;
     gap: 5px;
-    font-size: 1.25rem;
-    margin-top: 12px;
+    font-size: 1rem;
+    min-width: 0;
 }
 
 /* a dash and the step after it wrap together */
@@ -998,14 +944,8 @@ levelPoolMenu.place() sets its position, width, and height */
     white-space: nowrap;
 }
 
-/* levels packed together like the experiment grid, each level draws the line on its right and bottom into the 1px gaps */
 .level-pool-zone {
-    --level-pool-line: #444; /* the same as the card lines in experiment mode */
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(7.6em, 1fr));
-    gap: 1px;
     min-height: 1.9em;
-    border: 1px solid var(--level-pool-line);
     transition: background-color 0.1s;
 }
 
@@ -1023,32 +963,17 @@ levelPoolMenu.place() sets its position, width, and height */
 }
 
 .level-chip {
-    padding: 4px 8px;
-    background-color: var(--card-color);
-    box-shadow: 1px 0 0 var(--level-pool-line), 0 1px 0 var(--level-pool-line);
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
     cursor: grab;
     user-select: none;
-}
-
-.level-chip:hover {
-    background-color: var(--hover-card-color);
 }
 
 .level-chip:active {
     cursor: grabbing;
 }
 
-.level-chip:focus-visible {
-    outline: 2px solid #333;
-    outline-offset: -2px;
-}
-
 /* levels waiting outside the pool */
 .level-chip-out {
-    color: #888;
+    color: #666;
 }
 
 .level-chip-out:hover {
@@ -1059,15 +984,6 @@ levelPoolMenu.place() sets its position, width, and height */
     opacity: 0.3;
 }
 
-/* thumbnails on, each level is its thumbnail with the name under it, see levelPoolMenu.thumbnail() */
-.level-pool-thumbnails .level-pool-zone {
-    grid-template-columns: repeat(auto-fill, minmax(9.5em, 1fr));
-}
-
-.level-pool-thumbnails .level-chip {
-    padding: 0;
-}
-
 .level-chip-thumbnail {
     display: block;
     width: 100%;
@@ -1076,10 +992,10 @@ levelPoolMenu.place() sets its position, width, and height */
 }
 
 .level-chip-out .level-chip-thumbnail {
-    opacity: 0.4;
+    opacity: 0.65;
 }
 
-.level-chip-out:hover .level-chip-thumbnail {
+.level-chip-out:is(:hover, :focus-visible) .level-chip-thumbnail {
     opacity: 1;
 }
 
@@ -2400,6 +2316,203 @@ button [data-help] {
     border-radius: 5px;
 }
 
+/* both tabs occupy the same frame */
+#choose-grid:has(.training-picker) {
+    display: block;
+}
+
+#choose-grid:has(.training-picker),
+#level-pool {
+    position: fixed;
+    inset: 0;
+    transform: none;
+    margin: auto;
+    width: min(924px, calc(100% - 16px));
+    height: calc(100% - 36px);
+    max-height: none;
+    box-sizing: border-box;
+    overflow: auto;
+    scrollbar-width: none;
+    padding: 0 10px 10px;
+    border: 2px solid #333;
+    border-radius: 8px;
+    background-color: var(--card-color);
+    color: #000;
+    font-size: 1rem;
+    line-height: 130%;
+}
+
+/* the buttons stay in reach while the levels scroll */
+.level-menu-toolbar {
+    position: sticky;
+    top: 0;
+    z-index: 1;
+    display: grid;
+    grid-template-columns: auto auto minmax(0, 1fr);
+    grid-template-areas: "tabs actions link" "description description description";
+    align-items: start;
+    gap: 4px 8px;
+    padding: 10px 0 4px;
+    background-color: var(--card-color);
+}
+
+.level-menu-toolbar:not(:has(.level-menu-actions)) {
+    grid-template-columns: auto minmax(0, 1fr);
+    grid-template-areas: "tabs link" "description description";
+}
+
+@media (max-width: 740px) {
+    .level-menu-toolbar {
+        grid-template-columns: auto minmax(0, 1fr);
+        grid-template-areas: "tabs link" "description description" "actions actions";
+    }
+}
+
+.level-menu-site-link {
+    grid-area: link;
+    place-self: center end;
+    color: #05749b;
+    font-size: 0.8em;
+    line-height: 1.15;
+    text-align: right;
+}
+
+.level-menu-description {
+    grid-area: description;
+}
+
+.level-menu-actions {
+    grid-area: actions;
+    justify-self: end;
+    grid-auto-flow: column;
+    grid-auto-columns: auto;
+}
+
+.level-menu-actions,
+.level-menu-tabs {
+    display: grid;
+    gap: 1px;
+    border: 1px solid #444;
+    background-color: #444;
+}
+
+.level-menu-tabs {
+    grid-area: tabs;
+    justify-self: start;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.training-picker-button,
+.level-pool-button,
+.level-menu-tab {
+    border: none;
+    border-radius: 0;
+    min-height: calc(17px + 0.85lh); /* 85% of the former line height plus 20px padding */
+    padding: 0 4px;
+    color: #000;
+    background-color: var(--card-color);
+    font: inherit;
+    font-size: 1.1em;
+    cursor: pointer;
+}
+
+.level-menu-actions > button,
+.level-menu-tab {
+    padding-inline: 10px;
+    font-size: 1.1rem;
+    flex-shrink: 0;
+}
+
+@media (max-width: 400px) {
+    .level-menu-tab {
+        padding-inline: 6px;
+        font-size: 0.95rem;
+    }
+}
+
+.training-picker-button:hover:not(:disabled),
+.level-pool-button:hover,
+.level-menu-tab:hover {
+    background-color: var(--hover-card-color);
+}
+
+.level-menu-tab[aria-current="true"] {
+    background-color: #333;
+    color: #fff;
+    cursor: default;
+}
+
+.training-picker-button:disabled {
+    color: #aaa;
+    cursor: default;
+}
+
+.training-picker-title,
+.level-pool-header {
+    margin: 12px 0 4px;
+    font-size: 1.1em;
+}
+
+.training-picker-title .training-picker-button,
+.level-pool-header .level-pool-button,
+.level-route > .level-pool-button {
+    border: 1px solid #444;
+    min-height: 0;
+    padding: 2px 9px;
+    font-size: 0.825rem;
+    flex-shrink: 0;
+}
+
+.training-picker-levels,
+.level-pool-zone {
+    display: grid;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: 1px;
+    border: 1px solid #444;
+}
+
+@media (max-width: 560px) {
+    .training-picker-levels,
+    .level-pool-zone {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+}
+
+.training-picker-tutorial-levels {
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 6.25rem), 1fr));
+}
+
+/* each card draws its right and bottom lines into the gaps, so a short last row has no dark cells */
+.training-picker-level,
+.level-chip {
+    padding: 0;
+    border: none;
+    border-radius: 0;
+    overflow: hidden;
+    background-color: var(--card-color);
+    box-shadow: 1px 0 0 #444, 0 1px 0 #444;
+    font: inherit;
+    font-size: 0.825em;
+    text-align: center;
+    white-space: nowrap;
+}
+
+.training-picker-level {
+    color: #000;
+    cursor: pointer;
+}
+
+.training-picker-level:is(:hover, :focus-visible),
+.level-chip:is(:hover, :focus-visible) {
+    background-color: var(--hover-card-color);
+}
+
+.training-picker-level:focus-visible,
+.level-chip:focus-visible {
+    outline: 2px solid #333;
+    outline-offset: -2px;
+}
+
 .difficulty-options-grid {
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -3122,10 +3235,26 @@ body.level-editor.le-panels-hidden .le-hint {
     display: block;
 }
 
+/* full test with the panels hidden says esc stops it, in the top left where the panels were */
+body.level-editor .le-hint.le-stop-hint {
+    display: none;
+    top: 10px;
+    bottom: auto;
+}
+
+body.level-editor.le-panels-hidden.le-full-test .le-hint.le-stop-hint {
+    display: block;
+}
+
+body.level-editor:not(.le-invincible) .le-hint.le-stop-hint { /* under the health bar, invincible hides it */
+    top: 46px;
+}
+
 /* the pause menu covers the left and right panels, so they hide while it's open, see build.pauseGrid() */
 body.level-editor.pause-open .le-panel,
 body.level-editor.pause-open .le-status,
-body.level-editor.pause-open .le-hint {
+body.level-editor.pause-open .le-hint,
+body.level-editor.pause-open .le-hint.le-stop-hint {
     display: none;
 }
 
@@ -3948,6 +4077,10 @@ body.level-editor.le-invincible #level-editor-left {
     white-space: nowrap;
 }
 
+.le-site-link .site-link-name {
+    color: #08c;
+}
+
 .le-site-note {
     overflow: hidden;
     text-overflow: ellipsis;
@@ -4007,8 +4140,40 @@ body.level-editor.le-invincible #level-editor-left {
     margin-top: 0;
 }
 
-.le-load:has(>.le-load-pairs)+.le-grid { /* a gap between the local levels and new, import, and export */
+/* load is two boxes with the panel's gray between them: the local levels, then new, import, export, and the written levels */
+.le-details:has(>.le-load-box) {
+    background-color: transparent;
+    border: none;
+    padding: 0;
+}
+
+.le-load-box {
+    background-color: var(--card-color);
+    border: 1px solid var(--le-ink);
+    border-radius: 5px;
+    padding: var(--le-pad);
+    overflow: hidden; /* the flush rows inside keep its rounded corners */
+}
+
+.le-load-box+.le-load-box {
     margin-top: 6px;
+}
+
+.le-load-box:not(:has(.le-load-pairs)):has(>[data-load-local]) { /* no local levels, only the buttons' box */
+    display: none;
+}
+
+.le-load-box:has(.le-load-pairs) {
+    padding-bottom: 0;
+}
+
+.le-load-box .le-load-pairs {
+    border-bottom: none; /* the box's outline is under the last level */
+}
+
+.le-load-box>.le-grid:first-child { /* new, import, and export flush with the box's top */
+    margin-top: calc(-1 * var(--le-pad));
+    border-top-width: 0;
 }
 
 .le-pair {

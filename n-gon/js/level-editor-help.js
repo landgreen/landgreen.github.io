@@ -21,7 +21,7 @@ Object.assign(levelEditor, {
                 <li>Drag the squares around a selection to resize it. Hold alt to move or resize without snapping to the grid.</li>
                 <li>The shapes at the top of <b>add</b> make ramps, domes, stairs, and more.</li>
                 <li>Select a map piece or block and press <b>V</b> or <b>vertices</b> to edit its corners. These shapes can't have inward dents; use several pieces to make those.</li>
-                <li>The angle box and ↻ buttons rotate your selection. Hold shift when clicking a ↻ button to turn the other way.</li>
+                <li>The angle box and ↻ buttons rotate your selection. Hold shift when clicking a ↻ button to turn the other way. Drag the round handle above one object to turn it, and hold shift to end at a right angle.</li>
                 <li>⌘Z undoes a change, ⌘⇧Z redoes it. <b>History</b> lets you return to an earlier step.</li>
                 <li>⌘X cuts, ⌘C copies, and ⌘V pastes at the mouse. Use ctrl instead of ⌘ on Windows or Linux. Delete removes the selection. The keys under the info box do the same when clicked.</li>
                 <li>Scroll to zoom. Drag with the middle mouse button (or the pan tool) to move the view, middle click to center on the player, or double-click either one to teleport the player to the mouse. Mouse 4 and 5 (the back and forward buttons) teleport with one click. <b>fit</b> in the bottom bar shows the whole level, or just the selection.</li>
